@@ -3,6 +3,7 @@
 <p *ngIf="userLoggedOn"> Usuario Autenticado</p>
 
 <div *ngIf="userLoggedOn">
+    <p>id: {{user?.id}}</p>
     <p>Nombre: {{user?.firstname}}</p>
     <p>Apellido: {{user?.lastname}}</p>
     <p>User: {{user?.username}}</p>

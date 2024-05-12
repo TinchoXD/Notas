@@ -26,7 +26,7 @@
           </li>
           <li><hr class="dropdown-divider" /></li>
           <li *ngIf="userLoggedOn">
-            <a class="dropdown-item" routerLink="/inicio">Cerrar Sesión</a>
+            <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
           </li>
         </ul>
       </li>

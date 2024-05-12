@@ -14,12 +14,13 @@ export class DashboardComponent implements OnInit {
   errorMessage: String = '';
   user?: User;
 
+
   
   constructor(
     private loginService: LoginService,
     private userService: UserService
   ) {
-    this.userService.getUser(environment.userId).subscribe({
+    this.userService.getUser(this.loginService.userId).subscribe({
       next: (userData) => {
         this.user = userData;
       },

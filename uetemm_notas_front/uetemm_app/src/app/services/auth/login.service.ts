@@ -18,6 +18,8 @@ import { environment } from '../../../environments/environment.development';
 export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
+  userId: number = 0;
+
 
   constructor(private http: HttpClient) {
     this.currentUserLoggedOn = new BehaviorSubject<boolean>(
@@ -28,6 +30,8 @@ export class LoginService {
     );
   }
 
+  
+
   login(credenciales: LoginRequest): Observable<any> {
     return this.http
       .post<any>(environment.urlHost + '/auth/login', credenciales)
@@ -36,6 +40,9 @@ export class LoginService {
           sessionStorage.setItem('token', userData.token);
           this.currentUserData.next(userData.token);
           this.currentUserLoggedOn.next(true);
+          this.userId = JSON.parse(window.atob(userData.token.split('.')[1])).userId;
+          
+          
         }),
         map((userData) => userData.token),
         catchError(this.handleError)
@@ -60,7 +67,14 @@ export class LoginService {
     return this.currentUserData.asObservable();
   }
 
+
+
   get userLoggedOn(): Observable<boolean> {
     return this.currentUserLoggedOn.asObservable();
   }
+
+  get userToken():String{
+    return this.currentUserData.value;
+  }
+
 }

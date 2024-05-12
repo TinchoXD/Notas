@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../services/auth/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -8,7 +9,7 @@ import { LoginService } from '../../services/auth/login.service';
 })
 export class NavComponent implements OnInit {
   userLoggedOn: boolean = false;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
 
 
@@ -18,5 +19,10 @@ export class NavComponent implements OnInit {
         this.userLoggedOn=userLoggedOn;
       }
     })
+  }
+
+  logout(){
+    this.loginService.logout();
+    this.router.navigate(['/inicio']);
   }
 }
