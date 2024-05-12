@@ -71,7 +71,7 @@ public class UserService {
                 .password(passwordEncoder.encode( passwordRequest.getPassword()))
                 .build();
 
-        userRepository.updateUser(user.id, user.firstname, user.lastname, user.country);
+        userRepository.updatePassword(user.id, user.password);
 
         return new MessageResponse("La contraseña se ha actualizado Correctamente.");
     }

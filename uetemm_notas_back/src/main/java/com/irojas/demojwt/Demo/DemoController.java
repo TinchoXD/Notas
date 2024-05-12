@@ -65,7 +65,6 @@ public class DemoController {
 
         }
     } */
-
     
     @PutMapping("/user")
     public ResponseEntity<MessageResponse> updateUser(@RequestBody UserRequest userRequest)
