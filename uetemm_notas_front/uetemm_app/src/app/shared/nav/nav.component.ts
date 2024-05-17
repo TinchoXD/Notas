@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../services/auth/login.service';
 import { Router } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-nav',
@@ -21,8 +23,8 @@ export class NavComponent implements OnInit {
     })
   }
 
+  
   logout(){
     this.loginService.logout();
-    this.router.navigate(['/inicio']);
   }
 }

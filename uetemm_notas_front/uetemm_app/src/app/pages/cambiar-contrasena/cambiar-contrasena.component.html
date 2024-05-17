@@ -1,0 +1,56 @@
+<div class="container">
+
+
+
+
+    <form *ngIf="userLoggedOn" [formGroup]="updatePasswordForm">
+        <div class="form-group row">
+            <div class="col-sm-11">
+                <input type="text" formControlName="id" class="form-control" id="inputId" hidden />
+            </div>
+        </div>
+        <div class="form-group row border-bottom pb-3">
+            <div class="col-sm-11">
+                <label for="inputCountry" class="">Nueva Contraseña</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                    <input type="password" formControlName="password" class="form-control" id="inputPassword"
+                        placeholder="Nueva contraseña" type="{{ inputPassType }}" />
+     
+                    <span class="input-group-text">
+                        <i class="fa fa-eye" id="togglePassword" (click)="hidePassToggle()" style="cursor: pointer"></i>
+                    </span>
+
+                </div>
+            </div>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                <div *ngIf="password.hasError('required')">
+                    La nueva contraseña es requerida. 
+                </div>
+                <div *ngIf="password.hasError('minlength') ">
+                    <span>Debe tener al menos <strong>{{password.errors?.['minlength'].requiredLength}}</strong> caracteres. actual {{password.errors?.['minlength'].actualLength}}</span>
+                </div>
+                <div *ngIf="password.hasError('pattern') ">
+                    <span>Debe contener al menos una letra <strong>Mayúscula</strong> y un <strong>dígito</strong>.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <button style="width: 100%;" (click)="mostrarDialogo()"
+                        class="btn btn-primary btn-block confirm-button" type="submit"
+                        [disabled]="!password.valid">Confirmar</button>
+                </div>
+                <div class="col-6">
+                    <button style="width: 100%;" routerLink="/inicio"
+                        class="btn btn-danger btn-block confirm-button">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

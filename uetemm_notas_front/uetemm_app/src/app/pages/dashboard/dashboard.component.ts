@@ -40,6 +40,6 @@ export class DashboardComponent implements OnInit {
         this.userLoggedOn = userLoggedOn;
       },
     });
-
   }
+  
 }

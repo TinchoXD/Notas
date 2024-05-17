@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
   
   ngOnInit(): void {
    this.loginForm.clearValidators();
+   this.loginService.logout();
   }
 
   constructor(private formBuilder: FormBuilder, private router: Router, private loginService: LoginService) {

@@ -1,64 +1,73 @@
-<app-nav></app-nav>
-<p *ngIf="errorMessage.length!=0" class="text-danger">{{errorMessage}}</p>
-<div *ngIf="(userLoggedOn && !editMode) || !userLoggedOn">
-    <p><b> id: </b> {{user?.id}} </p>
-    <p><b> Nombre: </b> {{user?.firstname}} </p>
-    <p><b> Apellido: </b> {{user?.lastname}}</p>
-    <p><b> Pais: </b> {{user?.country}}</p>
-    <button *ngIf="userLoggedOn && !editMode" (click)="editMode=true"  class="btn btn-dark"><img
-        src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
-        width="8%" alt="editar" />Editar Datos Personales</button>
-</div>
+<div class="container">
 
-<form *ngIf="userLoggedOn && editMode" [formGroup]="registerForm" >
-    <div class="form-group row">
-        <label for="inputId" class="col-sm-1 col-form-label">id</label>
-        <div class="col-sm-11">
-        <input type="text" formControlName="id" class="form-control" id="inputId">
+
+    
+    <p *ngIf="errorMessage.length!=0" class="text-danger">{{errorMessage}}</p>
+    <div *ngIf="(userLoggedOn && !editMode) || !userLoggedOn">
+        <p><b> id: </b> {{user?.id}} </p>
+        <p><b> Nombre: </b> {{user?.firstname}} </p>
+        <p><b> Apellido: </b> {{user?.lastname}}</p>
+        <p><b> Pais: </b> {{user?.country}}</p>
+        <button *ngIf="userLoggedOn && !editMode" (click)="editMode=true"  class="btn btn-dark"><img
+            src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
+            width="8%" alt="editar" />Editar Datos Personales</button>
+        </div>
         
-            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                <div *ngIf="firstname.errors?.['required']">
-                    El Nombre es requerido.
+        <form *ngIf="userLoggedOn && editMode" [formGroup]="registerForm" >
+            <div class="form-group row">
+                <label for="inputId" class="col-sm-1 col-form-label">id</label>
+                <div class="col-sm-11">
+                    <input type="text" formControlName="id" class="form-control" id="inputId">
+                    
+                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                        <div *ngIf="firstname.errors?.['required']">
+                            El ID es requerido.
+                        </div>
+                        
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="inputFirstName" class="col-sm-1 col-form-label">Nombre</label>
-        <div class="col-sm-11">
-        <input type="text" formControlName="firstname" class="form-control" id="inputFirstName">
+            <div class="form-group row">
+                <label for="inputFirstName" class="col-sm-1 col-form-label">Nombre</label>
+                <div class="col-sm-11">
+                    <input type="text" formControlName="firstname" class="form-control" id="inputFirstName">
+                    
+                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                        <div *ngIf="firstname.errors?.['required']">
+                            El Nombre es requerido.
+                        </div>
+                        
+                    </div> 
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputLasttName" class="col-sm-1 col-form-label">Apellido</label>
+                <div class="col-sm-11">
+                    <input type="text" formControlName="lastname" class="form-control" id="inputLasttName">
+                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                        <div *ngIf="lastname.errors?.['required']">
+                            El Apellido es requerido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row border-bottom pb-3" >
+                <label for="inputCountry" class="col-sm-1 col-form-label">País</label>
+                <div class="col-sm-11">
+                    <input type="text" formControlName="country" class="form-control" id="inputCountry" >
+                    <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
+                        <div *ngIf="country.errors?.['required']">
+                            El País es requerido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" (click)="saveUserDetailsData()"  class="btn btn-dark mt-3">Guardar</button>
+            <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
+        </form>
         
-            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                <div *ngIf="firstname.errors?.['required']">
-                    El Nombre es requerido.
-                </div>
-
-            </div>
-        </div>
     </div>
-    <div class="form-group row">
-        <label for="inputLasttName" class="col-sm-1 col-form-label">Apellido</label>
-        <div class="col-sm-11">
-        <input type="text" formControlName="lastname" class="form-control" id="inputLasttName">
-        <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-            <div *ngIf="lastname.errors?.['required']">
-                El Apellido es requerido.
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="form-group row border-bottom pb-3" >
-        <label for="inputCountry" class="col-sm-1 col-form-label">País</label>
-        <div class="col-sm-11">
-        <input type="text" formControlName="country" class="form-control" id="inputCountry" >
-        <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
-            <div *ngIf="country.errors?.['required']">
-                El País es requerido.
-            </div>
-        </div>
-    </div>
-    </div>
-    <button type="submit" (click)="saveUserDetailsData()"  class="btn btn-dark mt-3">Guardar</button>
-    <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
-</form>
+        
+        
+        
+        

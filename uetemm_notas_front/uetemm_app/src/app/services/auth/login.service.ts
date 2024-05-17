@@ -11,6 +11,7 @@ import {
 } from 'rxjs';
 import { User } from './user';
 import { environment } from '../../../environments/environment.development';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class LoginService {
   userId: number = 0;
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserLoggedOn = new BehaviorSubject<boolean>(
       sessionStorage.getItem('token') != null
     );
@@ -52,7 +53,10 @@ export class LoginService {
   logout(): void {
     sessionStorage.removeItem('token');
     this.currentUserLoggedOn.next(false);
+    this.router.navigate(['/iniciar-sesion']);
   }
+
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

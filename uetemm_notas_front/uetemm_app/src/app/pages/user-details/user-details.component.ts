@@ -16,67 +16,65 @@ export class UserDetailsComponent {
   userLoggedOn: boolean = false;
   editMode: boolean = false;
 
-  registerForm=this.formBuilder.group({
-    id:[''],
-    lastname:['',Validators.required],
-    firstname:['', Validators.required],
-    country:['',Validators.required]
-  })
+  registerForm = this.formBuilder.group({
+    id: [''],
+    lastname: ['', Validators.required],
+    firstname: ['', Validators.required],
+    country: ['', Validators.required],
+  });
 
-  constructor(private userService:UserService, private formBuilder:FormBuilder, private loginService:LoginService  ){
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private loginService: LoginService
+  ) {
     this.userService.getUser(this.loginService.userId).subscribe({
       next: (userData) => {
-        this.user=userData;
+        this.user = userData;
         this.registerForm.controls.id.setValue(userData.id.toString());
-        this.registerForm.controls.firstname.setValue( userData.firstname);
-        this.registerForm.controls.lastname.setValue( userData.lastname);
-        this.registerForm.controls.country.setValue( userData.country);
+        this.registerForm.controls.firstname.setValue(userData.firstname);
+        this.registerForm.controls.lastname.setValue(userData.lastname);
+        this.registerForm.controls.country.setValue(userData.country);
       },
       error: (errorData) => {
-        this.errorMessage=errorData
+        this.errorMessage = errorData;
       },
       complete: () => {
-        console.info("User Data ok");
-      }
-    })
+        console.info('User Data ok');
+      },
+    });
 
     this.loginService.userLoggedOn.subscribe({
-      next:(userLoggedOn) => {
-        this.userLoggedOn=userLoggedOn;
-      }
-    })
-    
+      next: (userLoggedOn) => {
+        this.userLoggedOn = userLoggedOn;
+      },
+    });
   }
 
-  get firstname()
-  {
+  get firstname() {
     return this.registerForm.controls.firstname;
   }
 
-  get lastname()
-  {
+  get lastname() {
     return this.registerForm.controls.lastname;
   }
 
-  get country()
-  {
+  get country() {
     return this.registerForm.controls.country;
   }
 
-  saveUserDetailsData()
-  {
-    if (this.registerForm.valid)
-    {
+  saveUserDetailsData() {
+    if (this.registerForm.valid) {
       console.log(this.registerForm);
-      this.userService.updateUser(this.registerForm.value as unknown as User).subscribe({
-        
-        next:() => {
-          this.editMode=false;
-          this.user=this.registerForm.value as unknown as User;
-        },
-        error:(errorData)=> console.error(errorData)
-      })
+      this.userService
+        .updateUser(this.registerForm.value as unknown as User)
+        .subscribe({
+          next: () => {
+            this.editMode = false;
+            this.user = this.registerForm.value as unknown as User;
+          },
+          error: (errorData) => console.error(errorData),
+        });
     }
   }
-
 }

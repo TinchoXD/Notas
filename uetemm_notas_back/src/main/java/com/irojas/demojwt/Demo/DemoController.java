@@ -74,7 +74,7 @@ public class DemoController {
 
     @PutMapping("/user/cambiarContrasena")
     public ResponseEntity<MessageResponse> updatePassword(@RequestBody PasswordRequest userRequest)
-    {
+    { 
         return ResponseEntity.ok(userService.updatePassword(userRequest));
     }
 

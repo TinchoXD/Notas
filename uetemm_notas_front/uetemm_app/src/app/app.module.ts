@@ -14,6 +14,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { JwtInterceptoprService } from './services/auth/jwt-interceptor.service';
 import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
+import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
+import { DialogoConfirmacionComponent } from './shared/dialogo-confirmacion/dialogo-confirmacion.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatMenuModule } from '@angular/material/menu';
+import { MaterialIcon } from 'material-icons';
+import { SideMenuComponent } from './shared/side-menu/side-menu.component';
 
 
 @NgModule({
@@ -25,16 +31,22 @@ import { ErrorInterceptorService } from './services/auth/error-interceptor.servi
     LoginComponent,
     NavComponent,
     UserDetailsComponent,
+    CambiarContrasenaComponent,
+    DialogoConfirmacionComponent,
+    SideMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule,
+    
   ],
   providers: [{provide:HTTP_INTERCEPTORS,useClass:JwtInterceptoprService,multi:true},
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorService,multi:true}],
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorService,multi:true},
+    provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
