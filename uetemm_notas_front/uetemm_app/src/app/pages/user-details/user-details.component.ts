@@ -28,7 +28,7 @@ export class UserDetailsComponent {
     private formBuilder: FormBuilder,
     private loginService: LoginService
   ) {
-    this.userService.getUser(this.loginService.userId).subscribe({
+    this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
         this.registerForm.controls.id.setValue(userData.id.toString());

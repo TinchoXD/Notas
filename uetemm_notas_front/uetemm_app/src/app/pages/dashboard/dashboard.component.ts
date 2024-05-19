@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     private loginService: LoginService,
     private userService: UserService
   ) {
-    this.userService.getUser(this.loginService.userId).subscribe({
+    this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
       },

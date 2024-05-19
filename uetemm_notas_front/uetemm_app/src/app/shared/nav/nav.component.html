@@ -1,19 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="userLoggedOn">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      </ul>
-      <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">Menú</button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/inicio">Inicio</button>
-        <button mat-menu-item routerLink="/informacion-personal">Informacion personal</button>
-        <button mat-menu-item routerLink="/actualizar-contrasena">Cambiar contraseña</button>
-        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
-      </mat-menu>
+<div *ngIf="userLoggedOn">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">Menú</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/inicio">Inicio</button>
+          <button mat-menu-item routerLink="/informacion-personal">Informacion personal</button>
+          <button mat-menu-item routerLink="/actualizar-contrasena">Cambiar contraseña</button>
+          <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+        </mat-menu>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+  
+</div>

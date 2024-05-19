@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class UserService implements OnInit{
 
   userLoggedOn: boolean = false;
+  id: string = ""
 
   ngOnInit(): void {
     this.loginService.currentUserLoggedOn.subscribe({
@@ -26,8 +27,19 @@ export class UserService implements OnInit{
 
   constructor(private http:HttpClient, private loginService: LoginService, private router: Router) { }
 
-  getUser(id:number):Observable<User>{
+  /* getUser(id:number):Observable<User>{
     return this.http.get<User>(environment.urlApi+"/user/"+id).pipe(
+      catchError(this.handleError
+      )
+    )
+  } */
+  getUser(token:String):Observable<User>{
+    try {
+      this.id = JSON.parse(window.atob(token.split('.')[1])).userId;
+    } catch (error) {
+      console.log('no existe el totken en la sesión actual')
+    }
+    return this.http.get<User>(environment.urlApi+"/user/"+this.id).pipe(
       catchError(this.handleError)
     )
   }

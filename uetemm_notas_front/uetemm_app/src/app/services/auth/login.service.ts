@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from './loginRequest';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import {
   Observable,
   catchError,
@@ -20,6 +20,7 @@ export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
   userId: number = 0;
+  private tokenKey = 'token';
 
 
   constructor(private http: HttpClient, private router: Router) {
@@ -42,11 +43,9 @@ export class LoginService {
           this.currentUserData.next(userData.token);
           this.currentUserLoggedOn.next(true);
           this.userId = JSON.parse(window.atob(userData.token.split('.')[1])).userId;
-          
-          
         }),
         map((userData) => userData.token),
-        catchError(this.handleError)
+        catchError(this.handleError),
       );
   }
 
@@ -72,6 +71,13 @@ export class LoginService {
   }
 
 
+  isAuthenticated(): boolean {
+    return !!sessionStorage.getItem(this.tokenKey);
+  }
+
+  getToken(): string | null {
+    return sessionStorage.getItem(this.tokenKey);
+  }
 
   get userLoggedOn(): Observable<boolean> {
     return this.currentUserLoggedOn.asObservable();
@@ -79,6 +85,10 @@ export class LoginService {
 
   get userToken():String{
     return this.currentUserData.value;
+  }
+
+  getuserIdsession():number{
+    return this.userId
   }
 
 }

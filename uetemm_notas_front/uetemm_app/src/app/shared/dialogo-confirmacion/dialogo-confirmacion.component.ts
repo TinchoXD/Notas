@@ -2,6 +2,11 @@ import { Component, OnInit, Inject, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_MENU_CONTENT } from '@angular/material/menu';
 
+export interface DialogData {
+  titulo: string;
+  mensaje: string;
+}
+
 @Component({
   selector: 'app-dialogo-confirmacion',
   templateUrl: './dialogo-confirmacion.component.html',
@@ -10,7 +15,7 @@ import { MAT_MENU_CONTENT } from '@angular/material/menu';
 export class DialogoConfirmacionComponent implements OnInit{
 
   constructor(
-    public dialogo: MatDialogRef<DialogoConfirmacionComponent>,  @Inject(MAT_DIALOG_DATA) public mensaje: string) { }
+    public dialogo: MatDialogRef<DialogoConfirmacionComponent>,  @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
     cerrarDialogo(): void {
       this.dialogo.close(false);

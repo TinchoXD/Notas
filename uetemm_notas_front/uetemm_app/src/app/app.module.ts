@@ -19,7 +19,9 @@ import { DialogoConfirmacionComponent } from './shared/dialogo-confirmacion/dial
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatMenuModule } from '@angular/material/menu';
 import { MaterialIcon } from 'material-icons';
-import { SideMenuComponent } from './shared/side-menu/side-menu.component';
+
+import { MaterialModule } from './material-module';
+import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 
 
 @NgModule({
@@ -33,7 +35,7 @@ import { SideMenuComponent } from './shared/side-menu/side-menu.component';
     UserDetailsComponent,
     CambiarContrasenaComponent,
     DialogoConfirmacionComponent,
-    SideMenuComponent,
+    NavMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,11 +44,12 @@ import { SideMenuComponent } from './shared/side-menu/side-menu.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatMenuModule,
-    
+    MaterialModule
+
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:JwtInterceptoprService,multi:true},
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorService,multi:true},
-    provideAnimationsAsync()],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+  provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

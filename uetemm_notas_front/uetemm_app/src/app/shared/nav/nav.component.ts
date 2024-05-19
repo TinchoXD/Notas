@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../services/auth/login.service';
-import { Router } from '@angular/router';
-import {MatMenuModule} from '@angular/material/menu';
+
 
 
 @Component({
@@ -11,7 +10,7 @@ import {MatMenuModule} from '@angular/material/menu';
 })
 export class NavComponent implements OnInit {
   userLoggedOn: boolean = false;
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService) {}
 
 
 
@@ -27,4 +26,6 @@ export class NavComponent implements OnInit {
   logout(){
     this.loginService.logout();
   }
+
+  
 }

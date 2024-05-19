@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { User } from '../../services/auth/user';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
@@ -12,7 +12,7 @@ import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/
 @Component({
   selector: 'app-cambiar-contrasena',
   templateUrl: './cambiar-contrasena.component.html',
-  styleUrls: ['./cambiar-contrasena.component.css'], 
+  styleUrls: ['./cambiar-contrasena.component.css'],
 })
 export class CambiarContrasenaComponent {
   userLoggedOn: boolean = false;
@@ -23,7 +23,7 @@ export class CambiarContrasenaComponent {
 
   updatePasswordForm = this.formBuilder.group({
     id: [''],
-    password: ['',[Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[0-9])/)]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[0-9])/)]],
   });
 
   constructor(
@@ -33,7 +33,7 @@ export class CambiarContrasenaComponent {
     public dialogo: MatDialog
   ) {
 
-    this.userService.getUser(this.loginService.userId).subscribe({
+    this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
         this.updatePasswordForm.controls.id.setValue(userData.id.toString());
@@ -98,7 +98,10 @@ export class CambiarContrasenaComponent {
   mostrarDialogo(): void {
     this.dialogo
       .open(DialogoConfirmacionComponent, {
-        data: `¿Está seguro que desea cambiar su contraseña?\n\nAl hacerlo, su sesión se cerrará para aplicar los cambios.`
+        data: {
+          titulo: `¿Está seguro que desea cambiar su contraseña?`,
+          mensaje: `Al hacerlo, su sesión se cerrará para aplicar los cambios.`
+        }
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
