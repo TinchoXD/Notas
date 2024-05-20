@@ -39,21 +39,21 @@ export class UserService implements OnInit{
     } catch (error) {
       console.log('no existe el totken en la sesión actual')
     }
-    return this.http.get<User>(environment.urlApi+"/user/"+this.id).pipe(
+    return this.http.get<User>(environment.urlApi+"users/user/"+this.id).pipe(
       catchError(this.handleError)
     )
   }
 
   updateUser(userRequest:User):Observable<any>
   {
-    return this.http.put(environment.urlApi+"/user", userRequest).pipe(
+    return this.http.put(environment.urlApi+"users/user", userRequest).pipe(
       catchError(this.handleError)
     )
   }
 
   updateUserPassword(passwordRequest:PasswordRequest):Observable<any>
   {
-    return this.http.put(environment.urlApi+"/user/cambiarContrasena", passwordRequest).pipe(
+    return this.http.put(environment.urlApi+"users/user/cambiarContrasena", passwordRequest).pipe(
       catchError(this.handleError)
     )
   }

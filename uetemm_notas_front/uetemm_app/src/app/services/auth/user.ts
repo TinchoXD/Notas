@@ -7,5 +7,6 @@ export interface User{
     role?: string;
     mensaje?: string;
     country:string;
+    estadoCivil:number;
 
 }

@@ -1,73 +1,303 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
 
 
-    
+
     <p *ngIf="errorMessage.length!=0" class="text-danger">{{errorMessage}}</p>
     <div *ngIf="(userLoggedOn && !editMode) || !userLoggedOn">
         <p><b> id: </b> {{user?.id}} </p>
         <p><b> Nombre: </b> {{user?.firstname}} </p>
         <p><b> Apellido: </b> {{user?.lastname}}</p>
         <p><b> Pais: </b> {{user?.country}}</p>
-        <button *ngIf="userLoggedOn && !editMode" (click)="editMode=true"  class="btn btn-dark"><img
-            src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
-            width="8%" alt="editar" />Editar Datos Personales</button>
-        </div>
-        
-        <form *ngIf="userLoggedOn && editMode" [formGroup]="registerForm" >
-            <div class="form-group row">
-                <label for="inputId" class="col-sm-1 col-form-label">id</label>
-                <div class="col-sm-11">
-                    <input type="text" formControlName="id" class="form-control" id="inputId">
-                    
-                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                        <div *ngIf="firstname.errors?.['required']">
-                            El ID es requerido.
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputFirstName" class="col-sm-1 col-form-label">Nombre</label>
-                <div class="col-sm-11">
-                    <input type="text" formControlName="firstname" class="form-control" id="inputFirstName">
-                    
-                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                        <div *ngIf="firstname.errors?.['required']">
-                            El Nombre es requerido.
-                        </div>
-                        
-                    </div> 
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputLasttName" class="col-sm-1 col-form-label">Apellido</label>
-                <div class="col-sm-11">
-                    <input type="text" formControlName="lastname" class="form-control" id="inputLasttName">
-                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-                        <div *ngIf="lastname.errors?.['required']">
-                            El Apellido es requerido.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row border-bottom pb-3" >
-                <label for="inputCountry" class="col-sm-1 col-form-label">País</label>
-                <div class="col-sm-11">
-                    <input type="text" formControlName="country" class="form-control" id="inputCountry" >
-                    <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
-                        <div *ngIf="country.errors?.['required']">
-                            El País es requerido.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" (click)="saveUserDetailsData()"  class="btn btn-dark mt-3">Guardar</button>
-            <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
-        </form>
-        
+        <button *ngIf="userLoggedOn && !editMode" (click)="editMode=true" class="btn btn-dark"><img
+                src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
+                width="8%" alt="editar" />Editar Datos Personales</button>
     </div>
-        
-        
-        
-        
+
+    <form *ngIf="userLoggedOn && editMode">
+        <div class="form-group row">
+            <label for="inputId" class="col-sm-1 col-form-label">id</label>
+            <div class="col-sm-11">
+                <input type="text" formControlName="id" class="form-control" id="inputId">
+
+                <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                    <div *ngIf="firstname.errors?.['required']">
+                        El ID es requerido.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputFirstName" class="col-sm-1 col-form-label">Nombre</label>
+            <div class="col-sm-11">
+                <input type="text" formControlName="firstname" class="form-control" id="inputFirstName">
+
+                <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                    <div *ngIf="firstname.errors?.['required']">
+                        El Nombre es requerido.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputLasttName" class="col-sm-1 col-form-label">Apellido</label>
+            <div class="col-sm-11">
+                <input type="text" formControlName="lastname" class="form-control" id="inputLasttName">
+                <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                    <div *ngIf="lastname.errors?.['required']">
+                        El Apellido es requerido.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row border-bottom pb-3">
+            <label for="inputCountry" class="col-sm-1 col-form-label">País</label>
+            <div class="col-sm-11">
+                <input type="text" formControlName="country" class="form-control" id="inputCountry">
+                <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
+                    <div *ngIf="country.errors?.['required']">
+                        El País es requerido.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" (click)="saveUserDetailsData()" class="btn btn-dark mt-3">Guardar</button>
+        <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
+    </form>
+</div> - -->
+
+<div class="container-fluid rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px"
+                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span
+                    class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru</span><span> </span>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 border-right">
+            <form *ngIf="!editMode" [formGroup]="userDetailsForm">
+                <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Información Personal</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Nombres</label><input type="text" formControlName="firstname"
+                                class="form-control" placeholder="Nombres" value />
+
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Apellidos</label><input type="text" formControlName="lastname"
+                                class="form-control" placeholder="Apellidos" value />
+                        </div>
+                    </div>
+                    <div class="row mt-3 input-group mb-3">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">Documento de identidad
+                                        (CI)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="ci"><i class="fa fa-id-card"
+                                                    aria-hidden="true"></i>
+
+                                            </span>
+                                        </div>
+                                        <input type="text" formControlName="username" class="form-control"
+                                            placeholder="CI" aria-label="CI" aria-describedby="ci" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">Estado civil</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="estadocivil"><i class="fa fa-user"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                        <select class="custom-select" id="inputNivel" aria-describedby="estadocivil"
+                                            formControlName="estadoCivil" [(ngModel)]="selectedEstadoCivil">
+                                            <option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                [value]="estadoCivil.id">{{estadoCivil.nombre}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-12">
+                            <div class="row mt-3">
+                                <label class="labels">Dirección
+                                </label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="direccion"><i class="fa fa-home"
+                                                aria-hidden="true"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Dirección"
+                                        aria-label="Dirección" aria-describedby="direccion" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">Teléfono Móvil</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="celular"><i class="fa fa-mobile"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Teléfono Móvil"
+                                            aria-label="Teléfono Móvil" aria-describedby="celular" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">Teléfono Convencional</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="convencional"><i class="fa fa-phone"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Teléfono convencional"
+                                            aria-label="Teléfono convencional" aria-describedby="convencional" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">E-mail Personal</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="emailpersonal"><i class="fa fa-envelope"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="E-mail Personal"
+                                            aria-label="E-mail Personal" aria-describedby="emailpersonal" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row mt-3">
+                                    <label class="labels">E-mail Institucional</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="emailinstitucional"><i
+                                                    class="fa fa-envelope" aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="E-mail Institucional"
+                                            aria-label="E-mail Institucional" aria-describedby="emailinstitucional" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row mt-3">
+                                    <label class="labels">Realación Laboral</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="relacionlaboral"><i
+                                                    class="fa fa-handshake" aria-hidden="true"></i></span>
+                                        </div>
+
+                                        <select class="custom-select" id="inputNivel"
+                                            aria-describedby="relacionlaboral">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mt-3">
+                                    <label class="labels">Jornada</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="joranada"><i class="fa fa-clock"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+
+                                        <select class="custom-select" id="inputNivel" aria-describedby="joranada">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mt-3">
+                                    <label class="labels">Nivel</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="nivel"><i class="fa fa-bars"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+
+
+                                        <select class="custom-select" id="inputNivel" aria-describedby="nivel">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+                        <!-- <div class="col-md-12">
+                            <label class="labels">Título senescyt</label><input type="text" class="form-control"
+                                placeholder="Título senescyt" value />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Instrucción
+                                Académica</label><input type="text" class="form-control"
+                                placeholder="Instrucción Académica" value />
+                        </div> -->
+                    </div>
+                    <div class="row mt-3">
+                        <!-- <div class="col-md-6">
+                            <label class="labels">País</label><input type="text" class="form-control" value
+                                placeholder="state" />
+                        </div> -->
+                        <!--  <div class="col-md-6">
+                            <label class="labels">Distrito</label><input type="text" class="form-control"
+                                placeholder="Distrito" value />
+                        </div> -->
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button type="submit" (click)="saveUserDetailsData()" class="btn btn-dark mt-3">
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

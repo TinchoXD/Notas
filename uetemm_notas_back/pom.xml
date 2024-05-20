@@ -8,11 +8,14 @@
 		<version>3.1.11</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.irojas</groupId>
-	<artifactId>demo-jwt</artifactId>
+	<groupId>com.notas</groupId>
+	<!-- <groupId>com.irojas</groupId> -->
+	<artifactId>backend</artifactId>
+	<!-- <artifactId>demo-jwt</artifactId> -->
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo-jwt</name>
-	<description>Demo project for Spring Boot</description>
+	<name>backend</name>
+	<!-- <name>demo-jwt</name> -->
+	<description>Proyecto Spring Boot (backend) de appNotas</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
