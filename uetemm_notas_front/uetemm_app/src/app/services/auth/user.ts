@@ -1,3 +1,5 @@
+import { Catalogo } from "../catalogo/catalogo";
+
 export interface User{
 
     id: number;
@@ -6,7 +8,7 @@ export interface User{
     lastname: string;
     role?: string;
     mensaje?: string;
-    country:string;
-    estadoCivil:number;
+    pais:string;
+    estadoCivil: Catalogo;
 
 }

@@ -1,35 +1,38 @@
 import { Component } from '@angular/core';
-import { User } from '../../services/auth/user';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
-import { environment } from '../../../environments/environment.development';
 import { LoginService } from '../../services/auth/login.service';
-import { Catalogo } from '../../services/catalogo/catalogo';
 import { CatalogoService } from '../../services/catalogo/catalogo.service';
+import { User } from '../../services/auth/user';
+import { Catalogo } from '../../services/catalogo/catalogo';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.css',
+  styleUrls: ['./user-details.component.css'],
 })
 export class UserDetailsComponent {
   errorMessage: String = '';
   user?: User;
   userLoggedOn: boolean = false;
   editMode: boolean = false;
-  
+
   catalogoEstadoCivil: Catalogo[] = [];
-  selectedEstadoCivil: number = 0;
-  
+  selectedEstadoCivil?: Catalogo;
 
+  pruebaCatalogo: Catalogo = { id: 2, nombre: "asda", catalogoParent: 1 }
 
-  userDetailsForm = this.formBuilder.group({
+  userDetailsForm: FormGroup = this.formBuilder.group({
     id: [''],
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     username: ['', Validators.required],
-    country: ['', Validators.required],
-    estadoCivil: ['', Validators.required],
+    pais: ['', Validators.required],
+    estadoCivil: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    })
   });
 
   constructor(
@@ -38,56 +41,78 @@ export class UserDetailsComponent {
     private loginService: LoginService,
     private catalogoService: CatalogoService
   ) {
+    this.loadUserData();
+    this.loadCatalogoEstadoCivil();
+    this.listenToUserLoginStatus();
+  }
+
+  private loadUserData() {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
-        this.userDetailsForm.controls.id.setValue(userData.id.toString());
-        this.userDetailsForm.controls.firstname.setValue(userData.firstname);
-        this.userDetailsForm.controls.lastname.setValue(userData.lastname);
-        this.userDetailsForm.controls.username.setValue(userData.username);
-        this.userDetailsForm.controls.country.setValue(userData.country);
+        console.log(userData)
+        this.userDetailsForm.patchValue({
+          id: userData.id.toString(),
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          username: userData.username,
+          pais: userData.pais,
+          estadoCivil: {
+            id: userData.estadoCivil.id.toString(),
+            nombre: userData.estadoCivil.nombre,
+            catalogoParent: userData.estadoCivil.catalogoParent.toString() || null
+          }
+        });
+        this.selectedEstadoCivil =  this.selectedEstadoCivil = {
+          id: userData.estadoCivil.id,
+          nombre: userData.estadoCivil.nombre,
+          catalogoParent: userData.estadoCivil.catalogoParent
+        };
       },
       error: (errorData) => {
         this.errorMessage = errorData;
       },
       complete: () => {
-        console.info('User Data ok');
+        console.info('User Data loaded');
       },
     });
+  }
 
+  private loadCatalogoEstadoCivil() {
+    this.catalogoService.getEstadoCivilLista().subscribe({
+      next: (data) => {
+        this.catalogoEstadoCivil = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+
+  private listenToUserLoginStatus() {
     this.loginService.userLoggedOn.subscribe({
       next: (userLoggedOn) => {
         this.userLoggedOn = userLoggedOn;
       },
     });
-
-    this.catalogoService.getEstadoCivilLista().subscribe(
-      (data: Catalogo[])=>{
-        this.catalogoEstadoCivil = data;
-        console.log(this.catalogoEstadoCivil)
-      },
-      (error) => {
-        console.error('Error fetching catalogos', error);
-      }
-    );
   }
 
   get firstname() {
-    return this.userDetailsForm.controls.firstname;
+    return this.userDetailsForm.controls['firstname'];
   }
 
   get lastname() {
-    return this.userDetailsForm.controls.lastname;
+    return this.userDetailsForm.controls['lastname'];
   }
 
-  get country() {
-    return this.userDetailsForm.controls.country;
+  get pais() {
+    return this.userDetailsForm.controls['pais'];
   }
 
   saveUserDetailsData() {
     if (this.userDetailsForm.valid) {
-      this.userService
-        .updateUser(this.userDetailsForm.value as unknown as User)
+      alert("form valido")
+      this.userService.updateUser(this.userDetailsForm.value as unknown as User)
         .subscribe({
           next: () => {
             this.editMode = false;
@@ -95,6 +120,9 @@ export class UserDetailsComponent {
           },
           error: (errorData) => console.error(errorData),
         });
+    } else {
+
+      alert("form NO valido")
     }
   }
 }

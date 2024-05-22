@@ -1,5 +1,7 @@
 package com.notas.backend.dto;
 
+import com.notas.backend.model.Catalogo;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,18 +18,20 @@ public class UserDTO {
 
     private int role;
 
-    private String country;
+    private String pais;
+
+    private Catalogo estadoCivil;
 
 
 
-
-    public UserDTO(Integer id, String firstname, String lastname, String username, int role, String country) {
+    public UserDTO(Integer id, String firstname, String lastname, String username, int role, String pais, Catalogo estadoCivil) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.role = role;
-        this.country = country;
+        this.pais = pais;
+        this.estadoCivil = estadoCivil;
     }
 
 

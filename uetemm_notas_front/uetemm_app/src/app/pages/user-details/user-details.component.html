@@ -98,7 +98,7 @@
                     </div>
                     <div class="row mt-3 input-group mb-3">
 
-                        <div class="row">
+
 
                             <div class="col-md-6">
                                 <div class="row mt-3">
@@ -118,23 +118,25 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="row mt-3">
+                                <div class="row mt-3"  >
                                     <label class="labels">Estado civil</label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="estadocivil"><i class="fa fa-user"
-                                                    aria-hidden="true"></i></span>
+                                    <div class="input-group mb-3" formGroupName="estadoCivil">
+                                        <div class="input-group-prepend" >
+                                            <span class="input-group-text" id="ci"><i class="fa fa-id-card"
+                                                    aria-hidden="true"></i>
+
+                                            </span>
                                         </div>
-                                        <select class="custom-select" id="inputNivel" aria-describedby="estadocivil"
-                                            formControlName="estadoCivil" [(ngModel)]="selectedEstadoCivil">
-                                            <option *ngFor="let estadoCivil of catalogoEstadoCivil"
-                                                [value]="estadoCivil.id">{{estadoCivil.nombre}}</option>
-                                        </select>
+                                      
+                                            <select  class="custom-select" formControlName="id" required="true" >
+                                                <!-- <option disabled selected value>Seleccione</option> -->
+                                                <option *ngFor="let estadoCivil of catalogoEstadoCivil" [value]="estadoCivil.id">{{estadoCivil.nombre}}</option>
+                                            </select>
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
 
                         <!-- <div class="col-md-12">
                             <div class="row mt-3">
@@ -282,10 +284,21 @@
                         </div> -->
                     </div>
                     <div class="row mt-3">
-                        <!-- <div class="col-md-6">
-                            <label class="labels">País</label><input type="text" class="form-control" value
-                                placeholder="state" />
-                        </div> -->
+                        <div class="col-md-6">
+                            <div class="row mt-3">
+                                <label class="labels">País</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="pais"><i class="fa fa-globe"
+                                                aria-hidden="true"></i>
+
+                                        </span>
+                                    </div>
+                                    <input type="text" formControlName="pais" class="form-control"
+                                        placeholder="País" aria-label="País" aria-describedby="pais" />
+                                </div>
+                            </div>
+                        </div>
                         <!--  <div class="col-md-6">
                             <label class="labels">Distrito</label><input type="text" class="form-control"
                                 placeholder="Distrito" value />

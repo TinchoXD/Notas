@@ -1,14 +1,11 @@
 package com.notas.backend.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.notas.backend.dto.UserDTO;
-import com.notas.backend.model.User;
 import com.notas.backend.request.PasswordRequest;
 import com.notas.backend.request.UserRequest;
 import com.notas.backend.response.MessageResponse;
@@ -16,16 +13,10 @@ import com.notas.backend.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashMap;
-
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController

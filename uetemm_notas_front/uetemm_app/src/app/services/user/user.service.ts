@@ -63,7 +63,7 @@ export class UserService implements OnInit{
       console.error('Se ha producido un error ', error.error);
     } else {
       console.error(
-        'Backend retornó el código de estado, el Token de sesión ha caducado', error
+        'Backend retornó el código de estado ', error
       );
     }
     return throwError(() => new Error('Algo salió mal, intente nuevamente'));

@@ -15,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -38,10 +40,13 @@ public class User implements UserDetails {
     @Column(nullable = false)
     public String lastname;
     public String firstname;
-    public String country;
+    public String pais;
     public String password;
     @Enumerated(EnumType.STRING) 
     public Role role;
+    @ManyToOne
+    @JoinColumn(name="estado_civil", nullable=false)
+    public Catalogo estado_civil;
 
 
 

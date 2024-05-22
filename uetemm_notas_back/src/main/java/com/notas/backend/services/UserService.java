@@ -2,11 +2,13 @@ package com.notas.backend.services;
 
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.notas.backend.dto.UserDTO;
+import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Role;
 import com.notas.backend.model.User;
 import com.notas.backend.repository.UserRepository;
@@ -24,13 +26,17 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-      private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public UserDTO buscarPersona(int id) {
+      
+
         User user = userRepository.findById(id).orElse(null);
-        UserDTO UserDTO = new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), 1,
-                user.getCountry());
-        return UserDTO;
+
+        UserDTO userDTO = new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getUsername(), 1,
+                user.getPais(), user.getEstado_civil());
+       
+        return userDTO;
     }
 
     public User actualizarPersona(User user) {
@@ -54,11 +60,12 @@ public class UserService {
                 .id(userRequest.id)
                 .firstname(userRequest.getFirstname())
                 .lastname(userRequest.lastname)
-                .country(userRequest.getCountry())
+                .pais(userRequest.pais)
                 .role(Role.USER)
+                .estado_civil(userRequest.estadoCivil)
                 .build();
 
-        userRepository.updateUser(user.id, user.firstname, user.lastname, user.country);
+        userRepository.updateUser(user.id, user.firstname, user.lastname, user.pais, user.estado_civil);
 
         return new MessageResponse("El usuario se actualizó satisfactoriamente.");
     }
@@ -68,7 +75,7 @@ public class UserService {
 
         User user = User.builder()
                 .id(passwordRequest.id)
-                .password(passwordEncoder.encode( passwordRequest.getPassword()))
+                .password(passwordEncoder.encode(passwordRequest.getPassword()))
                 .build();
 
         userRepository.updatePassword(user.id, user.password);
