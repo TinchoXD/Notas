@@ -14,18 +14,32 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByUsername(String username);
 
-//* METODO ANTERIOR */
-    /* 
+    // * METODO ANTERIOR */
+    /*
+     * @Modifying()
+     * 
+     * @Query("update User u set u.firstname=:firstname, u.lastname=:lastname, u.pais=:pais where u.id = :id"
+     * )
+     * void updateUser(@Param(value = "id") Integer id, @Param(value = "firstname")
+     * String firstname,
+     * 
+     * @Param(value = "lastname") String lastname, @Param(value = "pais") String
+     * pais);
+     */
+
     @Modifying()
-    @Query("update User u set u.firstname=:firstname, u.lastname=:lastname, u.pais=:pais where u.id = :id")
-    void updateUser(@Param(value = "id") Integer id, @Param(value = "firstname") String firstname,
-            @Param(value = "lastname") String lastname, @Param(value = "pais") String pais);
- */
-            
-    @Modifying()
-    @Query("update User u set u.firstname=:firstname, u.lastname=:lastname, u.pais=:pais , u.estado_civil=:estado_civil where u.id = :id")
-    void updateUser(@Param(value = "id") Integer id, @Param(value = "firstname") String firstname,
-            @Param(value = "lastname") String lastname, @Param(value = "pais") String pais, @Param(value = "estado_civil") Catalogo estado_civil);
+    @Query("update User u set u.firstname=:firstname, u.lastname=:lastname, u.pais=:pais , u.estado_civil=:estado_civil, u.user_direccion=:user_direccion, u.user_telefono_celular=:user_telefono_celular, u.user_telefono_convencional=:user_telefono_convencional, u.user_email_personal=:user_email_personal, u.user_email_institucional=:user_email_institucional, u.user_distrito=:user_distrito where u.id = :id")
+    void updateUser(@Param(value = "id") Integer id,
+            @Param(value = "firstname") String firstname,
+            @Param(value = "lastname") String lastname,
+            @Param(value = "pais") String pais,
+            @Param(value = "estado_civil") Catalogo estado_civil,
+            @Param(value = "user_direccion") String user_direccion,
+            @Param(value = "user_telefono_celular") String user_telefono_celular,
+            @Param(value = "user_telefono_convencional") String user_telefono_convencional,
+            @Param(value = "user_email_personal") String user_email_personal,
+            @Param(value = "user_email_institucional") String user_email_institucional,
+            @Param(value = "user_distrito") String user_distrito);
 
     @Modifying()
     @Query("update User u set u.password=:password where u.id = :id")

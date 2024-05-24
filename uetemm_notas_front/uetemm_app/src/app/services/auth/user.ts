@@ -7,8 +7,16 @@ export interface User{
     firstname: string;
     lastname: string;
     role?: string;
-    mensaje?: string;
+    /* mensaje?: string; */
     pais:string;
     estadoCivil: Catalogo;
+
+    user_direccion: string;
+    user_telefono_celular: string;
+    user_telefono_convencional: string;
+    user_email_personal: string;
+    user_email_institucional: string;
+    user_distrito: string;
+
 
 }

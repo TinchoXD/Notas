@@ -47,6 +47,13 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name="estado_civil", nullable=false)
     public Catalogo estado_civil;
+    public String user_direccion;
+    public String user_telefono_celular;
+    public String user_telefono_convencional;
+    public String user_email_personal;
+    public String user_email_institucional;
+    public String user_distrito;
+
 
 
 

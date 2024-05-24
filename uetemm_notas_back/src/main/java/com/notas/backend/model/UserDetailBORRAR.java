@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="user_detail")
-public class UserDetail {
+public class UserDetailBORRAR {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
