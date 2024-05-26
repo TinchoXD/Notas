@@ -4,7 +4,6 @@ package com.notas.backend.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -18,8 +17,15 @@ public class CatogoService {
     CatalogoRepository catalogoRepository;
 
     public List<Catalogo> getAllCatalogos(){
-        List<Catalogo> resultList = catalogoRepository.findByCatalogoParent(1);
+        List<Catalogo> resultList = catalogoRepository.findByCatalogoParent(null);
         return resultList;    
     }
+
+    public List<Catalogo> getCatalogoByParentId(Integer catalogo_parent_id){
+        List<Catalogo> resultList = catalogoRepository.findByCatalogoParent(catalogo_parent_id);
+        return resultList;    
+    }
+
+
 
 }

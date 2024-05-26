@@ -1,8 +1,10 @@
 package com.notas.backend.model;
 
+
+
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Basic;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,5 +39,8 @@ public class Catalogo {
 
     @Column(name = "cata_catalogo_parent")
     public Integer catalogoParent;
+  
+    @Column(name = "cata_status")
+    public Integer status;
 
 }

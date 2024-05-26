@@ -17,6 +17,22 @@ export class CatalogoService {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/estado_civil')
   }
 
+  getRelacionLaboralLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/relacion_laboral')
+  }
+  getJornadaLaboralLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/jornada_laboral')
+  }
+  getCategoriaLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/categoria')
+  }
+  getGrupoEtnicoLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/grupo_etnico')
+  }
+  getGrupoEtnicoOtroLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/grupo_etnico_otro')
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error('Se ha producido un error ', error.error);

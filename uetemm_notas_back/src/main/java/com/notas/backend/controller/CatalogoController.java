@@ -5,16 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.notas.backend.dto.CatalogoDTO;
-import com.notas.backend.dto.UserDTO;
+
 import com.notas.backend.services.CatogoService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/catalogos")
@@ -28,10 +26,70 @@ public class CatalogoController {
     @GetMapping("/estado_civil")
     public ResponseEntity<Object> getEstadoCivilList() {
         try {
-            return ResponseEntity.ok(catalogoService.getAllCatalogos());
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(1));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Estado Civil", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/relacion_laboral")
+    public ResponseEntity<Object> getRelacionLaboralList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(12));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Relacion Laboral", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/jornada_laboral")
+    public ResponseEntity<Object> getJornadaboralList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(8));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Jornada Laboral", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/categoria")
+    public ResponseEntity<Object> getCategoriaList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(16));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Categoria", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/nivel_educacion")
+    public ResponseEntity<Object> getGrupoEtnicoList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(25));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Nivel Educacion", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/grupo_etnico")
+    public ResponseEntity<Object> getNivelEducacionList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(31));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Grupo etnico", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/grupo_etnico_otro")
+    public ResponseEntity<Object> getGrupoEtnicoOtroList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(39));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Grupo etnico otro", HttpStatus.BAD_REQUEST);
             }
     }
 

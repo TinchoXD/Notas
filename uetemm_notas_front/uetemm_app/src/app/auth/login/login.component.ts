@@ -12,7 +12,7 @@ import { LoginRequest } from '../../services/auth/loginRequest';
 export class LoginComponent implements OnInit{
   
   loginError:string="";
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
 
 /*   loginForm = this.formBuilder.group({
     username:['1718139205',[Validators.required, Validators.minLength(10)]],

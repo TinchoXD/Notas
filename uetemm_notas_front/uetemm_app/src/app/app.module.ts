@@ -18,11 +18,12 @@ import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-c
 import { DialogoConfirmacionComponent } from './shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatMenuModule } from '@angular/material/menu';
-import { MaterialIcon } from 'material-icons';
+
 
 import { MaterialModule } from './material-module';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
-
+import { OverlayModule } from '@angular/cdk/overlay';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
     CambiarContrasenaComponent,
     DialogoConfirmacionComponent,
     NavMenuComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatMenuModule,
-    MaterialModule
+    MaterialModule,
+    OverlayModule 
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },

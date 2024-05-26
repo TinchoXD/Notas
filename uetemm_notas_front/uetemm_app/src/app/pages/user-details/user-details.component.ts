@@ -7,6 +7,14 @@ import { User } from '../../services/auth/user';
 import { Catalogo } from '../../services/catalogo/catalogo';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/dialogo-confirmacion.component';
+import { AlertService } from '../../services/alert/alert.service';
+import { Router } from '@angular/router';
+
+type AlertType = 'success' | 'error';
+
+function isAlertType(type: string): type is AlertType {
+  return type === 'success' || type === 'error';
+}
 
 @Component({
   selector: 'app-user-details',
@@ -18,11 +26,18 @@ export class UserDetailsComponent {
   user?: User;
   userLoggedOn: boolean = false;
   editMode: boolean = false;
-
   catalogoEstadoCivil: Catalogo[] = [];
-  selectedEstadoCivil?: Catalogo;
+  catalogoRelacionLaboral: Catalogo[] = [];
+  catalogoJornadaLaboral: Catalogo[] = [];
+  catalogoCategoria: Catalogo[] = [];
+  catalogoGrupoEtnico: Catalogo[] = [];
+  catalogoGrupoEtnicoOtro: Catalogo[] = [];
+  otroGrupoEtnico: boolean = false;
+  //selectedEstadoCivil?: Catalogo;
 
-  pruebaCatalogo: Catalogo = { id: 2, nombre: "asda", catalogoParent: 1 }
+
+
+
 
   userDetailsForm: FormGroup = this.formBuilder.group({
     id: [''],
@@ -30,6 +45,31 @@ export class UserDetailsComponent {
     lastname: ['', Validators.required],
     username: ['', Validators.required],
     estadoCivil: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    }),
+    user_relacion_laboral: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    }),
+    user_jornada_laboral: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    }),
+    user_categoria: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    }),
+    user_grupo_etnico: this.formBuilder.group({
+      id: ['', Validators.required],
+      nombre: ['', Validators.required],
+      catalogoParent: ['', Validators.required]
+    }),
+    user_grupo_etnico_otro: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
@@ -44,24 +84,40 @@ export class UserDetailsComponent {
   });
 
 
-
+  
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private catalogoService: CatalogoService,
-    public dialogo: MatDialog
+    public dialogo: MatDialog,
+    private alertService: AlertService,
+    private router: Router
   ) {
     this.loadUserData();
     this.loadCatalogoEstadoCivil();
+    this.loadCatalogoRelacionLaboral();
+    this.loadCatalogoJornadaLaboral();
+    this.loadCatalogoCategoria();
+    this.loadCatalogoGrupoEtnico();
+    this.loadCatalogoGrupoEtnicoOtro();
     this.listenToUserLoginStatus();
   }
+  
+  showAlert(mensaje: string, type: string) {
+    if (isAlertType(type)){
+      this.alertService.showAlert(mensaje, type);
+    }
+  }
+
+
 
   private loadUserData() {
     this.userService.getUser(this.loginService.userToken).subscribe({
+      
       next: (userData) => {
         this.user = userData;
-        console.log(userData)
+        console.log("user DATA", userData)
         this.userDetailsForm.patchValue({
           id: userData.id.toString(),
           firstname: userData.firstname,
@@ -72,12 +128,37 @@ export class UserDetailsComponent {
             nombre: userData.estadoCivil.nombre,
             catalogoParent: userData.estadoCivil.catalogoParent.toString() || null
           },
+          user_relacion_laboral: {
+            id: userData.user_relacion_laboral.id.toString(),
+            nombre: userData.user_relacion_laboral.nombre,
+            catalogoParent: userData.user_relacion_laboral.catalogoParent.toString() || null
+          },
+          user_jornada_laboral: {
+            id: userData.user_jornada_laboral.id.toString(),
+            nombre: userData.user_jornada_laboral.nombre,
+            catalogoParent: userData.user_jornada_laboral.catalogoParent.toString() || null
+          },
+          user_categoria: {
+            id: userData.user_categoria.id.toString(),
+            nombre: userData.user_categoria.nombre,
+            catalogoParent: userData.user_categoria.catalogoParent.toString() || null
+          },
+          user_grupo_etnico: {
+            id: userData.user_grupo_etnico.id.toString(),
+            nombre: userData.user_grupo_etnico.nombre,
+            catalogoParent: userData.user_grupo_etnico.catalogoParent.toString() || null
+          },
+          user_grupo_etnico_otro: {
+            id: userData?.user_grupo_etnico_otro.id.toString(),
+            nombre: userData?.user_grupo_etnico_otro.nombre,
+            catalogoParent: userData?.user_grupo_etnico_otro.catalogoParent.toString() || null
+          },
           user_direccion: userData.user_direccion,
           user_telefono_celular: userData.user_telefono_celular,
           user_telefono_convencional: userData.user_telefono_convencional,
           user_email_personal: userData.user_email_personal,
           user_email_institucional: userData.user_email_institucional,
-          user_distrito: userData.user_email_institucional,
+          user_distrito: userData.user_distrito,
           pais: userData.pais
           
         });
@@ -96,6 +177,59 @@ export class UserDetailsComponent {
     this.catalogoService.getEstadoCivilLista().subscribe({
       next: (data) => {
         this.catalogoEstadoCivil = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+  private loadCatalogoRelacionLaboral() {
+    this.catalogoService.getRelacionLaboralLista().subscribe({
+      next: (data) => {
+        this.catalogoRelacionLaboral = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+  private loadCatalogoJornadaLaboral() {
+    this.catalogoService.getJornadaLaboralLista().subscribe({
+      next: (data) => {
+        this.catalogoJornadaLaboral = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+
+  private loadCatalogoCategoria() {
+    this.catalogoService.getCategoriaLista().subscribe({
+      next: (data) => {
+        this.catalogoCategoria = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+
+  private loadCatalogoGrupoEtnico() {
+    this.catalogoService.getGrupoEtnicoLista().subscribe({
+      next: (data) => {
+        this.catalogoGrupoEtnico = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+
+  private loadCatalogoGrupoEtnicoOtro() {
+    this.catalogoService.getGrupoEtnicoOtroLista().subscribe({
+      next: (data) => {
+        this.catalogoGrupoEtnicoOtro = data;
       },
       error: (error) => {
         console.error('Error fetching catalogos', error);
@@ -146,6 +280,21 @@ export class UserDetailsComponent {
   get pais() {
     return this.userDetailsForm.controls['pais'];
   }
+  get relacionLaboral() {
+    return this.userDetailsForm.controls['user_relacion_laboral'];
+  }
+  get jornadaLaboral() {
+    return this.userDetailsForm.controls['user_jornada_laboral'];
+  }
+  get categoria() {
+    return this.userDetailsForm.controls['user_categoria'];
+  }
+  get grupoEtnico() {
+    return this.userDetailsForm.controls['user_grupo_etnico'];
+  }
+  get grupoEtnicoOtro() {
+    return this.userDetailsForm.controls['user_grupo_etnico'];
+  }
 
 
 
@@ -156,10 +305,13 @@ export class UserDetailsComponent {
           next: () => {
             this.editMode = false;
             this.user = this.userDetailsForm.value as unknown as User;
+            this.showAlert("La información se ha guardado exitosamente.", "success");
+            this.router.navigateByUrl('/informacion-personal');
           },
           error: (errorData) => console.error(errorData),
         });
-    } else {
+      } else {
+      this.showAlert("Error al guardar la información, valide los datos ingresados.", "error");
       this.markFormGroupTouched(this.userDetailsForm);
     }
   }
@@ -186,10 +338,13 @@ export class UserDetailsComponent {
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
+          //alert("aaa");
           this.saveUserDetailsData();
+          
+          //alert("bbb c");
         } else {
           this.dialogo.closeAll();
-        }
+        } 
       });
   }
 }

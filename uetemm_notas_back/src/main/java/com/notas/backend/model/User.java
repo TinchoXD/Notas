@@ -53,9 +53,28 @@ public class User implements UserDetails {
     public String user_email_personal;
     public String user_email_institucional;
     public String user_distrito;
+    @ManyToOne
+    @JoinColumn(name="user_relacion_laboral", nullable=false)
+    public Catalogo user_relacion_laboral;
+    @ManyToOne
+    @JoinColumn(name="user_jornada_laboral", nullable=false)
+    public Catalogo user_jornada_laboral;
+    @ManyToOne
+    @JoinColumn(name="user_nivel_educacion", nullable=false)
+    public Catalogo user_nivel_educacion;
+    @ManyToOne
+    @JoinColumn(name="user_categoria", nullable=false)
+    public Catalogo user_categoria;
+    @ManyToOne
+    @JoinColumn(name="user_grupo_etnico", nullable=false)
+    public Catalogo user_grupo_etnico;
+    @ManyToOne
+    @JoinColumn(name="user_grupo_etnico_otro", nullable=false)
+    public Catalogo user_grupo_etnico_otro;
+    public Integer user_estado_usuario;
 
 
-
+    public Integer user_status;
 
 
     @Override

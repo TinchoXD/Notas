@@ -46,6 +46,7 @@ export class UserService implements OnInit{
 
   updateUser(userRequest:User):Observable<any>
   {
+    console.log('AAAAAAAAAAAAAAA', userRequest)
     return this.http.put(environment.urlApi+"users/user", userRequest).pipe(
       catchError(this.handleError)
     )
