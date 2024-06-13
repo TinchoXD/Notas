@@ -9,7 +9,7 @@ export interface User{
     role?: string;
     /* mensaje?: string; */
     pais:string;
-    estadoCivil: Catalogo;
+    estadoCivil: number;
     
     user_direccion: string;
     user_telefono_celular: string;
@@ -18,11 +18,17 @@ export interface User{
     user_email_institucional: string;
     user_distrito: string;
 
-    user_relacion_laboral: Catalogo;
-    user_jornada_laboral: Catalogo;
-    user_categoria: Catalogo;
-    user_grupo_etnico: Catalogo;
-    user_grupo_etnico_otro: Catalogo;
+    user_relacion_laboral: number;
+    user_jornada_laboral: number;
+    user_categoria: number;
+    user_grupo_etnico: number;
+    user_grupo_etnico_otro: number;
+    user_nivel_educacion: number;
+    user_fecha_nacimiento: Date;
+    user_titulo_senescyt: string;
+    user_especialidad_accion_personal: string;
+    
+    
 
 
 }

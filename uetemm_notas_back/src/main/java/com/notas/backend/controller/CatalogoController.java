@@ -64,7 +64,7 @@ public class CatalogoController {
     }
 
     @GetMapping("/nivel_educacion")
-    public ResponseEntity<Object> getGrupoEtnicoList() {
+    public ResponseEntity<Object> getNivelEducacionList() {
         try {
             return ResponseEntity.ok(catalogoService.getCatalogoByParentId(25));
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class CatalogoController {
     }
 
     @GetMapping("/grupo_etnico")
-    public ResponseEntity<Object> getNivelEducacionList() {
+    public ResponseEntity<Object> getGrupoEtnicoList() {
         try {
             return ResponseEntity.ok(catalogoService.getCatalogoByParentId(31));
         } catch (Exception e) {

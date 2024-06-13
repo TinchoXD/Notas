@@ -43,4 +43,8 @@ public class Catalogo {
     @Column(name = "cata_status")
     public Integer status;
 
+
+
+
+    
 }

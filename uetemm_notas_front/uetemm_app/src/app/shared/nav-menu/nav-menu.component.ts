@@ -16,6 +16,7 @@ export class NavMenuComponent {
   user?: User;
   errorMessage: String = '';
 
+
   constructor(private loginService: LoginService,
     private userService: UserService,
     public dialogo: MatDialog) {
@@ -26,7 +27,7 @@ export class NavMenuComponent {
       error: (errorData) => {
         this.errorMessage = errorData;
       },
-      complete: ()=>{
+      complete: () => {
         console.info("User Data OK.")
       }
     });
@@ -34,20 +35,15 @@ export class NavMenuComponent {
 
   ngOnInit(): void {
     this.loginService.currentUserLoggedOn.subscribe({
-      next:(userLoggedOn)=>{
-        this.userLoggedOn=userLoggedOn;
+      next: (userLoggedOn) => {
+        this.userLoggedOn = userLoggedOn;
       }
-    }); 
-    
+    });
+
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
-  }
-
-  badgevisible = false;
-  badgevisibility() {
-    this.badgevisible = true;
   }
 
 

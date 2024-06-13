@@ -1,5 +1,7 @@
 package com.notas.backend.request;
 
+import java.util.Date;
+
 import com.notas.backend.model.Catalogo;
 
 import lombok.AllArgsConstructor;
@@ -17,13 +19,13 @@ public class UserRequest {
     public String firstname;
     public String lastname;
     public String pais;
-    public Catalogo estadoCivil;
-    public Catalogo user_relacion_laboral;
-    public Catalogo user_jornada_laboral;
-    public Catalogo user_categoria;
-    public Catalogo user_grupo_etnico;
-    public Catalogo user_grupo_etnico_otro;
-    public Catalogo user_nivel_educacion;
+    public Integer estadoCivil;
+    public Integer user_relacion_laboral;
+    public Integer user_jornada_laboral;
+    public Integer user_categoria;
+    public Integer user_grupo_etnico;
+    public Integer user_grupo_etnico_otro;
+    public Integer user_nivel_educacion;
     public String user_direccion;
     public String user_telefono_celular;
     public String user_telefono_convencional;
@@ -31,6 +33,9 @@ public class UserRequest {
     public String user_email_institucional;
     public String user_distrito;
     public Integer user_estado_usuario;
+    public Date user_fecha_nacimiento;
+    public String user_titulo_senescyt;
+    public String user_especialidad_accion_personal;
 
 
     public Integer user_status;

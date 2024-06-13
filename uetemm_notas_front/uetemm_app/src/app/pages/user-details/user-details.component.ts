@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 import { LoginService } from '../../services/auth/login.service';
 import { CatalogoService } from '../../services/catalogo/catalogo.service';
@@ -9,6 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { AlertService } from '../../services/alert/alert.service';
 import { Router } from '@angular/router';
+import { merge, firstValueFrom} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+
+
 
 type AlertType = 'success' | 'error';
 
@@ -32,11 +36,24 @@ export class UserDetailsComponent {
   catalogoCategoria: Catalogo[] = [];
   catalogoGrupoEtnico: Catalogo[] = [];
   catalogoGrupoEtnicoOtro: Catalogo[] = [];
-  otroGrupoEtnico: boolean = false;
-  //selectedEstadoCivil?: Catalogo;
+  catalogoNivelEducacion: Catalogo[] = [];
+  
 
+  disableSelect = new FormControl(false);
 
-
+  
+  habilitarGrupoEtenicoOtro: boolean = false;
+  
+  
+  
+  onGrupoEtnicoChange(event: any) {
+    if(event == 38){
+      this.habilitarGrupoEtenicoOtro=true
+    }else{
+      this.habilitarGrupoEtenicoOtro=false
+      
+    }
+  }
 
 
   userDetailsForm: FormGroup = this.formBuilder.group({
@@ -44,37 +61,49 @@ export class UserDetailsComponent {
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     username: ['', Validators.required],
-    estadoCivil: this.formBuilder.group({
+    estadoCivil: ['', Validators.required],
+    /*     estadoCivil: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
-    }),
-    user_relacion_laboral: this.formBuilder.group({
+    }), */
+    user_fecha_nacimiento:['', Validators.required],
+    user_relacion_laboral: ['', Validators.required],
+ /*    user_relacion_laboral: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
-    }),
-    user_jornada_laboral: this.formBuilder.group({
+    }), */
+    user_jornada_laboral: ['', Validators.required],
+    /* user_jornada_laboral: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
-    }),
-    user_categoria: this.formBuilder.group({
+    }), */
+    user_categoria: ['', Validators.required],
+    /* user_categoria: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
-    }),
-    user_grupo_etnico: this.formBuilder.group({
+    }), */
+    user_grupo_etnico: ['', Validators.required],
+    /* user_grupo_etnico: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       catalogoParent: ['', Validators.required]
-    }),
-    user_grupo_etnico_otro: this.formBuilder.group({
+    }), */
+    user_grupo_etnico_otro: ['', Validators.required],
+    /* user_grupo_etnico_otro: this.formBuilder.group({
       id: ['', Validators.required],
       nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required]
-    }),
+      catalogoParent: ['', Validators.required ]
+    }), */
+   /*  user_grupo_etnico_otro: [''], */
+   
+   user_nivel_educacion:['', Validators.required],
+   user_titulo_senescyt:['', Validators.required],
     user_direccion:['', Validators.required],
+  
     user_telefono_celular:['', Validators.required],
     user_telefono_convencional:['', Validators.required],
     user_email_personal:['', [Validators.required, Validators.email]],
@@ -101,7 +130,14 @@ export class UserDetailsComponent {
     this.loadCatalogoCategoria();
     this.loadCatalogoGrupoEtnico();
     this.loadCatalogoGrupoEtnicoOtro();
+    this.loadCatalogoNivelEducaicon();
+    
     this.listenToUserLoginStatus();
+    
+    merge(this.firstname.statusChanges, this.firstname.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+
   }
   
   showAlert(mensaje: string, type: string) {
@@ -123,36 +159,46 @@ export class UserDetailsComponent {
           firstname: userData.firstname,
           lastname: userData.lastname,
           username: userData.username,
-          estadoCivil: {
+          user_fecha_nacimiento: userData.user_fecha_nacimiento,
+          estadoCivil: userData.estadoCivil,
+/*           estadoCivil: {
             id: userData.estadoCivil.id.toString(),
             nombre: userData.estadoCivil.nombre,
             catalogoParent: userData.estadoCivil.catalogoParent.toString() || null
-          },
-          user_relacion_laboral: {
+          }, */
+          user_relacion_laboral: userData.user_relacion_laboral,
+          /* user_relacion_laboral: {
             id: userData.user_relacion_laboral.id.toString(),
             nombre: userData.user_relacion_laboral.nombre,
             catalogoParent: userData.user_relacion_laboral.catalogoParent.toString() || null
-          },
-          user_jornada_laboral: {
+          }, */
+          user_jornada_laboral: userData.user_jornada_laboral,
+          /* user_jornada_laboral: {
             id: userData.user_jornada_laboral.id.toString(),
             nombre: userData.user_jornada_laboral.nombre,
             catalogoParent: userData.user_jornada_laboral.catalogoParent.toString() || null
-          },
-          user_categoria: {
+          }, */
+          user_categoria: userData.user_categoria,
+          /* user_categoria: {
             id: userData.user_categoria.id.toString(),
             nombre: userData.user_categoria.nombre,
             catalogoParent: userData.user_categoria.catalogoParent.toString() || null
-          },
-          user_grupo_etnico: {
+          }, */
+          user_grupo_etnico: userData.user_grupo_etnico,
+          /* user_grupo_etnico: {
             id: userData.user_grupo_etnico.id.toString(),
             nombre: userData.user_grupo_etnico.nombre,
             catalogoParent: userData.user_grupo_etnico.catalogoParent.toString() || null
-          },
-          user_grupo_etnico_otro: {
-            id: userData?.user_grupo_etnico_otro.id.toString(),
-            nombre: userData?.user_grupo_etnico_otro.nombre,
-            catalogoParent: userData?.user_grupo_etnico_otro.catalogoParent.toString() || null
-          },
+          }, */
+          user_grupo_etnico_otro: userData.user_grupo_etnico_otro,
+         /*  user_grupo_etnico_otro: {
+            id: userData.user_grupo_etnico_otro.id.toString() || null,
+            nombre: userData.user_grupo_etnico_otro.nombre || null,
+            catalogoParent: userData.user_grupo_etnico_otro.catalogoParent.toString() || null
+          }, */
+          user_nivel_educacion: userData.user_nivel_educacion,
+          user_titulo_senescyt: userData.user_titulo_senescyt,
+
           user_direccion: userData.user_direccion,
           user_telefono_celular: userData.user_telefono_celular,
           user_telefono_convencional: userData.user_telefono_convencional,
@@ -183,6 +229,7 @@ export class UserDetailsComponent {
       }
     });
   }
+
   private loadCatalogoRelacionLaboral() {
     this.catalogoService.getRelacionLaboralLista().subscribe({
       next: (data) => {
@@ -237,6 +284,17 @@ export class UserDetailsComponent {
     });
   }
 
+  private loadCatalogoNivelEducaicon() {
+    this.catalogoService.getNivelEducacionLista().subscribe({
+      next: (data) => {
+        this.catalogoNivelEducacion = data;
+      },
+      error: (error) => {
+        console.error('Error fetching catalogos', error);
+      }
+    });
+  }
+
   private listenToUserLoginStatus() {
     this.loginService.userLoggedOn.subscribe({
       next: (userLoggedOn) => {
@@ -248,33 +306,34 @@ export class UserDetailsComponent {
   get firstname() {
     return this.userDetailsForm.controls['firstname'];
   }
-
   get lastname() {
     return this.userDetailsForm.controls['lastname'];
   }
-
   get username() {
     return this.userDetailsForm.controls['username'];
   }
   get estadoCivil() {
     return this.userDetailsForm.controls['estadoCivil'];
   }
-  get user_direccion() {
+  get fechaNacimiento() {
+    return this.userDetailsForm.controls['user_fecha_nacimiento'];
+  }
+  get direccion() {
     return this.userDetailsForm.controls['user_direccion'];
   }
-  get user_telefono_celular() {
+  get telefonoCelular() {
     return this.userDetailsForm.controls['user_telefono_celular'];
   }
-  get user_telefono_convencional() {
+  get telefonoConvencional() {
     return this.userDetailsForm.controls['user_telefono_convencional'];
   }
-  get user_email_personal() {
+  get emailPersonal() {
     return this.userDetailsForm.controls['user_email_personal'];
   }
-  get user_email_institucional() {
+  get emailInstitucional() {
     return this.userDetailsForm.controls['user_email_institucional'];
   }
-  get user_distrito() {
+  get distrito() {
     return this.userDetailsForm.controls['user_distrito'];
   }
   get pais() {
@@ -293,24 +352,30 @@ export class UserDetailsComponent {
     return this.userDetailsForm.controls['user_grupo_etnico'];
   }
   get grupoEtnicoOtro() {
-    return this.userDetailsForm.controls['user_grupo_etnico'];
+    return this.userDetailsForm.controls['user_grupo_etnico_otro'];
+  }
+  get nivelEducacion() {
+    return this.userDetailsForm.controls['user_nivel_educacion'];
+  }
+  get tituloSenescyt() {
+    return this.userDetailsForm.controls['user_titulo_senescyt'];
   }
 
 
 
-  saveUserDetailsData() {
+  async saveUserDetailsData() {
+    console.log("userDetailsForm", this.userDetailsForm);
     if (this.userDetailsForm.valid) {
-      this.userService.updateUser(this.userDetailsForm.value as unknown as User)
-        .subscribe({
-          next: () => {
-            this.editMode = false;
-            this.user = this.userDetailsForm.value as unknown as User;
-            this.showAlert("La información se ha guardado exitosamente.", "success");
-            this.router.navigateByUrl('/informacion-personal');
-          },
-          error: (errorData) => console.error(errorData),
-        });
-      } else {
+      try {
+        await firstValueFrom(this.userService.updateUser(this.userDetailsForm.value as unknown as User));
+        this.editMode = false;
+        this.user = this.userDetailsForm.value as unknown as User;
+        this.showAlert("La información se ha guardado exitosamente.", "success");
+        this.router.navigateByUrl('/informacion-personal');
+      } catch (errorData) {
+        console.error(errorData);
+      }
+    } else {
       this.showAlert("Error al guardar la información, valide los datos ingresados.", "error");
       this.markFormGroupTouched(this.userDetailsForm);
     }
@@ -347,4 +412,16 @@ export class UserDetailsComponent {
         } 
       });
   }
+
+  updateErrorMessage() {
+    if (this.firstname.hasError('required')) {
+      this.errorMessage = 'Este campo es obligatorio.';
+    } else {
+      this.errorMessage = '';
+    }
+  }
+
+  refresh(): void {
+    window.location.reload();
+}
 }

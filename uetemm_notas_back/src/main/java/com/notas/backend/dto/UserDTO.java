@@ -1,5 +1,7 @@
 package com.notas.backend.dto;
 
+import java.util.Date;
+
 import com.notas.backend.model.Catalogo;
 
 import lombok.Getter;
@@ -21,31 +23,35 @@ public class UserDTO {
 
     private String pais;
 
-    private Catalogo estadoCivil;
+    private Integer estadoCivil;
 
-    private Catalogo user_relacion_laboral;
-    public Catalogo user_jornada_laboral;
-    public Catalogo user_categoria;
-    public Catalogo user_grupo_etnico;
-    public Catalogo user_grupo_etnico_otro;
-    public Catalogo user_nivel_educacion;
-    public Integer user_estado_usuario;
+    private Integer user_relacion_laboral;
+    private Integer user_jornada_laboral;
+    private Integer user_categoria;
+    private Integer user_grupo_etnico;
+    private Integer user_grupo_etnico_otro;
+    private Integer user_nivel_educacion;
+    private Integer user_estado_usuario;
 
-    public String user_direccion;
-    public String user_telefono_celular;
-    public String user_telefono_convencional;
-    public String user_email_personal;
-    public String user_email_institucional;
-    public String user_distrito;
-
+    private String user_direccion;
+    private String user_telefono_celular;
+    private String user_telefono_convencional;
+    private String user_email_personal;
+    private String user_email_institucional;
+    private String user_distrito;
+    private Date user_fecha_nacimiento;
+    private String user_titulo_senescyt;
+    private String user_especialidad_accion_personal;
 
     
+
     public UserDTO(Integer id, String firstname, String lastname, String username, int role, String pais,
-            Catalogo estadoCivil, Catalogo user_relacion_laboral, Catalogo user_jornada_laboral,
-            Catalogo user_categoria, Catalogo user_grupo_etnico, Catalogo user_grupo_etnico_otro,
-            Catalogo user_nivel_educacion, Integer user_estado_usuario, String user_direccion,
-            String user_telefono_celular, String user_telefono_convencional, String user_email_personal,
-            String user_email_institucional, String user_distrito) {
+            Integer estadoCivil, Integer user_relacion_laboral, Integer user_jornada_laboral, Integer user_categoria,
+            Integer user_grupo_etnico, Integer user_grupo_etnico_otro, Integer user_nivel_educacion,
+            Integer user_estado_usuario, String user_direccion, String user_telefono_celular,
+            String user_telefono_convencional, String user_email_personal, String user_email_institucional,
+            String user_distrito, Date user_fecha_nacimiento, String user_titulo_senescyt,
+            String user_especialidad_accion_personal) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -66,7 +72,11 @@ public class UserDTO {
         this.user_email_personal = user_email_personal;
         this.user_email_institucional = user_email_institucional;
         this.user_distrito = user_distrito;
+        this.user_fecha_nacimiento = user_fecha_nacimiento;
+        this.user_titulo_senescyt = user_titulo_senescyt;
+        this.user_especialidad_accion_personal = user_especialidad_accion_personal;
     }
+
 
 
 

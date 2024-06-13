@@ -47,11 +47,12 @@ public class UserController {
         }
     } */
     
-    @PutMapping("/user")
+    @PutMapping("/updateUser")
     public ResponseEntity<MessageResponse> updateUser(@RequestBody UserRequest userRequest)
     {
         return ResponseEntity.ok(userService.updateUser(userRequest));
     }
+    
 
     @PutMapping("/user/cambiarContrasena")
     public ResponseEntity<MessageResponse> updatePassword(@RequestBody PasswordRequest userRequest)

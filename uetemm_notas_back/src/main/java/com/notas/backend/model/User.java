@@ -1,6 +1,7 @@
 package com.notas.backend.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,10 +74,14 @@ public class User implements UserDetails {
     @JoinColumn(name="user_grupo_etnico_otro", nullable=false)
     public Catalogo user_grupo_etnico_otro;
     public Integer user_estado_usuario;
-
+    public Date user_fecha_nacimiento;
+    public String user_titulo_senescyt;
+    public String user_especialidad_accion_personal;
 
     public Integer user_status;
 
+/*     @Transient
+    public Integer estado_civil_id; */
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

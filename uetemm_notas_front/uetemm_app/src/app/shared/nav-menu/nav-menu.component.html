@@ -53,31 +53,39 @@
 <mat-drawer-container autosize>
     <mat-drawer #drawer opened="true" mode="side" position="start">
         <mat-nav-list>
+            
             <mat-list-item routerLink="/inicio" mat-button>
                 <mat-icon>dashboard</mat-icon> Dashboard
             </mat-list-item>
+
             <mat-list-item routerLink="/actualizar-contrasena">
                 <mat-icon>home</mat-icon> Home
             </mat-list-item>
-            <mat-list-item>
-                <mat-icon>explore</mat-icon> Slider
+
+            <mat-list-item routerLink="/administracion-usuarios">
+                <mat-icon>group</mat-icon>Usuarios
             </mat-list-item>
+
             <mat-list-item>
                <mat-icon>table</mat-icon> Table
             </mat-list-item>
+
             <mat-list-item>
                <mat-icon>settings</mat-icon> Settings
             </mat-list-item>
+
             <mat-list-item>
               <mat-icon>help</mat-icon> Help
             </mat-list-item>
+
             <mat-list-item>
                <mat-icon>analytics</mat-icon> analytics
             </mat-list-item>
+
         </mat-nav-list>
     </mat-drawer>
 
-    <mat-drawer-content style="width: 100%;">
+    <mat-drawer-content style="width: 95%;">
         <div style="min-height: 100vh; ">
             <router-outlet></router-outlet>
         </div>

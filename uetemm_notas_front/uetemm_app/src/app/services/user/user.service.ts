@@ -39,15 +39,18 @@ export class UserService implements OnInit{
     } catch (error) {
       console.log('no existe el totken en la sesión actual')
     }
-    return this.http.get<User>(environment.urlApi+"users/user/"+this.id).pipe(
-      catchError(this.handleError)
+    return this.http.get<User>(environment.urlApi+"users/user/"+this.id).pipe(catchError(this.handleError)
     )
+  }
+
+  getAllUser():Observable<User[]>{
+    return this.http.get<User[]>(environment.urlApi+"administracionUsuarios/getAll").pipe(catchError(this.handleError))
   }
 
   updateUser(userRequest:User):Observable<any>
   {
     console.log('AAAAAAAAAAAAAAA', userRequest)
-    return this.http.put(environment.urlApi+"users/user", userRequest).pipe(
+    return this.http.put(environment.urlApi+"users/updateUser", userRequest).pipe(
       catchError(this.handleError)
     )
   }

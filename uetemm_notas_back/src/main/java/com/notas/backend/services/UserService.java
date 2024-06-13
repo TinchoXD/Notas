@@ -29,13 +29,52 @@ public class UserService {
 
     public UserDTO buscarPersona(int id) {
 
-        User user = userRepository.findById(id).orElse(null);
+        // User user = userRepository.findById(id);
+        User user = userRepository.findUserById(id);
+        Integer estadoCivil;
+        Integer relacionLaboral;
+        Integer jornadaLaboral;
+        Integer categoria;
+        Integer grupoEtnico;
+        Integer grupoEtnicoOtro;
+        Integer nivelEducacion;
+
         try {
-            user.getUser_grupo_etnico_otro();
-            
+            estadoCivil = user.getEstado_civil().getId();
         } catch (Exception e) {
-          user.setUser_grupo_etnico_otro(new Catalogo()); Verificar construccion del objeto cuando un campo es null
+            estadoCivil = null;
         }
+        try {
+            relacionLaboral = user.getUser_relacion_laboral().getId();
+        } catch (Exception e) {
+            relacionLaboral = null;
+        }
+        try {
+            jornadaLaboral = user.getUser_jornada_laboral().getId();
+        } catch (Exception e) {
+            jornadaLaboral = null;
+        }
+        try {
+            categoria = user.getUser_categoria().getId();
+        } catch (Exception e) {
+            categoria = null;
+        }
+        try {
+            grupoEtnico = user.getUser_grupo_etnico().getId();
+        } catch (Exception e) {
+            grupoEtnico = null;
+        }
+        try {
+            grupoEtnicoOtro = user.getUser_grupo_etnico_otro().getId();
+        } catch (Exception e) {
+            grupoEtnicoOtro = null;
+        }
+        try {
+            nivelEducacion = user.getUser_nivel_educacion().getId();
+        } catch (Exception e) {
+            nivelEducacion = null;
+        }
+
 
         UserDTO userDTO = new UserDTO(
                 user.getId(),
@@ -44,20 +83,23 @@ public class UserService {
                 user.getUsername(),
                 1,
                 user.getPais(),
-                user.getEstado_civil(),
-                user.getUser_relacion_laboral(),
-                user.getUser_jornada_laboral(),
-                user.getUser_categoria(),
-                user.getUser_grupo_etnico(),
-                user.getUser_grupo_etnico_otro(),
-                user.getUser_nivel_educacion(),
+                estadoCivil,
+                relacionLaboral,
+                jornadaLaboral,
+                categoria,
+                grupoEtnico,
+                grupoEtnicoOtro,
+                nivelEducacion,
                 user.getUser_estado_usuario(),
                 user.getUser_direccion(),
                 user.getUser_telefono_celular(),
                 user.getUser_telefono_convencional(),
                 user.getUser_email_personal(),
                 user.getUser_email_institucional(),
-                user.getUser_distrito());
+                user.getUser_distrito(),
+                user.getUser_fecha_nacimiento(),
+                user.getUser_titulo_senescyt(),
+                user.getUser_especialidad_accion_personal());
 
         return userDTO;
     }
@@ -81,22 +123,37 @@ public class UserService {
     @Transactional
     public MessageResponse updateUser(UserRequest userRequest) {
 
+        Catalogo catEstadoCivil = new Catalogo(userRequest.getEstadoCivil(), "", null, null);
+        Catalogo catRelacionLaboral = new Catalogo(userRequest.getUser_relacion_laboral(), "", null, null);
+        Catalogo catJornadaLaboral = new Catalogo(userRequest.getUser_jornada_laboral(), "", null, null);
+        Catalogo catCategoria = new Catalogo(userRequest.getUser_categoria(), "", null, null);
+        Catalogo catGrupoEtnico = new Catalogo(userRequest.getUser_grupo_etnico(), "", null, null);
+        Catalogo catGrupoEtnicoOtro = new Catalogo(userRequest.getUser_grupo_etnico_otro(), "", null, null);
+        Catalogo catNivelEducacion = new Catalogo(userRequest.getUser_nivel_educacion(), "", null, null);
+
         User user = User.builder()
                 .id(userRequest.id)
                 .firstname(userRequest.getFirstname())
                 .lastname(userRequest.lastname)
                 .pais(userRequest.pais)
                 .role(Role.USER)
-                .estado_civil(userRequest.estadoCivil)
+                .estado_civil(catEstadoCivil)
                 .user_direccion(userRequest.user_direccion)
                 .user_telefono_celular(userRequest.user_telefono_celular)
                 .user_telefono_convencional(userRequest.user_telefono_convencional)
                 .user_email_personal(userRequest.user_email_personal)
                 .user_email_institucional(userRequest.user_email_institucional)
                 .user_distrito(userRequest.user_distrito)
-                .user_relacion_laboral(userRequest.user_relacion_laboral)
-                .user_jornada_laboral(userRequest.user_jornada_laboral)
+                .user_relacion_laboral(catRelacionLaboral)
+                .user_jornada_laboral(catJornadaLaboral)
+                .user_categoria(catCategoria)
+                .user_grupo_etnico(catGrupoEtnico)
+                .user_grupo_etnico_otro(catGrupoEtnicoOtro)
+                .user_nivel_educacion(catNivelEducacion)
                 .user_status(userRequest.user_status)
+                .user_fecha_nacimiento(userRequest.user_fecha_nacimiento)
+                .user_titulo_senescyt(userRequest.user_titulo_senescyt)
+                .user_especialidad_accion_personal(userRequest.user_especialidad_accion_personal)
                 .build();
 
         userRepository.updateUser(
@@ -118,7 +175,10 @@ public class UserService {
                 user.user_grupo_etnico,
                 user.user_grupo_etnico_otro,
                 user.user_nivel_educacion,
-                user.user_estado_usuario);
+                user.user_estado_usuario,
+                user.user_fecha_nacimiento,
+                user.user_titulo_senescyt,
+                user.user_especialidad_accion_personal);
 
         return new MessageResponse("El usuario se actualizó satisfactoriamente.");
     }

@@ -67,7 +67,7 @@
     </form>
 </div> - -->
 
-<div class="container-fluid rounded bg-white mt-5 mb-5">
+<div class="container-fluid rounded mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -75,160 +75,237 @@
                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span
                     class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru</span><span> </span>
             </div>
+
+
+
         </div>
-
-
         <div class="col-md-6 border-right">
-            <form *ngIf="!editMode" [formGroup]="userDetailsForm" disabled>
-                <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
-
-                <div class="p-3 py-5">
-
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Información Personal</h4>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label class="labels">Nombres *</label><input type="text" formControlName="firstname"
-                                class="form-control" placeholder="Nombres" value />
-                            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="firstname.hasError('required')">
-                                    El campo 'Nombres' es obligatorio.
-                                </div>
-                            </div>
-
+            <form [formGroup]="userDetailsForm">
+                <fieldset>
+                    <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
+                    <div class="p-3 py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Información Personal</h4>
                         </div>
-                        <div class="col-md-6">
-                            <label class="labels">Apellidos *</label><input type="text" formControlName="lastname"
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput formControlName="firstname" />
+                                    @if (firstname.invalid) {
+                                    <mat-error> {{errorMessage}}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Apellidos</mat-label>
+                                    <input matInput formControlName="lastname" />
+                                    @if (lastname.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                                <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
+                                <!-- <label class="labels">Apellidos *</label><input type="text" formControlName="lastname"
                                 class="form-control" placeholder="Apellidos" value />
                             <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
                                 class="mt-3 alert alert-danger">
                                 <div *ngIf="lastname.hasError('required')">
                                     El campo 'Apellidos' es obligatorio.
                                 </div>
+                            </div> -->
                             </div>
                         </div>
-                    </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Documento de identidad (CI)</mat-label>
+                                    <input matInput readonly="true" formControlName="username" />
 
-
-                    <!-- <div class="row mt-3 input-group mb-3"> -->
-                    <div class="row mt-3">
-
-                        <div class="col-md-6">
-                            <label class="labels">Documento de identidad (CI) *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ci"><i class="fa fa-id-card"
-                                            aria-hidden="true"></i>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa  fa-id-card" aria-hidden="true"></i>
                                     </span>
-                                </div>
-                                <input type="text" formControlName="username" class="form-control" placeholder="CI"
-                                    aria-label="CI" aria-describedby="ci" />
+                                    @if (username.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
                             </div>
-                            <div *ngIf="username.invalid && (username.dirty || username.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="username.hasError('required')">
-                                    El campo 'Documento de Identidad' es obligatorio.
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Estado Civil</mat-label>
+                                        <mat-select formControlName="estadoCivil" [value]="estadoCivil">
+                                            <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                        </span>
+                                        @if (estadoCivil.invalid) {
+                                        <mat-error> Este campo es obligatorio.</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                        <mat-label>Fecha de nacimiento</mat-label>
+                                        <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
+                                            formControlName="user_fecha_nacimiento">
+                                        <mat-hint>DD/MM/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matIconSuffix
+                                            [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                                    </mat-form-field>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <label class="labels">Estado civil *</label>
-                            <div class="input-group mb-3" formGroupName="estadoCivil">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ci"><i class="fa fa-user" aria-hidden="true"></i>
-
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Nivel educación</mat-label>
+                                    <mat-select formControlName="user_nivel_educacion" [value]="nivelEducacion">
+                                        <mat-option *ngFor="let nivelEducacion of catalogoNivelEducacion"
+                                            [value]="nivelEducacion.id">{{nivelEducacion.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     </span>
-                                </div>
+                                    @if (nivelEducacion.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Título Senescyt</mat-label>
+                                    <input matInput formControlName="user_titulo_senescyt" />
 
-                                <select class="custom-select" formControlName="id" required="true">
-                                    <!-- <option disabled selected value>Seleccione</option> -->
-                                    <option *ngFor="let estadoCivil of catalogoEstadoCivil" [value]="estadoCivil.id">
-                                        {{estadoCivil.nombre}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="estadoCivil.invalid && (estadoCivil.dirty || estadoCivil.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="estadoCivil.hasError('required')">
-                                    El campo 'Estado Civil' es obligatorio.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label class="labels">Dirección *
-                            </label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="direccion"><i class="fa fa-home"
-                                            aria-hidden="true"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Dirección" aria-label="Dirección"
-                                    formControlName="user_direccion" aria-describedby="direccion" />
-                            </div>
-                            <div *ngIf="user_direccion.invalid && (user_direccion.dirty || user_direccion.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_direccion.hasError('required')">
-                                    El campo 'Dirección' es obligatorio.
-                                </div>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa  fa-certificate" aria-hidden="true"></i>
+                                    </span>
+                                    @if (tituloSenescyt.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-
-                            <label class="labels">Teléfono Móvil *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="celular"><i class="fa fa-mobile"
-                                            aria-hidden="true"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Teléfono Móvil"
-                                    formControlName="user_telefono_celular" aria-label="Teléfono Móvil"
-                                    aria-describedby="celular" />
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Grupo Étnico</mat-label>
+                                    <mat-select formControlName="user_grupo_etnico" [value]="grupoEtnico">
+                                        <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
+                                            [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                    </span>
+                                    @if (grupoEtnico.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
                             </div>
-                            <div *ngIf="user_telefono_celular.invalid && (user_telefono_celular.dirty || user_telefono_celular.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_telefono_celular.hasError('required')">
-                                    El campo 'Dirección' es obligatorio.
-                                </div>
-                            </div>
+                            <div class="col-md-6">
+                                <fieldset [disabled]="!habilitarGrupoEtenicoOtro">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Grupo Étnico OTRO</mat-label>
+                                        <mat-select formControlName="user_grupo_etnico_otro" [value]="grupoEtnicoOtro">
+                                            <mat-option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro"
+                                                [value]="grupoEtnicoOtro.id">{{grupoEtnicoOtro.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                        </span>
+                                        @if (grupoEtnicoOtro.invalid) {
+                                        <mat-error> Este campo es obligatorio.</mat-error>
+                                        }
+                                    </mat-form-field>
+                                    <!-- <label class="labels">Grupo Étnico OTRO*</label>
+                                <div class="input-group mb-3" formGroupName="user_grupo_etnico_otro">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="grupoEtnicoOtro"><i class="fa fa-handshake"
+                                                aria-hidden="true"></i>
 
+                                        </span>
+                                    </div>
+
+                                    <select class="custom-select" formControlName="id" required="true">
+                                        
+                                        <option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro"
+                                            [value]="grupoEtnicoOtro.id">
+                                            {{grupoEtnicoOtro.nombre}}</option>
+                                    </select>
+                                </div>
+                                <div *ngIf="grupoEtnicoOtro.invalid && (grupoEtnicoOtro.dirty || grupoEtnicoOtro.touched) && (habilitarGrupoEtenicoOtro && grupoEtnicoOtro.value==0)"
+                                    class="mt-3 alert alert-danger">
+                                    <div *ngIf="grupoEtnicoOtro.hasError('required')">
+                                        El campo 'Grupo Étnico OTRO' es obligatorio.
+                                    </div>
+                                </div> -->
+                                </fieldset>
+                            </div>
                         </div>
-
-                        <div class="col-md-6">
-
-                            <label class="labels">Teléfono Convencional *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="convencional"><i class="fa fa-phone"
-                                            aria-hidden="true"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Teléfono convencional"
-                                    formControlName="user_telefono_convencional" aria-label="Teléfono convencional"
-                                    aria-describedby="convencional" />
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Dirección</mat-label>
+                                    <input matInput formControlName="user_direccion" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-home" aria-hidden="true"></i>
+                                    </span>
+                                    @if (direccion.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
                             </div>
-                            <div *ngIf="user_telefono_convencional.invalid && (user_telefono_convencional.dirty || user_telefono_convencional.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_telefono_convencional.hasError('required')">
-                                    El campo 'Dirección' es obligatorio.
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Teléfono Móvil</mat-label>
+                                    <input matInput formControlName="user_telefono_celular" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-mobile" aria-hidden="true"></i>
+                                    </span>
 
-                    <div class="row mt-3">
-                        <div class="col-md-6">
+                                    @if (telefonoCelular.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Teléfono Convencional</mat-label>
+                                    <input matInput formControlName="user_telefono_convencional" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                    </span>
 
-                            <label class="labels">E-mail Personal *</label>
+                                    @if (telefonoConvencional.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>E-mail Personal</mat-label>
+                                    <input matInput formControlName="user_email_personal" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    </span>
+                                    @if (emailPersonal.hasError('required')) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                    @if (emailPersonal.hasError('email')) {
+                                    <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
+                                    }
+                                </mat-form-field>
+                                <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
+                                <!-- <label class="labels">E-mail Personal *</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="emailpersonal"><i class="fa fa-envelope"
@@ -246,216 +323,115 @@
                                 <div *ngIf="user_email_personal.hasError('email')">
                                     debe ser un e-mail válido ejemplo 'example&#64;email.com'.
                                 </div>
+                            </div> -->
                             </div>
-
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>E-mail institucional</mat-label>
+                                    <input matInput formControlName="user_email_institucional" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    </span>
+                                    @if (emailInstitucional.hasError('required')) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                    @if (emailInstitucional.hasError('email')) {
+                                    <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-
-                            <label class="labels">E-mail Institucional *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="emailinstitucional"><i class="fa fa-envelope"
-                                            style="cursor: pointer" aria-hidden="true"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="E-mail Institucional"
-                                    formControlName="user_email_institucional" aria-label="E-mail Institucional"
-                                    aria-describedby="emailinstitucional" />
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Relación laboral</mat-label>
+                                    <mat-select formControlName="user_relacion_laboral" [value]="relacionLaboral">
+                                        <mat-option *ngFor="let relacionLaboral of catalogoRelacionLaboral"
+                                            [value]="relacionLaboral.id">{{relacionLaboral.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-handshake" aria-hidden="true"></i>
+                                    </span>
+                                    @if (relacionLaboral.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
                             </div>
-                            <div *ngIf="user_email_institucional.invalid && (user_email_institucional.dirty || user_email_institucional.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_email_institucional.hasError('required')">
-                                    El campo 'Email Institucional' es obligatorio.
+                            <div class="col-md-4">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Jornada aboral</mat-label>
+                                    <mat-select formControlName="user_jornada_laboral" [value]="jornadaLaboral">
+                                        <mat-option *ngFor="let jornadaLaboral of catalogoJornadaLaboral"
+                                            [value]="jornadaLaboral.id">{{jornadaLaboral.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                    </span>
+                                    @if (jornadaLaboral.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Categoría</mat-label>
+                                    <mat-select formControlName="user_categoria" [value]="categoria">
+                                        <mat-option *ngFor="let categoria of catalogoCategoria"
+                                            [value]="categoria.id">{{categoria.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </span>
+                                    @if (categoria.invalid) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>País</mat-label>
+                                    <input matInput formControlName="pais" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                    </span>
+                                    @if (pais.hasError('required')) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Distrito</mat-label>
+                                    <input matInput formControlName="user_distrito" />
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                    </span>
+                                    @if (distrito.hasError('required')) {
+                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                        </div>
+                        <div class="container mt-5 text-center" >
+                            <div class="row">
+                                <div class="col-9">
                                 </div>
-                                <div *ngIf="user_email_institucional.hasError('email')">
-                                    debe ser un e-mail válido ejemplo 'example&#64;email.com'.
+                                <div class="col-3">
+                                    <button (click)="refresh()" class="btn btn-outline-danger">
+                                        <i class="fa fa-times"></i>
+                                        Cancelar</button>
+                                    <button type="submit" (click)="mostrarDialogo()" class="btn btn-success ml-3">
+                                        <i class="fa fa-check"></i>
+                                        Guardar</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-4">
-
-                                <label class="labels">Realación Laboral *</label>
-                                <div class="input-group mb-3" formGroupName="user_relacion_laboral">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ci"><i class="fa fa-handshake" aria-hidden="true"></i>
-    
-                                        </span>
-                                    </div>
-    
-                                    <select class="custom-select" formControlName="id" required="true">
-                                        <option *ngFor="let relacionLaboral of catalogoRelacionLaboral" [value]="relacionLaboral.id">
-                                            {{relacionLaboral.nombre}}</option>
-                                    </select>
-                                </div>
-                                <div *ngIf="relacionLaboral.invalid && (relacionLaboral.dirty || relacionLaboral.touched)"
-                                    class="mt-3 alert alert-danger">
-                                    <div *ngIf="relacionLaboral.hasError('required')">
-                                        El campo 'Relación Laboral' es obligatorio.
-                                    </div>
-                                </div>
-                            
-
-                        </div>
-                        <div class="col-md-4">
-
-                            <label class="labels">Jornada Laboral *</label>
-                            <div class="input-group mb-3" formGroupName="user_jornada_laboral">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ci"><i class="fa fa-handshake" aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-
-                                <select class="custom-select" formControlName="id" required="true">
-                                    <option *ngFor="let jornadaLaboral of catalogoJornadaLaboral" [value]="jornadaLaboral.id">
-                                        {{jornadaLaboral.nombre}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="jornadaLaboral.invalid && (jornadaLaboral.dirty || jornadaLaboral.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="jornadaLaboral.hasError('required')">
-                                    El campo 'Jornada Laboral' es obligatorio.
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4">
-                           
-                            <label class="labels">Categoría *</label>
-                            <div class="input-group mb-3" formGroupName="user_categoria">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="categoria"><i class="fa fa-handshake" aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-
-                                <select class="custom-select" formControlName="id" required="true">
-                                    <option *ngFor="let categoria of catalogoCategoria" [value]="categoria.id">
-                                        {{categoria.nombre}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="categoria.hasError('required')">
-                                    El campo 'Categoría' es obligatorio.
-                                </div>
-                            </div>
-                            
-
-                        </div>
-                    </div>
-
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-
-                            <label class="labels">País *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="pais"><i class="fa fa-globe"
-                                            aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-                                <input type="text" formControlName="pais" class="form-control" placeholder="País"
-                                    aria-label="País" aria-describedby="pais" />
-                            </div>
-                            <div *ngIf="pais.invalid && (pais.dirty || pais.touched)" class="mt-3 alert alert-danger">
-                                <div *ngIf="pais.hasError('required')">
-                                    El campo 'Pais' es obligatorio.
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-6">
-
-                            <label class="labels">Distrito *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="distrito"><i class="fa fa-building"
-                                            aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-                                <input type="text" formControlName="user_distrito" class="form-control"
-                                    placeholder="Distrito" aria-label="Distrito" aria-describedby="distrito" />
-                            </div>
-                            <div *ngIf="user_distrito.invalid && (user_distrito.dirty || user_distrito.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_distrito.hasError('required')">
-                                    El campo 'Distrito' es obligatorio.
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                    
-                        <div class="col-md-6">
-
-                            <label class="labels">Grupo Étnico *</label>
-                            <div class="input-group mb-3" formGroupName="user_grupo_etnico">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="grupoEtnico"><i class="fa fa-handshake" aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-
-                                <select class="custom-select" formControlName="id" required="true">
-                                    <option *ngFor="let grupoEtnico of catalogoGrupoEtnico" [value]="grupoEtnico.id">
-                                        {{grupoEtnico.nombre}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="grupoEtnico.invalid && (grupoEtnico.dirty || grupoEtnico.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="grupoEtnico.hasError('required')">
-                                    El campo 'Grupo Étnico' es obligatorio.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <label class="labels">Grupo Étnico OTRO*</label>
-                            <div class="input-group mb-3" formGroupName="user_grupo_etnico_otro">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="grupoEtnicoOtro"><i class="fa fa-handshake" aria-hidden="true"></i>
-
-                                    </span>
-                                </div>
-
-                                <select class="custom-select" formControlName="id" required="true">
-                                    <option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro" [value]="grupoEtnicoOtro.id">
-                                        {{grupoEtnicoOtro.nombre}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="grupoEtnicoOtro.invalid && (grupoEtnicoOtro.dirty || grupoEtnicoOtro.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="grupoEtnicoOtro.hasError('required')">
-                                    El campo 'Grupo Étnico OTRO' es obligatorio.
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="mt-5 text-center">
-                        <button type="submit" (click)="mostrarDialogo()" class="btn btn-success mt-3">
-                            <i class="fa fa-check"></i>
-                            Guardar
-                        </button>
-
-
-
-                    </div>
-                </div>
+                </fieldset>
             </form>
         </div>
     </div>

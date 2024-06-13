@@ -21,6 +21,12 @@ export class CambiarContrasenaComponent {
   user?: User;
   errorMessage: string = '';
 
+  hide = true;
+  clickEvent(event: MouseEvent) {
+    this.hide = !this.hide;
+    event.stopPropagation();
+  }
+
   updatePasswordForm = this.formBuilder.group({
     id: [''],
     password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[0-9])/)]],

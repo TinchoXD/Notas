@@ -18,12 +18,15 @@ import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-c
 import { DialogoConfirmacionComponent } from './shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatMenuModule } from '@angular/material/menu';
-
-
+import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MaterialModule } from './material-module';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AlertComponent } from './shared/alert/alert.component';
+import { CUSTOM_DATE_FORMATS } from './services/matDateFormat/custom-date-formats';
+import { AdministracionUsuariosComponent } from './pages/administracion-usuarios/administracion-usuarios.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomPaginatorIntl } from './services/customPaginatorIntl/custom-paginator-intl';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { AlertComponent } from './shared/alert/alert.component';
     DialogoConfirmacionComponent,
     NavMenuComponent,
     AlertComponent,
+    AdministracionUsuariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,11 +51,18 @@ import { AlertComponent } from './shared/alert/alert.component';
     HttpClientModule,
     MatMenuModule,
     MaterialModule,
-    OverlayModule 
+    OverlayModule,
+    MatNativeDateModule
 
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+  providers: 
+  [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+
   provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })

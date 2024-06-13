@@ -32,6 +32,9 @@ export class CatalogoService {
   getGrupoEtnicoOtroLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/grupo_etnico_otro')
   }
+  getNivelEducacionLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/nivel_educacion')
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
