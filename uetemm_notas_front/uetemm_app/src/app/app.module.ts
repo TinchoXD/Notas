@@ -20,6 +20,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MaterialModule } from './material-module';
+import { PrimeNGModule } from './primeng-modules';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AlertComponent } from './shared/alert/alert.component';
@@ -27,6 +28,7 @@ import { CUSTOM_DATE_FORMATS } from './services/matDateFormat/custom-date-format
 import { AdministracionUsuariosComponent } from './pages/administracion-usuarios/administracion-usuarios.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from './services/customPaginatorIntl/custom-paginator-intl';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { CustomPaginatorIntl } from './services/customPaginatorIntl/custom-pagin
     MatMenuModule,
     MaterialModule,
     OverlayModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    PrimeNGModule,
+    FormsModule
 
   ],
   providers: 

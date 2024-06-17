@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   userLoggedOn: boolean = false;
   errorMessage: String = '';
   user?: User;
-
+  value!: number;
 
   
   constructor(
@@ -48,4 +48,10 @@ export class DashboardComponent implements OnInit {
     });
   }
   
+
+  click(){
+    console.log("valor: ", this.value)
+
+  }
+
 }
