@@ -5,6 +5,9 @@ import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UserService } from '../../services/user/user.service';
 import { LoginService } from '../../services/auth/login.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { LoadingService } from '../../services/loading/loading.service';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -14,7 +17,7 @@ import { LoginService } from '../../services/auth/login.service';
   selector: 'app-administracion-usuarios',
   templateUrl: './administracion-usuarios.component.html',
   styleUrl: './administracion-usuarios.component.css',
-  
+
 })
 export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
 
@@ -25,15 +28,23 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
 
   dataSource = new MatTableDataSource<any>;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer,
-     private userService: UserService,
-     private loginService: LoginService,
-    ) {
-     /*  this.loadUserData(); */
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private userService: UserService,
+    private loginService: LoginService,
+    private router: Router,
+    private loadingService: LoadingService
+
+  ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.loadingService.hide();
+    });
   }
-  
+
   ngOnInit(): void {
-    this.userService.getAllUser().subscribe(data=>{
+    this.userService.getAllUser().subscribe(data => {
       this.dataSource = new MatTableDataSource(data)
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -44,7 +55,7 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    
+
   }
 
 
@@ -68,16 +79,17 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-/*   private loadUserData() {
-    this.userService.getAllUser().subscribe({next: (userData) => {
-      },
-      error: (errorData) => {
-       // this.errorMessage = errorData;
-      },
-      complete: () => {
-        console.info('lista de USUARIOS completa');
-      },})
-  } */
+  editar(id: number) {
+    this.loadingService.show(); // Muestra el spinner de carga
+    setTimeout(() => {
+      this.router.navigate([`/editar-usuario/${id}`]).then(() => {
+        this.loadingService.hide(); // Oculta el spinner de carga
+      });
+    }, 550); // Retraso de 2 segundos antes de la navegación
+  }
+
+
+
 
 }
 

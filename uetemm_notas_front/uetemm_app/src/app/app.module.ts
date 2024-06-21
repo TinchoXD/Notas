@@ -29,6 +29,10 @@ import { AdministracionUsuariosComponent } from './pages/administracion-usuarios
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from './services/customPaginatorIntl/custom-paginator-intl';
 import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
+import { LoadingComponent } from './services/loading/loading.component';
+import { LoadingService } from './services/loading/loading.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,9 @@ import { FormsModule } from '@angular/forms';
     NavMenuComponent,
     AlertComponent,
     AdministracionUsuariosComponent,
+    EditarUsuarioComponent,
+    LoadingComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -59,15 +66,16 @@ import { FormsModule } from '@angular/forms';
     FormsModule
 
   ],
-  providers: 
-  [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
-
-  provideAnimationsAsync()],
+  providers:
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+      { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+      { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+      { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+      MessageService,
+      LoadingService,
+      provideAnimationsAsync()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

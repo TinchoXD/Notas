@@ -49,14 +49,13 @@ export class UserService implements OnInit{
 
   updateUser(userRequest:User):Observable<any>
   {
-    console.log('AAAAAAAAAAAAAAA', userRequest)
-    return this.http.put(environment.urlApi+"users/updateUser", userRequest).pipe(
-      catchError(this.handleError)
+    return this.http.put(environment.urlApi+"users/updateUser", userRequest).pipe(catchError(this.handleError)
     )
   }
 
   updateUserPassword(passwordRequest:PasswordRequest):Observable<any>
   {
+
     return this.http.put(environment.urlApi+"users/user/cambiarContrasena", passwordRequest).pipe(
       catchError(this.handleError)
     )

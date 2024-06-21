@@ -32,6 +32,7 @@ public class UserDTO {
     private Integer user_grupo_etnico_otro;
     private Integer user_nivel_educacion;
     private Integer user_estado_usuario;
+    /* private Boolean user_estado_usuario; */
 
     private String user_direccion;
     private String user_telefono_celular;
@@ -42,6 +43,8 @@ public class UserDTO {
     private Date user_fecha_nacimiento;
     private String user_titulo_senescyt;
     private String user_especialidad_accion_personal;
+
+    private Boolean user_status;
 
     
 

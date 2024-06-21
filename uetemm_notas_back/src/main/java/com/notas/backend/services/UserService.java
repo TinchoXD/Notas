@@ -154,6 +154,7 @@ public class UserService {
                 .user_fecha_nacimiento(userRequest.user_fecha_nacimiento)
                 .user_titulo_senescyt(userRequest.user_titulo_senescyt)
                 .user_especialidad_accion_personal(userRequest.user_especialidad_accion_personal)
+                .user_estado_usuario(userRequest.user_estado_usuario==true?1:0)
                 .build();
 
         userRepository.updateUser(

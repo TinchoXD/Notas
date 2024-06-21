@@ -12,13 +12,7 @@ import { LoginRequest } from '../../services/auth/loginRequest';
 export class LoginComponent implements OnInit{
   
   loginError:string="";
-  loginForm: FormGroup;
-
-/*   loginForm = this.formBuilder.group({
-    username:['1718139205',[Validators.required, Validators.minLength(10)]],
-    password:['',[Validators.required]]
-  }); */
-  
+  loginForm: FormGroup; 
 
   get username(){
     return this.loginForm.controls['username'];
@@ -45,7 +39,10 @@ export class LoginComponent implements OnInit{
         this.loginError="";
         this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
           next: (userData) =>{
-            console.log(userData)
+            console.log("userData", userData)
+            if(userData.user_status){
+
+            }
           },
           error: (errorData)=>{
 
@@ -53,6 +50,7 @@ export class LoginComponent implements OnInit{
             this.loginError=errorData
           },
           complete: ()=>{
+
             console.info("Login Completo")
             this.router.navigateByUrl('/inicio');
             this.loginForm.reset();

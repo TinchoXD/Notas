@@ -4,6 +4,7 @@ import { User } from '../../services/auth/user';
 import { UserService } from '../../services/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../dialogo-confirmacion/dialogo-confirmacion.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -19,7 +20,8 @@ export class NavMenuComponent {
 
   constructor(private loginService: LoginService,
     private userService: UserService,
-    public dialogo: MatDialog) {
+    public dialogo: MatDialog,
+    public router: Router) {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
@@ -31,7 +33,25 @@ export class NavMenuComponent {
         console.info("User Data OK.")
       }
     });
+
+    
   }
+
+  /*     this.userService.getUser(this.loginService.userToken).subscribe({
+        next: (userData) => {
+          this.user = userData;
+        },
+        error: (errorData) => {
+          console.log("usuario no loggeado.")
+          this.errorMessage = errorData;
+          this.router.navigate(['/iniciar-sesion']);
+        },
+        complete: ()=>{
+          console.info("User Data OK.")
+        }
+      }); */
+
+
 
   ngOnInit(): void {
     this.loginService.currentUserLoggedOn.subscribe({
@@ -39,6 +59,7 @@ export class NavMenuComponent {
         this.userLoggedOn = userLoggedOn;
       }
     });
+
 
   }
 

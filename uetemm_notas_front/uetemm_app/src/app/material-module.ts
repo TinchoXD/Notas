@@ -20,6 +20,8 @@ import {MatRadioModule} from "@angular/material/radio"
 import {MatCheckboxModule} from "@angular/material/checkbox"
 import {MatDialogModule} from "@angular/material/dialog"
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {ThemePalette} from '@angular/material/core';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ exports:[
     MatRadioModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSlideToggleModule
 ]
 })
 export class MaterialModule{}

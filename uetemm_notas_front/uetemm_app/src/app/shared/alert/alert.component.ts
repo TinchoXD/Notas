@@ -10,8 +10,11 @@ export class AlertComponent {
   @Input() type: 'success' | 'error' = 'success';
   visible = false;
 
+  titulo: string = ''
+
   ngOnInit() {
-    setTimeout(() => this.visible = true, 100); // Delay to trigger the fade-in animation
+    setTimeout(() => this.visible = true, 200); // Delay to trigger the fade-in animation
+    this.titulo = this.type.toString()==="success"?"OK":"ERROR"
   }
 
   fadeOut() {

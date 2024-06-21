@@ -1,70 +1,57 @@
-<div class="container">
-
-    <form *ngIf="userLoggedOn" [formGroup]="updatePasswordForm">
-        <div class="form-group row">
-            <div class="col-sm-11">
-                <input type="text" formControlName="id" class="form-control" id="inputId" hidden />
-            </div>
-        </div>
-
-        <div class="form-group row border-bottom pb-3">
-            <div class="col-sm-11">
-                
-                
-      <!--           <label for="inputCountry" class="">Nueva Contraseña</label>
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="fa fa-lock"></i></span>
-                    <input type="password" formControlName="password" class="form-control" id="inputPassword"
-                        placeholder="Nueva contraseña" type="{{ inputPassType }}" autocomplete="off" />
-     
-                    <span class="input-group-text">
-                        <i class="fa fa-eye" id="togglePassword" (click)="hidePassToggle()" style="cursor: pointer"></i>
-                    </span>
-                </div> -->
-
-
-                <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Nueva Contraseña</mat-label>
-                    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" autocomplete="off"/>
-                    <span matTextPrefix><i class="fa fa-lock input-icon"></i></span>
-                    <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </button>
-                    @if (password.invalid) {
-                    <mat-error> {{errorMessage}}</mat-error>
-                    }
-                </mat-form-field>
-
-
-            </div>
-            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                <div *ngIf="password.hasError('required')">
-                    La nueva contraseña es requerida. 
+<div class="container"
+    style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); padding: 10px;">
+    <div class="card flex justify-content-center">
+        <p-card header="Cambiar Contraseña">
+            <form *ngIf="userLoggedOn" [formGroup]="updatePasswordForm">
+                <div class="form-group row">
+                    <div class="col-sm-11">
+                        <input type="text" formControlName="id" class="form-control" id="inputId" hidden />
+                    </div>
                 </div>
-                <div *ngIf="password.hasError('minlength') ">
-                    <span>Debe tener al menos <strong>{{password.errors?.['minlength'].requiredLength}}</strong> caracteres. actual {{password.errors?.['minlength'].actualLength}}</span>
+                <div class="form-group row border-bottom pb-3">
+                    <!-- <div class="form-group row border-bottom pb-3"> -->
+                    <div>
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Nueva Contraseña</mat-label>
+                            <input matInput formControlName="password" [type]="hide ? 'password' : 'text'"
+                                autocomplete="off" />
+                            <span matTextPrefix><i class="fa fa-lock input-icon"></i></span>
+                            <button mat-icon-button matSuffix (click)="clickEvent($event)"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            @if (password.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                        <div *ngIf="password.hasError('required')">
+                            La nueva contraseña es requerida.
+                        </div>
+                        <div *ngIf="password.hasError('minlength') ">
+                            <span>Debe tener al menos <strong>{{password.errors?.['minlength'].requiredLength}}</strong>
+                                caracteres. actual {{password.errors?.['minlength'].actualLength}}</span>
+                        </div>
+                        <div *ngIf="password.hasError('pattern') ">
+                            <span>Debe contener al menos una letra <strong>Mayúscula</strong> y un
+                                <strong>dígito</strong>.</span>
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="password.hasError('pattern') ">
-                    <span>Debe contener al menos una letra <strong>Mayúscula</strong> y un <strong>dígito</strong>.</span>
+                <div class="container">
+                    <div class="row">
+                        <div class="btn-group">
+
+                            <button routerLink="/inicio" class="btn btn btn-outline-danger"><i
+                                    class="fa fa-times input-icon"></i>Cancelar</button>
+
+                            <button (click)="mostrarDialogo()" class="btn btn-success ml-3" type="submit"
+                                [disabled]="!password.valid"><i class="fa fa-check input-icon"></i>Confirmar</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <button style="width: 100%;" (click)="mostrarDialogo()"
-                        class="btn btn-primary btn-block confirm-button" type="submit"
-                        [disabled]="!password.valid">Confirmar</button>
-                </div>
-                <div class="col-6">
-                    <button style="width: 100%;" routerLink="/inicio"
-                        class="btn btn-danger btn-block confirm-button">Cancelar</button>
-                </div>
-            </div>
-        </div>
-
-
-    </form>
-
+            </form>
+        </p-card>
+    </div>
 </div>

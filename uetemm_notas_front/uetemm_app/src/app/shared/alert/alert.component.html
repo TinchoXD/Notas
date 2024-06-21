@@ -1,1 +1,16 @@
-<div class="alert" [ngClass]="{ 'success': type === 'success', 'error': type === 'error', 'fade-in': visible, 'fade-out': !visible }">{{ message }}</div>
+<div class="alert blurred " [ngClass]="{ 'success': type === 'success', 'error': type === 'error', 'fade-in': visible, 'fade-out': !visible }">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="alet-icon">
+                    <i class="fa fa-3x " [ngClass]="{'fa-times': type === 'error' , 'fa-check': type === 'success' }" aria-hidden="true" ></i>
+                </div>
+            </div>
+            <div class="col-10"> <div class="alet-text">
+         
+                <p style="font-size: large;"> <strong>{{titulo}}</strong>  <br> {{ message }}</p> 
+            </div></div>
+        </div>
+
+    </div>
+</div>

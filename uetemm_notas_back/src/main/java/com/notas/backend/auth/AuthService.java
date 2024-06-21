@@ -23,31 +23,51 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        User user=userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token=jwtService.getToken(user);
-        return AuthResponse.builder()
+        authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        String token = jwtService.getToken(user);
+        if(user.getUser_estado_usuario()==null){
+            user.setUser_status(0);
+        }
+        if (user.getUser_estado_usuario() == 1) {
+            return AuthResponse.builder()
             .token(token)
+            .codigoStatus("200")
+            .mensaje("AuthResponse - Login: OK")
             .build();
+        } else if(user.getUser_estado_usuario() == 0){
+            return AuthResponse.builder()
+            .token(token)
+            .codigoStatus("403")
+            .mensaje("AuthResponse - Login: Prohibido")
+            .build();
+        } else{
+            return AuthResponse.builder()
+            .token(token)
+            .codigoStatus("500")
+            .mensaje("AuthResponse - Login: Error del servidor")
+            .build();
+        }
 
     }
 
     public AuthResponse register(RegisterRequest request) {
         User user = User.builder()
-            .username(request.getUsername())
-            .password(passwordEncoder.encode( request.getPassword()))
-            .firstname(request.getFirstname())
-            .lastname(request.lastname)
-            .pais(request.pais)
-            .role(Role.USER)
-            .build();
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .firstname(request.getFirstname())
+                .lastname(request.lastname)
+                .pais(request.pais)
+                .role(Role.USER)
+                .build();
 
         userRepository.save(user);
 
         return AuthResponse.builder()
-            .token(jwtService.getToken(user))
-            .build();
-        
+                .token(jwtService.getToken(user))
+                .build();
+
     }
 
 }

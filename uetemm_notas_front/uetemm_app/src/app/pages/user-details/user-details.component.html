@@ -83,6 +83,11 @@
             <form [formGroup]="userDetailsForm">
                 <fieldset>
                     <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
+
+                    <mat-slide-toggle formControlName="user_estado_usuario" [color]="color" [checked]="user_estado_usuario" hidden readonly>
+                       Usuario Habilitado
+                    </mat-slide-toggle>
+         
                     <div class="p-3 py-5">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="text-right">Información Personal</h4>
@@ -96,13 +101,14 @@
                                     <mat-error> {{errorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
+
                             </div>
                             <div class="col-md-6">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Apellidos</mat-label>
                                     <input matInput formControlName="lastname" />
                                     @if (lastname.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                                 <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
@@ -126,7 +132,7 @@
                                         <i class="fa  fa-id-card" aria-hidden="true"></i>
                                     </span>
                                     @if (username.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -142,7 +148,7 @@
                                             <i class="fa fa-heart" aria-hidden="true"></i>
                                         </span>
                                         @if (estadoCivil.invalid) {
-                                        <mat-error> Este campo es obligatorio.</mat-error>
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
                                         }
                                     </mat-form-field>
                                 </div>
@@ -173,7 +179,7 @@
                                         <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     </span>
                                     @if (nivelEducacion.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -186,7 +192,7 @@
                                         <i class="fa  fa-certificate" aria-hidden="true"></i>
                                     </span>
                                     @if (tituloSenescyt.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -203,7 +209,7 @@
                                         <i class="fa fa-users" aria-hidden="true"></i>
                                     </span>
                                     @if (grupoEtnico.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -219,7 +225,7 @@
                                             <i class="fa fa-users" aria-hidden="true"></i>
                                         </span>
                                         @if (grupoEtnicoOtro.invalid) {
-                                        <mat-error> Este campo es obligatorio.</mat-error>
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
                                         }
                                     </mat-form-field>
                                     <!-- <label class="labels">Grupo Étnico OTRO*</label>
@@ -256,7 +262,7 @@
                                         <i class="fa fa-home" aria-hidden="true"></i>
                                     </span>
                                     @if (direccion.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -271,7 +277,7 @@
                                     </span>
 
                                     @if (telefonoCelular.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -284,7 +290,7 @@
                                     </span>
 
                                     @if (telefonoConvencional.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -298,7 +304,7 @@
                                         <i class="fa fa-envelope" aria-hidden="true"></i>
                                     </span>
                                     @if (emailPersonal.hasError('required')) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                     @if (emailPersonal.hasError('email')) {
                                     <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
@@ -333,7 +339,7 @@
                                         <i class="fa fa-envelope" aria-hidden="true"></i>
                                     </span>
                                     @if (emailInstitucional.hasError('required')) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                     @if (emailInstitucional.hasError('email')) {
                                     <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
@@ -353,7 +359,7 @@
                                         <i class="fa fa-handshake" aria-hidden="true"></i>
                                     </span>
                                     @if (relacionLaboral.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -368,7 +374,7 @@
                                         <i class="fa fa-clock" aria-hidden="true"></i>
                                     </span>
                                     @if (jornadaLaboral.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -383,7 +389,7 @@
                                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
                                     </span>
                                     @if (categoria.invalid) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -397,7 +403,7 @@
                                         <i class="fa fa-globe" aria-hidden="true"></i>
                                     </span>
                                     @if (pais.hasError('required')) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -409,18 +415,16 @@
                                         <i class="fa fa-building" aria-hidden="true"></i>
                                     </span>
                                     @if (distrito.hasError('required')) {
-                                    <mat-error> Este campo es obligatorio.</mat-error>
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="mt-5 text-center">
                         </div>
-                        <div class="container mt-5 text-center" >
+                        <div class="container mt-5 text-center">
                             <div class="row">
-                                <div class="col-9">
-                                </div>
-                                <div class="col-3">
+                                <div class="btn-group">
                                     <button (click)="refresh()" class="btn btn-outline-danger">
                                         <i class="fa fa-times"></i>
                                         Cancelar</button>

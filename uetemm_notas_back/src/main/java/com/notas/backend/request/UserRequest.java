@@ -32,7 +32,7 @@ public class UserRequest {
     public String user_email_personal;
     public String user_email_institucional;
     public String user_distrito;
-    public Integer user_estado_usuario;
+    public Boolean user_estado_usuario;
     public Date user_fecha_nacimiento;
     public String user_titulo_senescyt;
     public String user_especialidad_accion_personal;

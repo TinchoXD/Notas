@@ -12,6 +12,13 @@ import {
 import { User } from './user';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
+import { AlertService } from '../alert/alert.service';
+
+type AlertType = 'success' | 'error';
+
+function isAlertType(type: string): type is AlertType {
+  return type === 'success' || type === 'error';
+}
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +27,11 @@ export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
   userId: number = 0;
+  user_estado_usuario: number = 0;
   private tokenKey = 'token';
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router,   private alertService: AlertService,) {
     this.currentUserLoggedOn = new BehaviorSubject<boolean>(
       sessionStorage.getItem('token') != null
     );
@@ -32,7 +40,11 @@ export class LoginService {
     );
   }
 
-  
+  showAlert(mensaje: string, type: string) {
+    if (isAlertType(type)){
+      this.alertService.showAlert(mensaje, type);
+    }
+  }
 
   login(credenciales: LoginRequest): Observable<any> {
     return this.http
@@ -43,6 +55,12 @@ export class LoginService {
           this.currentUserData.next(userData.token);
           this.currentUserLoggedOn.next(true);
           this.userId = JSON.parse(window.atob(userData.token.split('.')[1])).userId;
+          this.user_estado_usuario = JSON.parse(window.atob(userData.token.split('.')[1])).user_estado_usuario;
+          console.log("user_estado_usuario",this.user_estado_usuario)
+          if(this.user_estado_usuario == 0){
+            this.showAlert("El usuario se encuentra deshabilitado.", "error");
+            throw new Error('El usuario se encuentra deshabilitado.');
+          }
         }),
         map((userData) => userData.token),
         catchError(this.handleError),

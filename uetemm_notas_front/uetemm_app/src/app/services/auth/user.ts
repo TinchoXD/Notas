@@ -27,6 +27,8 @@ export interface User{
     user_fecha_nacimiento: Date;
     user_titulo_senescyt: string;
     user_especialidad_accion_personal: string;
+
+    user_estado_usuario: boolean
     
     
 

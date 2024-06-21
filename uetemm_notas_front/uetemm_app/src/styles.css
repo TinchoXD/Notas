@@ -12,11 +12,11 @@ html, body { height: 100%; }
 body { margin: 10; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-.ng-valid:not(form):not(div):not(mat-form-field):not(mat-select):not(input.mat-mdc-input-element).ng-touched{
+.ng-valid:not(form):not(div):not(mat-form-field):not(mat-select):not(input.mat-mdc-input-element):not(mat-slide-toggle).ng-touched{
     border-left: 5px solid #42A948;
 }
 
-.ng-invalid:not(form):not(div):not(mat-form-field):not(mat-select):not(input.mat-mdc-input-element).ng-touched{
+.ng-invalid:not(form):not(div):not(mat-form-field):not(mat-select):not(input.mat-mdc-input-element):not(mat-slide-toggle).ng-touched{
     border-left: 5px solid #E94442;
 }
 

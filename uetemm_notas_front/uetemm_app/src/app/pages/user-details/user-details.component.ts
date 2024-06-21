@@ -11,6 +11,7 @@ import { AlertService } from '../../services/alert/alert.service';
 import { Router } from '@angular/router';
 import { merge, firstValueFrom} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { ThemePalette } from '@angular/material/core';
 
 
 
@@ -27,6 +28,7 @@ function isAlertType(type: string): type is AlertType {
 })
 export class UserDetailsComponent {
   errorMessage: String = '';
+  requiredErrorMessage: String = 'Este campo es obligatorio.';
   user?: User;
   userLoggedOn: boolean = false;
   editMode: boolean = false;
@@ -37,14 +39,11 @@ export class UserDetailsComponent {
   catalogoGrupoEtnico: Catalogo[] = [];
   catalogoGrupoEtnicoOtro: Catalogo[] = [];
   catalogoNivelEducacion: Catalogo[] = [];
-  
 
-  disableSelect = new FormControl(false);
-
-  
   habilitarGrupoEtenicoOtro: boolean = false;
+  color: ThemePalette = 'primary';
   
-  
+  user_estado_usuario?: boolean;
   
   onGrupoEtnicoChange(event: any) {
     if(event == 38){
@@ -109,7 +108,9 @@ export class UserDetailsComponent {
     user_email_personal:['', [Validators.required, Validators.email]],
     user_email_institucional:['', [Validators.required, Validators.email]],
     user_distrito:['', Validators.required],
-    pais: ['', Validators.required]
+    pais: ['', Validators.required],
+    
+    user_estado_usuario:['']
   });
 
 
@@ -205,8 +206,9 @@ export class UserDetailsComponent {
           user_email_personal: userData.user_email_personal,
           user_email_institucional: userData.user_email_institucional,
           user_distrito: userData.user_distrito,
-          pais: userData.pais
-          
+          pais: userData.pais,
+          user_estado_usuario: userData.user_estado_usuario
+
         });
         
       },
@@ -366,7 +368,10 @@ export class UserDetailsComponent {
   async saveUserDetailsData() {
     console.log("userDetailsForm", this.userDetailsForm);
     if (this.userDetailsForm.valid) {
-      try {
+      try {   
+        console.log(this.userDetailsForm.value)
+        console.log("this.userDetailsForm.controls['user_estado_usuario']", this.userDetailsForm.controls['user_estado_usuario'])
+   
         await firstValueFrom(this.userService.updateUser(this.userDetailsForm.value as unknown as User));
         this.editMode = false;
         this.user = this.userDetailsForm.value as unknown as User;
