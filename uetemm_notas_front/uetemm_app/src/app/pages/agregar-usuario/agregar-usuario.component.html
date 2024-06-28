@@ -28,11 +28,15 @@
                 <div class="col-md-12">
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Cédula / Nombre de Usuario</mat-label>
-                        <input matInput formControlName="username" required>
+                        <input matInput formControlName="username" required (focusout)="verificarUserName($event)">
                         @if (cedula.invalid) {
                         <mat-error> {{errorMessage}}</mat-error>
                         }
                     </mat-form-field>
+                    @if(existeUsername){
+                    <mat-error>El usuario ya se encuentra registrado.</mat-error>
+                    }
+
                 </div>
             </div>
             <div class="row mt-3">
@@ -58,8 +62,8 @@
                         </mat-select>
 
                         @if (email.hasError('rol')) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
+                        <mat-error> {{errorMessage}}</mat-error>
+                        }
                     </mat-form-field>
                 </div>
             </div>
@@ -67,7 +71,7 @@
 
         <div mat-dialog-actions>
             <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-            <button mat-button type="submit">Agregar</button>
+            <button mat-flat-button type="submit" disabled="{{existeUsername}}" [color]="color">Agregar</button>
         </div>
     </form>
 

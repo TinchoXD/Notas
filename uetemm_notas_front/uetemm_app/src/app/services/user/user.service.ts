@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { User } from '../auth/user';
 import { environment } from '../../../environments/environment.development';
 import { PasswordRequest } from '../../pages/cambiar-contrasena/passwordRequest';
@@ -14,6 +14,8 @@ import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
 })
 export class UserService implements OnInit {
 
+  existeUsuario: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  
   userLoggedOn: boolean = false;
   id: string = ""
 
@@ -88,6 +90,14 @@ export class UserService implements OnInit {
   }
 
 
+  verificarUserName(username: string): Observable<any>{
+    
+
+
+    return this.http.get<User>(environment.urlApi + "users/user/verificarUsername/" + username).pipe(catchError(this.handleError))
+    
+
+  }
 
 
 }

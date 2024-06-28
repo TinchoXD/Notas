@@ -28,6 +28,7 @@ function isAlertType(type: string): type is AlertType {
 export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
+
   userId: number = 0;
   user_estado_usuario: number = 0;
   private tokenKey = 'token';
@@ -58,7 +59,7 @@ export class LoginService {
           this.currentUserLoggedOn.next(true);
           this.userId = JSON.parse(window.atob(userData.token.split('.')[1])).userId;
           this.user_estado_usuario = JSON.parse(window.atob(userData.token.split('.')[1])).user_estado_usuario;
-          console.log("user_estado_usuario",this.user_estado_usuario)
+
           if(this.user_estado_usuario == 0){
             this.showAlert("El usuario se encuentra deshabilitado.", "error");
             throw new Error('El usuario se encuentra deshabilitado.');
@@ -82,9 +83,10 @@ export class LoginService {
     console.log("addUserRequest:", addUserRequest)
     return this.http.post<any>(environment.urlHost + '/auth/register', addUserRequest).subscribe({
       next: () =>{
-        console.log("TODO OK")
+        this.showAlert('Usuario registrado','success')
       },
       error: () =>{
+        this.showAlert('Error al registrar usuario','error')
         console.log("Error: ", catchError(this.handleError))
       }
     })
@@ -131,5 +133,7 @@ export class LoginService {
   getuserIdsession():number{
     return this.userId
   }
+
+
 
 }

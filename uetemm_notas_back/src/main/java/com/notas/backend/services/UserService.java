@@ -135,6 +135,17 @@ public class UserService {
         return userDTO;
     }
 
+    public boolean verificarUsername(String username){
+
+        Optional<User> user = userRepository.findByUsername(username);    
+        
+        if(!user.isEmpty()){
+            return true;
+        }
+        
+        return false;
+    }
+
     /*
      * public User actualizarPersona(User user) {
      * try {

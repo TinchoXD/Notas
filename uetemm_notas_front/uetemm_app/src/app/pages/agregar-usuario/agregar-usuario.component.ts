@@ -5,6 +5,8 @@ import { AlertService } from '../../services/alert/alert.service';
 import { LoginService } from '../../services/auth/login.service';
 import { AddUserRequest } from './addUserRequest';
 import { first } from 'rxjs';
+import { UserService } from '../../services/user/user.service';
+import { ThemePalette } from '@angular/material/core';
 
 interface Rol {
   value: string;
@@ -30,13 +32,15 @@ export class AgregarUsuarioComponent {
     {value: '2', viewValue: 'Usuario'},
   ];
   errorMessage: String = 'Este campo es obligatorio.';
-
+  existeUsername: boolean = false;
+  color: ThemePalette = 'primary';
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AgregarUsuarioComponent>,
     private alertService: AlertService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private userService: UserService
 
   ) {
     this.userForm = this.fb.group({
@@ -82,6 +86,23 @@ export class AgregarUsuarioComponent {
       this.showAlert('Error al crear un nuevo usuario, valide los datos del formulario','error')
 
     }
+  }
+
+  verificarUserName(event: FocusEvent): void{
+
+    const inputElement = event.target as HTMLInputElement;
+    const username = inputElement.value;
+    if(username==="")
+      {
+        return;
+      }
+    
+    this.userService.verificarUserName(username).subscribe({
+      next:(result)=>{
+        this.existeUsername = result
+      }
+    })
+
   }
 
   showAlert(mensaje: string, type: string) {

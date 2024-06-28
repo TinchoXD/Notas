@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -33,6 +35,12 @@ public class UserController {
     public UserDTO getUserData(@PathVariable int id) {
         return userService.buscarPersona(id);
     }
+
+    @GetMapping("/user/verificarUsername/{username}")
+    public Boolean getMethodName(@PathVariable String username) {
+        return userService.verificarUsername(username);
+    }
+    
 
 
     //* MÉTODO ALTERNATIVO PARA ACTUALIZAR USUARIO */
