@@ -1,442 +1,457 @@
-<!-- <div class="container-fluid">
-
-
-
-    <p *ngIf="errorMessage.length!=0" class="text-danger">{{errorMessage}}</p>
-    <div *ngIf="(userLoggedOn && !editMode) || !userLoggedOn">
-        <p><b> id: </b> {{user?.id}} </p>
-        <p><b> Nombre: </b> {{user?.firstname}} </p>
-        <p><b> Apellido: </b> {{user?.lastname}}</p>
-        <p><b> Pais: </b> {{user?.country}}</p>
-        <button *ngIf="userLoggedOn && !editMode" (click)="editMode=true" class="btn btn-dark"><img
-                src="https://cdn.icon-icons.com/icons2/1572/PNG/96/3592815-compose-create-edit-edit-file-office-pencil-writing_107734.png"
-                width="8%" alt="editar" />Editar Datos Personales</button>
-    </div>
-
-    <form *ngIf="userLoggedOn && editMode">
-        <div class="form-group row">
-            <label for="inputId" class="col-sm-1 col-form-label">id</label>
-            <div class="col-sm-11">
-                <input type="text" formControlName="id" class="form-control" id="inputId">
-
-                <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                    <div *ngIf="firstname.errors?.['required']">
-                        El ID es requerido.
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputFirstName" class="col-sm-1 col-form-label">Nombre</label>
-            <div class="col-sm-11">
-                <input type="text" formControlName="firstname" class="form-control" id="inputFirstName">
-
-                <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                    <div *ngIf="firstname.errors?.['required']">
-                        El Nombre es requerido.
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputLasttName" class="col-sm-1 col-form-label">Apellido</label>
-            <div class="col-sm-11">
-                <input type="text" formControlName="lastname" class="form-control" id="inputLasttName">
-                <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-                    <div *ngIf="lastname.errors?.['required']">
-                        El Apellido es requerido.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row border-bottom pb-3">
-            <label for="inputCountry" class="col-sm-1 col-form-label">País</label>
-            <div class="col-sm-11">
-                <input type="text" formControlName="country" class="form-control" id="inputCountry">
-                <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
-                    <div *ngIf="country.errors?.['required']">
-                        El País es requerido.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button type="submit" (click)="saveUserDetailsData()" class="btn btn-dark mt-3">Guardar</button>
-        <a class="btn btn-danger mt-3" (click)="editMode=false">Cancelar</a>
-    </form>
-</div> - -->
-
-<div class="container-fluid rounded mt-5 mb-5">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" width="150px"
-                    src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span
-                    class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru</span><span> </span>
-            </div>
-
-
-
+        <div class="col-lg-1">
         </div>
-        <div class="col-md-6 border-right">
-            <form [formGroup]="userDetailsForm">
-                <fieldset>
-                    <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
-
-                    <mat-slide-toggle formControlName="user_estado_usuario" [color]="color" [checked]="user_estado_usuario" hidden readonly>
-                       Usuario Habilitado
-                    </mat-slide-toggle>
-         
-                    <div class="p-3 py-5">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="text-right">Información Personal</h4>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Nombres</mat-label>
-                                    <input matInput formControlName="firstname" />
-                                    @if (firstname.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-
+        <div class="col-10" style="margin-top: 2.5%;">
+            <div class="card">
+                <form [formGroup]="userDetailsForm">
+                    <fieldset>
+                        <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
+                        <mat-slide-toggle formControlName="user_estado_usuario" [color]="color"
+                            [checked]="user_estado_usuario" hidden readonly>
+                            Usuario Habilitado
+                        </mat-slide-toggle>
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Información Personal</h4>
                             </div>
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Apellidos</mat-label>
-                                    <input matInput formControlName="lastname" />
-                                    @if (lastname.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                                <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
-                                <!-- <label class="labels">Apellidos *</label><input type="text" formControlName="lastname"
-                                class="form-control" placeholder="Apellidos" value />
-                            <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="lastname.hasError('required')">
-                                    El campo 'Apellidos' es obligatorio.
-                                </div>
-                            </div> -->
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Documento de identidad (CI)</mat-label>
-                                    <input matInput readonly="true" formControlName="username" />
-
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa  fa-id-card" aria-hidden="true"></i>
-                                    </span>
-                                    @if (username.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="input-group mb-3">
+                            <div class="row mt-3">
+                                <div class="col-md-5">
                                     <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Estado Civil</mat-label>
-                                        <mat-select formControlName="estadoCivil" [value]="estadoCivil">
-                                            <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
-                                                [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                        <mat-label>Nombres</mat-label>
+                                        <input matInput formControlName="firstname" />
+                                        @if (firstname.invalid) {
+                                        <mat-error> {{errorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+
+                                </div>
+                                <div class="col-md-5">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Apellidos</mat-label>
+                                        <input matInput formControlName="lastname" />
+                                        @if (lastname.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                    <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
+                                    <!-- <label class="labels">Apellidos *</label><input type="text" formControlName="lastname"
+                                        class="form-control" placeholder="Apellidos" value />
+                                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+                                        class="mt-3 alert alert-danger">
+                                        <div *ngIf="lastname.hasError('required')">
+                                            El campo 'Apellidos' es obligatorio.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-2">
+
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Sexo</mat-label>
+                                        <mat-select formControlName="user_sexo" [value]="sexo">
+                                            <mat-option *ngFor="let sexo of catalogoSexo"
+                                                [value]="sexo.id">{{sexo.nombre}}</mat-option>
                                         </mat-select>
                                         <span matTextPrefix class="input-icon">
                                             <i class="fa fa-heart" aria-hidden="true"></i>
                                         </span>
-                                        @if (estadoCivil.invalid) {
+                                        @if (sexo.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Documento de identidad (CI)</mat-label>
+                                        <input matInput readonly="true" formControlName="username" />
+
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa  fa-id-card" aria-hidden="true"></i>
+                                        </span>
+                                        @if (username.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Estado Civil</mat-label>
+                                            <mat-select formControlName="estadoCivil" [value]="estadoCivil">
+                                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                            </span>
+                                            @if (estadoCivil.invalid) {
+                                            <mat-error> {{requiredErrorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Fecha de nacimiento</mat-label>
+                                            <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
+                                                formControlName="user_fecha_nacimiento">
+                                            <mat-hint>DD/MM/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Nivel educación</mat-label>
+                                        <mat-select formControlName="user_nivel_educacion" [value]="nivelEducacion">
+                                            <mat-option *ngFor="let nivelEducacion of catalogoNivelEducacion"
+                                                [value]="nivelEducacion.id">{{nivelEducacion.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                        </span>
+                                        @if (nivelEducacion.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Título Senescyt</mat-label>
+                                        <input matInput formControlName="user_titulo_senescyt" />
+
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa  fa-certificate" aria-hidden="true"></i>
+                                        </span>
+                                        @if (tituloSenescyt.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Nivel</mat-label>
+                                        <mat-select formControlName="user_nivel" [value]="nivel">
+                                            <mat-option *ngFor="let nivel of catalogoNivel"
+                                                [value]="nivel.id">{{nivel.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                        </span>
+                                        @if (nivel.invalid) {
                                         <mat-error> {{requiredErrorMessage}}</mat-error>
                                         }
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="input-group mb-3">
-                                    <mat-form-field appearance="outline" style="width: 100%;">
-                                        <mat-label>Fecha de nacimiento</mat-label>
-                                        <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
-                                            formControlName="user_fecha_nacimiento">
-                                        <mat-hint>DD/MM/YYYY</mat-hint>
-                                        <mat-datepicker-toggle matIconSuffix
-                                            [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
-                                        <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Fecha de ingreso al Magisterio</mat-label>
+                                            <input matInput [matDatepicker]="pickerFechaIngresoMagisterio"
+                                                readonly="true" formControlName="user_fecha_ingreso_magisterio">
+                                            <mat-hint>DD/MM/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="pickerFechaIngresoMagisterio"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerFechaIngresoMagisterio></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Fecha de ingreso a la Institucion</mat-label>
+                                            <input matInput [matDatepicker]="pickerFechaIngresoInstitucion"
+                                                readonly="true" formControlName="user_fecha_ingreso_institucion">
+                                            <mat-hint>DD/MM/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="pickerFechaIngresoInstitucion"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerFechaIngresoInstitucion></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Actividad Laboral</mat-label>
+                                        <mat-select formControlName="user_actividad_laboral" [value]="actividadLaboral">
+                                            <mat-option *ngFor="let actividadLaboral of catalogoActividadLaboral"
+                                                [value]="actividadLaboral.id">{{actividadLaboral.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                        </span>
+                                        @if (nivelEducacion.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Nivel educación</mat-label>
-                                    <mat-select formControlName="user_nivel_educacion" [value]="nivelEducacion">
-                                        <mat-option *ngFor="let nivelEducacion of catalogoNivelEducacion"
-                                            [value]="nivelEducacion.id">{{nivelEducacion.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    </span>
-                                    @if (nivelEducacion.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Título Senescyt</mat-label>
-                                    <input matInput formControlName="user_titulo_senescyt" />
 
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa  fa-certificate" aria-hidden="true"></i>
-                                    </span>
-                                    @if (tituloSenescyt.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Grupo Étnico</mat-label>
-                                    <mat-select formControlName="user_grupo_etnico" [value]="grupoEtnico">
-                                        <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
-                                            [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                    </span>
-                                    @if (grupoEtnico.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <fieldset [disabled]="!habilitarGrupoEtenicoOtro">
+                            <div class="row mt-3">
+                                <div class="col-md-6">
                                     <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Grupo Étnico OTRO</mat-label>
-                                        <mat-select formControlName="user_grupo_etnico_otro" [value]="grupoEtnicoOtro">
-                                            <mat-option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro"
-                                                [value]="grupoEtnicoOtro.id">{{grupoEtnicoOtro.nombre}}</mat-option>
+                                        <mat-label>Grupo Étnico</mat-label>
+                                        <mat-select formControlName="user_grupo_etnico" [value]="grupoEtnico">
+                                            <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
+                                                [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
                                         </mat-select>
                                         <span matTextPrefix class="input-icon">
                                             <i class="fa fa-users" aria-hidden="true"></i>
                                         </span>
-                                        @if (grupoEtnicoOtro.invalid) {
+                                        @if (grupoEtnico.invalid) {
                                         <mat-error> {{requiredErrorMessage}}</mat-error>
                                         }
                                     </mat-form-field>
-                                    <!-- <label class="labels">Grupo Étnico OTRO*</label>
-                                <div class="input-group mb-3" formGroupName="user_grupo_etnico_otro">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="grupoEtnicoOtro"><i class="fa fa-handshake"
-                                                aria-hidden="true"></i>
-
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset [disabled]="!habilitarNacionalidadIndigena">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Grupo Étnico OTRO</mat-label>
+                                            <mat-select formControlName="user_nacionalidad_indigena"
+                                                [value]="nacionalidadIndigena">
+                                                <mat-option
+                                                    *ngFor="let nacionalidadIndigena of catalogoNacionalidadIndigena"
+                                                    [value]="nacionalidadIndigena.id">{{nacionalidadIndigena.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                            </span>
+                                            @if (nacionalidadIndigena.invalid) {
+                                            <mat-error> {{requiredErrorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                        <!-- <label class="labels">Grupo Étnico OTRO*</label>
+                                        <div class="input-group mb-3" formGroupName="user_grupo_etnico_otro">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="grupoEtnicoOtro"><i class="fa fa-handshake"
+                                                        aria-hidden="true"></i>
+        
+                                                </span>
+                                            </div>
+        
+                                            <select class="custom-select" formControlName="id" required="true">
+                                                
+                                                <option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro"
+                                                    [value]="grupoEtnicoOtro.id">
+                                                    {{grupoEtnicoOtro.nombre}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="grupoEtnicoOtro.invalid && (grupoEtnicoOtro.dirty || grupoEtnicoOtro.touched) && (habilitarGrupoEtenicoOtro && grupoEtnicoOtro.value==0)"
+                                            class="mt-3 alert alert-danger">
+                                            <div *ngIf="grupoEtnicoOtro.hasError('required')">
+                                                El campo 'Grupo Étnico OTRO' es obligatorio.
+                                            </div>
+                                        </div> -->
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Dirección</mat-label>
+                                        <input matInput formControlName="user_direccion" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
                                         </span>
+                                        @if (direccion.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Teléfono Móvil</mat-label>
+                                        <input matInput formControlName="user_telefono_celular" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-mobile" aria-hidden="true"></i>
+                                        </span>
+
+                                        @if (telefonoCelular.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Teléfono Convencional</mat-label>
+                                        <input matInput formControlName="user_telefono_convencional" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                        </span>
+
+                                        @if (telefonoConvencional.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>E-mail Personal</mat-label>
+                                        <input matInput formControlName="user_email_personal" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </span>
+                                        @if (emailPersonal.hasError('required')) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                        @if (emailPersonal.hasError('email')) {
+                                        <mat-error> Debe ser un e-mail válido ejemplo
+                                            'example&#64;email.com'.</mat-error>
+                                        }
+                                    </mat-form-field>
+                                    <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
+                                    <!-- <label class="labels">E-mail Personal *</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="emailpersonal"><i class="fa fa-envelope"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="E-mail Personal"
+                                            formControlName="user_email_personal" aria-label="E-mail Personal"
+                                            aria-describedby="emailpersonal" />
                                     </div>
-
-                                    <select class="custom-select" formControlName="id" required="true">
-                                        
-                                        <option *ngFor="let grupoEtnicoOtro of catalogoGrupoEtnicoOtro"
-                                            [value]="grupoEtnicoOtro.id">
-                                            {{grupoEtnicoOtro.nombre}}</option>
-                                    </select>
+                                    <div *ngIf="user_email_personal.invalid && (user_email_personal.dirty || user_email_personal.touched)"
+                                        class="mt-3 alert alert-danger">
+                                        <div *ngIf="user_email_personal.hasError('required')">
+                                            El campo 'Email Personal' es obligatorio.
+                                        </div>
+                                        <div *ngIf="user_email_personal.hasError('email')">
+                                            debe ser un e-mail válido ejemplo 'example&#64;email.com'.
+                                        </div>
+                                    </div> -->
                                 </div>
-                                <div *ngIf="grupoEtnicoOtro.invalid && (grupoEtnicoOtro.dirty || grupoEtnicoOtro.touched) && (habilitarGrupoEtenicoOtro && grupoEtnicoOtro.value==0)"
-                                    class="mt-3 alert alert-danger">
-                                    <div *ngIf="grupoEtnicoOtro.hasError('required')">
-                                        El campo 'Grupo Étnico OTRO' es obligatorio.
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>E-mail institucional</mat-label>
+                                        <input matInput formControlName="user_email_institucional" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </span>
+                                        @if (emailInstitucional.hasError('required')) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                        @if (emailInstitucional.hasError('email')) {
+                                        <mat-error> Debe ser un e-mail válido ejemplo
+                                            'example&#64;email.com'.</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Relación laboral</mat-label>
+                                        <mat-select formControlName="user_relacion_laboral" [value]="relacionLaboral">
+                                            <mat-option *ngFor="let relacionLaboral of catalogoRelacionLaboral"
+                                                [value]="relacionLaboral.id">{{relacionLaboral.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-handshake" aria-hidden="true"></i>
+                                        </span>
+                                        @if (relacionLaboral.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Jornada aboral</mat-label>
+                                        <mat-select formControlName="user_jornada_laboral" [value]="jornadaLaboral">
+                                            <mat-option *ngFor="let jornadaLaboral of catalogoJornadaLaboral"
+                                                [value]="jornadaLaboral.id">{{jornadaLaboral.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-clock" aria-hidden="true"></i>
+                                        </span>
+                                        @if (jornadaLaboral.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Categoría</mat-label>
+                                        <mat-select formControlName="user_categoria" [value]="categoria">
+                                            <mat-option *ngFor="let categoria of catalogoCategoria"
+                                                [value]="categoria.id">{{categoria.nombre}}</mat-option>
+                                        </mat-select>
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        </span>
+                                        @if (categoria.invalid) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                   
+                                    <mat-form-field  style="width: 100%;" appearance="outline">
+                                        <mat-label>Especialidad Acción de Personal</mat-label>
+                                        <textarea matInput formControlName="user_especialidad_accion_personal" maxlength="1000"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>País</mat-label>
+                                        <input matInput formControlName="pais" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </span>
+                                        @if (pais.hasError('required')) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field style="width: 100%;" appearance="outline">
+                                        <mat-label>Distrito</mat-label>
+                                        <input matInput formControlName="user_distrito" />
+                                        <span matTextPrefix class="input-icon">
+                                            <i class="fa fa-building" aria-hidden="true"></i>
+                                        </span>
+                                        @if (distrito.hasError('required')) {
+                                        <mat-error> {{requiredErrorMessage}}</mat-error>
+                                        }
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center">
+                            </div>
+                            <div class="container mt-5 text-center">
+                                <div class="row">
+                                    <div class="btn-group">
+                                        <button (click)="dialogoDescartarCambios()" class="btn btn-outline-danger">
+                                            <i class="fa fa-times"></i>
+                                            Cancelar</button>
+                                        <button type="submit" (click)="dialogoGuardarCambios()" class="btn btn-success ml-3">
+                                            <i class="fa fa-check"></i>
+                                            Guardar</button>
                                     </div>
-                                </div> -->
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Dirección</mat-label>
-                                    <input matInput formControlName="user_direccion" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-home" aria-hidden="true"></i>
-                                    </span>
-                                    @if (direccion.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Teléfono Móvil</mat-label>
-                                    <input matInput formControlName="user_telefono_celular" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-mobile" aria-hidden="true"></i>
-                                    </span>
-
-                                    @if (telefonoCelular.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Teléfono Convencional</mat-label>
-                                    <input matInput formControlName="user_telefono_convencional" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-phone" aria-hidden="true"></i>
-                                    </span>
-
-                                    @if (telefonoConvencional.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>E-mail Personal</mat-label>
-                                    <input matInput formControlName="user_email_personal" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                                    </span>
-                                    @if (emailPersonal.hasError('required')) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                    @if (emailPersonal.hasError('email')) {
-                                    <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
-                                    }
-                                </mat-form-field>
-                                <!--* ESTRUCTURA ANTERIOR DE LOS INPUTS, SIN ANGULAR MATERIAL *-->
-                                <!-- <label class="labels">E-mail Personal *</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="emailpersonal"><i class="fa fa-envelope"
-                                            aria-hidden="true"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="E-mail Personal"
-                                    formControlName="user_email_personal" aria-label="E-mail Personal"
-                                    aria-describedby="emailpersonal" />
-                            </div>
-                            <div *ngIf="user_email_personal.invalid && (user_email_personal.dirty || user_email_personal.touched)"
-                                class="mt-3 alert alert-danger">
-                                <div *ngIf="user_email_personal.hasError('required')">
-                                    El campo 'Email Personal' es obligatorio.
-                                </div>
-                                <div *ngIf="user_email_personal.hasError('email')">
-                                    debe ser un e-mail válido ejemplo 'example&#64;email.com'.
-                                </div>
-                            </div> -->
-                            </div>
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>E-mail institucional</mat-label>
-                                    <input matInput formControlName="user_email_institucional" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                                    </span>
-                                    @if (emailInstitucional.hasError('required')) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                    @if (emailInstitucional.hasError('email')) {
-                                    <mat-error> Debe ser un e-mail válido ejemplo 'example&#64;email.com'.</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-4">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Relación laboral</mat-label>
-                                    <mat-select formControlName="user_relacion_laboral" [value]="relacionLaboral">
-                                        <mat-option *ngFor="let relacionLaboral of catalogoRelacionLaboral"
-                                            [value]="relacionLaboral.id">{{relacionLaboral.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-handshake" aria-hidden="true"></i>
-                                    </span>
-                                    @if (relacionLaboral.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Jornada aboral</mat-label>
-                                    <mat-select formControlName="user_jornada_laboral" [value]="jornadaLaboral">
-                                        <mat-option *ngFor="let jornadaLaboral of catalogoJornadaLaboral"
-                                            [value]="jornadaLaboral.id">{{jornadaLaboral.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-clock" aria-hidden="true"></i>
-                                    </span>
-                                    @if (jornadaLaboral.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Categoría</mat-label>
-                                    <mat-select formControlName="user_categoria" [value]="categoria">
-                                        <mat-option *ngFor="let categoria of catalogoCategoria"
-                                            [value]="categoria.id">{{categoria.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                                    </span>
-                                    @if (categoria.invalid) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>País</mat-label>
-                                    <input matInput formControlName="pais" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
-                                    </span>
-                                    @if (pais.hasError('required')) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Distrito</mat-label>
-                                    <input matInput formControlName="user_distrito" />
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-building" aria-hidden="true"></i>
-                                    </span>
-                                    @if (distrito.hasError('required')) {
-                                    <mat-error> {{requiredErrorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="mt-5 text-center">
-                        </div>
-                        <div class="container mt-5 text-center">
-                            <div class="row">
-                                <div class="btn-group">
-                                    <button (click)="refresh()" class="btn btn-outline-danger">
-                                        <i class="fa fa-times"></i>
-                                        Cancelar</button>
-                                    <button type="submit" (click)="mostrarDialogo()" class="btn btn-success ml-3">
-                                        <i class="fa fa-check"></i>
-                                        Guardar</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </fieldset>
-            </form>
+                    </fieldset>
+                </form>
+            </div>
         </div>
+
     </div>
 </div>

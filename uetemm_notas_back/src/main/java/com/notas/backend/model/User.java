@@ -42,6 +42,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     public String lastname;
     public String firstname;
+    @ManyToOne
+    @JoinColumn(name="user_sexo", nullable=false)
+    public Catalogo user_sexo;
     public String pais;
     public String password;
     @Enumerated(EnumType.STRING) 
@@ -71,15 +74,31 @@ public class User implements UserDetails {
     @JoinColumn(name="user_grupo_etnico", nullable=false)
     public Catalogo user_grupo_etnico;
     @ManyToOne
-    @JoinColumn(name="user_grupo_etnico_otro", nullable=false)
-    public Catalogo user_grupo_etnico_otro;
+    @JoinColumn(name="user_nacionalidad_indigena", nullable=false)
+    public Catalogo user_nacionalidad_indigena;
     public Integer user_estado_usuario;
     public Date user_fecha_nacimiento;
     public String user_titulo_senescyt;
     public String user_especialidad_accion_personal;
-
+    
+    public Integer user_requiere_cambio_contrasena;
     public Integer user_status;
 
+    @ManyToOne
+    @JoinColumn(name="user_actividad_laboral", nullable=false)
+    public Catalogo user_actividad_laboral;
+
+    @ManyToOne
+    @JoinColumn(name="user_nivel", nullable=false)
+    public Catalogo user_nivel;
+
+    @ManyToOne
+    @JoinColumn(name="user_activo", nullable=false)
+    public Catalogo user_activo;
+
+    public Date user_fecha_ingreso_magisterio;
+    public Date user_fecha_ingreso_institucion;
+    public String user_observacion;
 /*     @Transient
     public Integer estado_civil_id; */
 

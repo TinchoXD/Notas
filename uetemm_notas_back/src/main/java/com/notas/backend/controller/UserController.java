@@ -55,9 +55,15 @@ public class UserController {
     
 
     @PutMapping("/user/cambiarContrasena")
-    public ResponseEntity<MessageResponse> updatePassword(@RequestBody PasswordRequest userRequest)
+    public ResponseEntity<MessageResponse> updatePassword(@RequestBody PasswordRequest passwordRequest)
     { 
-        return ResponseEntity.ok(userService.updatePassword(userRequest));
+        return ResponseEntity.ok(userService.updatePassword(passwordRequest));
+    }
+
+    @PutMapping("/user/restablecerContrasena")
+    public ResponseEntity<MessageResponse> resetPassword(@RequestBody PasswordRequest resetPasswordRequest)
+    { 
+        return ResponseEntity.ok(userService.resetPassword(resetPasswordRequest));
     }
 
 }

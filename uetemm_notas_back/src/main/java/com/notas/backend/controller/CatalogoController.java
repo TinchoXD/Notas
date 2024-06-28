@@ -83,13 +83,43 @@ public class CatalogoController {
             }
     }
 
-    @GetMapping("/grupo_etnico_otro")
+    @GetMapping("/nacionalidad_indigena")
     public ResponseEntity<Object> getGrupoEtnicoOtroList() {
         try {
             return ResponseEntity.ok(catalogoService.getCatalogoByParentId(39));
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("error al consultar catálogo - Grupo etnico otro", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("error al consultar catálogo - Nacionalidad Indigena", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/actividad_laboral")
+    public ResponseEntity<Object> getActividadLaboralList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(68));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Actividad Laboral", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/nivel")
+    public ResponseEntity<Object> getNivelList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(72));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Nivel", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/sexo")
+    public ResponseEntity<Object> getSexoList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(80));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Sexo", HttpStatus.BAD_REQUEST);
             }
     }
 

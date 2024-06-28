@@ -5,6 +5,7 @@ export interface User{
     id: number;
     username: string;
     firstname: string;
+    user_sexo: number;
     lastname: string;
     role?: string;
     /* mensaje?: string; */
@@ -22,15 +23,19 @@ export interface User{
     user_jornada_laboral: number;
     user_categoria: number;
     user_grupo_etnico: number;
-    user_grupo_etnico_otro: number;
+    user_nacionalidad_indigena: number;
     user_nivel_educacion: number;
     user_fecha_nacimiento: Date;
     user_titulo_senescyt: string;
     user_especialidad_accion_personal: string;
-
+    
     user_estado_usuario: boolean
     
+    user_fecha_ingreso_magisterio: Date;
+    user_fecha_ingreso_institucion: Date;
     
-
-
+    user_actividad_laboral: number;
+    user_nivel: number;
+    user_activo: number;
+    user_observacion: number;
 }

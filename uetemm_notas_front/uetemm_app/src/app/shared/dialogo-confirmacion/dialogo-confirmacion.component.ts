@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MAT_MENU_CONTENT } from '@angular/material/menu';
 
 export interface DialogData {
+  
+  icon: string;
   titulo: string;
   mensaje: string;
 }

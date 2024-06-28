@@ -33,6 +33,7 @@ import { MessageService } from 'primeng/api';
 import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
 import { LoadingComponent } from './services/loading/loading.component';
 import { LoadingService } from './services/loading/loading.service';
+import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { LoadingService } from './services/loading/loading.service';
     AlertComponent,
     AdministracionUsuariosComponent,
     EditarUsuarioComponent,
-    LoadingComponent
+    LoadingComponent,
+    AgregarUsuarioComponent
     
   ],
   imports: [

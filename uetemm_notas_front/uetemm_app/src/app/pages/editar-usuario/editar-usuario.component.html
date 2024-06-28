@@ -1,12 +1,142 @@
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-1">
         </div>
         <div class="col-10" style="margin-top: 2.5%;">
             <div class="card">
-                el id es {{userId}}
+                <section>
+
+                    <div class="div-button-row">
+                        <div class="div-flex-container">
+                            <div class="div-button-container">
+                                <button mat-fab color="primary" matTooltip="Regresar"
+                                    routerLink="/administracion-usuarios">
+                                    <mat-icon>keyboard_arrow_left</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <form [formGroup]="userDetailsForm">
+                    <input type="text" formControlName="user_id" class="form-control" id="inputId" hidden readonly>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Informacion Personal</h4>
+                            </div>
+                            <div class="col-md-2 mt-4"><!--  -->
+
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput formControlName="user_firstname" />
+                                    @if (firstname.invalid) {
+                                    <mat-error> {{errorMessage}}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Apellidos</mat-label>
+                                    <input matInput formControlName="user_lastname" />
+                                    @if (lastname.invalid) {
+                                    <mat-error> {{errorMessage}}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field style="width: 70%;" appearance="outline">
+                                    <mat-label>Cédula Identidad</mat-label>
+                                    <input matInput formControlName="user_username" />
+                                    @if (username.invalid) {
+                                    <mat-error> {{errorMessage}}</mat-error>
+                                    }
+                                </mat-form-field><button mat-mini-fab class="ml-3" [color]="color"
+                                    matTooltip="El número de cédula corresponde a su nombre de usuario">
+                                    <mat-icon>info</mat-icon>
+                                </button>
+                            </div>
+
+                            <div class="col-md-3">
+                                <section>
+                                    <div class="div-label">
+                                        <h5> Acciones</h5>
+                                    </div>
+                                </section>
+                                <mat-divider></mat-divider>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="pt-3 pb-3">Habilitar Usuario</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="div-button-row pt-3 pb-3">
+                                            <mat-slide-toggle formControlName="user_estado_usuario" [color]="color"
+                                                [checked]="user_estado_usuario">
+                                            </mat-slide-toggle>
+                                            <!-- <p-toggleButton [(ngModel)]="user_estado_usuario" onLabel="Activo" offLabel="Inactivo" /> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class=" pt-2 pb-3">Restablecer contraseña</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="div-button-row pt-1">
+                                            <button mat-raised-button
+                                                (click)="dialogoResetearContrasenia()"><mat-icon>refresh</mat-icon>Restablecer</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <section>
+
+
+                                </section>
+
+                                <section>
+
+
+                                </section>
+                            </div>
+                        </div>
+
+
+
+                    </fieldset>
+
+                </form>
+
+
+
+
+
+
+                <p-divider />
+                <p> el id es {{userId}}</p>
+                <p-divider />
+                <p> el id es {{userId}}</p>
+                <p-divider />
+                <p> el id es {{userId}}</p>
+                <div class="container mt-5 text-center">
+                    <div class="row">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-danger" (click)="dialogoCancelar()">
+                                <i class="fa fa-times"></i>
+                                Cancelar</button>
+                            <button type="submit" (click)="dialogoGuardarInformacion()" class="btn btn-success ml-3">
+                                <i class="fa fa-check"></i>
+                                Guardar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-1">

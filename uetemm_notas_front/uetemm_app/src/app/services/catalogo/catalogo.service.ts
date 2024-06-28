@@ -16,7 +16,9 @@ export class CatalogoService {
   getEstadoCivilLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/estado_civil')
   }
-
+  getSexoLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/sexo')
+  }
   getRelacionLaboralLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/relacion_laboral')
   }
@@ -29,11 +31,17 @@ export class CatalogoService {
   getGrupoEtnicoLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/grupo_etnico')
   }
-  getGrupoEtnicoOtroLista(): Observable<Catalogo[]> {
-    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/grupo_etnico_otro')
+  getNacionanlidadIndigenaLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/nacionalidad_indigena')
   }
   getNivelEducacionLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/nivel_educacion')
+  }
+  getActividadLaboralLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/actividad_laboral')
+  }
+  getNivelLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/nivel')
   }
 
   private handleError(error: HttpErrorResponse) {

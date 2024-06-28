@@ -12,6 +12,10 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
+import { DividerModule } from 'primeng/divider';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+
 
 
 
@@ -29,8 +33,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         ToolbarModule,
         SplitButtonModule,
         InputTextModule,
-        ProgressSpinnerModule
-
+        ProgressSpinnerModule,
+        TagModule,
+        DividerModule,
+        ToggleButtonModule
     ]
 })
 export class PrimeNGModule { }

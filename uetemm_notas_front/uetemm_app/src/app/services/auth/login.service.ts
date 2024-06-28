@@ -13,6 +13,8 @@ import { User } from './user';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { AlertService } from '../alert/alert.service';
+import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
+import { error } from 'jquery';
 
 type AlertType = 'success' | 'error';
 
@@ -65,6 +67,27 @@ export class LoginService {
         map((userData) => userData.token),
         catchError(this.handleError),
       );
+  }
+
+/*   register(addUserRequest: AddUserRequest): Observable<any>{
+    console.log("addUserRequest:", addUserRequest)
+    return this.http.post<any>(environment.urlHost + '/auth/register', addUserRequest).subscribe({
+      next: () =>{
+
+      }
+    })
+  } */
+
+  register(addUserRequest: AddUserRequest){
+    console.log("addUserRequest:", addUserRequest)
+    return this.http.post<any>(environment.urlHost + '/auth/register', addUserRequest).subscribe({
+      next: () =>{
+        console.log("TODO OK")
+      },
+      error: () =>{
+        console.log("Error: ", catchError(this.handleError))
+      }
+    })
   }
 
   logout(): void {

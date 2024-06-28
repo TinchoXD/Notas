@@ -8,6 +8,8 @@ import { LoginService } from '../../services/auth/login.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoadingService } from '../../services/loading/loading.service';
 import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { AgregarUsuarioComponent } from '../agregar-usuario/agregar-usuario.component';
 
 
 
@@ -22,19 +24,19 @@ import { filter } from 'rxjs/operators';
 export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
 
 
-  displayedColumns: string[] = ['index', 'Nombres', 'Apellidos', 'Cédula', 'Rol', 'E-mail institucional', 'Acciones'];
+  displayedColumns: string[] = ['index', 'Nombres', 'Apellidos', 'Cédula', 'Rol', 'E-mail institucional', 'Activo', 'Acciones'];
   addButtonLabel: string = ''; // Propiedad para controlar el texto del botón
   buttonState: string = 'collapsed'; // Estado inicial de la animación del botón
-
   dataSource = new MatTableDataSource<any>;
+  severity: string = 'severity'
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private userService: UserService,
     private loginService: LoginService,
     private router: Router,
-    private loadingService: LoadingService
-
+    private loadingService: LoadingService,
+    private dialog: MatDialog
   ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -43,8 +45,22 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     });
   }
 
+  dialogAgregarUsuario(): void {
+    const dialogRef = this.dialog.open(AgregarUsuarioComponent, {
+      width: '900px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Nuevo usuario agregado:', result);
+        // Aquí puedes agregar el código para manejar el nuevo usuario
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.userService.getAllUser().subscribe(data => {
+      console.log("users DATA",data )
       this.dataSource = new MatTableDataSource(data)
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -57,7 +73,6 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
 
   }
-
 
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
@@ -88,7 +103,10 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     }, 550); // Retraso de 2 segundos antes de la navegación
   }
 
-
+  highlightCondition(row: any): boolean {
+    // Define la condición para resaltar la fila
+    return row.user_estado_usuario == 0;
+  }
 
 
 }

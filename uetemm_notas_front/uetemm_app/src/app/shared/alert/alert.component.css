@@ -33,7 +33,6 @@
   padding: 20px;
   box-sizing: border-box;
   border: 2px solid rgb(206, 192, 5)
-
 }
 
 .success {
@@ -41,7 +40,6 @@
   background: rgba(241, 253, 245, 0.8);
   color: rgb(22, 163, 74);
   border: 2px solid rgb(187, 247, 208)
-
 }
 
 .error {
@@ -49,7 +47,6 @@
   background: rgba(254, 243, 243, 0.8);
   color: rgb(220, 38, 38);
   border: 2px solid rgb(254, 202, 202)
-
 }
 
 .fade-in {
@@ -60,3 +57,9 @@
   opacity: 0;
 }
 
+.alert-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
