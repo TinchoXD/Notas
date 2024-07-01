@@ -1,0 +1,34 @@
+
+
+<div class="container-fluid border">
+
+   
+
+
+    <p *ngIf="!userLoggedOn">Usuario no Autenticado</p>
+    <p *ngIf="userLoggedOn"> Usuario Autenticado</p>
+
+    <div *ngIf="userLoggedOn">
+        <p>id: {{user?.id}}</p>
+        <p>Nombre: {{user?.firstname}}</p>
+        <p>Apellido: {{user?.lastname}}</p>
+        <p>User: {{user?.username}}</p>
+    </div>
+</div>
+
+
+<div class="card flex justify-content-center">
+    <p-knob [(ngModel)]="value" (click)="click()" [size]="200" />
+</div>
+
+<div class="card flex justify-content-center">
+    <p-toast />
+    <p-button pRipple (click)="show()" label="Show" />
+</div>
+
+<div class="container-sm border">.container-sm</div>
+<div class="container-md mt-3 border">.container-md</div>
+<div class="container-lg mt-3 border">.container-lg</div>
+<div class="container-xl mt-3 border">.container-xl</div>
+
+

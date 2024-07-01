@@ -1,0 +1,65 @@
+/* alert.component.css */
+.alert {
+  padding: 15px;
+  border-radius: 5px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  opacity: 0;
+  /* margin: 10px 0; */
+  border-radius: 8px;
+  transition: opacity 0.5s ease-in-out;
+  max-width: 400px;
+  /* Ajusta esto según sea necesario */
+  word-wrap: break-word;
+  /* Para asegurar que el texto se ajusta dentro del contenedor */
+  font-size: 14px;
+  /* Ajusta el tamaño del texto si es necesario */
+  display: inline-block;
+  /* Asegura que el elemento se muestra en línea y no ocupa todo el ancho */
+  width: 700px;
+
+
+
+  /* Efecto de desenfoque */
+  backdrop-filter: blur(10px);
+  /* Efecto de desenfoque para navegadores basados en WebKit */
+  -webkit-backdrop-filter: blur(10px);
+  /* Bordes redondeados */
+  border-radius: 10px;
+  /* Sombra para darle profundidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  box-sizing: border-box;
+  border: 2px solid rgb(206, 192, 5)
+}
+
+.success {
+  /* background-color: #c0e6c9; */
+  background: rgba(241, 253, 245, 0.8);
+  color: rgb(22, 163, 74);
+  border: 2px solid rgb(187, 247, 208)
+}
+
+.error {
+  /* background-color: #e7979e; */
+  background: rgba(254, 243, 243, 0.8);
+  color: rgb(220, 38, 38);
+  border: 2px solid rgb(254, 202, 202)
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.alert-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

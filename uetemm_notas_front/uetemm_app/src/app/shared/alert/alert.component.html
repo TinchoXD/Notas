@@ -1,0 +1,19 @@
+<div class="alert blurred "
+    [ngClass]="{ 'success': type === 'success', 'error': type === 'error', 'fade-in': visible, 'fade-out': !visible }">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="alert-icon">
+                    <i class="fa fa-3x " [ngClass]="{'fa-times': type === 'error' , 'fa-check': type === 'success' }"
+                        aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="alert-text">
+                    <p style="font-size: large; margin-bottom: 3px;"> <strong>{{titulo}}</strong><br>{{ message }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

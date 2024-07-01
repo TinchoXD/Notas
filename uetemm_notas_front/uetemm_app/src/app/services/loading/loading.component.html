@@ -1,0 +1,6 @@
+<div *ngIf="loading$ | async" class="loading-overlay card flex justify-content-center">
+    <!-- <div class="spinner"></div> -->
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="4" fill="var(--surface-ground)"
+        animationDuration=".7s" />
+    <p><strong> Cargando ...</strong></p>
+</div>

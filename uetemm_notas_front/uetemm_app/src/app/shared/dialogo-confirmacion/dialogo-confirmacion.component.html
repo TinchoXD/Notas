@@ -1,0 +1,14 @@
+<div class="text-center" style="width: 550px; height: auto;">
+
+    <h1 mat-dialog-title><i class="fa " [ngClass]="{'fa-exclamation-triangle': data.icon === 'warning'}"></i>
+        {{data.titulo}}</h1>
+    <div mat-dialog-content>
+        <p style="white-space: pre-line;">{{data.mensaje}}</p>
+    </div>
+    <div mat-dialog-actions align="end" style="align-items: end;">
+        <button class="btn btn-success" mat-button (click)="confirmado()"> <i class="fa fa-check"
+                style="padding-right: 15px;"></i>Sí</button>
+        <button class="btn btn-danger" mat-button (click)="cerrarDialogo()"> <i class="fa fa-times"
+                style="padding-right: 15px;"></i>No</button>
+    </div>
+</div>
