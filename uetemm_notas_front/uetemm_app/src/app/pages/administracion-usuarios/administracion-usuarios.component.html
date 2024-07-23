@@ -99,4 +99,43 @@
         </div>
 
     </div>
+
+    
 </div>
+
+<div class="card flex justify-content-center">
+    <p-toast />
+
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button
+                severity="success" 
+                label="New" 
+                icon="pi pi-plus" 
+                class="mr-2" 
+                 />
+            <p-button
+                severity="danger" 
+                label="Delete" 
+                icon="pi pi-trash" 
+                
+                />
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <p-fileUpload 
+                mode="basic" 
+                accept="image/*" 
+                [maxFileSize]="1000000" 
+                label="Import" 
+                chooseLabel="Import" 
+                class="mr-2 inline-block" />
+            <p-button
+                severity="help" 
+                label="Export" 
+                icon="pi pi-upload" />
+        </ng-template>
+    </p-toolbar>
+
+
+</div> 

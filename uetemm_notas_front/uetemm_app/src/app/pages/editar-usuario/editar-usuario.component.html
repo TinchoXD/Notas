@@ -23,7 +23,7 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-md-10">
-                                <h4>Informacion Personal</h4>
+                                <p style="font-size: x-large;">Informacion Personal</p>
                             </div>
                             <div class="col-md-2 mt-4"><!--  -->
 
@@ -36,7 +36,7 @@
                                     <mat-label>Nombres</mat-label>
                                     <input matInput formControlName="user_firstname" />
                                     @if (firstname.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
+                                    <mat-error> {{errorRequiredMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -45,7 +45,7 @@
                                     <mat-label>Apellidos</mat-label>
                                     <input matInput formControlName="user_lastname" />
                                     @if (lastname.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
+                                    <mat-error> {{errorRequiredMessage}}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -54,7 +54,7 @@
                                     <mat-label>Cédula Identidad</mat-label>
                                     <input matInput formControlName="user_username" />
                                     @if (username.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
+                                    <mat-error> {{errorRequiredMessage}}</mat-error>
                                     }
                                 </mat-form-field><button mat-mini-fab class="ml-3" [color]="color"
                                     matTooltip="El número de cédula corresponde a su nombre de usuario">
@@ -94,33 +94,78 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <section>
-
-
-                                </section>
-
-                                <section>
-
-
-                                </section>
                             </div>
                         </div>
-
-
-
                     </fieldset>
-
                 </form>
 
-
-
-
-
-
                 <p-divider />
-                <p> el id es {{userId}}</p>
+
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <p style="font-size: x-large;">Cursos</p>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <p-toast />
+                <p-toolbar styleClass="mb-4 gap-2">
+                    <ng-template pTemplate="left">
+
+                        <p-button pRipple severity="success" label="New" icon="pi pi-plus" class="mr-2" (click)="openNuevoCurso()" />
+                        <p-button pRipple severity="danger" label="Delete" icon="pi pi-trash" />
+                    </ng-template>
+
+
+                    <ng-template pTemplate="right">
+                        <button mat-flat-button type="submit" disabled="false" [color]="color" class="mr-3" (click)="openNuevoCurso()"> <i
+                                class="fa fa-add" style="padding-right: 15px;"></i> Agregar Curso</button>
+                        <p-button pRipple severity="help" label="Export" icon="pi pi-upload" />
+                    </ng-template>
+                </p-toolbar>
+
+
+                <p-dialog [(visible)]="agregarCursoDialog"  header="Agregar Curso"  [style]="{ width: '550px' }" 
+                    [modal]="true">
+                    <ng-template pTemplate="content">
+                        <div class="field">
+                            <label for="cursoNombre">Nombre</label>
+                            <input 
+                                type="text" 
+                               
+                                pInputText 
+                                id="cursoNombre" 
+                                [(ngModel)]="curso.nombre" 
+                                required 
+                                autofocus />
+                            <small class="p-error" *ngIf="submitted && !curso.nombre">
+                                Obligatorio.
+                            </small>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <p-button 
+                            pRipple 
+                            label="Cancel" 
+                            icon="pi pi-times" 
+                            [text]="true" 
+                            (click)="hideDialog()" />
+                        <p-button 
+                            pRipple 
+                            label="Save" 
+                            icon="pi pi-check" 
+                            [text]="true" 
+                            (click)="agregarCurso()" />
+                    </ng-template>
+                </p-dialog>
+
+
+
+
+
                 <p-divider />
                 <p> el id es {{userId}}</p>
                 <p-divider />
@@ -143,3 +188,4 @@
         </div>
     </div>
 </div>
+
