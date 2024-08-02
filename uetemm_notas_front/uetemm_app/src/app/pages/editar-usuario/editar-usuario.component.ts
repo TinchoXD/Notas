@@ -12,6 +12,7 @@ import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/
 import { PasswordRequest } from '../cambiar-contrasena/passwordRequest';
 import { AlertService } from '../../services/alert/alert.service';
 import { Curso } from '../../domain/curso';
+import { AgregarCursoComponent } from '../curso/agregar-curso/agregar-curso.component';
 
 type AlertType = 'success' | 'error';
 
@@ -38,6 +39,8 @@ export class EditarUsuarioComponent implements OnInit {
   errorMessage: String = '';
   errorRequiredMessage: String = 'Este campo es obligatorio.';
 
+  checked:boolean = true
+  value: number = 50
   /* public resetPasswordRequest: PasswordRequest */
   public resetPasswordRequest: PasswordRequest = {
     id: 0,
@@ -51,14 +54,15 @@ export class EditarUsuarioComponent implements OnInit {
     private loginService: LoginService,
     public dialogo: MatDialog,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   userDetailsForm: FormGroup = this.formBuilder.group({
-    user_id: [''],
-    user_firstname: ['', Validators.required],
-    user_lastname: ['', Validators.required],
-    user_username: ['', Validators.required],
+    id: [''],
+    firstname: ['', Validators.required],
+    lastname: ['', Validators.required],
+    username: ['', Validators.required],
     user_estado_usuario: [''],
   });
 
@@ -79,10 +83,10 @@ export class EditarUsuarioComponent implements OnInit {
         this.userCI = userData.username;
 
         this.userDetailsForm.patchValue({
-          user_id: userData.id.toString(),
-          user_firstname: userData.firstname,
-          user_lastname: userData.lastname,
-          user_username: userData.username,
+          id: userData.id.toString(),
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          username: userData.username,
           user_estado_usuario: userData.user_estado_usuario,
         });
       },
@@ -96,13 +100,16 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   get firstname() {
-    return this.userDetailsForm.controls['user_firstname'];
+    return this.userDetailsForm.controls['firstname'];
   }
   get lastname() {
-    return this.userDetailsForm.controls['user_lastname'];
+    return this.userDetailsForm.controls['lastname'];
   }
   get username() {
-    return this.userDetailsForm.controls['user_username'];
+    return this.userDetailsForm.controls['username'];
+  }
+  get estado_usuario(){
+    return this.userDetailsForm.controls['user_estado_usuario'];
   }
 
   dialogoResetearContrasenia(): void {
@@ -171,10 +178,15 @@ export class EditarUsuarioComponent implements OnInit {
       });
   }
 
-  openNuevoCurso() {
+  dialogAgregarCurso() {
     this.agregarCursoDialog = true;
     this.submitted = false;
     this.curso = {};
+
+    const dialogRef = this.dialog.open(AgregarCursoComponent, {
+      width: '900px'
+    });
+
   }
   hideDialog() {
     this.agregarCursoDialog = false;
@@ -195,9 +207,15 @@ export class EditarUsuarioComponent implements OnInit {
     this.showAlert('Se ha restabelcido la contraseña del usuario.', 'success');
   }
 
-  async guardarInformacionUsuario() {
-    /* await firstValueFrom() */
-    this.showAlert('La información se ha guardado con éxito.', 'success');
+  guardarInformacionUsuario() {
+    if(this.userDetailsForm.valid){
+      this.userService.updateUserByAdmin(this.userDetailsForm.value as User).subscribe({
+        next:()=>{
+          this.showAlert('La información se ha guardado con éxito.', 'success');
+        }
+      })
+      
+    }
   }
 
   showAlert(mensaje: string, type: string) {

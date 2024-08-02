@@ -80,7 +80,6 @@ export class AgregarUsuarioComponent {
     console.log(this.userForm)
     if (this.userForm.valid) {
       this.loginService.register(this.userForm.value as AddUserRequest)
-      /*  this.loginService.login(this.loginForm.value as LoginRequest) */
       this.dialogRef.close(this.userForm.value);
     } else {
       this.showAlert('Error al crear un nuevo usuario, valide los datos del formulario','error')

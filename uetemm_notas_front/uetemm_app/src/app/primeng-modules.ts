@@ -106,6 +106,8 @@ import { InputIconModule } from 'primeng/inputicon';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
 
+
+
 @NgModule({
   exports: [
     BrowserAnimationsModule,
@@ -126,6 +128,9 @@ import { AutoFocusModule } from 'primeng/autofocus';
     DialogModule,
     AccordionModule,
     FileUploadModule,
+    TableModule,
+    SelectButtonModule,
+    DropdownModule 
   ],
 })
 export class PrimeNGModule {}

@@ -34,6 +34,7 @@ import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.co
 import { LoadingComponent } from './services/loading/loading.component';
 import { LoadingService } from './services/loading/loading.service';
 import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
+import { AgregarCursoComponent } from './pages/curso/agregar-curso/agregar-curso.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario
     AdministracionUsuariosComponent,
     EditarUsuarioComponent,
     LoadingComponent,
-    AgregarUsuarioComponent
+    AgregarUsuarioComponent,
+    AgregarCursoComponent
     
   ],
   imports: [

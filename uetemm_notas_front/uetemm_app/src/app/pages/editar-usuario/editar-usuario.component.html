@@ -19,13 +19,13 @@
                 </section>
 
                 <form [formGroup]="userDetailsForm">
-                    <input type="text" formControlName="user_id" class="form-control" id="inputId" hidden readonly>
+                    <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
                     <fieldset>
                         <div class="row">
                             <div class="col-md-10">
                                 <p style="font-size: x-large;">Informacion Personal</p>
                             </div>
-                            <div class="col-md-2 mt-4"><!--  -->
+                            <div class="col-md-2 mt-4">
 
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                             <div class="col-md-3">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Nombres</mat-label>
-                                    <input matInput formControlName="user_firstname" />
+                                    <input matInput formControlName="firstname" />
                                     @if (firstname.invalid) {
                                     <mat-error> {{errorRequiredMessage}}</mat-error>
                                     }
@@ -43,19 +43,19 @@
                             <div class="col-md-3">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Apellidos</mat-label>
-                                    <input matInput formControlName="user_lastname" />
-                                    @if (lastname.invalid) {
+                                    <input matInput formControlName="lastname" />
+                                    <!--  @if (lastname.invalid) {
                                     <mat-error> {{errorRequiredMessage}}</mat-error>
-                                    }
+                                    } -->
                                 </mat-form-field>
                             </div>
                             <div class="col-md-3">
                                 <mat-form-field style="width: 70%;" appearance="outline">
-                                    <mat-label>Cédula Identidad</mat-label>
-                                    <input matInput formControlName="user_username" />
-                                    @if (username.invalid) {
+                                    <mat-label>Cédula Identidad / Nombre de Usuario</mat-label>
+                                    <input matInput formControlName="username" />
+                                    <!--  @if (username.invalid) {
                                     <mat-error> {{errorRequiredMessage}}</mat-error>
-                                    }
+                                    } -->
                                 </mat-form-field><button mat-mini-fab class="ml-3" [color]="color"
                                     matTooltip="El número de cédula corresponde a su nombre de usuario">
                                     <mat-icon>info</mat-icon>
@@ -65,7 +65,7 @@
                             <div class="col-md-3">
                                 <section>
                                     <div class="div-label">
-                                        <h5> Acciones</h5>
+                                        <h5> <strong>Acciones</strong></h5>
                                     </div>
                                 </section>
                                 <mat-divider></mat-divider>
@@ -74,11 +74,9 @@
                                         <div class="pt-3 pb-3">Habilitar Usuario</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="div-button-row pt-3 pb-3">
-                                            <mat-slide-toggle formControlName="user_estado_usuario" [color]="color"
-                                                [checked]="user_estado_usuario">
-                                            </mat-slide-toggle>
-                                            <!-- <p-toggleButton [(ngModel)]="user_estado_usuario" onLabel="Activo" offLabel="Inactivo" /> -->
+                                        <div class="div-button-row pt-2 pb-2">
+                                            <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
+                                                onIcon="pi pi-check" offIcon="pi pi-ban" offLabel="Inactivo" />
                                         </div>
                                     </div>
                                 </div>
@@ -89,8 +87,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="div-button-row pt-1">
-                                            <button mat-raised-button
-                                                (click)="dialogoResetearContrasenia()"><mat-icon>refresh</mat-icon>Restablecer</button>
+
+                                            <button pButton pRipple [raised]="true" label="Restablecer"
+                                                icon="pi pi-refresh" class="p-button-success"
+                                                (click)="dialogoResetearContrasenia()" severity="warning">
+                                            </button>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -112,55 +115,34 @@
                 </div>
 
                 <p-toast />
+
+
+
+
                 <p-toolbar styleClass="mb-4 gap-2">
                     <ng-template pTemplate="left">
-
-                        <p-button pRipple severity="success" label="New" icon="pi pi-plus" class="mr-2" (click)="openNuevoCurso()" />
-                        <p-button pRipple severity="danger" label="Delete" icon="pi pi-trash" />
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" placeholder="Buscar curso.." />
+                        </span>
+                        <!-- <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" /> -->
                     </ng-template>
 
-
                     <ng-template pTemplate="right">
-                        <button mat-flat-button type="submit" disabled="false" [color]="color" class="mr-3" (click)="openNuevoCurso()"> <i
-                                class="fa fa-add" style="padding-right: 15px;"></i> Agregar Curso</button>
-                        <p-button pRipple severity="help" label="Export" icon="pi pi-upload" />
+
+                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCurso()" />
+   
+
                     </ng-template>
                 </p-toolbar>
 
 
-                <p-dialog [(visible)]="agregarCursoDialog"  header="Agregar Curso"  [style]="{ width: '550px' }" 
-                    [modal]="true">
-                    <ng-template pTemplate="content">
-                        <div class="field">
-                            <label for="cursoNombre">Nombre</label>
-                            <input 
-                                type="text" 
-                               
-                                pInputText 
-                                id="cursoNombre" 
-                                [(ngModel)]="curso.nombre" 
-                                required 
-                                autofocus />
-                            <small class="p-error" *ngIf="submitted && !curso.nombre">
-                                Obligatorio.
-                            </small>
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="footer">
-                        <p-button 
-                            pRipple 
-                            label="Cancel" 
-                            icon="pi pi-times" 
-                            [text]="true" 
-                            (click)="hideDialog()" />
-                        <p-button 
-                            pRipple 
-                            label="Save" 
-                            icon="pi pi-check" 
-                            [text]="true" 
-                            (click)="agregarCurso()" />
-                    </ng-template>
-                </p-dialog>
+
+
+
+
+
+
 
 
 
@@ -188,4 +170,3 @@
         </div>
     </div>
 </div>
-

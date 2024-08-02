@@ -99,7 +99,6 @@ public class UserService {
             activo = null;
         }
 
-
         UserDTO userDTO = new UserDTO(
                 user.getId(),
                 user.getFirstname(),
@@ -135,14 +134,14 @@ public class UserService {
         return userDTO;
     }
 
-    public boolean verificarUsername(String username){
+    public boolean verificarUsername(String username) {
 
-        Optional<User> user = userRepository.findByUsername(username);    
-        
-        if(!user.isEmpty()){
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if (!user.isEmpty()) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -163,6 +162,21 @@ public class UserService {
      */
 
     @Transactional
+    public MessageResponse updateUserByAdmin(UserRequest userRequest) {
+
+        User user = userRepository.findUserById(userRequest.id);
+
+        user.setFirstname(userRequest.getFirstname());
+        user.setLastname(userRequest.getLastname());
+        user.setUsername(userRequest.getUsername());
+        user.setUser_estado_usuario(userRequest.isUser_estado_usuario()==true?1:0);
+
+        userRepository.save(user);
+
+        return new MessageResponse("El usuario se actualizó satisfactoriamente.");
+    }
+
+    @Transactional
     public MessageResponse updateUser(UserRequest userRequest) {
 
         Catalogo catSexo = new Catalogo(userRequest.getUser_sexo(), "", null, null);
@@ -173,7 +187,7 @@ public class UserService {
         Catalogo catGrupoEtnico = new Catalogo(userRequest.getUser_grupo_etnico(), "", null, null);
         Catalogo catNacionalidadIndigena = new Catalogo(userRequest.getUser_nacionalidad_indigena(), "", null, null);
         Catalogo catNivelEducacion = new Catalogo(userRequest.getUser_nivel_educacion(), "", null, null);
-        
+
         Catalogo catActividadLaboral = new Catalogo(userRequest.getUser_actividad_laboral(), "", null, null);
         Catalogo catNivel = new Catalogo(userRequest.getUser_nivel(), "", null, null);
 
@@ -201,7 +215,8 @@ public class UserService {
                 .user_fecha_nacimiento(userRequest.user_fecha_nacimiento)
                 .user_titulo_senescyt(userRequest.user_titulo_senescyt)
                 .user_especialidad_accion_personal(userRequest.user_especialidad_accion_personal)
-                .user_estado_usuario(userRequest.user_estado_usuario==true?1:0)
+                .user_estado_usuario(userRequest.user_estado_usuario == true ? 1 : 0)
+                //.user_estado_usuario(userRequest.user_estado_usuario)
                 .user_actividad_laboral(catActividadLaboral)
                 .user_nivel(catNivel)
                 .user_fecha_ingreso_magisterio(userRequest.user_fecha_ingreso_magisterio)
@@ -235,8 +250,7 @@ public class UserService {
                 user.user_actividad_laboral,
                 user.user_nivel,
                 user.user_fecha_ingreso_magisterio,
-                user.user_fecha_ingreso_institucion
-                );
+                user.user_fecha_ingreso_institucion);
 
         return new MessageResponse("El usuario se actualizó satisfactoriamente.");
     }
