@@ -7,12 +7,13 @@ import { AddUserRequest } from './addUserRequest';
 import { first } from 'rxjs';
 import { UserService } from '../../services/user/user.service';
 import { ThemePalette } from '@angular/material/core';
+import { AlertType } from '../../shared/alert/alertType';
 
 interface Rol {
   value: string;
   viewValue: string;
 }
-type AlertType = 'success' | 'error';
+
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -77,7 +78,6 @@ export class AgregarUsuarioComponent {
   }
 
   onSubmit(): void {
-    console.log(this.userForm)
     if (this.userForm.valid) {
       this.loginService.register(this.userForm.value as AddUserRequest)
       this.dialogRef.close(this.userForm.value);

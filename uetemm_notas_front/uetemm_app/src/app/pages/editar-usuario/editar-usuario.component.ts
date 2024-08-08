@@ -11,10 +11,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { PasswordRequest } from '../cambiar-contrasena/passwordRequest';
 import { AlertService } from '../../services/alert/alert.service';
-import { Curso } from '../../domain/curso';
+import { Curso } from '../../services/curso/curso';
 import { AgregarCursoComponent } from '../curso/agregar-curso/agregar-curso.component';
-
-type AlertType = 'success' | 'error';
+import { CursoService } from '../../services/curso/curso.service';
+import { AlertType } from '../../shared/alert/alertType';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -33,14 +33,15 @@ export class EditarUsuarioComponent implements OnInit {
   user_estado_usuario?: boolean;
 
   curso!: Curso;
+  cursos!: Curso[];
   submitted: boolean = false;
 
   color: ThemePalette = 'primary';
   errorMessage: String = '';
   errorRequiredMessage: String = 'Este campo es obligatorio.';
 
-  checked:boolean = true
-  value: number = 50
+  checked: boolean = true;
+  value: number = 50;
   /* public resetPasswordRequest: PasswordRequest */
   public resetPasswordRequest: PasswordRequest = {
     id: 0,
@@ -55,6 +56,7 @@ export class EditarUsuarioComponent implements OnInit {
     public dialogo: MatDialog,
     private alertService: AlertService,
     private router: Router,
+    private cursoService: CursoService,
     private dialog: MatDialog
   ) {}
 
@@ -67,13 +69,25 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
-
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
     });
     this.loadUserData();
+
+    /* this.cursoService.getCursoByUserId(1).subscribe({
+      next(cursos) {
+          console.log('cursos', cursos)
+          this.cursos = cursos
+      },
+    }) */
+    this.cursoService
+      .getCursoByUserId(this.userId)
+      .subscribe(
+        (data) => (
+          (this.cursos = data), console.log('this.cursos', this.cursos)
+        )
+      );
   }
 
   private loadUserData() {
@@ -108,7 +122,7 @@ export class EditarUsuarioComponent implements OnInit {
   get username() {
     return this.userDetailsForm.controls['username'];
   }
-  get estado_usuario(){
+  get estado_usuario() {
     return this.userDetailsForm.controls['user_estado_usuario'];
   }
 
@@ -182,17 +196,46 @@ export class EditarUsuarioComponent implements OnInit {
     this.agregarCursoDialog = true;
     this.submitted = false;
     this.curso = {};
+    const userId = this.userId;
 
     const dialogRef = this.dialog.open(AgregarCursoComponent, {
-      width: '900px'
+      width: '600px',
+      data: { userId },
     });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cursoService
+          .getCursoByUserId(userId)
+          .subscribe((cursos) => (this.cursos = cursos));
+      }
+    });
   }
+
+  editarCurso(cursoEdit: Curso) {
+    this.curso = cursoEdit;
+    const userId = this.userId;
+    this.submitted = false;
+
+    const dialogRef = this.dialog.open(AgregarCursoComponent, {
+      width: '600px',
+      data: { userId, cursoEdit },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cursoService
+          .getCursoByUserId(userId)
+          .subscribe((cursos) => (this.cursos = cursos));
+      }
+    });
+  }
+
   hideDialog() {
     this.agregarCursoDialog = false;
     this.submitted = false;
   }
-  agregarCurso(){
+  agregarCurso() {
     this.submitted = true;
   }
 
@@ -208,13 +251,17 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   guardarInformacionUsuario() {
-    if(this.userDetailsForm.valid){
-      this.userService.updateUserByAdmin(this.userDetailsForm.value as User).subscribe({
-        next:()=>{
-          this.showAlert('La información se ha guardado con éxito.', 'success');
-        }
-      })
-      
+    if (this.userDetailsForm.valid) {
+      this.userService
+        .updateUserByAdmin(this.userDetailsForm.value as User)
+        .subscribe({
+          next: () => {
+            this.showAlert(
+              'La información se ha guardado con éxito.',
+              'success'
+            );
+          },
+        });
     }
   }
 

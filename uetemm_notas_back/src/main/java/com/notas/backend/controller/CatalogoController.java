@@ -23,6 +23,17 @@ public class CatalogoController {
     @Autowired
     CatogoService catalogoService;
 
+    
+    @GetMapping("/all")
+    public ResponseEntity<Object> getCatalogoList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getAllCatalogos());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar Lista de Catálogos", HttpStatus.BAD_REQUEST);
+            }
+    }
+
     @GetMapping("/estado_civil")
     public ResponseEntity<Object> getEstadoCivilList() {
         try {
@@ -123,6 +134,67 @@ public class CatalogoController {
             }
     }
 
+    @GetMapping("/nivelAsignatura")
+    public ResponseEntity<Object> getNivelAsignaturaList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(122));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - NivelAsignatura", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/subNivelAsignatura")
+    public ResponseEntity<Object> getSubNivelAsignaturaList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(98));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - SubNivelAsignatura", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/grado")
+    public ResponseEntity<Object> getGradosList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(87));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Grado", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/paralelo")
+    public ResponseEntity<Object> getParaleloList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(103));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Paralelo", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/asignatura")
+    public ResponseEntity<Object> getAsignaturaList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(113));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/jornada")
+    public ResponseEntity<Object> getJornadaList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getCatalogoByParentId(118));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Jornada", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    
     /*
      * @GetMapping("/estado-civil")
      * public UserDTO getEstadoCivil() {

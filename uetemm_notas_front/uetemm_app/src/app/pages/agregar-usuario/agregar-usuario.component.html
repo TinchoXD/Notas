@@ -61,7 +61,7 @@
                             }
                         </mat-select>
 
-                        @if (email.hasError('rol')) {
+                        @if (rol.invalid) {
                         <mat-error> {{errorMessage}}</mat-error>
                         }
                     </mat-form-field>
