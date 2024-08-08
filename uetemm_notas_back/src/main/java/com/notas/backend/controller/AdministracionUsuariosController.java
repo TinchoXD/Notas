@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/administracionUsuarios")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4600" })
 public class AdministracionUsuariosController {
 
     @Autowired

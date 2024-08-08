@@ -16,6 +16,8 @@ import jakarta.transaction.Transactional;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByUsername(String username);
+    
+    Optional<User> findById(Integer id);
 
     @Query("select u from User u where u.id = :id")
     User findUserById(@Param("id") Integer id);

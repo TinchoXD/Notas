@@ -31,26 +31,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
     @Basic
-    @Column(nullable = false)
+    @Column(nullable = true)
     public String username;
-    @Column(nullable = false)
+    @Column(nullable = true)
     public String lastname;
     public String firstname;
     @ManyToOne
-    @JoinColumn(name="user_sexo", nullable=false)
+    @JoinColumn(name = "user_sexo", nullable = true)
     public Catalogo user_sexo;
     public String pais;
     public String password;
-    @Enumerated(EnumType.STRING) 
+    @Enumerated(EnumType.STRING)
     public Role role;
+
     @ManyToOne
-    @JoinColumn(name="estado_civil", nullable=false)
+    @JoinColumn(name = "estado_civil", nullable = true)
     public Catalogo estado_civil;
     public String user_direccion;
     public String user_telefono_celular;
@@ -59,65 +60,71 @@ public class User implements UserDetails {
     public String user_email_institucional;
     public String user_distrito;
     @ManyToOne
-    @JoinColumn(name="user_relacion_laboral", nullable=false)
+    @JoinColumn(name = "user_relacion_laboral", nullable = true)
     public Catalogo user_relacion_laboral;
     @ManyToOne
-    @JoinColumn(name="user_jornada_laboral", nullable=false)
+    @JoinColumn(name = "user_jornada_laboral", nullable = true)
     public Catalogo user_jornada_laboral;
     @ManyToOne
-    @JoinColumn(name="user_nivel_educacion", nullable=false)
+    @JoinColumn(name = "user_nivel_educacion", nullable = true)
     public Catalogo user_nivel_educacion;
     @ManyToOne
-    @JoinColumn(name="user_categoria", nullable=false)
+    @JoinColumn(name = "user_categoria", nullable = true)
     public Catalogo user_categoria;
     @ManyToOne
-    @JoinColumn(name="user_grupo_etnico", nullable=false)
+    @JoinColumn(name = "user_grupo_etnico", nullable = true)
     public Catalogo user_grupo_etnico;
     @ManyToOne
-    @JoinColumn(name="user_nacionalidad_indigena", nullable=false)
+    @JoinColumn(name = "user_nacionalidad_indigena", nullable = true)
     public Catalogo user_nacionalidad_indigena;
     public Integer user_estado_usuario;
     public Date user_fecha_nacimiento;
     public String user_titulo_senescyt;
     public String user_especialidad_accion_personal;
-    
+
     public Integer user_requiere_cambio_contrasena;
     public Integer user_status;
 
     @ManyToOne
-    @JoinColumn(name="user_actividad_laboral", nullable=false)
+    @JoinColumn(name = "user_actividad_laboral", nullable = true)
     public Catalogo user_actividad_laboral;
 
     @ManyToOne
-    @JoinColumn(name="user_nivel", nullable=false)
+    @JoinColumn(name = "user_nivel", nullable = true)
     public Catalogo user_nivel;
 
     @ManyToOne
-    @JoinColumn(name="user_activo", nullable=false)
+    @JoinColumn(name = "user_activo", nullable = true)
     public Catalogo user_activo;
 
     public Date user_fecha_ingreso_magisterio;
     public Date user_fecha_ingreso_institucion;
     public String user_observacion;
-/*     @Transient
-    public Integer estado_civil_id; */
+    /*
+     * @Transient
+     * public Integer estado_civil_id;
+     */
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-      return List.of(new SimpleGrantedAuthority((role.name())));
+        return List.of(new SimpleGrantedAuthority((role.name())));
     }
+
     @Override
     public boolean isAccountNonExpired() {
-       return true;
+        return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
-       return true;
+        return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;

@@ -10,6 +10,7 @@ import { LoadingService } from '../../services/loading/loading.service';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AgregarUsuarioComponent } from '../agregar-usuario/agregar-usuario.component';
+import { User } from '../../services/auth/user';
 
 
 
@@ -30,6 +31,14 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<any>;
   severity: string = 'severity'
 
+  sizes!: any[];
+  selectedSize: any = { name: 'Small', class: 'p-datatable-sm' };
+
+  usuarios!: User[];
+
+
+
+
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private userService: UserService,
@@ -46,25 +55,28 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   }
 
   dialogAgregarUsuario(): void {
+  
     const dialogRef = this.dialog.open(AgregarUsuarioComponent, {
       width: '900px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Nuevo usuario agregado:', result);
-        // Aquí puedes agregar el código para manejar el nuevo usuario
+        this.userService.getAllUser().subscribe((data)=>(this.usuarios = data))
       }
     });
   }
 
   ngOnInit(): void {
-    this.userService.getAllUser().subscribe(data => {
-      console.log("users DATA",data )
-      this.dataSource = new MatTableDataSource(data)
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    })
+    
+    this.userService.getAllUser().subscribe((data)=>(this.usuarios = data))
+
+    this.sizes = [
+      { name: 'Small', class: 'p-datatable-sm' },
+      { name: 'Normal', class: '' },
+      { name: 'Large',  class: 'p-datatable-lg' }
+  ];
+
   }
 
   @ViewChild(MatSort) sort!: MatSort;

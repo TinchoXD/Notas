@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "BackEndApplication",
+            "request": "launch",
+            "mainClass": "com.notas.backend.BackEndApplication",
+            "projectName": "backend"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",

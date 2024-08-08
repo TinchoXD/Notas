@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
 import { merge, firstValueFrom} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import { ThemePalette } from '@angular/material/core';
+import { AlertType } from '../../shared/alert/alertType';
 
 
 
-type AlertType = 'success' | 'error';
+
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -438,9 +439,6 @@ export class UserDetailsComponent {
     console.log("userDetailsForm", this.userDetailsForm);
     if (this.userDetailsForm.valid) {
       try {   
-        console.log(this.userDetailsForm.value)
-        console.log("this.userDetailsForm.controls['user_estado_usuario']", this.userDetailsForm.controls['user_estado_usuario'])
-   
         await firstValueFrom(this.userService.updateUser(this.userDetailsForm.value as unknown as User));
         this.editMode = false;
         this.user = this.userDetailsForm.value as unknown as User;

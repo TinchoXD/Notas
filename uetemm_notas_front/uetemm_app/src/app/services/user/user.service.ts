@@ -60,6 +60,11 @@ export class UserService implements OnInit {
     )
   }
 
+  updateUserByAdmin(userRequest: User): Observable<any> {
+    return this.http.put(environment.urlApi + "users/updateUserByAdmin", userRequest).pipe(catchError(this.handleError)
+    )
+  }
+
   updateUserPassword(passwordRequest: PasswordRequest): Observable<any> {
     return this.http.put(environment.urlApi + "users/user/cambiarContrasena", passwordRequest).pipe(
       catchError(this.handleError)

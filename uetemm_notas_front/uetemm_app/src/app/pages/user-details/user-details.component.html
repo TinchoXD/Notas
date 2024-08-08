@@ -48,7 +48,7 @@
 
                                     <mat-form-field style="width: 100%;" appearance="outline">
                                         <mat-label>Sexo</mat-label>
-                                        <mat-select formControlName="user_sexo" [value]="sexo">
+                                        <mat-select formControlName="user_sexo">
                                             <mat-option *ngFor="let sexo of catalogoSexo"
                                                 [value]="sexo.id">{{sexo.nombre}}</mat-option>
                                         </mat-select>

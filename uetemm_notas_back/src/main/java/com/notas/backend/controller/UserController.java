@@ -17,14 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:4600"})
 public class UserController {
 
     @Autowired
@@ -60,7 +61,14 @@ public class UserController {
     {
         return ResponseEntity.ok(userService.updateUser(userRequest));
     }
-    
+
+    @PutMapping("/updateUserByAdmin")
+    public ResponseEntity<MessageResponse> updateUserByAdmin(@RequestBody UserRequest userRequest)
+    {
+        return ResponseEntity.ok(userService.updateUserByAdmin(userRequest));
+    }
+
+
 
     @PutMapping("/user/cambiarContrasena")
     public ResponseEntity<MessageResponse> updatePassword(@RequestBody PasswordRequest passwordRequest)

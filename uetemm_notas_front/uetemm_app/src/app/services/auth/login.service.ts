@@ -15,8 +15,9 @@ import { Router } from '@angular/router';
 import { AlertService } from '../alert/alert.service';
 import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
 import { error } from 'jquery';
+import { AlertType } from '../../shared/alert/alertType';
 
-type AlertType = 'success' | 'error';
+
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';

@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "material-icons": "^1.13.12",
+    "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.1",
     "rxjs": "~7.8.0",
@@ -44,6 +45,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "nodemon": "^3.1.4",
     "typescript": "~5.4.2"
   }
 }

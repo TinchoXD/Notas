@@ -1,0 +1,11 @@
+.full-width-dropdown {
+    width: 100%;
+  }
+  
+  .full-width-dropdown .p-dropdown {
+    width: 100%;
+  }
+  
+  .full-width-dropdown .p-dropdown-label {
+    width: 100%;
+  }
