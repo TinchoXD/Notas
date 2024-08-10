@@ -6,7 +6,7 @@ export interface CursoRequest {
     subnivel: number;
     grado: number;
     paralelo: number;
-    asignatura: number;
+/*     asignatura: number; */
     jornada: number;
     descripcion: string;
     user_id: number;

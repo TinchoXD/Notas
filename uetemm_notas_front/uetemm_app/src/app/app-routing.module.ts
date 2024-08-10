@@ -6,6 +6,8 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { AdministracionUsuariosComponent } from './pages/administracion-usuarios/administracion-usuarios.component';
 import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
+import { CursosComponent } from './pages/curso/curso/cursos.component';
+import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
 
 
 const routes: Routes = [
@@ -17,7 +19,9 @@ const routes: Routes = [
   { path: 'informacion-personal', component: UserDetailsComponent },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent },
   { path: 'administracion-usuarios', component: AdministracionUsuariosComponent },
-  { path: 'editar-usuario/:id', component: EditarUsuarioComponent }
+  { path: 'cursos', component: CursosComponent },
+  { path: 'asignaturas', component: AsignaturaComponent },
+  { path: 'editar-usuario/:id', component: EditarUsuarioComponent },
 ];
 
 @NgModule({

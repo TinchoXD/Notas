@@ -34,7 +34,11 @@ import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.co
 import { LoadingComponent } from './services/loading/loading.component';
 import { LoadingService } from './services/loading/loading.service';
 import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
-import { AgregarCursoComponent } from './pages/curso/agregar-curso/agregar-curso.component';
+import { AgregarCursoComponent } from './pages/curso/dialogo-curso/agregar-curso.component';
+import { CursosComponent } from './pages/curso/curso/cursos.component';
+import { AsyncPipe } from '@angular/common';
+import { DialogoAsignaturaComponent } from './pages/asignatura/dialogo-asignatura/dialogo-asignatura.component';
+import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,10 @@ import { AgregarCursoComponent } from './pages/curso/agregar-curso/agregar-curso
     EditarUsuarioComponent,
     LoadingComponent,
     AgregarUsuarioComponent,
-    AgregarCursoComponent
+    AgregarCursoComponent,
+    CursosComponent,
+    DialogoAsignaturaComponent,
+    AsignaturaComponent
     
   ],
   imports: [
@@ -67,8 +74,8 @@ import { AgregarCursoComponent } from './pages/curso/agregar-curso/agregar-curso
     OverlayModule,
     MatNativeDateModule,
     PrimeNGModule,
-    FormsModule
-
+    FormsModule,
+    AsyncPipe
   ],
   providers:
     [

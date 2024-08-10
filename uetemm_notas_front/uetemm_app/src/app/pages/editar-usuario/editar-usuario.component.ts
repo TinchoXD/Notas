@@ -12,7 +12,7 @@ import { DialogoConfirmacionComponent } from '../../shared/dialogo-confirmacion/
 import { PasswordRequest } from '../cambiar-contrasena/passwordRequest';
 import { AlertService } from '../../services/alert/alert.service';
 import { Curso } from '../../services/curso/curso';
-import { AgregarCursoComponent } from '../curso/agregar-curso/agregar-curso.component';
+import { AgregarCursoComponent } from '../curso/dialogo-curso/agregar-curso.component';
 import { CursoService } from '../../services/curso/curso.service';
 import { AlertType } from '../../shared/alert/alertType';
 
@@ -32,8 +32,8 @@ export class EditarUsuarioComponent implements OnInit {
   userCI: string = '';
   user_estado_usuario?: boolean;
 
-  curso!: Curso;
-  cursos!: Curso[];
+/*   curso!: Curso;
+  cursos!: Curso[]; */
   submitted: boolean = false;
 
   color: ThemePalette = 'primary';
@@ -69,6 +69,7 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
@@ -81,13 +82,13 @@ export class EditarUsuarioComponent implements OnInit {
           this.cursos = cursos
       },
     }) */
-    this.cursoService
+    /* this.cursoService
       .getCursoByUserId(this.userId)
       .subscribe(
         (data) => (
           (this.cursos = data), console.log('this.cursos', this.cursos)
         )
-      );
+      ); */
   }
 
   private loadUserData() {
@@ -192,52 +193,9 @@ export class EditarUsuarioComponent implements OnInit {
       });
   }
 
-  dialogAgregarCurso() {
-    this.agregarCursoDialog = true;
-    this.submitted = false;
-    this.curso = {};
-    const userId = this.userId;
+  
 
-    const dialogRef = this.dialog.open(AgregarCursoComponent, {
-      width: '600px',
-      data: { userId },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.cursoService
-          .getCursoByUserId(userId)
-          .subscribe((cursos) => (this.cursos = cursos));
-      }
-    });
-  }
-
-  editarCurso(cursoEdit: Curso) {
-    this.curso = cursoEdit;
-    const userId = this.userId;
-    this.submitted = false;
-
-    const dialogRef = this.dialog.open(AgregarCursoComponent, {
-      width: '600px',
-      data: { userId, cursoEdit },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.cursoService
-          .getCursoByUserId(userId)
-          .subscribe((cursos) => (this.cursos = cursos));
-      }
-    });
-  }
-
-  hideDialog() {
-    this.agregarCursoDialog = false;
-    this.submitted = false;
-  }
-  agregarCurso() {
-    this.submitted = true;
-  }
+  
 
   async resetearContrasenia() {
     this.resetPasswordRequest = {

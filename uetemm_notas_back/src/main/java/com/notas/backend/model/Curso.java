@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -26,10 +27,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "curso", uniqueConstraints = { @UniqueConstraint(columnNames = { "curs_id" }) })
 @AttributeOverrides({
-        @AttributeOverride(name = "fecha_creacion", column = @Column(name = "curs_fecha_creacion")),
-        @AttributeOverride(name = "fecha_modificacion", column = @Column(name = "curs_fecha_modificacion")),
-        @AttributeOverride(name = "user_creacion", column = @Column(name = "curs_user_creacion")),
-        @AttributeOverride(name = "user_modificacion", column = @Column(name = "curs_user_modificacion"))
+    @AttributeOverride(name = "fecha_creacion", column = @Column(name = "curs_fecha_creacion")),
+    @AttributeOverride(name = "fecha_modificacion", column = @Column(name = "curs_fecha_modificacion")),
+    @AttributeOverride(name = "user_creacion", column = @Column(name = "curs_user_creacion")),
+    @AttributeOverride(name = "user_modificacion", column = @Column(name = "curs_user_modificacion")),
+
 })
 public class Curso {
 
@@ -66,7 +68,10 @@ public class Curso {
     @JoinColumn(name = "user_id", nullable = true)
     public User user;
 
-    @Column(name = "curs_descripcion")
-    public String descripcion;
+    @Column(name = "curs_descripcion", nullable = true)
+    public String descripcion; 
+
+    @Column(name = "curs_status", nullable = true)
+    public int status;
     
 }

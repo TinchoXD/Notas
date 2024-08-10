@@ -39,16 +39,36 @@ public class CursoController {
     @Autowired
     CursoService cursoService;
 
+    //* OBTENER TODOS LOS CURSOS */
+    @GetMapping("/all")
+    public List<Curso> getCursos() {
+        return cursoService.getCursos();
+    }
 
+    //* OBTENER TODOS LOS CURSOS ACTIVOS*/
+    @GetMapping("/allActive")
+    public List<Curso> getCursosActivos() {
+        return cursoService.getCursosActivos();
+    }
+
+    //* OBTENER LOS POR ID DE USUARIO (TUTOR) */
     @GetMapping("/curso/user/{id}")
     public List<Curso> getCursoByUserId(@PathVariable int id) {
         return cursoService.getCursoByUserId(id);
     }
 
+    //* GUARDAR NUEVO CURSO */
     @PostMapping(value = "/curso/agregarCurso")
     public ResponseEntity<Object> postCurso(@RequestBody CursoRequest request)
     {
         return ResponseEntity.ok(cursoService.postCurso(request));
+    }
+   
+    //* ELIMINAR CURSO (DESCATALOGAR CURSO - STATUS = 0) */
+    @PostMapping(value = "/curso/deleteCurso")
+    public ResponseEntity<Object> delCurso(@RequestBody CursoRequest request)
+    {
+        return ResponseEntity.ok(cursoService.delCurso(request));
     }
 
 /* 
