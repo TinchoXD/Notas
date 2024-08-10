@@ -32,32 +32,10 @@ export class AgregarCursoComponent implements OnInit {
   paralelos!: Catalogo[];
   jornadas!: Catalogo[];
   profesores!: User[];
-
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<AgregarCursoComponent>,
-    private fb: FormBuilder,
-    private catalogoService: CatalogoService,
-    private alertService: AlertService,
-    private cursoService: CursoService,
-    private userService: UserService,
-  ) {
-    this.cursoForm = this.fb.group({
-      id: [''],
-      nivel: ['', Validators.required],
-      subnivel: ['', Validators.required],
-      grado: ['', Validators.required],
-      paralelo: ['', Validators.required],
-      jornada: ['', Validators.required],
-      descripcion: [''],
-      user_id: [''],
-    });
-  }
+  
   ngOnInit(): void {
     if (this.data.cursoEdit) {
       console.log(this.data.cursoEdit);
-
       this.cursoForm.patchValue({
         id: this.data.cursoEdit.id.toString(),
         nivel: this.data.cursoEdit.nivel.id,
@@ -68,13 +46,7 @@ export class AgregarCursoComponent implements OnInit {
         user_id: this.data.cursoEdit.user.id,
         descripcion: this.data.cursoEdit.descripcion,
       });
-      console.log('this.cursoForm',this.cursoForm)
-    } else {
-      console.log(this.data);
-      this.cursoForm.patchValue({
-
-      });
-    }
+    } 
 
     this.catalogoService
       .getNivelAsignaturaLista()
@@ -102,8 +74,27 @@ export class AgregarCursoComponent implements OnInit {
     this.catalogoService
       .getJornadaLista()
       .subscribe((jornadas) => (this.jornadas = jornadas));
+  }
 
-
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<AgregarCursoComponent>,
+    private fb: FormBuilder,
+    private catalogoService: CatalogoService,
+    private alertService: AlertService,
+    private cursoService: CursoService,
+    private userService: UserService,
+  ) {
+    this.cursoForm = this.fb.group({
+      id: [''],
+      nivel: ['', Validators.required],
+      subnivel: ['', Validators.required],
+      grado: ['', Validators.required],
+      paralelo: ['', Validators.required],
+      jornada: ['', Validators.required],
+      descripcion: [''],
+      user_id: ['', Validators.required],
+    });
   }
 
   get nivel() {
@@ -136,9 +127,7 @@ export class AgregarCursoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.cursoForm.value', this.cursoForm.value);
     if (this.cursoForm.valid) {
-      console.log('this.cursoForm.value', this.cursoForm.value);
       this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
       this.dialogRef.close(this.cursoForm.value);
     } else {

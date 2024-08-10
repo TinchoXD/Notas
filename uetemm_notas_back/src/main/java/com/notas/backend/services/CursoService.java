@@ -48,15 +48,20 @@ public class CursoService {
         User user = new User();
         if(cursoRequest.user_id != 0){
            user = User.builder().id(cursoRequest.user_id).build();
+           Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura).grado(grado)
+                   .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion).user(user)
+                   .status(1)
+                   .build();
+           cursoRepository.save(curso);
         }else{
             user = User.builder().id(null).build();
+            Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura).grado(grado)
+                    .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion)
+                    .status(1)
+                    .build();
+            cursoRepository.save(curso);
         }
 
-        Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura).grado(grado)
-                .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion)
-                .user(user).status(1)
-                .build();
-        cursoRepository.save(curso);
         return new MessageResponse("El Curso se agregó satisfactoriamente.");
     }
 

@@ -1,21 +1,12 @@
 package com.notas.backend.controller;
 
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.notas.backend.auth.AuthResponse;
-import com.notas.backend.auth.RegisterRequest;
-import com.notas.backend.dto.UserDTO;
 import com.notas.backend.model.Curso;
 import com.notas.backend.request.CursoRequest;
-import com.notas.backend.request.PasswordRequest;
-import com.notas.backend.request.UserRequest;
-import com.notas.backend.response.MessageResponse;
 import com.notas.backend.services.CursoService;
-import com.notas.backend.services.UserService;
-
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.notas.backend.request.CatalogoRequest;
+import com.notas.backend.request.CursoRequest;
 import com.notas.backend.services.CatogoService;
 
 import lombok.RequiredArgsConstructor;
@@ -183,6 +186,25 @@ public class CatalogoController {
             return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
             }
     }
+    @PostMapping(value = "/agregarAsignatura")
+    public ResponseEntity<Object> postAsignatura(@RequestBody CatalogoRequest request) {
+        try {
+            return ResponseEntity.ok(catalogoService.postAsignatura(request));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al agregar - Asignatura", HttpStatus.BAD_REQUEST);
+            }
+    }
+
+    @GetMapping("/asignaturaActive")
+    public ResponseEntity<Object> getAsignaturaActiveList() {
+        try {
+            return ResponseEntity.ok(catalogoService.getAsignaturasActivas());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
+            }
+    }
 
     @GetMapping("/jornada")
     public ResponseEntity<Object> getJornadaList() {
@@ -193,6 +215,8 @@ public class CatalogoController {
             return new ResponseEntity<>("error al consultar catálogo - Jornada", HttpStatus.BAD_REQUEST);
             }
     }
+
+
 
     
     /*

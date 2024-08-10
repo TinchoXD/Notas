@@ -2,9 +2,6 @@ package com.notas.backend.dto;
 
 import java.util.Date;
 
-import com.notas.backend.model.Catalogo;
-
-
 import lombok.Getter;
 import lombok.Setter;
 

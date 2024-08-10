@@ -79,8 +79,8 @@ export class CursosComponent implements OnInit {
     console.log('curso a borrar', curso)
     this.dialog.open(DialogoConfirmacionComponent,{
       data:{
-        titutlo: `¿Eliminar Curso?`,
-         mensaje: 'Desea eliminar el Curso ' + curso.grado +' '+ curso.paralelo + ' de la jornada '+ curso.jornada
+        titulo: `¿Eliminar Curso?`,
+         mensaje: ' asdawd afwfaw'
       }
     })
     .afterClosed()

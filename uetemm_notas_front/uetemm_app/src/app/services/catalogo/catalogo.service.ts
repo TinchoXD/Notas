@@ -4,13 +4,20 @@ import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Catalogo } from './catalogo';
 import { error } from 'jquery';
+import { CatalogoRequest } from './catalogoRequest';
+import { AlertType } from '../../shared/alert/alertType';
+import { AlertService } from '../alert/alert.service';
+
+function isAlertType(type: string): type is AlertType {
+  return type === 'success' || type === 'error';
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogoService {
 
-  constructor(private http: HttpClient,) {
+  constructor(private http: HttpClient, private alertService: AlertService) {
 
   }
 
@@ -67,6 +74,22 @@ export class CatalogoService {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignatura').pipe(catchError(this.handleError))
   }
   
+  getAsignaturaActiveLista(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignaturaActive').pipe(catchError(this.handleError))
+  }
+
+  putAsignatura(curso: CatalogoRequest) {
+    return this.http.post<any>(environment.urlApi + 'catalogos/agregarAsignatura', curso).subscribe({
+      next: () => {
+        this.showAlert('Asignatura guardada', 'success');
+      },
+      error: () => {
+        this.showAlert('Error al agregar Asignatura', 'error');
+        console.log('Error: ', catchError(this.handleError));
+      },
+    });
+  }
+
   getJornadaLista(): Observable<Catalogo[]> {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/jornada').pipe(catchError(this.handleError))
   }
@@ -82,5 +105,10 @@ export class CatalogoService {
     return throwError(() => new Error('Algo salió mal, intente nuevamente'));
   }
 
+  showAlert(mensaje: string, type: string) {
+    if (isAlertType(type)) {
+      this.alertService.showAlert(mensaje, type);
+    }
+  }
 
 }

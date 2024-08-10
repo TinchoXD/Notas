@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Curso } from './curso';
+
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { CursoRequest } from './cursoRequest';
+
 import { AlertType } from '../../shared/alert/alertType';
 import { AlertService } from '../alert/alert.service';
+import { Catalogo } from '../catalogo/catalogo';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -17,7 +18,16 @@ function isAlertType(type: string): type is AlertType {
 export class CursoService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
-  getCurso(): Observable<Curso[]>{
+
+  getAsignaturas(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignatura').pipe(catchError(this.handleError))
+  }
+
+  getAsignaturasActive(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignaturaActive').pipe(catchError(this.handleError))
+  }
+
+  /* getCurso(): Observable<Curso[]>{
     return this.http
     .get<Curso[]>(environment.urlApi + 'cursos/all' )
     .pipe(catchError(this.handleError));
@@ -51,7 +61,7 @@ export class CursoService {
         console.log('Error: ', catchError(this.handleError));
       },
     });
-  }
+  } */
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
