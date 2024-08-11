@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 
 
-  { path: 'inicio', component: DashboardComponent },
   { path: 'iniciar-sesion', component: LoginComponent },
+  { path: 'inicio', component: DashboardComponent },
   { path: 'informacion-personal', component: UserDetailsComponent },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent },
   { path: 'administracion-usuarios', component: AdministracionUsuariosComponent },

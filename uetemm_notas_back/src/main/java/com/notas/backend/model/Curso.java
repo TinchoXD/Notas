@@ -12,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -48,9 +47,7 @@ public class Curso {
     @JoinColumn(name = "curs_paralelo", nullable = true)
     public Catalogo paralelo;
 
-    @ManyToOne
-    @JoinColumn(name = "curs_asignatura", nullable = true)
-    public Catalogo asignatura;
+
 
     @ManyToOne
     @JoinColumn(name = "curs_jornada", nullable = true)

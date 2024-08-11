@@ -15,6 +15,8 @@ import { Curso } from '../../services/curso/curso';
 import { AgregarCursoComponent } from '../curso/dialogo-curso/agregar-curso.component';
 import { CursoService } from '../../services/curso/curso.service';
 import { AlertType } from '../../shared/alert/alertType';
+import { CursoProfesorService } from '../../services/cursoProfesor/curso-profesor.service';
+import { DialogoCursoProfesorComponent } from './dialogoCursoProfesor/dialogo-curso-profesor.component';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -26,14 +28,17 @@ function isAlertType(type: string): type is AlertType {
   styleUrl: './editar-usuario.component.css',
 })
 export class EditarUsuarioComponent implements OnInit {
-  agregarCursoDialog: boolean = false;
+  agregarCursoProfesorDialog: boolean = false;
   user?: User;
   userId: number = 0;
   userCI: string = '';
   user_estado_usuario?: boolean;
 
-/*   curso!: Curso;
-  cursos!: Curso[]; */
+  onIcion: string = 'pi pi-check'
+
+  cursosProfesor!: any[];
+  cursoProfesor!: any;
+
   submitted: boolean = false;
 
   color: ThemePalette = 'primary';
@@ -57,7 +62,8 @@ export class EditarUsuarioComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private cursoService: CursoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cursoProfesorService: CursoProfesorService
   ) {}
 
   userDetailsForm: FormGroup = this.formBuilder.group({
@@ -74,21 +80,16 @@ export class EditarUsuarioComponent implements OnInit {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
     });
-    this.loadUserData();
 
-    /* this.cursoService.getCursoByUserId(1).subscribe({
-      next(cursos) {
-          console.log('cursos', cursos)
-          this.cursos = cursos
-      },
-    }) */
-    /* this.cursoService
-      .getCursoByUserId(this.userId)
-      .subscribe(
-        (data) => (
-          (this.cursos = data), console.log('this.cursos', this.cursos)
-        )
-      ); */
+    this.cursoProfesorService.getAllCursoProfesorByProfesorId(this.userId).subscribe({
+      next:(data)=>{
+        this.cursosProfesor = data;
+        console.log('cursosProfesor', this.cursosProfesor)
+      }
+    })
+
+    this.loadUserData();
+    
   }
 
   private loadUserData() {
@@ -193,7 +194,43 @@ export class EditarUsuarioComponent implements OnInit {
       });
   }
 
-  
+  dialogAgregarCursoProfesor(){
+    this.agregarCursoProfesorDialog = true
+    this.submitted = false;
+    this.cursoProfesor = {}
+
+    const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
+      width: '800px',
+      data: {user_id: this.userId}
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cursoProfesorService
+          .getAllCursoProfesorByProfesorId(this.userId)
+          .subscribe((cursosProfesor) => (this.cursosProfesor = cursosProfesor));
+      }
+    });
+  } 
+
+  editarCursoProfesor(cursoProfesorEdit: any){
+
+    this.cursoProfesor = cursoProfesorEdit;
+    this.submitted = false
+
+    const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
+      width: '800px',
+      data: { cursoProfesorEdit },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cursoProfesorService
+          .getAllCursoProfesorByProfesorId(this.userId)
+          .subscribe((cursosProfesor) => (this.cursosProfesor = cursosProfesor));
+      }
+    });
+  }
 
   
 

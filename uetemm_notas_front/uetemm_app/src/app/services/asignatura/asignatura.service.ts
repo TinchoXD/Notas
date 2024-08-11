@@ -15,7 +15,7 @@ function isAlertType(type: string): type is AlertType {
 @Injectable({
   providedIn: 'root',
 })
-export class CursoService {
+export class AsignaturaService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
 
@@ -23,9 +23,12 @@ export class CursoService {
     return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignatura').pipe(catchError(this.handleError))
   }
 
-  getAsignaturasActive(): Observable<Catalogo[]> {
-    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignaturaActive').pipe(catchError(this.handleError))
+  getAsignaturasActive(): Observable<any[]> {
+    return this.http.get<any[]>(environment.urlApi + 'catalogos/asignaturaActive').pipe(catchError(this.handleError))
   }
+  /* getAsignaturasActive(): Observable<Catalogo[]> {
+    return this.http.get<Catalogo[]>(environment.urlApi + 'catalogos/asignaturaActive').pipe(catchError(this.handleError))
+  } */
 
   /* getCurso(): Observable<Curso[]>{
     return this.http

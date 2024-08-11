@@ -33,6 +33,27 @@ export class AgregarCursoComponent implements OnInit {
   jornadas!: Catalogo[];
   profesores!: User[];
   
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<AgregarCursoComponent>,
+    private fb: FormBuilder,
+    private catalogoService: CatalogoService,
+    private alertService: AlertService,
+    private cursoService: CursoService,
+    private userService: UserService,
+  ) {
+    this.cursoForm = this.fb.group({
+      id: [''],
+      nivel: ['', Validators.required],
+      subnivel: ['', Validators.required],
+      grado: ['', Validators.required],
+      paralelo: ['', Validators.required],
+      jornada: ['', Validators.required],
+      descripcion: [''],
+      user_id: ['', Validators.required],
+    });
+  }
+  
   ngOnInit(): void {
     if (this.data.cursoEdit) {
       console.log(this.data.cursoEdit);
@@ -76,26 +97,7 @@ export class AgregarCursoComponent implements OnInit {
       .subscribe((jornadas) => (this.jornadas = jornadas));
   }
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<AgregarCursoComponent>,
-    private fb: FormBuilder,
-    private catalogoService: CatalogoService,
-    private alertService: AlertService,
-    private cursoService: CursoService,
-    private userService: UserService,
-  ) {
-    this.cursoForm = this.fb.group({
-      id: [''],
-      nivel: ['', Validators.required],
-      subnivel: ['', Validators.required],
-      grado: ['', Validators.required],
-      paralelo: ['', Validators.required],
-      jornada: ['', Validators.required],
-      descripcion: [''],
-      user_id: ['', Validators.required],
-    });
-  }
+  
 
   get nivel() {
     return this.cursoForm.controls['nivel'];

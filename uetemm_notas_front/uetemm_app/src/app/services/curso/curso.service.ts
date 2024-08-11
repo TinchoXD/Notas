@@ -23,9 +23,15 @@ export class CursoService {
     .pipe(catchError(this.handleError));
   }
 
-  getCursosActivos(): Observable<Curso[]>{
+/*   getCursosActivos(): Observable<Curso[]>{
     return this.http
     .get<Curso[]>(environment.urlApi + 'cursos/allActive' )
+    .pipe(catchError(this.handleError));
+  } */
+
+  getCursosActivos(): Observable<any[]>{
+    return this.http
+    .get<any[]>(environment.urlApi + 'cursos/allActive' )
     .pipe(catchError(this.handleError));
   }
 

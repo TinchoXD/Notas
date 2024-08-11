@@ -39,6 +39,7 @@ import { CursosComponent } from './pages/curso/curso/cursos.component';
 import { AsyncPipe } from '@angular/common';
 import { DialogoAsignaturaComponent } from './pages/asignatura/dialogo-asignatura/dialogo-asignatura.component';
 import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
+import { DialogoCursoProfesorComponent } from './pages/editar-usuario/dialogoCursoProfesor/dialogo-curso-profesor.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.co
     AgregarCursoComponent,
     CursosComponent,
     DialogoAsignaturaComponent,
-    AsignaturaComponent
+    AsignaturaComponent,
+    DialogoCursoProfesorComponent
     
   ],
   imports: [
