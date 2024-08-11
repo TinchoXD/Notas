@@ -1,12 +1,11 @@
 
+<app-login *ngIf="isLoginPage"></app-login>
 
-<div style="background-color: #fafafa;">
-
-  <app-nav-menu></app-nav-menu>
+<div style="background-color: #fafafa;" *ngIf="!isLoginPage">
+  <ng-container >
+    <app-nav-menu></app-nav-menu>
+    <app-loading></app-loading>
+  </ng-container>
   
-  <app-loading></app-loading>
-
   <router-outlet></router-outlet>
-  
-
 </div>

@@ -12,11 +12,9 @@ import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.co
 import { authGuard } from './services/auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-
-
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'iniciar-sesion', component: LoginComponent },
+  
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent, canActivate: [authGuard] },
