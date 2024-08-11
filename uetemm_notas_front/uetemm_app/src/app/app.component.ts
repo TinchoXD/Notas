@@ -10,5 +10,6 @@ import { LoginService } from './services/auth/login.service';
 })
 export class AppComponent {
   title = 'uetemm_app';
+  
 
 }

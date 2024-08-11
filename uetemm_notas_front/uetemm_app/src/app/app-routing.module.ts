@@ -9,19 +9,22 @@ import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.co
 import { CursosComponent } from './pages/curso/curso/cursos.component';
 import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
 
+import { authGuard } from './services/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
 
 
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'iniciar-sesion', component: LoginComponent },
-  { path: 'inicio', component: DashboardComponent },
-  { path: 'informacion-personal', component: UserDetailsComponent },
-  { path: 'actualizar-contrasena', component: CambiarContrasenaComponent },
-  { path: 'administracion-usuarios', component: AdministracionUsuariosComponent },
-  { path: 'cursos', component: CursosComponent },
-  { path: 'asignaturas', component: AsignaturaComponent },
-  { path: 'editar-usuario/:id', component: EditarUsuarioComponent },
+  { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },
+  { path: 'actualizar-contrasena', component: CambiarContrasenaComponent, canActivate: [authGuard] },
+  { path: 'administracion-usuarios', component: AdministracionUsuariosComponent, canActivate: [authGuard] },
+  { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },
+  { path: 'asignaturas', component: AsignaturaComponent, canActivate: [authGuard] },
+  { path: 'editar-usuario/:id', component: EditarUsuarioComponent, canActivate: [authGuard] },
+
 ];
 
 @NgModule({

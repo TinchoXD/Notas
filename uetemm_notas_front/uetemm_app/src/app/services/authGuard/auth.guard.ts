@@ -13,7 +13,7 @@ export class AuthService {
 
   //! REVISAR
   constructor() { 
-    this.isAuthenticated = !!localStorage.getItem(this.authSecretKey);
+   /*  this.isAuthenticated = !!localStorage.getItem(this.authSecretKey); */
   }
 
 
