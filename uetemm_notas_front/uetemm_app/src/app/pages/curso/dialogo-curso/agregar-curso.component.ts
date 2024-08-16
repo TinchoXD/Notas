@@ -8,6 +8,8 @@ import { AlertType } from '../../../shared/alert/alertType';
 import { AlertService } from '../../../services/alert/alert.service';
 import { CursoService } from '../../../services/curso/curso.service';
 import { CursoRequest } from '../../../services/curso/cursoRequest';
+import { User } from '../../../services/auth/user';
+import { UserService } from '../../../services/user/user.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -24,22 +26,21 @@ export class AgregarCursoComponent implements OnInit {
   cursoForm: FormGroup;
   errorMessage: String = 'Este campo es obligatorio.';
 
-  userId: number = 0;
-
-  nivelesAsignatura!: Catalogo[];
+  nivelesAsignatura: Catalogo[] = [];
   subnivelesAsignatura!: Catalogo[];
   grados!: Catalogo[];
   paralelos!: Catalogo[];
-  asignaturas!: Catalogo[];
   jornadas!: Catalogo[];
-
+  profesores!: User[];
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AgregarCursoComponent>,
     private fb: FormBuilder,
     private catalogoService: CatalogoService,
     private alertService: AlertService,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private userService: UserService,
   ) {
     this.cursoForm = this.fb.group({
       id: [''],
@@ -47,31 +48,26 @@ export class AgregarCursoComponent implements OnInit {
       subnivel: ['', Validators.required],
       grado: ['', Validators.required],
       paralelo: ['', Validators.required],
-      asignatura: ['', Validators.required],
       jornada: ['', Validators.required],
       descripcion: [''],
       user_id: ['', Validators.required],
     });
   }
+  
   ngOnInit(): void {
     if (this.data.cursoEdit) {
       console.log(this.data.cursoEdit);
       this.cursoForm.patchValue({
-        id: this.data.cursoEdit.id,
-        nivel: this.data.cursoEdit.nivel,
-        subnivel: this.data.cursoEdit.subnivel,
-        grado: this.data.cursoEdit.grado,
-        paralelo: this.data.cursoEdit.paralelo,
-        asignatura: this.data.cursoEdit.asignatura,
-        jornada: this.data.cursoEdit.jornada,
+        id: this.data.cursoEdit.id.toString(),
+        nivel: this.data.cursoEdit.nivel.id,
+        subnivel: this.data.cursoEdit.subnivel.id,
+        grado: this.data.cursoEdit.grado.id,
+        paralelo: this.data.cursoEdit.paralelo.id,
+        jornada: this.data.cursoEdit.jornada.id,
+        user_id: this.data.cursoEdit.user.id,
         descripcion: this.data.cursoEdit.descripcion,
-        user_id: this.data.userId,
       });
-    } else {
-      this.cursoForm.patchValue({
-        user_id: this.data.userId,
-      });
-    }
+    } 
 
     this.catalogoService
       .getNivelAsignaturaLista()
@@ -90,15 +86,18 @@ export class AgregarCursoComponent implements OnInit {
     this.catalogoService
       .getParaleloLista()
       .subscribe((paralelos) => (this.paralelos = paralelos));
-    this.catalogoService
-      .getAsignaturaLista()
-      .subscribe((asignaturas) => (this.asignaturas = asignaturas));
+    this.userService
+      .getAllUser()
+      .subscribe((users) => (
+        this.profesores = users.sort((a, b) => a.firstname.localeCompare(b.firstname))
+      ));
+
     this.catalogoService
       .getJornadaLista()
       .subscribe((jornadas) => (this.jornadas = jornadas));
-
-    this.userId = this.data.userId;
   }
+
+  
 
   get nivel() {
     return this.cursoForm.controls['nivel'];
@@ -109,8 +108,8 @@ export class AgregarCursoComponent implements OnInit {
   get grado() {
     return this.cursoForm.controls['grado'];
   }
-  get paralelo() {
-    return this.cursoForm.controls['paralelo'];
+  get paralelo() { 
+    return this.cursoForm.controls['paralelo']
   }
   get asignatura() {
     return this.cursoForm.controls['asignatura'];
@@ -121,6 +120,9 @@ export class AgregarCursoComponent implements OnInit {
   get descripcion() {
     return this.cursoForm.controls['descripcion'];
   }
+  get user() {
+    return this.cursoForm.controls['user_id'];
+  }
 
   onCancel() {
     this.dialogRef.close();
@@ -128,7 +130,6 @@ export class AgregarCursoComponent implements OnInit {
 
   onSubmit() {
     if (this.cursoForm.valid) {
-      console.log('this.cursoForm.value', this.cursoForm.value);
       this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
       this.dialogRef.close(this.cursoForm.value);
     } else {

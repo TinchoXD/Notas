@@ -17,20 +17,42 @@ function isAlertType(type: string): type is AlertType {
 export class CursoService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
+  getCurso(): Observable<Curso[]>{
+    return this.http
+    .get<Curso[]>(environment.urlApi + 'cursos/all' )
+    .pipe(catchError(this.handleError));
+  }
+
+/*   getCursosActivos(): Observable<Curso[]>{
+    return this.http
+    .get<Curso[]>(environment.urlApi + 'cursos/allActive' )
+    .pipe(catchError(this.handleError));
+  } */
+
+  getCursosActivos(): Observable<any[]>{
+    return this.http
+    .get<any[]>(environment.urlApi + 'cursos/allActive' )
+    .pipe(catchError(this.handleError));
+  }
+
   getCursoByUserId(user_id: number): Observable<Curso[]> {
     return this.http
       .get<Curso[]>(environment.urlApi + 'cursos/curso/user/' + user_id)
       .pipe(catchError(this.handleError));
   }
 
+  delCurso(curso: any): Observable<Curso[]> {
+    return this.http
+      .post<Curso[]>(environment.urlApi + 'cursos/curso/deleteCurso', curso)
+      .pipe(catchError(this.handleError));
+  }
+
   putCurso(curso: CursoRequest) {
     return this.http.post<any>(environment.urlApi + 'cursos/curso/agregarCurso', curso).subscribe({
       next: () => {
-        alert('OK')
-        this.showAlert('Curso Agregado', 'success');
+        this.showAlert('Curso guardado', 'success');
       },
       error: () => {
-        alert('ERROR')
         this.showAlert('Error al registrar Curso', 'error');
         console.log('Error: ', catchError(this.handleError));
       },

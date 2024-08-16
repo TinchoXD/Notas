@@ -1,7 +1,10 @@
-<div class="text-center" style="width: 550px; height: auto;">
+<div  style="width: 550px; height: auto;">
 
-    <h1 mat-dialog-title><i class="fa " [ngClass]="{'fa-exclamation-triangle': data.icon === 'warning'}"></i>
-        {{data.titulo}}</h1>
+    <div class="text-center">
+        <h1 mat-dialog-title><i class="fa " [ngClass]="{'fa-exclamation-triangle': data.icon === 'warning'}"></i>
+            {{data.titulo}}</h1>
+        
+    </div>
     <div mat-dialog-content>
         <p style="white-space: pre-line;">{{data.mensaje}}</p>
     </div>

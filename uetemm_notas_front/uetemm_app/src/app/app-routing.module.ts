@@ -6,20 +6,39 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
 import { AdministracionUsuariosComponent } from './pages/administracion-usuarios/administracion-usuarios.component';
 import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
+<<<<<<< HEAD
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
+=======
+import { CursosComponent } from './pages/curso/curso/cursos.component';
+import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
+>>>>>>> 32e934c5920ae9c3f82aacba660d36b235018455
 
+import { authGuard } from './services/auth/auth.guard';
+import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
+import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-
-
-  { path: 'inicio', component: DashboardComponent },
   { path: 'iniciar-sesion', component: LoginComponent },
+<<<<<<< HEAD
   { path: 'informacion-personal', component: UserDetailsComponent },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent },
   { path: 'administracion-usuarios', component: AdministracionUsuariosComponent },
   { path: 'editar-usuario/:id', component: EditarUsuarioComponent },
   { path: 'estudiantes/estudiante', component: EstudianteFormComponent }
+=======
+  
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+  { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },
+  { path: 'actualizar-contrasena', component: CambiarContrasenaComponent, canActivate: [authGuard] },
+  { path: 'administracion-usuarios', component: AdministracionUsuariosComponent, canActivate: [authGuard] },
+  { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },
+  { path: 'asignaturas', component: AsignaturaComponent, canActivate: [authGuard] },
+  { path: 'editar-usuario/:id', component: EditarUsuarioComponent, canActivate: [authGuard] },
+  { path: 'mis-cursos', component: MisCursosComponent, canActivate: [authGuard] },
+  { path: 'estudiantes', component: EstudianteComponent, canActivate: [authGuard] },
+
+>>>>>>> 32e934c5920ae9c3f82aacba660d36b235018455
 ];
 
 @NgModule({

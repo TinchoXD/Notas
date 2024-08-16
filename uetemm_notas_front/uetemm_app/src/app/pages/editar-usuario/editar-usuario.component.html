@@ -1,11 +1,6 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-1">
-        </div>
-        <div class="col-10" style="margin-top: 2.5%;">
+<div class="container-page">
             <div class="card">
                 <section>
-
                     <div class="div-button-row">
                         <div class="div-flex-container">
                             <div class="div-button-container">
@@ -76,7 +71,7 @@
                                     <div class="col-md-6">
                                         <div class="div-button-row pt-2 pb-2">
                                             <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
-                                                onIcon="pi pi-check" offIcon="pi pi-ban" offLabel="Inactivo" />
+                                                [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo" />
                                         </div>
                                     </div>
                                 </div>
@@ -101,23 +96,9 @@
                         </div>
                     </fieldset>
                 </form>
-
                 <p-divider />
 
-
-                <div class="row">
-                    <div class="col-md-10">
-                        <p style="font-size: x-large;">Cursos</p>
-                    </div>
-                    <div class="col-md-2">
-
-                    </div>
-                </div>
-
-                <p-toast />
-
-
-
+                <p style="font-size: x-large;">Asignar Cursos</p>
 
                 <p-toolbar styleClass="mb-4 gap-2">
                     <ng-template pTemplate="left">
@@ -126,108 +107,88 @@
                             <input pInputText type="text" placeholder="Buscar curso.."
                                 (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
                         </span>
-                        <!-- <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" /> -->
                     </ng-template>
-
                     <ng-template pTemplate="right">
-
-                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCurso()" />
-
-
+                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCursoProfesor()" />
                     </ng-template>
                 </p-toolbar>
-
-                <p-table #dt [value]="cursos" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
-                    [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','asignatura.nombre', 'jornada.nombre'] "
+             
+                <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
+                    [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
                     [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
                     [rowsPerPageOptions]="[5, 10, 20]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true">
                     <ng-template pTemplate="header">
                         <tr>
-                            <!-- <th style="width: 4rem">
-                            <p-tableHeaderCheckbox />
-                        </th> -->
-                            <th pSortableColumn="nivel.nombre" >
+                            <th pSortableColumn="nivel.nombre">
                                 Nivel <p-sortIcon field="nivel.nombre" />
                             </th>
-                            <th pSortableColumn="subnivel.nombre" >
+                            <th pSortableColumn="subnivel.nombre">
                                 SubNivel <p-sortIcon field="subnivel.nombre" />
                             </th>
-                            <th pSortableColumn="grado.nombre" >
+                            <th pSortableColumn="grado.nombre">
                                 Grado <p-sortIcon field="grado.nombre" />
                             </th>
-                            <th pSortableColumn="paralelo.nombre" >
+                            <th pSortableColumn="paralelo.nombre">
                                 Paralelo <p-sortIcon field="paralelo.nombre" />
                             </th>
-                            <th pSortableColumn="paralelo.nombre">
-                                Asignatura <p-sortIcon field="paralelo.nombre" />
+                            <th pSortableColumn="jornada.nombre">
+                                Jornada <p-sortIcon field="jornada.nombre" />
                             </th>
-                            <th pSortableColumn="nivel.nombre" >
-                                Jornada <p-sortIcon field="nivel.nombre" />
+                            <th pSortableColumn="asignatura.nombre">
+                                Asignatura <p-sortIcon field="asignatura.nombre" />
                             </th>
-                            <th pSortableColumn="descripcion" >
-                                Descripcion <p-sortIcon field="descripcion" />
-                            </th>
-
                             <th>
                                 Acciones
                             </th>
                         </tr>
                     </ng-template>
 
-                    <ng-template pTemplate="body" let-cursoRow>
+                    <ng-template pTemplate="body" let-cursoProfesorRow>
                         <tr>
-                            <!-- <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario===0}" > -->
-                            <!-- <td>
-                                <p-tableCheckbox [value]="product" />
-                            </td> -->
                             <td>
-                                {{ cursoRow.nivel.nombre }}
+                                {{ cursoProfesorRow.curso.nivel.nombre }}
                             </td>
                             <td>
-                                {{ cursoRow.subnivel.nombre }}
+                                {{ cursoProfesorRow.curso.subnivel.nombre }}
                             </td>
                             <td>
-                                {{ cursoRow.grado.nombre }}
+                                {{ cursoProfesorRow.curso.grado.nombre }}
                             </td>
                             <td>
-                                {{ cursoRow.paralelo.nombre }}
+                                {{ cursoProfesorRow.curso.paralelo.nombre }}
                             </td>
                             <td>
-                                {{ cursoRow.asignatura.nombre }}
+                                {{ cursoProfesorRow.curso.jornada.nombre }} 
                             </td>
                             <td>
-                                {{ cursoRow.jornada.nombre }}
+                                {{ cursoProfesorRow.asignatura.nombre }} 
                             </td>
-                            <td>
-                                {{ cursoRow.descripcion }}
-                            </td>
-
-
                             <td>
                                 <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true"
-                                    [outlined]="true" pTooltip="Editar Curso" class="mr-2" (click)="editarCurso(cursoRow)"/>
+                                    [outlined]="true" pTooltip="Editar Curso" class="mr-2"
+                                    (click)="editarCursoProfesor(cursoProfesorRow)" />
                             </td>
                         </tr>
                     </ng-template>
 
 
                 </p-table>
-
-
-
-
-
-
-
+             
+             
+                <p-divider />
+                
+                
 
 
 
 
                 <p-divider />
-                <p> el id es {{userId}}</p>
-                <p-divider />
+
+
+
+
                 <p> el id es {{userId}}</p>
                 <div class="container mt-5 text-center">
                     <div class="row">
@@ -242,8 +203,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-1">
-        </div>
-    </div>
 </div>

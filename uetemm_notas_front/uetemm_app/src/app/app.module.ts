@@ -34,8 +34,19 @@ import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.co
 import { LoadingComponent } from './services/loading/loading.component';
 import { LoadingService } from './services/loading/loading.service';
 import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
+<<<<<<< HEAD
 import { AgregarCursoComponent } from './pages/curso/agregar-curso/agregar-curso.component';
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
+=======
+import { AgregarCursoComponent } from './pages/curso/dialogo-curso/agregar-curso.component';
+import { CursosComponent } from './pages/curso/curso/cursos.component';
+import { AsyncPipe } from '@angular/common';
+import { DialogoAsignaturaComponent } from './pages/asignatura/dialogo-asignatura/dialogo-asignatura.component';
+import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
+import { DialogoCursoProfesorComponent } from './pages/editar-usuario/dialogoCursoProfesor/dialogo-curso-profesor.component';
+import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
+import { EstudianteComponent } from './pages/estudiante/estudiante.component';
+>>>>>>> 32e934c5920ae9c3f82aacba660d36b235018455
 
 @NgModule({
   declarations: [
@@ -55,7 +66,16 @@ import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estu
     LoadingComponent,
     AgregarUsuarioComponent,
     AgregarCursoComponent,
+<<<<<<< HEAD
     EstudianteFormComponent
+=======
+    CursosComponent,
+    DialogoAsignaturaComponent,
+    AsignaturaComponent,
+    DialogoCursoProfesorComponent,
+    MisCursosComponent,
+    EstudianteComponent
+>>>>>>> 32e934c5920ae9c3f82aacba660d36b235018455
     
   ],
   imports: [
@@ -69,8 +89,8 @@ import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estu
     OverlayModule,
     MatNativeDateModule,
     PrimeNGModule,
-    FormsModule
-
+    FormsModule,
+    AsyncPipe
   ],
   providers:
     [

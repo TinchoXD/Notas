@@ -26,10 +26,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "curso", uniqueConstraints = { @UniqueConstraint(columnNames = { "curs_id" }) })
 @AttributeOverrides({
-        @AttributeOverride(name = "fecha_creacion", column = @Column(name = "curs_fecha_creacion")),
-        @AttributeOverride(name = "fecha_modificacion", column = @Column(name = "curs_fecha_modificacion")),
-        @AttributeOverride(name = "user_creacion", column = @Column(name = "curs_user_creacion")),
-        @AttributeOverride(name = "user_modificacion", column = @Column(name = "curs_user_modificacion"))
+    @AttributeOverride(name = "fecha_creacion", column = @Column(name = "curs_fecha_creacion")),
+    @AttributeOverride(name = "fecha_modificacion", column = @Column(name = "curs_fecha_modificacion")),
+    @AttributeOverride(name = "user_creacion", column = @Column(name = "curs_user_creacion")),
+    @AttributeOverride(name = "user_modificacion", column = @Column(name = "curs_user_modificacion")),
+
 })
 public class Curso {
 
@@ -46,9 +47,7 @@ public class Curso {
     @JoinColumn(name = "curs_paralelo", nullable = true)
     public Catalogo paralelo;
 
-    @ManyToOne
-    @JoinColumn(name = "curs_asignatura", nullable = true)
-    public Catalogo asignatura;
+
 
     @ManyToOne
     @JoinColumn(name = "curs_jornada", nullable = true)
@@ -66,7 +65,10 @@ public class Curso {
     @JoinColumn(name = "user_id", nullable = true)
     public User user;
 
-    @Column(name = "curs_descripcion")
-    public String descripcion;
+    @Column(name = "curs_descripcion", nullable = true)
+    public String descripcion; 
+
+    @Column(name = "curs_status", nullable = true)
+    public int status;
     
 }

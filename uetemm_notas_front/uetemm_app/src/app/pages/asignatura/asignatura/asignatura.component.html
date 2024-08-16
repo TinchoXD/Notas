@@ -1,0 +1,61 @@
+<div class="container-page">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-10">
+                        <p style="font-size: x-large;">Asignaturas</p>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <p-toast />
+                <p-toolbar styleClass="mb-4 gap-2">
+                    <ng-template pTemplate="left">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" placeholder="Buscar curso.."
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                        </span>
+                    </ng-template>
+                    <ng-template pTemplate="right">
+                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarCurso()"/>
+                    </ng-template>
+                </p-toolbar>
+                <p-table #dt [value]="asignaturas" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
+                    [globalFilterFields]="['nombre'] "
+                    [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+                    [rowsPerPageOptions]="[5, 10, 20]"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [showCurrentPageReport]="true">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="nombre">
+                                Asignatura <p-sortIcon field="nombre" />
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-asignaturaRow>
+                        <tr>
+                            <td>
+                                {{ asignaturaRow.nombre }}
+                            </td>
+                            <td>
+                                <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true"
+                                    [outlined]="true" pTooltip="Editar Asignatura" class="mr-2"
+                                    (click)="editarAsignatura(asignaturaRow)" />
+                                <!-- <p-button pRipple icon="pi pi-trash" severity="warning" [rounded]="true"
+                                    [outlined]="true" pTooltip="Eliminar Asignatura" class="mr-2"
+                                    (click)="eliminarAsignatura(asignaturaRow)" /> -->
+                            </td>
+                        </tr>
+                    </ng-template>
+
+
+                </p-table>
+            </div>
+</div>

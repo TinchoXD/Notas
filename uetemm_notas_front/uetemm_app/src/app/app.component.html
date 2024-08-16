@@ -1,15 +1,11 @@
-<!-- <app-header ></app-header> -->
 
-<div style="background-color: #fafafa;">
+<app-login *ngIf="isLoginPage"></app-login>
 
-  <app-nav-menu></app-nav-menu>
+<div style="background-color: #fafafa;" *ngIf="!isLoginPage">
+  <ng-container >
+    <app-nav-menu></app-nav-menu>
+    <app-loading></app-loading>
+  </ng-container>
   
-  <app-loading></app-loading>
-
-  <router-outlet></router-outlet>
-  
-  <!-- <div class="fixed-bottom">  
-    <app-footer></app-footer>
-  </div> -->
-
+  <!-- <router-outlet></router-outlet> -->
 </div>

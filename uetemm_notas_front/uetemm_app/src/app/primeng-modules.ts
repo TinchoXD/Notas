@@ -130,7 +130,10 @@ import { AutoFocusModule } from 'primeng/autofocus';
     FileUploadModule,
     TableModule,
     SelectButtonModule,
-    DropdownModule 
+    DropdownModule,
+    IconFieldModule,
+    InputIconModule,
+    MultiSelectModule
   ],
 })
 export class PrimeNGModule {}

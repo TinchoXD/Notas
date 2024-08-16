@@ -2,7 +2,6 @@ package com.notas.backend.request;
 
 import java.util.Date;
 
-import com.notas.backend.model.Catalogo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

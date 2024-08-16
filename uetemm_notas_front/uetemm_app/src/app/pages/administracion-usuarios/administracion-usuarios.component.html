@@ -87,113 +87,88 @@
     </div>
 </div> -->
 
+<div class="container-page">
+    <div class="card">
+        <p-toast />
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Buscar..." />
+                </span>
+                <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" />
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarUsuario()" />
+            </ng-template>
+        </p-toolbar>
 
+        <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" styleClass="{{selectedSize.class}}"
+            [globalFilterFields]="['firstname','lastname','username','role','user_email_institucional', 'user_estado_usuario']"
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
 
-<div class="grid">
-    <div class="col-fixed" style="width:50px">
-
-    </div>
-    <div class="col">
-        <div class="card flex justify-content-center">
-            <p-toast />
-
-            <p-toolbar styleClass="mb-4 gap-2">
-                <ng-template pTemplate="left">
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                            placeholder="Buscar..." />
-                    </span>
-                    <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" />
-                </ng-template>
-
-                <ng-template pTemplate="right">
-                    
-                    <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarUsuario()" />
-
-                </ng-template>
-            </p-toolbar>
-
-
-
-          
-
-
-            <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" styleClass="{{selectedSize.class}}"
-                [globalFilterFields]="['firstname','lastname','username','role','user_email_institucional', 'user_estado_usuario']"
-                [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
-                [rowsPerPageOptions]="[5, 10, 20]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [showCurrentPageReport]="true">
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <!-- <th style="width: 4rem">
+            <ng-template pTemplate="header">
+                <tr>
+                    <!-- <th style="width: 4rem">
                             <p-tableHeaderCheckbox />
                         </th> -->
-                        <th pSortableColumn="firstname" style="min-width:15rem">
-                            Nombre <p-sortIcon field="firstname" />
-                        </th>
-                        <th pSortableColumn="lastname">
-                            Apellidos <p-sortIcon field="lastname" />
-                        </th>
-                        <th pSortableColumn="username" style="min-width:10rem">
-                            Cedula <p-sortIcon field="username" />
-                        </th>
-                        <th pSortableColumn="role">
-                            Rol <p-sortIcon field="role" />
-                        </th>
-                        <th pSortableColumn="user_email_institucional" style="min-width:10rem">
-                            E-mail Instituiconal <p-sortIcon field="user_email_institucional" />
-                        </th>
-                        <th pSortableColumn="user_estado_usuario" style="min-width:10rem">
-                            Estado <p-sortIcon field="user_estado_usuario" />
-                        </th>
-                        <th>
-                            Acciones
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-userRow>
-                    <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario===0}" >
-                        <!-- <td>
+                    <th pSortableColumn="firstname" style="min-width:15rem">
+                        Nombre <p-sortIcon field="firstname" />
+                    </th>
+                    <th pSortableColumn="lastname">
+                        Apellidos <p-sortIcon field="lastname" />
+                    </th>
+                    <th pSortableColumn="username" style="min-width:10rem">
+                        Cedula <p-sortIcon field="username" />
+                    </th>
+                    <th pSortableColumn="role">
+                        Rol <p-sortIcon field="role" />
+                    </th>
+                    <th pSortableColumn="user_email_institucional" style="min-width:10rem">
+                        E-mail Instituiconal <p-sortIcon field="user_email_institucional" />
+                    </th>
+                    <th pSortableColumn="user_estado_usuario" style="min-width:10rem">
+                        Estado <p-sortIcon field="user_estado_usuario" />
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-userRow>
+                <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario===0}">
+                    <!-- <td>
                             <p-tableCheckbox [value]="product" />
                         </td> -->
-                        <td>
-                            {{ userRow.firstname }}
-                        </td>
-                        <td>
-                            {{ userRow.lastname }}
-                        </td>
-                        <td>
-                            {{ userRow.username }}
-                        </td>
-                        <td>
-                            {{ userRow.role==1?"Administrador":"Usuario" }}
-                        </td>
-                        <td>
-                            {{ userRow.user_email_institucional }}
-                        </td>
-                        <td>
-                            <p-tag *ngIf="userRow.user_estado_usuario==1" [severity]="'success'" value="Activo"
-                                [rounded]="true" /> <p-tag *ngIf="userRow.user_estado_usuario==0" [severity]="'danger'"
-                                value="Inactivo" [rounded]="true" />
-                        </td>
-                        <td>
-                            <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
-                                pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)" />
-                        </td>
-                    </tr>
-                </ng-template>
-               
-
-            </p-table>
-
-
-
-        </div>
-    </div>
-    <div class="col-fixed" style="width:100px">
-
+                    <td>
+                        {{ userRow.firstname }}
+                    </td>
+                    <td>
+                        {{ userRow.lastname }}
+                    </td>
+                    <td>
+                        {{ userRow.username }}
+                    </td>
+                    <td>
+                        {{ userRow.role==1?"Administrador":"Usuario" }}
+                    </td>
+                    <td>
+                        {{ userRow.user_email_institucional }}
+                    </td>
+                    <td>
+                        <p-tag *ngIf="userRow.user_estado_usuario==1" [severity]="'success'" value="Activo"
+                            [rounded]="true" /> <p-tag *ngIf="userRow.user_estado_usuario==0" [severity]="'danger'"
+                            value="Inactivo" [rounded]="true" />
+                    </td>
+                    <td>
+                        <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
+                            pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

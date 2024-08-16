@@ -1,0 +1,128 @@
+"cata_id","cata_nombre","cata_catalogo_parent","cata_fecha_modificacion","cata_user_modificacion","cata_descripcion","cata_status"
+1,Estado Civil,,"2024-05-19 00:00:00",admin,catalogo contendor de estado civil,1
+2,Soltero/a,1,"2024-05-19 00:00:00",admin,estado civil - Soltero/a,1
+3,Casado/a,1,"2024-05-19 00:00:00",admin,estado civil - Casado/a,1
+4,Unión libre o Unión de hecho,1,"2024-05-19 00:00:00",admin,"estado civil - Unión libre o unión de hecho
+",1
+5,Separado,1,"2024-05-19 00:00:00",admin,estado civil - Separado,0
+6,Divorciado,1,"2024-05-19 00:00:00",admin,estado civil - Divorciado,1
+7,Viudo,1,"2024-05-19 00:00:00",admin,estado civil - Viudo,1
+8,Jornada Laboral,,"2024-05-19 00:00:00",admin,catalogo Jornada Laboral,1
+9,Matutina,8,"2024-05-19 00:00:00",admin,Jornada Matutina,1
+10,Vespertina,8,"2024-05-19 00:00:00",admin,Jornada Vespertina,1
+11,Nocturna,8,"2024-05-19 00:00:00",admin,Jornada Nocturna,1
+12,Relación Laboral,,"2024-05-19 00:00:00",admin,catálogo Relación Laboral,1
+13,Nombramiento Definitivo,12,"2024-05-19 00:00:00",admin,Nombramiento Definitivo,1
+14,Nombramiento Provisional,12,"2024-05-19 00:00:00",admin,Nombramiento Provisional,1
+15,Contrato,12,"2024-05-19 00:00:00",admin,Contrato,1
+16,Categoría,,"2024-05-19 00:00:00",admin,catálogo Contrato,1
+17,Categoría A,16,"2024-05-19 00:00:00",admin,Categoría A,1
+18,Categoría B,16,"2024-05-19 00:00:00",admin,Categoría B,1
+19,Categoría C,16,"2024-05-19 00:00:00",admin,Categoría C,1
+20,Categoría D,16,"2024-05-19 00:00:00",admin,Categoría D,1
+21,Categoría E,16,"2024-05-19 00:00:00",admin,Categoría E,1
+22,Categoría F,16,"2024-05-19 00:00:00",admin,Categoría F,1
+23,Categoría G,16,"2024-05-19 00:00:00",admin,Categoría G,1
+24,Contrato,16,"2024-05-19 00:00:00",admin,Contrato,1
+25,Nivel de Educación,,"2024-05-19 00:00:00",admin,catálogo Nivel de Educación,1
+26,Secundaria,25,"2024-05-19 00:00:00",admin,Secundaria,1
+27,Tercer Nivel,25,"2024-05-19 00:00:00",admin,Tercer Nivel,1
+28,Cuarto Nivel,25,"2024-05-19 00:00:00",admin,Cuarto Nivel,1
+29,Doctorado,25,"2024-05-19 00:00:00",admin,Doctorado,1
+30,PhD.,25,"2024-05-19 00:00:00",admin,PhD.,1
+31,Grupo étnico,,"2024-05-19 00:00:00",admin,catálogo Grupo étnico,1
+33,Mestizo,31,"2024-05-19 00:00:00",admin,grupo étnico Mestizo,1
+34,Indígena,31,"2024-05-19 00:00:00",admin,grupo étnico Indígena,1
+35,Montubio,31,"2024-05-19 00:00:00",admin,grupo étnico Montubio,1
+36,Afro-Ecuatoriano,31,"2024-05-19 00:00:00",admin,grupo étnico Afro-Ecuatoriano,1
+37,Blanco,31,"2024-05-19 00:00:00",admin,grupo étnico Blanco,1
+38,Otro,31,"2024-05-19 00:00:00",admin,grupo étnico Otro,1
+39,Grupo étnico otro,,"2024-05-19 00:00:00",admin,catálogo Grupo étnico específico,1
+40,Awa,39,"2024-05-19 00:00:00",admin,Awa,1
+41,Chachi,39,"2024-05-19 00:00:00",admin,Chachi,1
+42,Epera,39,"2024-05-19 00:00:00",admin,Epera,1
+43,Tsa´chila,39,"2024-05-19 00:00:00",admin,Tsa´chila,1
+44,Manta Huancavilca,39,"2024-05-19 00:00:00",admin,Manta Huancavilca,1
+45,Karanki,39,"2024-05-19 00:00:00",admin,Karanki,1
+46,Natabulea,39,"2024-05-19 00:00:00",admin,Natabulea,1
+47,Otavalo,39,"2024-05-19 00:00:00",admin,Otavalo,1
+48,Kayambi,39,"2024-05-19 00:00:00",admin,Kayambi,1
+49,Kitu Kara,39,"2024-05-19 00:00:00",admin,Kitu Kara,1
+50,Pamzaleo,39,"2024-05-19 00:00:00",admin,Pamzaleo,1
+51,Chibuleo,39,"2024-05-19 00:00:00",admin,Chibuleo,1
+52,Salasaka,39,"2024-05-19 00:00:00",admin,Salasaka,1
+53,Kisapincha,39,"2024-05-19 00:00:00",admin,Kisapincha,1
+54,Kichua Sierra,39,"2024-05-19 00:00:00",admin,Kichua Sierra,1
+55,Waranka,39,"2024-05-19 00:00:00",admin,Waranka,1
+56,Puruhá,39,"2024-05-19 00:00:00",admin,Puruhá,1
+57,Kañari,39,"2024-05-19 00:00:00",admin,Kañari,1
+58,Saraguro,39,"2024-05-19 00:00:00",admin,Saraguro,1
+59,A´i Cofan,39,"2024-05-19 00:00:00",admin,A´i Cofan,1
+60,Secoya,39,"2024-05-19 00:00:00",admin,Secoya,1
+61,Siona,39,"2024-05-19 00:00:00",admin,Siona,1
+62,Huaorani,39,"2024-05-19 00:00:00",admin,Huaorani,1
+63,Shiwiar,39,"2024-05-19 00:00:00",admin,Shiwiar,1
+64,Zápara,39,"2024-05-19 00:00:00",admin,Zápara,1
+65,Achuar,39,"2024-05-19 00:00:00",admin,Achuar,1
+66,Shuar,39,"2024-05-19 00:00:00",admin,Shuar,1
+67,Kichwa Amazonía,39,"2024-05-19 00:00:00",admin,Kichwa Amazonía,1
+68,Actividad Laboral,,"2024-05-19 00:00:00",admin,catálogo Actividad Laboral,1
+69,Docente,68,"2024-05-19 00:00:00",admin,Docente,1
+70,DECE,68,"2024-05-19 00:00:00",admin,DECE,1
+71,Autoridad,68,"2024-05-19 00:00:00",admin,Autoridad,1
+72,Nivel,,"2024-05-19 00:00:00",admin,catálogo Nivel Usuario,1
+73,Preparatoria,72,"2024-05-19 00:00:00",admin,Preparatoria,1
+74,Elemental,72,"2024-05-19 00:00:00",admin,Elemental,1
+75,Media,72,"2024-05-19 00:00:00",admin,Media,1
+76,Superior,72,"2024-05-19 00:00:00",admin,Superior,1
+77,Bachillerato,72,"2024-05-19 00:00:00",admin,Bachillerato,1
+78,PCEI no Intensivo,72,"2024-05-19 00:00:00",admin,PCEI no Intensivo,1
+79,PCEI Intensivo,72,"2024-05-19 00:00:00",admin,PCEI Intensivo,1
+80,Sexo,,"2024-05-19 00:00:00",admin,Catálogo Sexo,1
+81,Masculino,80,"2024-05-19 00:00:00",admin,Masculino,1
+82,Femenino,80,"2024-05-19 00:00:00",admin,Femenino,1
+83,Otro,80,"2024-05-19 00:00:00",admin,otro,1
+84,Activo,,"2024-05-19 00:00:00",admin,Catálogo Activo,1
+85,Sí,84,"2024-05-19 00:00:00",admin,Sí,1
+86,"No, Jubilado",84,"2024-05-19 00:00:00",admin,"No, Jubilado",1
+87,Grados,,"2024-05-19 00:00:00",admin,Catalogo Grados,1
+88,"1ro",87,"2024-05-19 00:00:00",admin,primer grado,1
+89,"2do",87,"2024-05-19 00:00:00",admin,segundo grado,1
+90,"3ro",87,"2024-05-19 00:00:00",admin,tercer grado,1
+91,"4to",87,"2024-05-19 00:00:00",admin,cuarto grado,1
+92,"5to",87,"2024-05-19 00:00:00",admin,quinto grado,1
+93,"6to",87,"2024-05-19 00:00:00",admin,sexto grado,1
+94,"7mo",87,"2024-05-19 00:00:00",admin,séptimo grado,1
+95,"8vo",87,"2024-05-19 00:00:00",admin,octavo grado,1
+96,"9no",87,"2024-05-19 00:00:00",admin,noveno grado,1
+97,"10mo",87,"2024-05-19 00:00:00",admin,décimo grado,1
+98,Subnivel Asignatura,,"2024-05-19 00:00:00",admin,Catálogo Subnivel Asignatura,1
+99,Elemental,98,"2024-05-19 00:00:00",admin,Subnivel Elemental,1
+100,Media,98,"2024-05-19 00:00:00",admin,Subnivel Media,1
+101,Superior,98,"2024-05-19 00:00:00",admin,Subnivel Superior,1
+102,Bachillerato Técnico,98,"2024-05-19 00:00:00",admin,Subnivel Bachillerato Técnico,1
+103,Paralelo,,"2024-05-19 00:00:00",admin,Catálogo Paralelo,1
+104,A,103,"2024-05-19 00:00:00",admin,Paralelo A,1
+105,B,103,"2024-05-19 00:00:00",admin,Paralelo B,1
+106,C,103,"2024-05-19 00:00:00",admin,Paralelo C,1
+107,D,103,"2024-05-19 00:00:00",admin,Paralelo D,1
+108,E,103,"2024-05-19 00:00:00",admin,Paralelo E,1
+109,F,103,"2024-05-19 00:00:00",admin,Paralelo F,1
+110,G,103,"2024-05-19 00:00:00",admin,Paralelo G,1
+111,H,103,"2024-05-19 00:00:00",admin,Paralelo G,1
+112,I,103,"2024-05-19 00:00:00",admin,Paralelo I,1
+113,Asignatura,,"2024-05-19 00:00:00",admin,Catálogo Asignatura,1
+114,Inglés,113,"2024-05-19 00:00:00",admin,Asignatura Inglés,1
+115,Matemáticas,113,"2024-05-19 00:00:00",admin,Asignatura Matemáticas,1
+116,Computación,113,"2024-05-19 00:00:00",admin,Asignatura Computación,1
+117,Ciencias Naturales,113,"2024-05-19 00:00:00",admin,Asignatura Ciencias Naturales,0
+118,Jornada,,"2024-05-19 00:00:00",admin,Catálogo Jornada,1
+119,Matutina,118,"2024-05-19 00:00:00",admin,Jornada Matutina,1
+120,Vespertina,118,"2024-05-19 00:00:00",admin,Jornada Vespertina,1
+121,Nocturna,118,"2024-05-19 00:00:00",admin,Jornada Nocturna,1
+122,Nivel Asignatura,,"2024-05-19 00:00:00",admin,Catálogo Nivel Asignatura,1
+123,Educación General Básica,122,"2024-05-19 00:00:00",admin,Nivel Educación General Básica,1
+124,Bachillerato,122,"2024-05-19 00:00:00",admin,Nivel Bachillerato,1
+125,Educación Física,113,,,,1
+126,Sociales,113,,,,1
+127,Álgebra,113,,,,1

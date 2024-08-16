@@ -13,7 +13,7 @@ export class AuthService {
 
   //! REVISAR
   constructor() { 
-    this.isAuthenticated = !!localStorage.getItem(this.authSecretKey);
+
   }
 
 
@@ -23,6 +23,3 @@ export class AuthService {
 }
 
 
-/* export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-}; */

@@ -2,12 +2,10 @@ package com.notas.backend.auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.notas.backend.jwt.JwtService;
-import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Role;
 import com.notas.backend.model.User;
 import com.notas.backend.repository.UserRepository;

@@ -11,5 +11,8 @@ import com.notas.backend.model.Curso;
 public interface CursoRepository extends JpaRepository<Curso,Integer> {
 
     List<Curso> findByUserId(Integer user_id); 
+    
+    List<Curso> findByStatus(int active); 
+    
 
 }
