@@ -23,6 +23,12 @@ export class EstudianteService {
     .pipe(catchError(this.handleError));
   }
 
+  getEstudianteById(estudiante_id: number): Observable<any> {
+    return this.http
+      .get<any>(environment.urlApi + 'estudiantes/estudiante/' + estudiante_id)
+      .pipe(catchError(this.handleError));
+  }
+  
   getEstudiantesByCursoId(curso_id: number): Observable<any[]> {
     return this.http
       .get<any[]>(environment.urlApi + 'estudiante/curso/' + curso_id)

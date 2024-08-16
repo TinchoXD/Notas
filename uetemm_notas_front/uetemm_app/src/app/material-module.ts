@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, signal } from "@angular/core";
 import {MatInputModule} from "@angular/material/input"
 import {MatSelectModule} from "@angular/material/select"
 import {MatAutocompleteModule} from "@angular/material/autocomplete"
@@ -22,6 +22,10 @@ import {MatDialogModule} from "@angular/material/dialog"
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {ThemePalette} from '@angular/material/core';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 
 @NgModule({
@@ -47,7 +51,9 @@ exports:[
     MatCheckboxModule,
     MatDialogModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatExpansionModule,
+    MatFormFieldModule
 ]
 })
 export class MaterialModule{}

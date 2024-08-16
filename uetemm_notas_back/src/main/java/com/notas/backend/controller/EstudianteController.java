@@ -42,6 +42,11 @@ public class EstudianteController {
         return estudianteService.getAllEstudiantes();
     }
 
+    @GetMapping("/estudiante/{id}")
+    public Estudiante getEstudiantesById(@PathVariable int id) {
+        return estudianteService.getEstudianteById(id);
+    }
+
     @GetMapping("/estudiante/curso/{curso_id}")
     public List<Estudiante> getEstudiantesByCurso(@PathVariable int curso_id) {
         return estudianteService.getEstudiantesByCurso(curso_id);

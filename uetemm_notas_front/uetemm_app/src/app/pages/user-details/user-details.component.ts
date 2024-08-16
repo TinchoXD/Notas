@@ -77,36 +77,15 @@ export class UserDetailsComponent {
     user_relacion_laboral: ['', Validators.required],
     user_actividad_laboral: ['', Validators.required],
     user_nivel: ['', Validators.required],
- /*    user_relacion_laboral: this.formBuilder.group({
-      id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required]
-    }), */
+
     user_jornada_laboral: ['', Validators.required],
-    /* user_jornada_laboral: this.formBuilder.group({
-      id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required]
-    }), */
+
     user_categoria: ['', Validators.required],
-    /* user_categoria: this.formBuilder.group({
-      id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required]
-    }), */
+
     user_grupo_etnico: ['', Validators.required],
-    /* user_grupo_etnico: this.formBuilder.group({
-      id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required]
-    }), */
+
     user_nacionalidad_indigena: ['', Validators.required],
-    /* user_grupo_etnico_otro: this.formBuilder.group({
-      id: ['', Validators.required],
-      nombre: ['', Validators.required],
-      catalogoParent: ['', Validators.required ]
-    }), */
-   /*  user_grupo_etnico_otro: [''], */
+
    
    user_nivel_educacion:['', Validators.required],
    user_titulo_senescyt:['', Validators.required],
@@ -206,17 +185,9 @@ export class UserDetailsComponent {
             catalogoParent: userData.user_categoria.catalogoParent.toString() || null
           }, */
           user_grupo_etnico: userData.user_grupo_etnico,
-          /* user_grupo_etnico: {
-            id: userData.user_grupo_etnico.id.toString(),
-            nombre: userData.user_grupo_etnico.nombre,
-            catalogoParent: userData.user_grupo_etnico.catalogoParent.toString() || null
-          }, */
+
           user_nacionalidad_indigena: userData.user_nacionalidad_indigena,
-         /*  user_grupo_etnico_otro: {
-            id: userData.user_grupo_etnico_otro.id.toString() || null,
-            nombre: userData.user_grupo_etnico_otro.nombre || null,
-            catalogoParent: userData.user_grupo_etnico_otro.catalogoParent.toString() || null
-          }, */
+
           user_nivel_educacion: userData.user_nivel_educacion,
           user_titulo_senescyt: userData.user_titulo_senescyt,
 

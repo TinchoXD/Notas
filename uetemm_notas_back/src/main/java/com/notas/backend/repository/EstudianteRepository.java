@@ -14,7 +14,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante,Integer> 
 
     List<Estudiante> findByCursoId(int curso_id);
 
-    List<Estudiante> findById(int id);
+    Estudiante findById(int id);
     
     /* List<Estudiante> findByStatus(int active);  */
     

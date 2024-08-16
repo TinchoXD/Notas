@@ -21,6 +21,10 @@ public class EstudianteService {
         return estudianteRepository.findAll();
     }
 
+    public Estudiante getEstudianteById(int id){
+        return estudianteRepository.findById(id);
+    }
+
     public List<Estudiante> getEstudiantesByCurso(int curso_id){
         return estudianteRepository.findByCursoId(curso_id);
         
