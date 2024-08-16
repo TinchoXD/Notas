@@ -1,0 +1,169 @@
+<p-card header="Simple Card">
+    <form [formGroup]="estudianteForm">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Datos del Estudiante</h4>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Nombres</mat-label>
+                    <input matInput formControlName="nombres" />
+                    @if (nombres.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput formControlName="apellidos" />
+                    @if (apellidos.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Cédula</mat-label>
+                    <input matInput formControlName="cedula" />
+                    @if (cedula.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Lugar de Nacimiento</mat-label>
+                    <input matInput formControlName="lugarNacimiento" />
+                    @if (lugarNacimiento.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Fecha de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
+                        formControlName="fechaNacimiento">
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Grupo Étnico</mat-label>
+                    <mat-select formControlName="grupoEtnico">
+                        <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
+                            [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
+                    </mat-select>
+                    <span matTextPrefix class="input-icon">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    </span>
+                    @if (grupoEtnico.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Sexo</mat-label>
+                    <mat-select formControlName="sexo">
+                        <mat-option *ngFor="let sexo of catalogoSexo" [value]="sexo.id">{{sexo.nombre}}</mat-option>
+                    </mat-select>
+                    <span matTextPrefix class="input-icon">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    </span>
+                    @if (sexo.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Dirección Domicilio</mat-label>
+                    <input matInput formControlName="direccionDomicilio" />
+                    @if (direccionDomicilio.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Teléfono Domicilio</mat-label>
+                    <input matInput formControlName="telefonoDomicilio" />
+                    @if (telefonoDomicilio.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Teléfono Celular de la Madre</mat-label>
+                    <input matInput formControlName="telefonoCelularMadre" />
+                    @if (telefonoCelularMadre.invalid) {
+                    <mat-error> {{errorMessageTelefonoMadre}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Teléfono Celular del Padre</mat-label>
+                    <input matInput formControlName="telefonoCelularPadre" />
+                    @if (telefonoCelularPadre.invalid) {
+                    <mat-error> {{errorMessageTelefonoPadre}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="flex flex-row-reverse flex-wrap">
+            <button mat-flat-button type="submit" [color]="color">Guardar Datos Estudiante</button>
+        </div>
+    </form>
+    <p-divider />
+    <form [formGroup]="madreForm">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Datos de la Madre</h4>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Nombres de la Madre</mat-label>
+                    <input matInput formControlName="nombresMadre" />
+                    @if (nombres.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Apellidos de la Madre</mat-label>
+                    <input matInput formControlName="apellidosMadre" />
+                    @if (apellidos.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Cédula de la Madre</mat-label>
+                    <input matInput formControlName="cedulaMadre" />
+                    @if (cedula.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+    <p-divider />
+
+    <p-divider />
+
+    <p-divider />
+</p-card>
