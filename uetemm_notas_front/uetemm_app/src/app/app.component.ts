@@ -19,7 +19,6 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         // Verifica si la ruta actual es la de login
         this.isLoginPage = this.router.url === '/iniciar-sesion';
-        console.log('isLoginPage:', this.isLoginPage); // Para verificar la lógica
       }
     });
   }

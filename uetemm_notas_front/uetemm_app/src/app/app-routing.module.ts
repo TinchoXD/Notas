@@ -10,6 +10,8 @@ import { CursosComponent } from './pages/curso/curso/cursos.component';
 import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
 
 import { authGuard } from './services/auth/auth.guard';
+import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
+import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'cursos', component: CursosComponent, canActivate: [authGuard] },
   { path: 'asignaturas', component: AsignaturaComponent, canActivate: [authGuard] },
   { path: 'editar-usuario/:id', component: EditarUsuarioComponent, canActivate: [authGuard] },
+  { path: 'mis-cursos', component: MisCursosComponent, canActivate: [authGuard] },
+  { path: 'estudiantes', component: EstudianteComponent, canActivate: [authGuard] },
 
 ];
 

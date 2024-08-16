@@ -40,6 +40,8 @@ import { AsyncPipe } from '@angular/common';
 import { DialogoAsignaturaComponent } from './pages/asignatura/dialogo-asignatura/dialogo-asignatura.component';
 import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
 import { DialogoCursoProfesorComponent } from './pages/editar-usuario/dialogoCursoProfesor/dialogo-curso-profesor.component';
+import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
+import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { DialogoCursoProfesorComponent } from './pages/editar-usuario/dialogoCur
     CursosComponent,
     DialogoAsignaturaComponent,
     AsignaturaComponent,
-    DialogoCursoProfesorComponent
+    DialogoCursoProfesorComponent,
+    MisCursosComponent,
+    EstudianteComponent
     
   ],
   imports: [

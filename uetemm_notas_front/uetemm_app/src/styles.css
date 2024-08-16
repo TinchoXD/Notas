@@ -11330,3 +11330,7 @@ body { margin: 10; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-bottom: 1rem;
 }
 
+.container-page{
+  padding-left: 4%; padding-right: 5%; padding-top: 2%;
+}
+

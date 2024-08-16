@@ -4,39 +4,40 @@
     </button>
     <span>App</span>
     <span class="spacer"></span>
-<!--     <button routerLink="" mat-button>Home</button>
+    <!--     <button routerLink="" mat-button>Home</button>
     <button [matMenuTriggerFor]="lvl1master" mat-button>Master</button> -->
-<!--     <mat-menu #lvl1master="matMenu">
+    <!--     <mat-menu #lvl1master="matMenu">
         <button [matMenuTriggerFor]="company" mat-menu-item>Company</button>
         <button [matMenuTriggerFor]="customer" mat-menu-item>Customer</button>
         <button [matMenuTriggerFor]="product" mat-menu-item>Product</button>
     </mat-menu> -->
 
-    <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">{{user?.firstname}} <mat-icon>person</mat-icon> </button>
+    <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">{{user?.firstname}}
+        <mat-icon>person</mat-icon> </button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/inicio">Inicio</button>
         <button mat-menu-item routerLink="/informacion-personal">Informacion personal</button>
         <button mat-menu-item routerLink="/actualizar-contrasena">Cambiar contraseña</button>
         <button mat-menu-item (click)="mostrarDialogo()">Cerrar Sesión</button>
-      </mat-menu>
+    </mat-menu>
 
- <!--    <mat-menu #company="matMenu">
+    <!--    <mat-menu #company="matMenu">
         <button mat-menu-item>Term</button>
         <button mat-menu-item>Tax</button>
         <button mat-menu-item>Currency</button>
     </mat-menu> -->
-<!--     <mat-menu #customer="matMenu">
+    <!--     <mat-menu #customer="matMenu">
         <button mat-menu-item>Type</button>
         <button mat-menu-item>Tax</button>
     </mat-menu> -->
 
-<!--     <mat-menu #product="matMenu">
+    <!--     <mat-menu #product="matMenu">
         <button mat-menu-item>Category</button>
         <button [matMenuTriggerFor]="variant" mat-menu-item>Variant</button>
         <button mat-menu-item>UOM</button>
     </mat-menu> -->
 
- <!--    <mat-menu #variant="matMenu">
+    <!--    <mat-menu #variant="matMenu">
         <button mat-menu-item>Color</button>
         <button mat-menu-item>Size</button>
     </mat-menu> -->
@@ -53,7 +54,7 @@
 <mat-drawer-container autosize>
     <mat-drawer #drawer opened="true" mode="side" position="start">
         <mat-nav-list>
-            
+
             <mat-list-item routerLink="/inicio" mat-button>
                 <mat-icon>dashboard</mat-icon> Dashboard
             </mat-list-item>
@@ -74,20 +75,20 @@
                 <mat-icon>group</mat-icon> Profesores
             </mat-list-item>
 
-            <mat-list-item>
-                <mat-icon>ballot</mat-icon> Mis Cursos
+            <mat-list-item routerLink="/mis-cursos">
+                <mat-icon >ballot</mat-icon> Mis Cursos
+            </mat-list-item>
+
+            <mat-list-item routerLink="/estudiantes">
+                <mat-icon>group</mat-icon> Estudiantes
             </mat-list-item>
 
             <mat-list-item>
-               <mat-icon>settings</mat-icon> Settings
+                <mat-icon>help</mat-icon> Help
             </mat-list-item>
 
             <mat-list-item>
-              <mat-icon>help</mat-icon> Help
-            </mat-list-item>
-
-            <mat-list-item>
-               <mat-icon>analytics</mat-icon> analytics
+                <mat-icon>analytics</mat-icon> analytics
             </mat-list-item>
 
         </mat-nav-list>
