@@ -1,0 +1,16 @@
+"curs_id","curs_grado","curs_paralelo","curs_jornada","curs_descripcion","curs_status","curs_nivel","curs_subnivel","user_id","curs_fecha_creacion","curs_fecha_modificacion","curs_usuario_creacion","curs_usuario_modificacion"
+1,88,104,119,descripcio,0,124,99,5,,,,
+3,90,106,120,descripcion abc 123,1,124,100,1,,,,
+52,90,106,121,"descripcion abc
+",1,124,100,1,,,,
+605,88,104,119,"123",0,124,99,4,,,,
+606,88,104,119,AAAAAAAAAA,0,124,99,4,,,,
+607,94,105,120,SAUROM 1111,0,123,99,202,,,,
+652,88,107,121,ME VOYYY,0,124,99,4,,,,
+702,91,107,121,"123",0,123,102,5,,,,
+753,90,112,119,AAA AAA AAA,0,123,102,952,,,,
+802,88,104,119,"",1,123,99,202,,,,
+903,88,107,121,BBBBB,1,124,99,952,,,,
+908,88,104,119,XAAD,0,123,99,102,,,,
+1156,88,104,119,"123",1,124,99,1,,,,
+1253,88,104,119,"123123",1,124,99,4,,,,
