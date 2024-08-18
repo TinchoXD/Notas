@@ -43,6 +43,7 @@ import { DialogoCursoProfesorComponent } from './pages/editar-usuario/dialogoCur
 import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
+import { AsignarCursoComponent } from './pages/estudiante/asignar-curso/asignar-curso.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estu
     DialogoCursoProfesorComponent,
     MisCursosComponent,
     EstudianteComponent,
-    EstudianteFormComponent 
+    EstudianteFormComponent,
+    AsignarCursoComponent 
     
   ],
   imports: [

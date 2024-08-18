@@ -25,6 +25,9 @@ import {ThemePalette} from '@angular/material/core';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ToolbarModule } from 'primeng/toolbar';
+
 
 
 
@@ -34,6 +37,7 @@ exports:[
     MatSelectModule,
     MatAutocompleteModule,
     MatToolbarModule,
+    ToolbarModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
@@ -53,7 +57,9 @@ exports:[
     MatTooltipModule,
     MatSlideToggleModule,
     MatExpansionModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTabsModule,
+
 ]
 })
 export class MaterialModule{}

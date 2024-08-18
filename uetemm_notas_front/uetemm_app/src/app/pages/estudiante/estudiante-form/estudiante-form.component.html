@@ -1,572 +1,1084 @@
+<p-toast />
 <div class="container-page">
 
     <div class="card">
 
-        <form [formGroup]="estudianteForm">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="text-right">Datos del Estudiante</h5>
-            </div>
-            <div class="grid">
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Nombres</mat-label>
-                        <input matInput formControlName="nombres" />
-                        @if (nombres.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput formControlName="apellidos" />
-                        @if (apellidos.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Cédula</mat-label>
-                        <input matInput formControlName="cedula" />
-                        @if (cedula.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="grid">
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Lugar de Nacimiento</mat-label>
-                        <input matInput formControlName="lugarNacimiento" />
-                        @if (lugarNacimiento.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Fecha de nacimiento</mat-label>
-                        <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
-                            formControlName="fechaNacimiento">
-                        <mat-hint>DD/MM/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
-                    </mat-form-field>
+        <mat-tab-group>
 
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Grupo Étnico</mat-label>
-                        <mat-select formControlName="grupoEtnico">
-                            <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
-                                [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
-                        </mat-select>
-                        <span matTextPrefix class="input-icon">
-                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                        </span>
-                        @if (grupoEtnico.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Sexo</mat-label>
-                        <mat-select formControlName="sexo">
-                            <mat-option *ngFor="let sexo of catalogoSexo" [value]="sexo.id">{{sexo.nombre}}</mat-option>
-                        </mat-select>
-                        <span matTextPrefix class="input-icon">
-                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                        </span>
-                        @if (sexo.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="grid">
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Dirección Domicilio</mat-label>
-                        <input matInput formControlName="direccionDomicilio" />
-                        @if (direccionDomicilio.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Teléfono Domicilio</mat-label>
-                        <input matInput formControlName="telefonoDomicilio" />
-                        @if (telefonoDomicilio.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Teléfono Celular de la Madre</mat-label>
-                        <input matInput formControlName="telefonoCelularMadre" />
-                        @if (telefonoCelularMadre.invalid) {
-                        <mat-error> {{errorMessageTelefonoMadre}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field style="width: 100%;" appearance="outline">
-                        <mat-label>Teléfono Celular del Padre</mat-label>
-                        <input matInput formControlName="telefonoCelularPadre" />
-                        @if (telefonoCelularPadre.invalid) {
-                        <mat-error> {{errorMessageTelefonoPadre}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="flex flex-row-reverse flex-wrap">
-                <button mat-flat-button type="submit" [color]="color">Guardar Datos Estudiante</button>
-            </div>
-        </form>
-
-
-        <p-divider />
-        <form [formGroup]="madreForm">
-            <div class="flex justify-content-between flex-wrap">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="text-right">Datos de la Madre</h5>
-                </div>
-                <div class=""></div>
-                <div class=""><mat-checkbox [formControl]="representanteMadre">Aplica</mat-checkbox></div>
-            </div>
-
-            <div *ngIf="representanteMadre.value">
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Nombres de la Madre</mat-label>
-                            <input matInput formControlName="nombresMadre" />
-                            @if (nombresMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
+            <!-- PEGAR AQUI -->
+            <mat-tab label="Estudiante / Representante">
+                <br>
+                <form [formGroup]="estudianteForm" style="width: 99%;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">Datos del Estudiante</h5>
                     </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Apellidos de la Madre</mat-label>
-                            <input matInput formControlName="apellidosMadre" />
-                            @if (apellidosMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Cédula de la Madre</mat-label>
-                            <input matInput formControlName="cedulaMadre" />
-                            @if (cedulaMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Estado civil</mat-label>
-                            <mat-select formControlName="estadoCivilMadre" >
-                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
-                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
-                            </mat-select>
-                            <span matTextPrefix class="input-icon">
-                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                            </span>
-                            @if (estadoCivilMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Nivel de instrucción académica</mat-label>
-                            <mat-select formControlName="nivelInstruccionMadre">
-                                <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
-                                    [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
-                            </mat-select>
-                            <span matTextPrefix class="input-icon">
-                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                            </span>
-                            @if (nivelInstruccionMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Ocupación</mat-label>
-                            <input matInput formControlName="ocupacionMadre" />
-                            @if (ocupacionMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Correo Electrónico</mat-label>
-                            <input matInput formControlName="correoElectronicoMadre" />
-                            @if (correoElectronicoMadre.hasError('email')) {
-                            <mat-error> Debe ser un e-mail válido ejemplo
-                                'example&#64;email.com'.</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Dirección domicilio</mat-label>
-                            <input matInput formControlName="direccionDomicilioMadre" />
-                            @if (direccionDomicilioMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Teléfono domicilio</mat-label>
-                            <input matInput formControlName="telefonoDomicilioMadre" />
-                            @if (telefonoDomicilioMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Lugar de Trabajo</mat-label>
-                            <input matInput formControlName="lugarTrabajoMadre" />
-                            @if (lugarTrabajoMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Teléfono del Trabajo</mat-label>
-                            <input matInput formControlName="telefonoTrabajoMadre" />
-                            @if (telefonoTrabajoMadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="flex flex-row-reverse flex-wrap">
-                    <button mat-flat-button type="submit" [color]="color">Guardar Datos de la Madre</button>
-                </div>
-            </div>
-        </form>
-
-        <p-divider />
-        <form [formGroup]="padreForm">
-            <div class="flex justify-content-between flex-wrap">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="text-right">Datos del Padre</h5>
-                </div>
-                <div class=""></div>
-                <div class=""><mat-checkbox [formControl]="representantePadre">Aplica</mat-checkbox></div>
-            </div>
-
-            <div *ngIf="representantePadre.value">
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Nombres del Padre</mat-label>
-                            <input matInput formControlName="nombresPadre" />
-                            @if (nombresPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Apellidos del Padre</mat-label>
-                            <input matInput formControlName="apellidosPadre" />
-                            @if (apellidosPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Cédula del Padre</mat-label>
-                            <input matInput formControlName="cedulaPadre" />
-                            @if (cedulaPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Estado civil</mat-label>
-                            <mat-select formControlName="estadoCivilPadre">
-                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
-                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
-                            </mat-select>
-                            <span matTextPrefix class="input-icon">
-                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                            </span>
-                            @if (estadoCivilPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Nivel de instrucción académica</mat-label>
-                            <mat-select formControlName="nivelInstruccionPadre">
-                                <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
-                                    [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
-                            </mat-select>
-                            <span matTextPrefix class="input-icon">
-                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                            </span>
-                            @if (nivelInstruccionPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Ocupación</mat-label>
-                            <input matInput formControlName="ocupacionPadre" />
-                            @if (ocupacionPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Correo Electrónico</mat-label>
-                            <input matInput formControlName="correoElectronicoPadre" />
-                            @if (correoElectronicoPadre.hasError('email')) {
-                            <mat-error> Debe ser un e-mail válido ejemplo
-                                'example&#64;email.com'.</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="grid">
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Dirección domicilio</mat-label>
-                            <input matInput formControlName="direccionDomicilioPadre" />
-                            @if (direccionDomicilioPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Teléfono domicilio</mat-label>
-                            <input matInput formControlName="telefonoDomicilioPadre" />
-                            @if (telefonoDomicilioPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Lugar de Trabajo</mat-label>
-                            <input matInput formControlName="lugarTrabajoPadre" />
-                            @if (lugarTrabajoPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                    <div class="col">
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Teléfono del Trabajo</mat-label>
-                            <input matInput formControlName="telefonoTrabajoPadre" />
-                            @if (telefonoTrabajoPadre.invalid) {
-                            <mat-error> {{errorMessage}}</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="flex flex-row-reverse flex-wrap">
-                    <button mat-flat-button type="submit" [color]="color">Guardar Datos del Padre</button>
-                </div>
-            </div>
-        </form>
-
-
-
-
-        <p-divider />
-
-        <mat-accordion class="example-headers-align">
-            <mat-expansion-panel [expanded]="step() === 1" (opened)="setStep(0)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title> Datos del Representante </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                <form [formGroup]="representanteForm">
-                    <div class="flex justify-content-between flex-wrap">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="text-right">Datos del Representante</h5>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Nombres</mat-label>
+                                <input matInput formControlName="nombres" />
+                                @if (nombres.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
                         </div>
-                        <div class=""></div>
-                        <div class=""><mat-checkbox [formControl]="representanteAdicional">Aplica</mat-checkbox></div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Apellidos</mat-label>
+                                <input matInput formControlName="apellidos" />
+                                @if (apellidos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Cédula</mat-label>
+                                <input matInput formControlName="cedula" />
+                                @if (cedula.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Lugar de Nacimiento</mat-label>
+                                <input matInput formControlName="lugarNacimiento" />
+                                @if (lugarNacimiento.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Fecha de nacimiento</mat-label>
+                                <input matInput [matDatepicker]="pickerFechaNacimiento" readonly="true"
+                                    formControlName="fechaNacimiento">
+                                <mat-hint>DD/MM/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix
+                                    [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Grupo Étnico</mat-label>
+                                <mat-select formControlName="grupoEtnico">
+                                    <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
+                                        [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
+                                </mat-select>
+                                <span matTextPrefix class="input-icon">
+                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                </span>
+                                @if (grupoEtnico.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Sexo</mat-label>
+                                <mat-select formControlName="sexo">
+                                    <mat-option *ngFor="let sexo of catalogoSexo"
+                                        [value]="sexo.id">{{sexo.nombre}}</mat-option>
+                                </mat-select>
+                                <span matTextPrefix class="input-icon">
+                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                </span>
+                                @if (sexo.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Dirección Domicilio</mat-label>
+                                <input matInput formControlName="direccionDomicilio" />
+                                @if (direccionDomicilio.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Teléfono Domicilio</mat-label>
+                                <input matInput formControlName="telefonoDomicilio" />
+                                @if (telefonoDomicilio.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Teléfono Celular de la Madre</mat-label>
+                                <input matInput formControlName="telefonoCelularMadre" />
+                                @if (telefonoCelularMadre.invalid) {
+                                <mat-error> {{errorMessageTelefonoMadre}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Teléfono Celular del Padre</mat-label>
+                                <input matInput formControlName="telefonoCelularPadre" />
+                                @if (telefonoCelularPadre.invalid) {
+                                <mat-error> {{errorMessageTelefonoPadre}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
                     </div>
 
-                    <div *ngIf="representanteAdicional.value">
-                        <div class="grid">
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Nombres del Representante</mat-label>
-                                    <input matInput formControlName="nombresRepresentante" />
-                                    @if (nombresRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Apellidos del Representante</mat-label>
-                                    <input matInput formControlName="apellidosRepresentante" />
-                                    @if (apellidosRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Cédula del Representante</mat-label>
-                                    <input matInput formControlName="cedulaRepresentante" />
-                                    @if (cedulaRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Parentesco</mat-label>
-                                    <input matInput formControlName="parentescoRepresentante" />
-                                    @if (parentescoRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
+                    <div class="grid">
+                        <div class="col-fixed text-center p-3 border-round-sm" style="width:180px">
+                            <button type="button" mat-flat-button [color]="color" (click)="dialogAsignarCurso()">
+                                Asignar Curso
+                            </button>
                         </div>
+                        <div class="col">
 
-                        <div class="grid">
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Estado civil</mat-label>
-                                    <mat-select formControlName="estadoCivilRepresentante">
-                                        <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
-                                            [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    </span>
-                                    @if (estadoCivilRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Nivel de instrucción académica</mat-label>
-                                    <mat-select formControlName="nivelInstruccionRepresentante">
-                                        <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
-                                            [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
-                                    </mat-select>
-                                    <span matTextPrefix class="input-icon">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    </span>
-                                    @if (nivelInstruccionRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Ocupación</mat-label>
-                                    <input matInput formControlName="ocupacionRepresentante" />
-                                    @if (ocupacionRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Correo Electrónico</mat-label>
-                                    <input matInput formControlName="correoElectronicoRepresentante" />
-                                    @if (correoElectronicoRepresentante.hasError('email')) {
-                                    <mat-error> Debe ser un e-mail válido ejemplo
-                                        'example&#64;email.com'.</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
+                            <input matInput formControlName="curso_id" readonly hidden />
+
+
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Curso</mat-label>
+                                <input matInput formControlName="curso" readonly />
+                                @if (curso.invalid) {
+                                <mat-error> {{curso}}</mat-error>
+                                }
+                            </mat-form-field>
+
                         </div>
-                        <div class="grid">
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Dirección domicilio</mat-label>
-                                    <input matInput formControlName="direccionDomicilioRepresentante" />
-                                    @if (direccionDomicilioRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Teléfono domicilio</mat-label>
-                                    <input matInput formControlName="telefonoDomicilioRepresentante" />
-                                    @if (telefonoDomicilioRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Lugar de Trabajo</mat-label>
-                                    <input matInput formControlName="lugarTrabajoRepresentante" />
-                                    @if (lugarTrabajoRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                            <div class="col">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Teléfono del Trabajo</mat-label>
-                                    <input matInput formControlName="telefonoTrabajoRepresentante" />
-                                    @if (telefonoTrabajoRepresentante.invalid) {
-                                    <mat-error> {{errorMessage}}</mat-error>
-                                    }
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="flex flex-row-reverse flex-wrap">
-                            <button mat-flat-button type="submit" [color]="color">Guardar Datos del
-                                Representante</button>
-                        </div>
+                    </div>
+
+                    <div class="flex flex-row-reverse flex-wrap">
+                        <button mat-flat-button type="submit" [color]="color">Guardar Datos Estudiante</button>
                     </div>
                 </form>
 
-            </mat-expansion-panel>
+
+                <p-divider />
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteMadre"
+                        (opened)="setStep(0)">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Datos de la Madre </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <form [formGroup]="madreForm">
+                            <!-- <div class="flex justify-content-between flex-wrap">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="text-right">Datos de la Madre</h5>
+                                </div>
+                                <div class=""></div>
+                                <div class=""><mat-checkbox [formControl]="representanteMadre">Aplica</mat-checkbox></div>
+                            </div> -->
+
+                            <div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nombres de la Madre</mat-label>
+                                            <input matInput formControlName="nombresMadre" />
+                                            @if (nombresMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Apellidos de la Madre</mat-label>
+                                            <input matInput formControlName="apellidosMadre" />
+                                            @if (apellidosMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Cédula de la Madre</mat-label>
+                                            <input matInput formControlName="cedulaMadre" />
+                                            @if (cedulaMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Fecha de nacimiento</mat-label>
+                                            <input matInput [matDatepicker]="pickerFechaNacimientoMadre" readonly="true"
+                                                formControlName="fechaNacimientoMadre">
+                                            <mat-hint>DD/MM/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="pickerFechaNacimientoMadre"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerFechaNacimientoMadre></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Estado civil</mat-label>
+                                            <mat-select formControlName="estadoCivilMadre">
+                                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (estadoCivilMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nivel de instrucción académica</mat-label>
+                                            <mat-select formControlName="nivelInstruccionMadre">
+                                                <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
+                                                    [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (nivelInstruccionMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Ocupación</mat-label>
+                                            <input matInput formControlName="ocupacionMadre" />
+                                            @if (ocupacionMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Correo Electrónico</mat-label>
+                                            <input matInput formControlName="correoElectronicoMadre" />
+                                            @if (correoElectronicoMadre.hasError('email')) {
+                                            <mat-error> Debe ser un e-mail válido ejemplo
+                                                'example&#64;email.com'.</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Dirección domicilio</mat-label>
+                                            <input matInput formControlName="direccionDomicilioMadre" />
+                                            @if (direccionDomicilioMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono domicilio</mat-label>
+                                            <input matInput formControlName="telefonoDomicilioMadre" />
+                                            @if (telefonoDomicilioMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Lugar de Trabajo</mat-label>
+                                            <input matInput formControlName="lugarTrabajoMadre" />
+                                            @if (lugarTrabajoMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono del Trabajo</mat-label>
+                                            <input matInput formControlName="telefonoTrabajoMadre" />
+                                            @if (telefonoTrabajoMadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row-reverse flex-wrap">
+                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos de la
+                                        Madre</button>
+                                    <button class="mr-2" mat-flat-button type="button" (click)="madreRepresentante()"
+                                        [color]="colorInfo">Representante</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <p-divider />
+
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 99%;" [expanded]="step() === representantePadre"
+                        (opened)="setStep(0)">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Datos del Padre </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <form [formGroup]="padreForm">
+                            <!--  <div class="flex justify-content-between flex-wrap">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="text-right">Datos del Padre</h5>
+                                </div>
+                                <div class=""></div>
+                                <div class=""><mat-checkbox [formControl]="representantePadre">Aplica</mat-checkbox></div>
+                            </div> -->
+
+                            <div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nombres del Padre</mat-label>
+                                            <input matInput formControlName="nombresPadre" />
+                                            @if (nombresPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Apellidos del Padre</mat-label>
+                                            <input matInput formControlName="apellidosPadre" />
+                                            @if (apellidosPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Cédula del Padre</mat-label>
+                                            <input matInput formControlName="cedulaPadre" />
+                                            @if (cedulaPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Fecha de nacimiento</mat-label>
+                                            <input matInput [matDatepicker]="pickerFechaNacimientoPadre" readonly="true"
+                                                formControlName="fechaNacimientoPadre">
+                                            <mat-hint>DD/MM/YYYY</mat-hint>
+                                            <mat-datepicker-toggle matIconSuffix
+                                                [for]="pickerFechaNacimientoPadre"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerFechaNacimientoPadre></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Estado civil</mat-label>
+                                            <mat-select formControlName="estadoCivilPadre">
+                                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (estadoCivilPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nivel de instrucción académica</mat-label>
+                                            <mat-select formControlName="nivelInstruccionPadre">
+                                                <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
+                                                    [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (nivelInstruccionPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Ocupación</mat-label>
+                                            <input matInput formControlName="ocupacionPadre" />
+                                            @if (ocupacionPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Correo Electrónico</mat-label>
+                                            <input matInput formControlName="correoElectronicoPadre" />
+                                            @if (correoElectronicoPadre.hasError('email')) {
+                                            <mat-error> Debe ser un e-mail válido ejemplo
+                                                'example&#64;email.com'.</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Dirección domicilio</mat-label>
+                                            <input matInput formControlName="direccionDomicilioPadre" />
+                                            @if (direccionDomicilioPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono domicilio</mat-label>
+                                            <input matInput formControlName="telefonoDomicilioPadre" />
+                                            @if (telefonoDomicilioPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Lugar de Trabajo</mat-label>
+                                            <input matInput formControlName="lugarTrabajoPadre" />
+                                            @if (lugarTrabajoPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono del Trabajo</mat-label>
+                                            <input matInput formControlName="telefonoTrabajoPadre" />
+                                            @if (telefonoTrabajoPadre.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row-reverse flex-wrap">
+                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos del
+                                        Padre</button>
+                                        <button class="mr-2" mat-flat-button type="button" (click)="padreRepresentante()"
+                                        [color]="colorInfo">Representante</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+
+                <p-divider />
+
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteAdicional"
+                        (opened)="setStep(0)">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Datos del Representante</mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <form [formGroup]="representanteForm">
+                            <!-- <div class="flex justify-content-between flex-wrap">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="text-right">Datos del Representante</h5>
+                                </div>
+                                <div class=""></div>
+                                <div class=""><mat-checkbox [formControl]="representanteAdicional">Aplica</mat-checkbox></div>
+                            </div> -->
+
+                            <div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nombres del Representante</mat-label>
+                                            <input matInput formControlName="nombresRepresentante" />
+                                            @if (nombresRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Apellidos del Representante</mat-label>
+                                            <input matInput formControlName="apellidosRepresentante" />
+                                            @if (apellidosRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Cédula del Representante</mat-label>
+                                            <input matInput formControlName="cedulaRepresentante" />
+                                            @if (cedulaRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Parentesco</mat-label>
+                                            <input matInput formControlName="parentescoRepresentante" />
+                                            @if (parentescoRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Estado civil</mat-label>
+                                            <mat-select formControlName="estadoCivilRepresentante">
+                                                <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
+                                                    [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (estadoCivilRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Nivel de instrucción académica</mat-label>
+                                            <mat-select formControlName="nivelInstruccionRepresentante">
+                                                <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
+                                                    [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
+                                            </mat-select>
+                                            <span matTextPrefix class="input-icon">
+                                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            </span>
+                                            @if (nivelInstruccionRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Ocupación</mat-label>
+                                            <input matInput formControlName="ocupacionRepresentante" />
+                                            @if (ocupacionRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Correo Electrónico</mat-label>
+                                            <input matInput formControlName="correoElectronicoRepresentante" />
+                                            @if (correoElectronicoRepresentante.hasError('email')) {
+                                            <mat-error> Debe ser un e-mail válido ejemplo
+                                                'example&#64;email.com'.</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="grid">
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Dirección domicilio</mat-label>
+                                            <input matInput formControlName="direccionDomicilioRepresentante" />
+                                            @if (direccionDomicilioRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono domicilio</mat-label>
+                                            <input matInput formControlName="telefonoDomicilioRepresentante" />
+                                            @if (telefonoDomicilioRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Lugar de Trabajo</mat-label>
+                                            <input matInput formControlName="lugarTrabajoRepresentante" />
+                                            @if (lugarTrabajoRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono del Trabajo</mat-label>
+                                            <input matInput formControlName="telefonoTrabajoRepresentante" />
+                                            @if (telefonoTrabajoRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row-reverse flex-wrap">
+                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos del
+                                        Representante</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </mat-expansion-panel>
+                    <br>
+                </mat-accordion>
+
+            </mat-tab>
+
+            <mat-tab label="Datos Familiares / Antecedentes">
+                <br>
+                <form [formGroup]="datosFamiliaresForm" style="width: 99%;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">Datos Familiares</h5>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Unión padres</mat-label>
+                                <mat-select formControlName="familiaUnionPadres">
+                                    <mat-option value="juntos">Juntos</mat-option>
+                                    <mat-option value="separados">Separados</mat-option>
+                                    <mat-option value="otro">Otro</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="datosFamiliaresForm.get('familiaUnionPadres')?.invalid">
+                                    {{errorMessage}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Otro</mat-label>
+                                <input matInput formControlName="familiaUnionPadresOtro" />
+                                <mat-error *ngIf="datosFamiliaresForm.get('familiaUnionPadresOtro')?.invalid">
+                                    {{errorMessage}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Número de hijos</mat-label>
+                                <input matInput formControlName="familiaNumeroHijos" type="number" />
+                                @if (familiaNumeroHijos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Número varones</mat-label>
+                                <input matInput formControlName="familiaNumeroHijosVarones" type="number" />
+                                @if (familiaNumeroHijos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Número mujeres</mat-label>
+                                <input matInput formControlName="familiaNumeroHijosMujeres" type="number" />
+                                @if (familiaNumeroHijos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Puesto que ocupa entre hermanos</mat-label>
+                                <mat-select formControlName="familiaNumeroPuestoEntreHermanos">
+                                    <mat-option value="primero">Primero</mat-option>
+                                    <mat-option value="segundo">Segundo</mat-option>
+                                    <mat-option value="tercero">Tercero</mat-option>
+                                    <mat-option value="cuarto">Cuarto</mat-option>
+                                    <mat-option value="quinto">Quinto</mat-option>
+                                    <mat-option value="sexto">Sexto</mat-option>
+                                    <mat-option value="septimo">Séptimo</mat-option>
+                                </mat-select>
+                                @if (familiaNumeroPuestoEntreHermanos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Personas que viven con el estudiante</mat-label>
+                                <input matInput formControlName="familiaDetallePersonsasVivenConEstudiante"
+                                    maxlength="1000" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Familiares con discapacidad</mat-label>
+                                <mat-select formControlName="familiaNumeroFamiliaresDiscapacidad">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (familiaNumeroFamiliaresDiscapacidad.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>¿Quién / Quienes?</mat-label>
+                                <input matInput formControlName="familiaFamiliaresDiscacidadDescripcion"
+                                    maxlength="1000" />
+                                @if (familiaFamiliaresDiscacidadDescripcion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Tipo de Vivienda</mat-label>
+                                <mat-select formControlName="familiaTipoVivienda">
+                                    <mat-option value="propia">Propia</mat-option>
+                                    <mat-option value="arrendada">Arrendada</mat-option>
+                                    <mat-option value="deFamiliares">De familiares</mat-option>
+                                    <mat-option value="otro">Otro</mat-option>
+                                </mat-select>
+                                @if (familiaTipoVivienda.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Tipo de vivienda</mat-label>
+                                <input matInput formControlName="familiaTipoViviendaOtro" maxlength="1000" />
+                                @if (familiaFamiliaresDiscacidadDescripcion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Servicios Básicos</mat-label>
+                                <mat-select formControlName="familiaServiciosBasicos" multiple>
+                                    @for (servicio of serviciosBasicos; track servicio) {
+                                    <mat-option [value]="servicio">{{servicio}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex flex-row-reverse flex-wrap">
+                        <button mat-flat-button type="submit" [color]="color">Guardar datos Familiares</button>
+                    </div>
+                </form>
+
+                <p-divider />
+
+                <form [formGroup]="antecedentesMadreForm" style="width: 99%;">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">Antecedentes de la Madre</h5>
+                    </div>
+                    <div class="grid">
+                        <div class="col-3">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Dificultades presentadas en el embarazo</mat-label>
+                                <mat-select formControlName="antecedentesMadreDificultadEmbarazo">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesMadreDificultadEmbarazo.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>¿Cuáles?</mat-label>
+                                <input matInput formControlName="antecedentesMadreDificultadEmbarazoDescripcion"
+                                    maxlength="1000" />
+                                @if (antecedentesMadreDificultadEmbarazoDescripcion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-3">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Dificultades presentadas en el parto</mat-label>
+                                <mat-select formControlName="antecedentesMadreDificultadParto">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesMadreDificultadParto.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>¿Cuáles?</mat-label>
+                                <input matInput formControlName="antecedentesMadreDificultadPartoDescripcion"
+                                    maxlength="1000" />
+                                @if (antecedentesMadreDificultadPartoDescripcion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex flex-row-reverse flex-wrap">
+                        <button mat-flat-button type="submit" [color]="color">Guardar Antecedentes de la Madre</button>
+                    </div>
+                </form>
+
+                <p-divider />
+
+                <form [formGroup]="antecedentesEstudianteForm" style="width: 99%;">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">Antecedentes del Estudiante</h5>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <p>
+                                <strong>DATOS RELEVANTES DEL DESARROLLO DEL NIÑO</strong> (EDAD QUE CAMINÓ, EDAD QUE
+                                HABLÓ, SI GATEÓ O NO, ENFERMEDADES QUE HA PRESENTADO RELEVANTES, ENTRE OTROS DATOS QUE
+                                SE CONSIDERE NECESARIOS COMUNICARLOS)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Detalle de los datos relevantes</mat-label>
+                                <textarea matInput formControlName="antecedentesEstudianteDatosNinez"
+                                    maxlength="1000"></textarea>
+                                @if (antecedentesEstudianteDatosNinez.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="col">
+                            <p>
+                                <strong>DATOS DE LA HISTORIA ESCOLAR</strong> (SI HA PRESENTADO EN LOS AÑOS ANTERIORES
+                                ALGUNA DIFICULTAD DE APRENDIZAJE O ALGÚN DATO RELEVANTE QUE SEA NECESARIO COMUNICAR)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Detalle de la historia escolar </mat-label>
+                                <textarea matInput formControlName="antecedentesEstudianteHistoriaEscolar"
+                                    maxlength="1000"></textarea>
+                                @if (antecedentesEstudianteHistoriaEscolar.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="col">
+                            <p>
+                                <strong>EL ESTUDIANTE PRESENTA N.E.E</strong> (NECESIDAD EDUCATIVA ESPECIAL) DETECTADA
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>N.E.E.</mat-label>
+                                <mat-select formControlName="antecedentesEstudianteNecesidadEducativaEspecial">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesEstudianteNecesidadEducativaEspecial.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Número de canré de discapacidad</mat-label>
+                                <input matInput formControlName="antecedentesEstudianteNumeroCarne" maxlength="1000" />
+                                @if (antecedentesEstudianteNumeroCarne.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Porcentaje de discapacidad</mat-label>
+                                <input matInput formControlName="antecedentesEstudiantePorcentajeDiscapacidad"
+                                    type="number" maxlength="1000" />
+                                @if (antecedentesEstudiantePorcentajeDiscapacidad.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Presenta informe de N.E.E. a la Institución</mat-label>
+                                <mat-select
+                                    formControlName="antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+                    <div class="grid">
+                        <div class="col">
+                            <p>
+                                <strong>DATOS RELEVANTES QUE SE TOME EN CUENTA</strong> PARA EL DESEMBOLVIMIENTO
+                                NORMAL DEL ESTUDIANTE EN LA INSTITUCIÓN
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Detalle </mat-label>
+                                <textarea matInput formControlName="antecedentesEstudianteDatosRelevantes"
+                                    maxlength="1000"></textarea>
+                                @if (antecedentesEstudianteDatosRelevantes.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+                        <div class="col-3">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Toma medicamento</mat-label>
+                                <mat-select formControlName="antecedentesEstudianteTomaMedicamento">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesEstudianteTomaMedicamento.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>¿Cuál / Cuáles?</mat-label>
+                                <input matInput formControlName="antecedentesEstudianteMedicamentoDescripcion"
+                                    maxlength="1000" />
+                                @if (antecedentesEstudianteMedicamentoDescripcion.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Razón</mat-label>
+                                <input matInput formControlName="antecedentesEstudianteMedicamentoRazon"
+                                    maxlength="1000" />
+                                @if (antecedentesEstudianteMedicamentoRazon.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col-3">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>¿Ha repetido años?</mat-label>
+                                <mat-select formControlName="antecedentesEstudianteRepiteAnios">
+                                    <mat-option value="1">Sí</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                @if (antecedentesEstudianteRepiteAnios.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Años repetidos</mat-label>
+                                <input matInput formControlName="antecedentesEstudianteAniosRepetidos"
+                                    maxlength="1000" />
+                                @if (antecedentesEstudianteAniosRepetidos.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row-reverse flex-wrap">
+                        <button mat-flat-button type="submit" [color]="color">Guardar Antecedentes del
+                            Estudiante</button>
+                    </div>
+                    <br>
+                </form>
 
 
 
 
+            </mat-tab>
+            <mat-tab label="Seguimiento">
+                <br>
+                <form [formGroup]="seguimientoForm" style="width: 99%;">
 
-        </mat-accordion>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-right">Seguimiento y acompañamiento del estudiante</h5>
+                    </div>
 
-        <p-divider />
+                    <div class="grid">
+                        <div class="col">
+                            <p>
+                                Este aparatado lo llenará el profecional del DECE
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Detalle</mat-label>
+                                <textarea matInput formControlName="seguimiento" rows="20"
+                                    maxlength="10000"></textarea>
+                                @if (seguimiento.invalid) {
+                                <mat-error> {{errorMessage}}</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="flex flex-row-reverse flex-wrap">
+                        <button mat-flat-button type="submit" [color]="color">Guardar seguimiento</button>
+                    </div>
+                    <br>
+                </form>
+            </mat-tab>
+        </mat-tab-group>
+
+
+
+        <br>
+
     </div>
 
 </div>

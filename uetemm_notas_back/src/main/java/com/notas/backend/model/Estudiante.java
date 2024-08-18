@@ -224,6 +224,9 @@ public class Estudiante {
     @Column(name = "estu_dato_familiar_numero_hijos_mujeres", nullable = true)
     public Integer familiaNumeroHijosMujeres;
 
+    @Column(name = "estu_dato_familiar_puesto_entre_hermanos", nullable = true)
+    public Integer familiaNumeroPuestoEntreHermanos;
+
     @Column(name = "estu_dato_familiar_personas_viven_con_estudiante", nullable = true)
     public String familiaDetallePersonsasVivenConEstudiante;
 
@@ -235,6 +238,9 @@ public class Estudiante {
 
     @Column(name = "estu_dato_familiar_tipo_vivienda", nullable = true)
     public String familiaTipoVivienda;
+    
+    @Column(name = "estu_dato_familiar_servicios_basicos", nullable = true)
+    public String familiaServiciosBasicos;
 
     // ! SERVICIOS QUE POSEE, CREAR TABLA EN BASE
 
@@ -287,6 +293,13 @@ public class Estudiante {
 
     @Column(name = "estu_antecedente_estudiante_medicamento_razon", nullable = true)
     public String antecedentesEstudianteMedicamentoRazon;
+    
+    
+    @Column(name = "estu_antecedente_estudiante_repite_anios", nullable = true)
+    public String antecedentesEstudianteRepiteAnios;
+
+    @Column(name = "estu_antecedente_estudiante_anios_repetidos", nullable = true)
+    public String antecedentesEstudianteAniosRepetidos;
 
     // ! AÑOS REPETIDOS, CREAR TABLA EN BASE
 
