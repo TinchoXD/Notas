@@ -25,7 +25,7 @@
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Sub Nivel</mat-label>
                         <mat-select [value]="subnivel" formControlName="subnivel">
-                            @for (subnivel of subnivelesAsignatura; track subnivel) {
+                            @for (subnivel of subnivelesFiltrados; track subnivel) {
                             <mat-option [value]="subnivel.id">{{subnivel.nombre}}</mat-option>
                             }
                         </mat-select>
@@ -171,6 +171,10 @@
             </div>
         </div> -->
 
+
+       <!--  <div class="flex justify-content-center">
+            <p-inputOtp [(ngModel)]="value"  [length]="length" />
+        </div> -->
 
 
         <div mat-dialog-actions align="end" style="align-items: end;">

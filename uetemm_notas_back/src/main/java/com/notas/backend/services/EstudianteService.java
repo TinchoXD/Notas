@@ -43,7 +43,7 @@ public class EstudianteService {
     public MessageResponse updateEstudiante(EstudianteRequest estudianteRequest) {
 
         Estudiante estudiante = estudianteRepository.findById(estudianteRequest.id);
- 
+
         try {
             switch (estudianteRequest.form_id) {
                 case "1":
@@ -124,13 +124,35 @@ public class EstudianteService {
                     estudiante.familiaDetallePersonsasVivenConEstudiante = estudianteRequest.familiaDetallePersonsasVivenConEstudiante;
                     estudiante.familiaNumeroFamiliaresDiscapacidad = estudianteRequest.familiaNumeroFamiliaresDiscapacidad;
                     estudiante.familiaFamiliaresDiscapacidadDescripcion = estudianteRequest.familiaFamiliaresDiscapacidadDescripcion;
-                    estudiante.familiaTipoVivienda = estudianteRequest.familiaTipoVivienda; 
+                    estudiante.familiaTipoVivienda = estudianteRequest.familiaTipoVivienda;
+                    estudiante.familiaTipoViviendaOtro = estudianteRequest.familiaTipoViviendaOtro;
                     estudiante.familiaServiciosBasicos = estudianteRequest.familiaServiciosBasicos;
 
-
-
                 case "6":
+                    estudiante.antecedentesMadreDificultadEmbarazo = estudianteRequest.antecedentesMadreDificultadEmbarazo;
+                    estudiante.antecedentesMadreDificultadEmbarazoDescripcion = estudianteRequest.antecedentesMadreDificultadEmbarazoDescripcion;
+                    estudiante.antecedentesMadreDificultadParto = estudianteRequest.antecedentesMadreDificultadParto;
+                    estudiante.antecedentesMadreDificultadPartoDescripcion = estudianteRequest.antecedentesMadreDificultadPartoDescripcion;
+                    break;
 
+                case "7":
+                    estudiante.antecedentesEstudianteDatosNinez = estudianteRequest.antecedentesEstudianteDatosNinez;
+                    estudiante.antecedentesEstudianteHistoriaEscolar = estudianteRequest.antecedentesEstudianteHistoriaEscolar;
+                    estudiante.antecedentesEstudianteNecesidadEducativaEspecial = estudianteRequest.antecedentesEstudianteNecesidadEducativaEspecial;
+                    estudiante.antecedentesEstudianteNumeroCarne = estudianteRequest.antecedentesEstudianteNumeroCarne;
+                    estudiante.antecedentesEstudiantePorcentajeDiscapacidad = estudianteRequest.antecedentesEstudiantePorcentajeDiscapacidad;
+                    estudiante.antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion = estudianteRequest.antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion;
+                    estudiante.antecedentesEstudianteDatosRelevantes = estudianteRequest.antecedentesEstudianteDatosRelevantes;
+                    estudiante.antecedentesEstudianteTomaMedicamento = estudianteRequest.antecedentesEstudianteTomaMedicamento;
+                    estudiante.antecedentesEstudianteMedicamentoDescripcion = estudianteRequest.antecedentesEstudianteMedicamentoDescripcion;
+                    estudiante.antecedentesEstudianteMedicamentoRazon = estudianteRequest.antecedentesEstudianteMedicamentoRazon;
+                    estudiante.antecedentesEstudianteRepiteAnios = estudianteRequest.antecedentesEstudianteRepiteAnios;
+                    estudiante.antecedentesEstudianteAniosRepetidos = estudianteRequest.antecedentesEstudianteAniosRepetidos;
+                    break;
+
+                case "8":
+                    estudiante.seguimiento = estudianteRequest.seguimiento;
+                    break;
                 default:
                     break;
             }

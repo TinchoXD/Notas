@@ -102,6 +102,7 @@ public class EstudianteRequest {
     public Integer familiaNumeroFamiliaresDiscapacidad;
     public String familiaFamiliaresDiscapacidadDescripcion;
     public String familiaTipoVivienda;
+    public String familiaTipoViviendaOtro;
     public String familiaServiciosBasicos;
 
 

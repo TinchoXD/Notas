@@ -238,6 +238,9 @@ public class Estudiante {
 
     @Column(name = "estu_dato_familiar_tipo_vivienda", nullable = true)
     public String familiaTipoVivienda;
+
+    @Column(name = "estu_dato_familiar_tipo_vivienda_otro", nullable = true)
+    public String familiaTipoViviendaOtro;
     
     @Column(name = "estu_dato_familiar_servicios_basicos", nullable = true)
     public String familiaServiciosBasicos;

@@ -27,12 +27,17 @@ export class AgregarCursoComponent implements OnInit {
   errorMessage: String = 'Este campo es obligatorio.';
 
   nivelesAsignatura: Catalogo[] = [];
+  
   subnivelesAsignatura!: Catalogo[];
+  subnivelesFiltrados!: Catalogo[]
+
   grados!: Catalogo[];
   paralelos!: Catalogo[];
   jornadas!: Catalogo[];
   profesores!: User[];
-  
+
+  value: any;
+  length: number = 6;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AgregarCursoComponent>,
@@ -40,20 +45,22 @@ export class AgregarCursoComponent implements OnInit {
     private catalogoService: CatalogoService,
     private alertService: AlertService,
     private cursoService: CursoService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.cursoForm = this.fb.group({
       id: [''],
       nivel: ['', Validators.required],
-      subnivel: ['', Validators.required],
-      grado: ['', Validators.required],
-      paralelo: ['', Validators.required],
-      jornada: ['', Validators.required],
+      subnivel: [{ value: '', disabled: true }],
+      grado: [{ value: '', disabled: true }],
+      paralelo: [{ value: '', disabled: true }],
+      jornada: [{ value: '', disabled: true }],
       descripcion: [''],
+      codigo: [{ value: '', disabled: true }],
+
       user_id: ['', Validators.required],
     });
   }
-  
+
   ngOnInit(): void {
     if (this.data.cursoEdit) {
       console.log(this.data.cursoEdit);
@@ -67,7 +74,7 @@ export class AgregarCursoComponent implements OnInit {
         user_id: this.data.cursoEdit.user.id,
         descripcion: this.data.cursoEdit.descripcion,
       });
-    } 
+    }
 
     this.catalogoService
       .getNivelAsignaturaLista()
@@ -78,7 +85,9 @@ export class AgregarCursoComponent implements OnInit {
       .getSubnivelAsignaturaLista()
       .subscribe(
         (subnivelesAsignatura) =>
-          (this.subnivelesAsignatura = subnivelesAsignatura)
+          (this.subnivelesAsignatura = subnivelesAsignatura,
+            console.log('subnivelesAsignatura', this.subnivelesAsignatura)
+          )
       );
     this.catalogoService
       .getGradoLista()
@@ -88,16 +97,53 @@ export class AgregarCursoComponent implements OnInit {
       .subscribe((paralelos) => (this.paralelos = paralelos));
     this.userService
       .getAllUser()
-      .subscribe((users) => (
-        this.profesores = users.sort((a, b) => a.firstname.localeCompare(b.firstname))
-      ));
+      .subscribe(
+        (users) =>
+          (this.profesores = users.sort((a, b) =>
+            a.firstname.localeCompare(b.firstname)
+          ))
+      );
 
     this.catalogoService
       .getJornadaLista()
       .subscribe((jornadas) => (this.jornadas = jornadas));
+
+
+
+
+
+
+      this.cursoForm.get('nivel')?.valueChanges.subscribe((value) => {
+      const subnivel = this.cursoForm.get('subnivel');
+      console.log('this.cursoForm.value', this.cursoForm);
+      if (value) {
+        subnivel?.setValidators([Validators.required]);
+        subnivel?.enable();
+
+        if(value === 123){
+          const idsFiltrados = [128, 129, 130];
+          this.subnivelesFiltrados = [
+            ...this.subnivelesAsignatura.filter(subnivel =>
+              subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number)
+            )
+          ];
+          console.log('123123123', this.subnivelesFiltrados);
+        }
+
+      } else {
+        subnivel?.clearValidators();
+        subnivel?.disable();
+        subnivel?.patchValue('');
+      }
+      subnivel?.updateValueAndValidity();
+    });
   }
 
-  
+
+
+
+
+
 
   get nivel() {
     return this.cursoForm.controls['nivel'];
@@ -108,8 +154,8 @@ export class AgregarCursoComponent implements OnInit {
   get grado() {
     return this.cursoForm.controls['grado'];
   }
-  get paralelo() { 
-    return this.cursoForm.controls['paralelo']
+  get paralelo() {
+    return this.cursoForm.controls['paralelo'];
   }
   get asignatura() {
     return this.cursoForm.controls['asignatura'];

@@ -751,9 +751,9 @@
                         <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>¿Quién / Quienes?</mat-label>
-                                <input matInput formControlName="familiaFamiliaresDiscacidadDescripcion"
+                                <input matInput formControlName="familiaFamiliaresDiscapacidadDescripcion"
                                     maxlength="1000" />
-                                @if (familiaFamiliaresDiscacidadDescripcion.invalid) {
+                                @if (familiaFamiliaresDiscapacidadDescripcion.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
                             </mat-form-field>
@@ -778,7 +778,7 @@
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Tipo de vivienda</mat-label>
                                 <input matInput formControlName="familiaTipoViviendaOtro" maxlength="1000" />
-                                @if (familiaFamiliaresDiscacidadDescripcion.invalid) {
+                                @if (familiaFamiliaresDiscapacidadDescripcion.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
                             </mat-form-field>
@@ -855,7 +855,7 @@
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color">Guardar Antecedentes de la Madre</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarAntecedentesMadre()">Guardar Antecedentes de la Madre</button>
                     </div>
                 </form>
 
@@ -1049,7 +1049,7 @@
                     </div>
 
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color">Guardar Antecedentes del
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarAntecedentesEstudiante()">Guardar Antecedentes del
                             Estudiante</button>
                     </div>
                     <br>
@@ -1076,7 +1076,7 @@
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Detalle</mat-label>
                                 <textarea matInput formControlName="seguimiento" rows="20"
-                                    maxlength="10000"></textarea>
+                                    maxlength="8000"></textarea> <mat-hint align="end">{{seguimiento.value.length}} / 8000</mat-hint>  
                                 @if (seguimiento.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -1084,7 +1084,7 @@
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color">Guardar seguimiento</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarSeguimientoEstudiante()">Guardar seguimiento</button>
                     </div>
                     <br>
                 </form>

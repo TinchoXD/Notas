@@ -133,7 +133,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
     DropdownModule,
     IconFieldModule,
     InputIconModule,
-    MultiSelectModule
+    MultiSelectModule,
+    InputOtpModule
   ],
 })
 export class PrimeNGModule {}
