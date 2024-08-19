@@ -645,9 +645,6 @@ export class EstudianteFormComponent implements OnInit {
 
 
       this.datosFamiliaresFormAux.patchValue({
-
-
-
         familiaUnionPadres: this.familiaUnionPadres.value,
         familiaUnionPadresOtro: this.familiaUnionPadresOtro.value,
         familiaNumeroHijos: this.familiaNumeroHijos.value,
