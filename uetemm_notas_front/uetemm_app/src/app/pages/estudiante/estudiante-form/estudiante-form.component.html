@@ -2,15 +2,25 @@
 <div class="container-page">
 
     <div class="card">
-
+        <section>
+            <div class="div-button-row">
+                <div class="div-flex-container">
+                    <div class="div-button-container">
+                        <button mat-fab color="primary" matTooltip="Regresar"
+                            routerLink="/estudiantes">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
         <mat-tab-group>
-
-            <!-- PEGAR AQUI -->
             <mat-tab label="Estudiante / Representante">
                 <br>
                 <form [formGroup]="estudianteForm" style="width: 99%;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">Datos del Estudiante</h5>
+                        
+                        <h5 class="text-right"><span class="circle-number mr-3">1</span>Datos del Estudiante</h5>
                     </div>
                     <div class="grid">
                         <div class="col">
@@ -69,9 +79,9 @@
                                     <mat-option *ngFor="let grupoEtnico of catalogoGrupoEtnico"
                                         [value]="grupoEtnico.id">{{grupoEtnico.nombre}}</mat-option>
                                 </mat-select>
-                                <span matTextPrefix class="input-icon">
+                                <!-- <span matTextPrefix class="input-icon">
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                </span>
+                                </span> -->
                                 @if (grupoEtnico.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -84,9 +94,9 @@
                                     <mat-option *ngFor="let sexo of catalogoSexo"
                                         [value]="sexo.id">{{sexo.nombre}}</mat-option>
                                 </mat-select>
-                                <span matTextPrefix class="input-icon">
+                                <!-- <span matTextPrefix class="input-icon">
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                </span>
+                                </span> -->
                                 @if (sexo.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -142,7 +152,6 @@
 
                             <input matInput formControlName="curso_id" readonly hidden />
 
-
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Curso</mat-label>
                                 <input matInput formControlName="curso" readonly />
@@ -155,17 +164,16 @@
                     </div>
 
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color">Guardar Datos Estudiante</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosEstudiante()">Guardar Datos Estudiante</button>
                     </div>
                 </form>
-
 
                 <p-divider />
                 <mat-accordion class="example-headers-align">
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteMadre"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title> Datos de la Madre </mat-panel-title>
+                            <mat-panel-title><span class="circle-number mr-3">2</span> Datos de la Madre </mat-panel-title>
                         </mat-expansion-panel-header>
                         <form [formGroup]="madreForm">
                             <!-- <div class="flex justify-content-between flex-wrap">
@@ -226,9 +234,9 @@
                                                 <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
                                                     [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (estadoCivilMadre.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -241,9 +249,9 @@
                                                 <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
                                                     [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (nivelInstruccionMadre.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -308,8 +316,8 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos de la
-                                        Madre</button>
+                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosMadre()" matTooltip="Establecer la información de la Madre como Representante">Guardar Datos de la
+                                        Madre </button>
                                     <button class="mr-2" mat-flat-button type="button" (click)="madreRepresentante()"
                                         [color]="colorInfo">Representante</button>
                                 </div>
@@ -324,7 +332,7 @@
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representantePadre"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title> Datos del Padre </mat-panel-title>
+                            <mat-panel-title> <span class="circle-number mr-3">3</span>Datos del Padre </mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <form [formGroup]="padreForm">
@@ -386,9 +394,9 @@
                                                 <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
                                                     [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (estadoCivilPadre.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -401,9 +409,9 @@
                                                 <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
                                                     [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (nivelInstruccionPadre.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -468,9 +476,9 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos del
+                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosPadre()">Guardar Datos del
                                         Padre</button>
-                                        <button class="mr-2" mat-flat-button type="button" (click)="padreRepresentante()"
+                                        <button class="mr-2" mat-flat-button type="button" (click)="padreRepresentante()" matTooltip="Establecer la información del Padre como Representante"
                                         [color]="colorInfo">Representante</button>
                                 </div>
                             </div>
@@ -478,15 +486,13 @@
                     </mat-expansion-panel>
                 </mat-accordion>
 
-
-
                 <p-divider />
 
                 <mat-accordion class="example-headers-align">
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteAdicional"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title> Datos del Representante</mat-panel-title>
+                            <mat-panel-title><span class="circle-number mr-3">4</span> Datos del Representante</mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <form [formGroup]="representanteForm">
@@ -546,9 +552,9 @@
                                                 <mat-option *ngFor="let estadoCivil of catalogoEstadoCivil"
                                                     [value]="estadoCivil.id">{{estadoCivil.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (estadoCivilRepresentante.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -561,9 +567,9 @@
                                                 <mat-option *ngFor="let nivelInstruccion of catalogoNivelInstruccion"
                                                     [value]="nivelInstruccion.id">{{nivelInstruccion.nombre}}</mat-option>
                                             </mat-select>
-                                            <span matTextPrefix class="input-icon">
+                                            <!-- <span matTextPrefix class="input-icon">
                                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                            </span>
+                                            </span> -->
                                             @if (nivelInstruccionRepresentante.invalid) {
                                             <mat-error> {{errorMessage}}</mat-error>
                                             }
@@ -626,9 +632,18 @@
                                             }
                                         </mat-form-field>
                                     </div>
+                                    <div class="col">
+                                        <mat-form-field style="width: 100%;" appearance="outline">
+                                            <mat-label>Teléfono Celular</mat-label>
+                                            <input matInput formControlName="telefonoCelularRepresentante" />
+                                            @if (telefonoCelularRepresentante.invalid) {
+                                            <mat-error> {{errorMessage}}</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color">Guardar Datos del
+                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosRepresentante()">Guardar Datos del
                                         Representante</button>
                                 </div>
                             </div>
@@ -644,7 +659,7 @@
                 <br>
                 <form [formGroup]="datosFamiliaresForm" style="width: 99%;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">Datos Familiares</h5>
+                        <h5 class="text-right"><span class="circle-number mr-3">5</span>Datos Familiares</h5>
                     </div>
                     <div class="grid">
                         <div class="col">
@@ -698,13 +713,13 @@
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Puesto que ocupa entre hermanos</mat-label>
                                 <mat-select formControlName="familiaNumeroPuestoEntreHermanos">
-                                    <mat-option value="primero">Primero</mat-option>
-                                    <mat-option value="segundo">Segundo</mat-option>
-                                    <mat-option value="tercero">Tercero</mat-option>
-                                    <mat-option value="cuarto">Cuarto</mat-option>
-                                    <mat-option value="quinto">Quinto</mat-option>
-                                    <mat-option value="sexto">Sexto</mat-option>
-                                    <mat-option value="septimo">Séptimo</mat-option>
+                                    <mat-option value="1">Primero</mat-option>
+                                    <mat-option value="2">Segundo</mat-option>
+                                    <mat-option value="3">Tercero</mat-option>
+                                    <mat-option value="4">Cuarto</mat-option>
+                                    <mat-option value="5">Quinto</mat-option>
+                                    <mat-option value="6">Sexto</mat-option>
+                                    <mat-option value="7">Séptimo</mat-option>
                                 </mat-select>
                                 @if (familiaNumeroPuestoEntreHermanos.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
@@ -773,14 +788,14 @@
                                 <mat-label>Servicios Básicos</mat-label>
                                 <mat-select formControlName="familiaServiciosBasicos" multiple>
                                     @for (servicio of serviciosBasicos; track servicio) {
-                                    <mat-option [value]="servicio">{{servicio}}</mat-option>
+                                    <mat-option [value]="servicio.value">{{servicio.nombre}}</mat-option>
                                     }
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color">Guardar datos Familiares</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosFamiliares()">Guardar datos Familiares</button>
                     </div>
                 </form>
 
@@ -789,7 +804,7 @@
                 <form [formGroup]="antecedentesMadreForm" style="width: 99%;">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">Antecedentes de la Madre</h5>
+                        <h5 class="text-right"><span class="circle-number mr-3">6</span>Antecedentes de la Madre</h5>
                     </div>
                     <div class="grid">
                         <div class="col-3">
@@ -849,7 +864,7 @@
                 <form [formGroup]="antecedentesEstudianteForm" style="width: 99%;">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">Antecedentes del Estudiante</h5>
+                        <h5 class="text-right"><span class="circle-number mr-3">7</span>Antecedentes del Estudiante</h5>
                     </div>
                     <div class="grid">
                         <div class="col">
@@ -927,10 +942,15 @@
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Porcentaje de discapacidad</mat-label>
                                 <input matInput formControlName="antecedentesEstudiantePorcentajeDiscapacidad"
-                                    type="number" maxlength="1000" />
-                                @if (antecedentesEstudiantePorcentajeDiscapacidad.invalid) {
+                                    type="number" />
+                                    <mat-icon matSuffix>percent</mat-icon>
+
+                                @if (antecedentesEstudiantePorcentajeDiscapacidad.hasError('required')) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
+                                @if (antecedentesEstudiantePorcentajeDiscapacidad.hasError('min') || antecedentesEstudiantePorcentajeDiscapacidad.hasError('max')) {
+                                    <mat-error>Debe tener un valor entre 1 y 100</mat-error>
+                                    }
                             </mat-form-field>
                         </div>
                         <div class="col">
@@ -947,7 +967,6 @@
                             </mat-form-field>
                         </div>
                     </div>
-
 
                     <div class="grid">
                         <div class="col">
@@ -1036,16 +1055,13 @@
                     <br>
                 </form>
 
-
-
-
             </mat-tab>
             <mat-tab label="Seguimiento">
                 <br>
                 <form [formGroup]="seguimientoForm" style="width: 99%;">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right">Seguimiento y acompañamiento del estudiante</h5>
+                        <h5 class="text-right"><span class="circle-number mr-3">8</span>Seguimiento y acompañamiento del estudiante</h5>
                     </div>
 
                     <div class="grid">
@@ -1074,8 +1090,6 @@
                 </form>
             </mat-tab>
         </mat-tab-group>
-
-
 
         <br>
 

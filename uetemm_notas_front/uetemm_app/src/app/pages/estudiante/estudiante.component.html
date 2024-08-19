@@ -2,7 +2,7 @@
     <div class="card">
 
         <p-table #dt [value]="estudiantes" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
-            [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cedula', 'telefono']"
+            [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cedula', '']"
             [tableStyle]="{ 'min-width': '75rem;'}">
 
             <ng-template pTemplate="caption">
@@ -20,8 +20,14 @@
             <ng-template pTemplate="header">
 
                 <tr>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
+                    <th pSortableColumn="nombres">
+                        Nombres <p-sortIcon field="nombres" />
+                    </th>
+                    <th pSortableColumn="apellidos">
+                        Apellidos <p-sortIcon field="apellidos" />
+                    </th>
+
+
                     <th>Cedula</th>
                     <th>Grado / Curso</th>
 
@@ -65,7 +71,7 @@
 
 
                     <th>
-
+                        
                     </th>
                 </tr>
 
@@ -83,11 +89,16 @@
                         {{ estudianteRow.cedula }}
                     </td>
                     <td>
-                        {{ estudianteRow.curso.nivel.nombre }} - {{ estudianteRow.curso.subnivel.nombre }} - <strong>{{
-                            estudianteRow.curso.grado.nombre }}</strong> - <strong>{{
-                            estudianteRow.curso.paralelo.nombre }}</strong> - {{ estudianteRow.curso.jornada.nombre }}
+                        {{ estudianteRow.curso ? estudianteRow.curso.nivel.nombre : null}} -
+                        {{ estudianteRow.curso ? estudianteRow.curso.subnivel.nombre : null }} -
+                        <strong>{{ estudianteRow.curso ? estudianteRow.curso.grado.nombre : null }}</strong> -
+                        <strong>{{estudianteRow.curso ? estudianteRow.curso.paralelo.nombre : null}}</strong> -
+                        {{ estudianteRow.curso ? estudianteRow.curso.jornada.nombre : null}}
                     </td>
-
+                    <td>
+                        <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
+                        pTooltip="Editar Curso" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
+                    </td>
                 </tr>
             </ng-template>
 

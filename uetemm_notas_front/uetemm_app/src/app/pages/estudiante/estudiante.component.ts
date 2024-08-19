@@ -3,6 +3,9 @@ import { AlertType } from '../../shared/alert/alertType';
 import { EstudianteService } from '../../services/estudiante/estudiante.service';
 import { ThemePalette } from '@angular/material/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
+import { LoadingService } from '../../services/loading/loading.service';
+import { Router } from '@angular/router';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -31,7 +34,11 @@ export class EstudianteComponent implements OnInit {
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private estudianteService: EstudianteService) {
+    private estudianteService: EstudianteService,
+    public dialog: MatDialog,
+    private loadingService: LoadingService,
+    private router: Router,
+  ) {
 
   }
 
@@ -49,22 +56,32 @@ export class EstudianteComponent implements OnInit {
 
     this.estudianteService.getAllEstudiantes().subscribe({
       next: (estudiantes) => {
-        this.estudiantes = estudiantes
         this.loading = false;
+        this.estudiantes = estudiantes
         console.log('estudiantes', estudiantes)
 
+
+        // Crear lista para filtro de Cursos (sin repetir)
         this.cursos = estudiantes
         .map(estudiante => estudiante.curso)
         .filter((curso, index, self) =>
-          index === self.findIndex(c => c.id === curso.id)
+          index === self.findIndex(c => c?.id === curso?.id)
         );
   
       console.log('Cursos distintos:', this.cursos);
       }
     })
-
   }
 
+  editarEstudiante(estudiante: any){
+    this.loadingService.show();
+    setTimeout(() => {
+      this.router.navigate([`/estudiantes/estudiante/${estudiante.id}`]).then(() => {
+        this.loadingService.hide(); // Oculta el spinner de carga
+      });
+    }, 550); // Retraso de 2 segundos antes de la navegación
+
+  }
 
 
 

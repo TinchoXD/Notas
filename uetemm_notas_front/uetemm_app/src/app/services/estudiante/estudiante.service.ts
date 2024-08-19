@@ -9,18 +9,17 @@ function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class EstudianteService {
 
-  constructor(private http: HttpClient, private alertService: AlertService) {}
+  constructor(private http: HttpClient, private alertService: AlertService) { }
 
-  getAllEstudiantes(): Observable<any[]>{
+  getAllEstudiantes(): Observable<any[]> {
     return this.http
-    .get<any[]>(environment.urlApi + 'estudiantes/all' )
-    .pipe(catchError(this.handleError));
+      .get<any[]>(environment.urlApi + 'estudiantes/all')
+      .pipe(catchError(this.handleError));
   }
 
   getEstudianteById(estudiante_id: number): Observable<any> {
@@ -28,11 +27,14 @@ export class EstudianteService {
       .get<any>(environment.urlApi + 'estudiantes/estudiante/' + estudiante_id)
       .pipe(catchError(this.handleError));
   }
-  
+
   getEstudiantesByCursoId(curso_id: number): Observable<any[]> {
     return this.http
       .get<any[]>(environment.urlApi + 'estudiante/curso/' + curso_id)
       .pipe(catchError(this.handleError));
+  }
+  updateEstudent(estudiante: any): Observable<any> {
+    return this.http.put(environment.urlApi + 'estudiantes/estudiante', estudiante).pipe(catchError(this.handleError))
   }
 
 

@@ -230,11 +230,11 @@ public class Estudiante {
     @Column(name = "estu_dato_familiar_personas_viven_con_estudiante", nullable = true)
     public String familiaDetallePersonsasVivenConEstudiante;
 
-    @Column(name = "estu_dato_familiar_familiares_discacidad", nullable = true)
-    public Integer familiaNumeroFamiliaresDiscacidad;
+    @Column(name = "estu_dato_familiar_familiares_discapacidad", nullable = true)
+    public Integer familiaNumeroFamiliaresDiscapacidad;
 
-    @Column(name = "estu_dato_familiar_familiares_discacidad_descripcion", nullable = true) 
-    public String familiaFamiliaresDiscacidadDescripcion;
+    @Column(name = "estu_dato_familiar_familiares_discapacidad_descripcion", nullable = true) 
+    public String familiaFamiliaresDiscapacidadDescripcion;
 
     @Column(name = "estu_dato_familiar_tipo_vivienda", nullable = true)
     public String familiaTipoVivienda;
@@ -258,7 +258,7 @@ public class Estudiante {
     public Integer antecedentesMadreDificultadParto;
 
     @Column(name = "estu_antecedente_madre_dificultad_parto_descripcion", nullable = true)
-    public String antecedentesMadreDificultadPartoDescripcion;
+    public String antecedentesMadreDificultadPartoDescripcion; 
 
     // **********************************/
     // * ANTECEDENTES DEL ESTUDIANTE ****/

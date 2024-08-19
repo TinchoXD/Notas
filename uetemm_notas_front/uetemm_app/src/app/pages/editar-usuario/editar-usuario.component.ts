@@ -232,8 +232,6 @@ export class EditarUsuarioComponent implements OnInit {
     });
   }
 
-  
-
   async resetearContrasenia() {
     this.resetPasswordRequest = {
       id: this.userId,

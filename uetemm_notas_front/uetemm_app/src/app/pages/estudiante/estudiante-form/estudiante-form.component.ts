@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogoService } from '../../../services/catalogo/catalogo.service';
 import { Catalogo } from '../../../services/catalogo/catalogo';
 import { EstudianteService } from '../../../services/estudiante/estudiante.service';
@@ -15,9 +15,16 @@ import { CursosComponent } from '../../curso/curso/cursos.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AsignarCursoComponent } from '../asignar-curso/asignar-curso.component';
 import { MessageService } from 'primeng/api';
+import { __values } from 'tslib';
+import { LoadingService } from '../../../services/loading/loading.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
+}
+
+interface ServicioBasico {
+  value: string,
+  nombre: string
 }
 
 @Component({
@@ -38,18 +45,23 @@ export class EstudianteFormComponent implements OnInit {
   catalogoEstadoCivil: Catalogo[] = [];
   catalogoNivelInstruccion: Catalogo[] = [];
 
-
   representanteMadre: number = 1;
   representantePadre: number = 1;
   representanteAdicional: number = 0;
 
-  serviciosBasicos: string[] = ['Luz Eléctrica', 'Agua Potable', 'Teléfono', 'Cable', 'Celular', 'Internet'];
+  /* serviciosBasicos: string[] = ['Luz Eléctrica', 'Agua Potable', 'Teléfono', 'Cable', 'Celular', 'Internet']; */
 
+  serviciosBasicos: ServicioBasico[] = [
+    { value: 'luz_electrica', nombre: 'Luz Eléctrica' },
+    { value: 'agua_potable', nombre: 'Agua Potable' },
+    { value: 'telefono', nombre: 'Teléfono' },
+    { value: 'cable', nombre: 'Cable' },
+    { value: 'celular', nombre: 'Celular' },
+    { value: 'internet', nombre: 'Internet' },
 
+  ];
 
-
-
-  estudiante: any;
+  serviciosBasicosSeleccionados!: string[]
 
   step = signal(0);
 
@@ -72,8 +84,6 @@ export class EstudianteFormComponent implements OnInit {
     telefonoDomicilio: ['', []],
     telefonoCelularMadre: ['', [Validators.pattern(/^[0-9]+$/)]],
     telefonoCelularPadre: ['', [Validators.pattern(/^[0-9]+$/)]],
-
-    user_estado_usuario: [''],
   });
 
   madreForm: FormGroup = this.formBuilder.group({
@@ -119,10 +129,15 @@ export class EstudianteFormComponent implements OnInit {
     telefonoDomicilioRepresentante: ['', []],
     lugarTrabajoRepresentante: ['', []],
     telefonoTrabajoRepresentante: ['', []],
+    telefonoCelularRepresentante: ['',],
   });
 
+
+
+
+
   datosFamiliaresForm: FormGroup = this.formBuilder.group({
-    familiaUnionPadres: ['',],
+    familiaUnionPadres: ['', Validators.required],
     familiaUnionPadresOtro: [{ value: '', disabled: true }],
     familiaNumeroHijos: ['',],
     familiaNumeroHijosVarones: ['',],
@@ -133,7 +148,22 @@ export class EstudianteFormComponent implements OnInit {
     familiaFamiliaresDiscacidadDescripcion: [{ value: '', disabled: true }],
     familiaTipoVivienda: ['', Validators.required],
     familiaTipoViviendaOtro: [{ value: '', disabled: true }],
-    familiaServiciosBasicos: ['',],
+    familiaServiciosBasicos: ['', Validators.required],
+  })
+
+  datosFamiliaresFormAux: FormGroup = this.formBuilder.group({
+    familiaUnionPadres: [''],
+    familiaUnionPadresOtro: [''],
+    familiaNumeroHijos: [''],
+    familiaNumeroHijosVarones: [''],
+    familiaNumeroHijosMujeres: [''],
+    familiaNumeroPuestoEntreHermanos: [''],
+    familiaDetallePersonsasVivenConEstudiante: [''],
+    familiaNumeroFamiliaresDiscapacidad: [''],
+    familiaFamiliaresDiscacidadDescripcion: [''],
+    familiaTipoVivienda: [''],
+    familiaTipoViviendaOtro: [''],
+    familiaServiciosBasicos: [''],
   })
 
   antecedentesMadreForm: FormGroup = this.formBuilder.group({
@@ -160,7 +190,7 @@ export class EstudianteFormComponent implements OnInit {
 
   })
 
-  seguimientoForm:FormGroup = this.formBuilder.group({
+  seguimientoForm: FormGroup = this.formBuilder.group({
     seguimiento: ['']
   })
 
@@ -184,28 +214,26 @@ export class EstudianteFormComponent implements OnInit {
     return '';
   }
 
-  estudianteId: number = 0;
+  estudiante_id: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private catalogoService: CatalogoService,
     private estudianteService: EstudianteService,
-    public dialogCurso: MatDialog,
-    private messageServicePNG: MessageService
+    public dialog: MatDialog,
+    private messageServicePNG: MessageService,
+    private router: Router,
+    private loadingService: LoadingService,
   ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.estudianteId = +params['id']; // El signo '+' convierte el string a número
+      this.estudiante_id = +params['id']; // El signo '+' convierte el string a número
     });
 
-
-
-    this.estudianteService.getEstudianteById(1 /* ********** this.estudianteId */).subscribe({
+    this.estudianteService.getEstudianteById(this.estudiante_id).subscribe({
       next: (estudiante) => {
-        this.estudiante = estudiante;
-        console.log('this.estudiante', this.estudiante);
 
         this.estudianteForm.patchValue({
           id: estudiante.id.toString(),
@@ -224,9 +252,8 @@ export class EstudianteFormComponent implements OnInit {
           telefonoCelularPadre: estudiante.telefonoCelularPadre,
         });
 
-
-
         this.madreForm.patchValue({
+          id: estudiante.id.toString(),
           nombresMadre: estudiante.madreNombres,
           apellidosMadre: estudiante.madreApellidos,
           cedulaMadre: estudiante.madreCedula,
@@ -242,6 +269,7 @@ export class EstudianteFormComponent implements OnInit {
         })
 
         this.padreForm.patchValue({
+          id: estudiante.id.toString(),
           nombresPadre: estudiante.padreNombres,
           apellidosPadre: estudiante.padreApellidos,
           cedulaPadre: estudiante.padreCedula,
@@ -257,6 +285,7 @@ export class EstudianteFormComponent implements OnInit {
         })
 
         this.representanteForm.patchValue({
+          id: estudiante.id.toString(),
           nombresRepresentante: estudiante.representanteNombres,
           apellidosRepresentante: estudiante.representanteApellidos,
           cedulaRepresentante: estudiante.representanteCedula,
@@ -276,19 +305,55 @@ export class EstudianteFormComponent implements OnInit {
         } else {
           this.representanteMadre = 0
         }
-
-
         if (Object.values(this.padreForm.value).every(value => value === null)) {
           this.representantePadre = 1
         } else {
           this.representantePadre = 0
         }
 
-        
-
+        this.serviciosBasicosSeleccionados = estudiante.familiaServiciosBasicos ? estudiante.familiaServiciosBasicos.split(',').map((item: string) => item.trim()) : '';
         this.datosFamiliaresForm.patchValue({
-          familiaServiciosBasicos: ['Onion']
+          id: estudiante.id.toString(),
+          familiaUnionPadres: estudiante.familiaUnionPadres,
+          familiaUnionPadresOtro: estudiante.familiaUnionPadresOtro,
+          familiaNumeroHijos: estudiante.familiaNumeroHijos,
+          familiaNumeroHijosVarones: estudiante.familiaNumeroHijosVarones,
+          familiaNumeroHijosMujeres: estudiante.familiaNumeroHijosMujeres,
+          familiaNumeroPuestoEntreHermanos: estudiante.familiaNumeroPuestoEntreHermanos ? estudiante.familiaNumeroPuestoEntreHermanos.toString() : null,
+          familiaDetallePersonsasVivenConEstudiante: estudiante.familiaDetallePersonsasVivenConEstudiante,
+          familiaNumeroFamiliaresDiscapacidad: estudiante.familiaNumeroFamiliaresDiscapacidad ? estudiante.familiaNumeroFamiliaresDiscapacidad.toString() : null,
+          familiaFamiliaresDiscacidadDescripcion: estudiante.familiaFamiliaresDiscacidadDescripcion,
+          familiaTipoVivienda: estudiante.familiaTipoVivienda,
+          familiaTipoViviendaOtro: estudiante.familiaTipoViviendaOtro,
+          familiaServiciosBasicos: this.serviciosBasicosSeleccionados,
+          /* familiaServiciosBasicos: estudiante.familiaServiciosBasicos, */
         })
+
+        this.antecedentesMadreForm.patchValue({
+          id: estudiante.id.toString(),
+          antecedentesMadreDificultadEmbarazo: estudiante.antecedentesMadreDificultadEmbarazo ? estudiante.antecedentesMadreDificultadEmbarazo.toString() : null,
+          antecedentesMadreDificultadEmbarazoDescripcion: estudiante.antecedentesMadreDificultadEmbarazoDescripcion,
+          antecedentesMadreDificultadParto: estudiante.antecedentesMadreDificultadParto ? estudiante.antecedentesMadreDificultadParto.toString() : null,
+          antecedentesMadreDificultadPartoDescripcion: estudiante.antecedentesMadreDificultadPartoDescripcion,
+        })
+
+        this.antecedentesEstudianteForm.patchValue({
+          id: estudiante.id.toString(),
+          antecedentesEstudianteDatosNinez: estudiante.antecedentesEstudianteDatosNinez,
+          antecedentesEstudianteHistoriaEscolar: estudiante.antecedentesEstudianteHistoriaEscolar,
+          antecedentesEstudianteNecesidadEducativaEspecial: estudiante.antecedentesEstudianteNecesidadEducativaEspecial,
+          antecedentesEstudianteNumeroCarne: estudiante.antecedentesEstudianteNumeroCarne,
+          antecedentesEstudiantePorcentajeDiscapacidad: estudiante.antecedentesEstudiantePorcentajeDiscapacidad,
+          antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion: estudiante.antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion,
+          antecedentesEstudianteDatosRelevantes: estudiante.antecedentesEstudianteDatosRelevantes,
+          antecedentesEstudianteTomaMedicamento: estudiante.antecedentesEstudianteTomaMedicamento,
+          antecedentesEstudianteMedicamentoDescripcion: estudiante.antecedentesEstudianteMedicamentoDescripcion,
+          antecedentesEstudianteMedicamentoRazon: estudiante.antecedentesEstudianteMedicamentoRazon,
+          antecedentesEstudianteRepiteAnios: estudiante.antecedentesEstudianteRepiteAnios,
+          antecedentesEstudianteAniosRepetidos: estudiante.antecedentesEstudianteAniosRepetidos,
+          antecedentesEstudianteSeguimiento: estudiante.antecedentesEstudianteSeguimiento,
+        })
+
       },
     });
 
@@ -371,7 +436,7 @@ export class EstudianteFormComponent implements OnInit {
         antecedentesEstudianteNumeroCarne?.setValidators([Validators.required]);
         antecedentesEstudianteNumeroCarne?.enable();
 
-        antecedentesEstudiantePorcentajeDiscapacidad?.setValidators([Validators.required]);
+        antecedentesEstudiantePorcentajeDiscapacidad?.setValidators([Validators.required, Validators.min(1), Validators.max(100)]);
         antecedentesEstudiantePorcentajeDiscapacidad?.enable();
 
         antecedentesEstudiantePresentaNecesidadEducativaEspecialInstitucion?.setValidators([Validators.required]);
@@ -416,54 +481,50 @@ export class EstudianteFormComponent implements OnInit {
 
     this.antecedentesEstudianteForm.get('antecedentesEstudianteRepiteAnios')?.valueChanges.subscribe(value => {
       const antecedentesEstudianteAniosRepetidos = this.antecedentesEstudianteForm.get('antecedentesEstudianteAniosRepetidos')
-      
+
       if (value === '1') {
         antecedentesEstudianteAniosRepetidos?.setValidators([Validators.required]);
         antecedentesEstudianteAniosRepetidos?.enable();
-
       } else {
         antecedentesEstudianteAniosRepetidos?.clearValidators();
         antecedentesEstudianteAniosRepetidos?.disable();
         antecedentesEstudianteAniosRepetidos?.patchValue('')
-
       }
       antecedentesEstudianteAniosRepetidos?.updateValueAndValidity();
-
     })
-
   }
 
-  madreRepresentante(){
+  madreRepresentante() {
     this.representanteForm.patchValue({
       nombresRepresentante: this.nombresMadre.value,
-          apellidosRepresentante: this.apellidosMadre.value,
-          cedulaRepresentante: this.cedulaMadre.value,
-          parentescoRepresentante: 'MADRE',
-          estadoCivilRepresentante: this.estadoCivilMadre.value,
-          nivelInstruccionRepresentante: this.nivelInstruccionMadre.value,
-          ocupacionRepresentante: this.ocupacionMadre.value,
-          correoElectronicoRepresentante: this.correoElectronicoMadre.value,
-          direccionDomicilioRepresentante: this.direccionDomicilioMadre.value,
-          telefonoDomicilioRepresentante: this.telefonoDomicilioMadre.value,
-          lugarTrabajoRepresentante: this.lugarTrabajoMadre.value,
-          telefonoTrabajoRepresentante: this.telefonoTrabajoMadre.value
+      apellidosRepresentante: this.apellidosMadre.value,
+      cedulaRepresentante: this.cedulaMadre.value,
+      parentescoRepresentante: 'MADRE',
+      estadoCivilRepresentante: this.estadoCivilMadre.value,
+      nivelInstruccionRepresentante: this.nivelInstruccionMadre.value,
+      ocupacionRepresentante: this.ocupacionMadre.value,
+      correoElectronicoRepresentante: this.correoElectronicoMadre.value,
+      direccionDomicilioRepresentante: this.direccionDomicilioMadre.value,
+      telefonoDomicilioRepresentante: this.telefonoDomicilioMadre.value,
+      lugarTrabajoRepresentante: this.lugarTrabajoMadre.value,
+      telefonoTrabajoRepresentante: this.telefonoTrabajoMadre.value
     })
     this.messageServicePNG.add({ severity: 'success', summary: 'Representante', detail: 'Los datos de la madre se han cargado en como Representante del Estudiante' });
   }
-  padreRepresentante(){
+  padreRepresentante() {
     this.representanteForm.patchValue({
       nombresRepresentante: this.nombresPadre.value,
-          apellidosRepresentante: this.apellidosPadre.value,
-          cedulaRepresentante: this.cedulaPadre.value,
-          parentescoRepresentante: 'PADRE',
-          estadoCivilRepresentante: this.estadoCivilPadre.value,
-          nivelInstruccionRepresentante: this.nivelInstruccionPadre.value,
-          ocupacionRepresentante: this.ocupacionPadre.value,
-          correoElectronicoRepresentante: this.correoElectronicoPadre.value,
-          direccionDomicilioRepresentante: this.direccionDomicilioPadre.value,
-          telefonoDomicilioRepresentante: this.telefonoDomicilioPadre.value,
-          lugarTrabajoRepresentante: this.lugarTrabajoPadre.value,
-          telefonoTrabajoRepresentante: this.telefonoTrabajoPadre.value
+      apellidosRepresentante: this.apellidosPadre.value,
+      cedulaRepresentante: this.cedulaPadre.value,
+      parentescoRepresentante: 'PADRE',
+      estadoCivilRepresentante: this.estadoCivilPadre.value,
+      nivelInstruccionRepresentante: this.nivelInstruccionPadre.value,
+      ocupacionRepresentante: this.ocupacionPadre.value,
+      correoElectronicoRepresentante: this.correoElectronicoPadre.value,
+      direccionDomicilioRepresentante: this.direccionDomicilioPadre.value,
+      telefonoDomicilioRepresentante: this.telefonoDomicilioPadre.value,
+      lugarTrabajoRepresentante: this.lugarTrabajoPadre.value,
+      telefonoTrabajoRepresentante: this.telefonoTrabajoPadre.value
     })
     this.messageServicePNG.add({ severity: 'success', summary: 'Representante', detail: 'Los datos del padre se han cargado en como Representante del Estudiante' });
   }
@@ -471,28 +532,156 @@ export class EstudianteFormComponent implements OnInit {
   dialogAsignarCurso() {
     this.asignarCursoDialog = true;
     this.submitted = false;
-    //this.curso = {};
-
-
-    const dialogRef = this.dialogCurso.open(AsignarCursoComponent, {
+    const dialogRef = this.dialog.open(AsignarCursoComponent, {
       width: '90%',
     });
     dialogRef.afterClosed().subscribe((cursoSeleccionado) => {
       if (cursoSeleccionado) {
         this.cursoSeleccionado = cursoSeleccionado
-
         this.estudianteForm.patchValue({
           curso_id: this.cursoSeleccionado.id,
           curso: this.cursoSeleccionado.nivel.nombre + ' - ' + this.cursoSeleccionado.subnivel.nombre + ' - ' + this.cursoSeleccionado.grado.nombre + ' - ' + this.cursoSeleccionado.paralelo.nombre + ' - ' + this.cursoSeleccionado.jornada.nombre
-
         })
       }
     })
-
-
-
   }
 
+  guardarDatosEstudiante() {
+    console.log('Estudiante', this.estudianteForm)
+    if (this.estudianteForm.valid) {
+      this.estudianteForm.addControl('form_id', new FormControl('1'))
+      this.loadingService.show();
+      setTimeout(() => {
+        this.estudianteService.updateEstudent(this.estudianteForm.value).subscribe({
+          next: (req) => {
+            this.messageServicePNG.add({ severity: 'success', summary: 'Datos del Estudiante', detail: 'La información del Estudiante se han guardado exitosamente' });
+          },
+          error: (error) => {
+            this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Error al guardar la información del Estudiante' });
+          }
+        })
+        this.loadingService.hide();
+      }, 150);
+    } else {
+      this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Verifique la información' });
+    }
+  }
+
+  guardarDatosMadre() {
+    console.log('Madre', this.madreForm)
+    if (this.madreForm.valid) {
+      this.madreForm.addControl('id', new FormControl(this.estudiante_id))
+      this.madreForm.addControl('form_id', new FormControl('2'))
+      this.loadingService.show();
+      setTimeout(() => {
+        this.estudianteService.updateEstudent(this.madreForm.value).subscribe({
+          next: (req) => {
+            this.messageServicePNG.add({ severity: 'success', summary: 'Datos de la Madre', detail: 'La información se ha guardado exitosamente' });
+          },
+          error: (error) => {
+            this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Error al guardar la información de la Madre' });
+          }
+        })
+        this.loadingService.hide();
+      }, 150);
+    } else {
+      this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Verifique la información' });
+    }
+  }
+
+  guardarDatosPadre() {
+    console.log('Padre', this.padreForm)
+    if (this.padreForm.valid) {
+      this.padreForm.addControl('id', new FormControl(this.estudiante_id))
+      this.padreForm.addControl('form_id', new FormControl('3'))
+      this.loadingService.show();
+      setTimeout(() => {
+        this.estudianteService.updateEstudent(this.padreForm.value).subscribe({
+          next: (req) => {
+            this.messageServicePNG.add({ severity: 'success', summary: 'Datos del Padre', detail: 'La información se ha guardado exitosamente' });
+          },
+          error: (error) => {
+            this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Error al guardar la información del Padre' });
+          }
+        })
+        this.loadingService.hide();
+      }, 150);
+    } else {
+      this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Verifique la información' });
+    }
+  }
+
+
+  guardarDatosRepresentante() {
+    console.log('Representante', this.representanteForm)
+    if (this.representanteForm.valid) {
+      this.representanteForm.addControl('id', new FormControl(this.estudiante_id))
+      this.representanteForm.addControl('form_id', new FormControl('4'))
+      this.loadingService.show();
+      setTimeout(() => {
+        this.estudianteService.updateEstudent(this.representanteForm.value).subscribe({
+          next: (req) => {
+            this.messageServicePNG.add({ severity: 'success', summary: 'Datos del Representante', detail: 'La información se ha guardado exitosamente' });
+          },
+          error: (error) => {
+            this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Error al guardar la información del Representante' });
+          }
+        })
+        this.loadingService.hide();
+      }, 150);
+    } else {
+      this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Verifique la información' });
+    }
+  }
+
+  guardarDatosFamiliares() {
+    console.log('datos Familiares', this.datosFamiliaresForm)
+    if (this.datosFamiliaresForm.valid) {
+      this.datosFamiliaresFormAux.addControl('id', new FormControl(this.estudiante_id))
+      this.datosFamiliaresFormAux.addControl('form_id', new FormControl('5'))
+      this.loadingService.show();
+
+
+
+
+      this.datosFamiliaresFormAux.patchValue({
+
+
+
+        familiaUnionPadres: this.familiaUnionPadres.value,
+        familiaUnionPadresOtro: this.familiaUnionPadresOtro.value,
+        familiaNumeroHijos: this.familiaNumeroHijos.value,
+        familiaNumeroHijosVarones: this.familiaNumeroHijosVarones.value,
+        familiaNumeroHijosMujeres: this.familiaNumeroHijosMujeres.value,
+        familiaNumeroPuestoEntreHermanos: this.familiaNumeroPuestoEntreHermanos.value,
+        familiaDetallePersonsasVivenConEstudiante: this.familiaDetallePersonsasVivenConEstudiante.value,
+        familiaNumeroFamiliaresDiscapacidad: this.familiaNumeroFamiliaresDiscapacidad.value,
+        familiaFamiliaresDiscacidadDescripcion: this.familiaFamiliaresDiscacidadDescripcion.value,
+        familiaTipoVivienda: this.familiaTipoVivienda.value,
+        familiaTipoViviendaOtro: this.familiaTipoVivienda.value,
+        familiaServiciosBasicos: this.familiaServiciosBasicos.value.join(',')
+      })
+
+      console.log('datos Familiares AUX', this.datosFamiliaresFormAux)
+
+      setTimeout(() => {
+        this.estudianteService.updateEstudent(this.datosFamiliaresFormAux.value).subscribe({
+          next: (req) => {
+            this.messageServicePNG.add({ severity: 'success', summary: 'Datos Familiares', detail: 'La información se ha guardado exitosamente' });
+          },
+          error: (error) => {
+            this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Error al guardar la información Familiar' });
+          }
+        })
+        this.loadingService.hide();
+      }, 150);
+    } else {
+      this.messageServicePNG.add({ severity: 'error', summary: 'Error', detail: 'Verifique la información' });
+    }
+
+
+    //this.serviciosBasicosSeleccionados = estudiante.familiaServiciosBasicos ? estudiante.familiaServiciosBasicos.split(',').map((item: string) => item.trim()) : '';
+  }
 
   //* Form ESTUDIANTE
   get nombres() {
@@ -654,6 +843,9 @@ export class EstudianteFormComponent implements OnInit {
   get parentescoRepresentante() {
     return this.representanteForm.controls['parentescoRepresentante'];
   }
+  get telefonoCelularRepresentante() {
+    return this.representanteForm.controls['telefonoCelularRepresentante'];
+  }
 
   //* Form Datos Familiares
 
@@ -688,6 +880,10 @@ export class EstudianteFormComponent implements OnInit {
   get familiaTipoVivienda() {
     return this.datosFamiliaresForm.controls['familiaTipoVivienda']
   }
+  get familiaServiciosBasicos() {
+    return this.datosFamiliaresForm.controls['familiaServiciosBasicos']
+  }
+
 
   //* FORM ANTECEDENTES MADRE
   get antecedentesMadreDificultadEmbarazo() {
@@ -747,7 +943,6 @@ export class EstudianteFormComponent implements OnInit {
   get seguimiento() {
     return this.seguimientoForm.controls['seguimiento']
   }
-
 
   private loadCatalogoGrupoEtnico() {
     this.catalogoService.getGrupoEtnicoLista().subscribe({
