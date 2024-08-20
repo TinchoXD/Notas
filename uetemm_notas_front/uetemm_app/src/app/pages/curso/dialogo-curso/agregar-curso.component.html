@@ -40,7 +40,7 @@
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Grado</mat-label>
                         <mat-select [value]="grado" formControlName="grado">
-                            @for (grado of grados; track grado) {
+                            @for (grado of gradosFiltrados; track grado) {
                             <mat-option [value]="grado.id">{{grado.nombre}}</mat-option>
                             }
                         </mat-select>
@@ -70,7 +70,7 @@
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Jornada</mat-label>
                         <mat-select [value]="jornada" formControlName="jornada">
-                            @for (jornada of jornadas; track jornada) {
+                            @for (jornada of jornadasFiltrados; track jornada) {
                             <mat-option [value]="jornada.id">{{jornada.nombre}}</mat-option>
                             }
                         </mat-select>

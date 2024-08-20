@@ -27,13 +27,18 @@ export class AgregarCursoComponent implements OnInit {
   errorMessage: String = 'Este campo es obligatorio.';
 
   nivelesAsignatura: Catalogo[] = [];
-  
+
   subnivelesAsignatura!: Catalogo[];
   subnivelesFiltrados!: Catalogo[]
 
   grados!: Catalogo[];
+  gradosFiltrados!: Catalogo[]
+
   paralelos!: Catalogo[];
+
   jornadas!: Catalogo[];
+  jornadasFiltrados!: Catalogo[]
+
   profesores!: User[];
 
   value: any;
@@ -85,13 +90,13 @@ export class AgregarCursoComponent implements OnInit {
       .getSubnivelAsignaturaLista()
       .subscribe(
         (subnivelesAsignatura) =>
-          (this.subnivelesAsignatura = subnivelesAsignatura,
-            console.log('subnivelesAsignatura', this.subnivelesAsignatura)
-          )
+        (this.subnivelesAsignatura = subnivelesAsignatura,
+          console.log('subnivelesAsignatura', this.subnivelesAsignatura)
+        )
       );
     this.catalogoService
       .getGradoLista()
-      .subscribe((grados) => (this.grados = grados));
+      .subscribe((grados) => (this.grados = grados, console.log('grados', this.grados)));
     this.catalogoService
       .getParaleloLista()
       .subscribe((paralelos) => (this.paralelos = paralelos));
@@ -99,9 +104,9 @@ export class AgregarCursoComponent implements OnInit {
       .getAllUser()
       .subscribe(
         (users) =>
-          (this.profesores = users.sort((a, b) =>
-            a.firstname.localeCompare(b.firstname)
-          ))
+        (this.profesores = users.sort((a, b) =>
+          a.firstname.localeCompare(b.firstname)
+        ))
       );
 
     this.catalogoService
@@ -111,25 +116,34 @@ export class AgregarCursoComponent implements OnInit {
 
 
 
+    //********************** INICIO *************************/
+    //********* VALIDACION DE PASOS, CREACION CURSO *********/
+    //********************** INICIO *************************/
 
+    const subnivel = this.cursoForm.get('subnivel');
+    const grado = this.cursoForm.get('grado');
+    const paralelo = this.cursoForm.get('paralelo');
+    const jornada = this.cursoForm.get('jornada')
 
-      this.cursoForm.get('nivel')?.valueChanges.subscribe((value) => {
-      const subnivel = this.cursoForm.get('subnivel');
-      console.log('this.cursoForm.value', this.cursoForm);
-      if (value) {
+    this.cursoForm.get('nivel')?.valueChanges.subscribe((valueNivel) => {
+      if (valueNivel) {
         subnivel?.setValidators([Validators.required]);
         subnivel?.enable();
-
-        if(value === 123){
-          const idsFiltrados = [128, 129, 130];
+        if (valueNivel === this.nivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Bachillerato'.toLowerCase())?.id) {
+          const idsFiltrados = this.subnivelesAsignatura.filter(item => item.nombre !== undefined && ['Contabilidad', 'Ventas', 'Servicios Hoteleros', 'Mecanizado'].includes(item.nombre)).map(item => item.id); // ESPECIALIDADES DE BACHILLERATO
           this.subnivelesFiltrados = [
             ...this.subnivelesAsignatura.filter(subnivel =>
               subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number)
             )
           ];
-          console.log('123123123', this.subnivelesFiltrados);
+        } else if (valueNivel === this.nivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Educación General Básica'.toLowerCase())?.id) {
+          const idsFiltrados = this.subnivelesAsignatura.filter(item => item.nombre !== undefined && ['Elemental', 'Media', 'Superior'].includes(item.nombre)).map(item => item.id); // SUBNIVELES DE EGB
+          this.subnivelesFiltrados = [
+            ...this.subnivelesAsignatura.filter(subnivel =>
+              subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number)
+            )
+          ];
         }
-
       } else {
         subnivel?.clearValidators();
         subnivel?.disable();
@@ -137,6 +151,88 @@ export class AgregarCursoComponent implements OnInit {
       }
       subnivel?.updateValueAndValidity();
     });
+
+
+    this.cursoForm.get('subnivel')?.valueChanges.subscribe((valueSubnivel) => {
+      if (valueSubnivel) {
+        grado?.setValidators([Validators.required]);
+        grado?.enable();
+        if (valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Elemental'.toLowerCase())?.id) {
+          const idsFiltrados = this.grados.filter(item => item.nombre !== undefined && ['2do', '3ro', '4to'].includes(item.nombre)).map(item => item.id); // GRADOS PARA ELEMENTAL
+          this.gradosFiltrados = [
+            ...this.grados.filter(grado =>
+              grado.id !== undefined && idsFiltrados.includes(grado.id as number)
+            )
+          ]
+        } else if (valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Media'.toLowerCase())?.id) {
+          const idsFiltrados = this.grados.filter(item => item.nombre !== undefined && ['5to', '6to', '7mo'].includes(item.nombre)).map(item => item.id); // GRADOS PARA Media
+          this.gradosFiltrados = [
+            ...this.grados.filter(grado =>
+              grado.id !== undefined && idsFiltrados.includes(grado.id as number)
+            )
+          ]
+        } else if (valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Superior'.toLowerCase())?.id) {
+          const idsFiltrados = this.grados.filter(item => item.nombre !== undefined && ['8vo', '9no', '10mo'].includes(item.nombre)).map(item => item.id); // GRADOS PARA Superior
+          this.gradosFiltrados = [
+            ...this.grados.filter(grado =>
+              grado.id !== undefined && idsFiltrados.includes(grado.id as number)
+            )
+          ]
+        } else if (valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Contabilidad'.toLowerCase())?.id || valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Ventas'.toLowerCase())?.id || valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Servicios Hoteleros'.toLowerCase())?.id || valueSubnivel === this.subnivelesAsignatura.find(nombre => nombre.nombre?.toLowerCase() === 'Mecanizado'.toLowerCase())?.id) {
+          const idsFiltrados = this.grados.filter(item => item.nombre !== undefined && ['1ro', '2do', '3ro'].includes(item.nombre)).map(item => item.id); // GRADOS PARA TODO BACHILLETATO
+          this.gradosFiltrados = [
+            ...this.grados.filter(grado =>
+              grado.id !== undefined && idsFiltrados.includes(grado.id as number)
+            )
+          ]
+        }
+      } else {
+        grado?.clearValidators();
+        grado?.disable();
+        grado?.patchValue('');
+      }
+      grado?.updateValueAndValidity();
+    });
+
+    this.cursoForm.get('grado')?.valueChanges.subscribe((valueGrado) => {
+      if (valueGrado) {
+        paralelo?.setValidators([Validators.required]);
+        paralelo?.enable();
+      }
+    });
+
+    this.cursoForm.get('paralelo')?.valueChanges.subscribe((valueParalelo) => {
+
+      if (valueParalelo) {
+        jornada?.setValidators([Validators.required]);
+        jornada?.enable();
+        if (subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Elemental'.toLowerCase()))?.id || subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Media'.toLowerCase()))?.id) {
+          const idsFiltrados = this.jornadas.filter(item => item.nombre !== undefined && ['Matutina'].includes(item.nombre)).map(item => item.id); // JORNADAS PARA Elemental y Media
+          this.jornadasFiltrados = [
+            ...this.jornadas.filter(subnivel => subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number))
+          ]
+        } else if (subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Superior'.toLowerCase()))?.id) {
+          const idsFiltrados = this.jornadas.filter(item => item.nombre !== undefined && ['Vespertina'].includes(item.nombre)).map(item => item.id); // JORNADAS PARA Superior
+          this.jornadasFiltrados = [
+            ...this.jornadas.filter(subnivel => subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number))
+          ]
+        } else if (subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Contabilidad'.toLowerCase()))?.id || subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Mecanizado'.toLowerCase()))?.id) {
+          const idsFiltrados = this.jornadas.filter(item => item.nombre !== undefined && ['Matutina', 'Nocturna'].includes(item.nombre)).map(item => item.id); // JORNADAS PARA Contabilidad y Mecanizado
+          this.jornadasFiltrados = [
+            ...this.jornadas.filter(subnivel => subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number))
+          ]
+        } else if (subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Ventas'.toLowerCase()))?.id || subnivel?.value === this.subnivelesAsignatura.find(nombre => (nombre.nombre?.toLowerCase() === 'Servicios Hoteleros'.toLowerCase()))?.id) {
+          const idsFiltrados = this.jornadas.filter(item => item.nombre !== undefined && ['Matutina'].includes(item.nombre)).map(item => item.id); // JORNADAS PARA Ventas y Servicios Hoteleros
+          this.jornadasFiltrados = [
+            ...this.jornadas.filter(subnivel => subnivel.id !== undefined && idsFiltrados.includes(subnivel.id as number))
+          ]
+        }
+      }
+    });
+
+    //*********************** FIN **************************/
+    //********* VALIDACION DE PASOS, CREACION CURSO ********/
+    //*********************** FIN **************************/
   }
 
 
