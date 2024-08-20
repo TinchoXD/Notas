@@ -41,6 +41,12 @@ export class CursoService {
       .pipe(catchError(this.handleError));
   }
 
+  getCursoByCodigo(codigo: string): Observable<boolean> {
+    return this.http
+      .get<boolean>(environment.urlApi + 'cursos/curso/codigo/' + codigo)
+      .pipe(catchError(this.handleError));
+  }
+
   delCurso(curso: any): Observable<Curso[]> {
     return this.http
       .post<Curso[]>(environment.urlApi + 'cursos/curso/deleteCurso', curso)

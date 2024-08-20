@@ -10,6 +10,7 @@ export interface CursoRequest {
     jornada: number;
     descripcion: string;
     user_id: number;
+    curso: string;
 
 
 

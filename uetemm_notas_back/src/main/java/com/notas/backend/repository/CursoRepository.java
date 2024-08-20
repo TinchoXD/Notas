@@ -14,5 +14,6 @@ public interface CursoRepository extends JpaRepository<Curso,Integer> {
     
     List<Curso> findByStatus(int active); 
     
+    Curso findByCodigo(String codigo);
 
 }

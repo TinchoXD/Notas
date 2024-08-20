@@ -13,7 +13,6 @@
                             <mat-option *ngFor="let nivel of nivelesAsignatura"
                                 [value]="nivel.id">{{nivel.nombre}}</mat-option>
                         </mat-select>
-                        
                         @if (nivel.invalid) {
                         <mat-error> {{errorMessage}}</mat-error>
                         }
@@ -70,7 +69,7 @@
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Jornada</mat-label>
                         <mat-select [value]="jornada" formControlName="jornada">
-                            @for (jornada of jornadasFiltrados; track jornada) {
+                            @for (jornada of jornadasFiltradas; track jornada) {
                             <mat-option [value]="jornada.id">{{jornada.nombre}}</mat-option>
                             }
                         </mat-select>
@@ -80,13 +79,11 @@
                     </mat-form-field>
                 </div>
             </div>
-
             <div class="row mt-3">
                 <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Tutor</mat-label>
                         <mat-select [value]="user" formControlName="user_id">
-                            
                             @for (profesor of profesores; track profesor) {
                             <mat-option [value]="profesor.id">{{profesor.firstname}} {{profesor.lastname}}</mat-option>
                             }
@@ -101,12 +98,23 @@
                 <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Descripción / Observaciones</mat-label>
-
                         <textarea matInput placeholder="Descripción del Curso" formControlName="descripcion">
-
                         </textarea>
-
-
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12 " style="margin-left: auto; margin-right: 0;">
+                    <!-- <div class="pb-2 flex justify-content-center">
+                        <mat-label>Código del curso (Automático)</mat-label>
+                    </div>
+                    <div class="flex justify-content-center">
+                        <p-inputOtp [length]="length" formControlName="codigo" [disabled]="true" />
+                    </div> -->
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Código del Curso (Automático)</mat-label>
+                        <input matInput placeholder="Código del Curso " formControlName="codigo" readonly/>
+                        
                     </mat-form-field>
                 </div>
             </div>
@@ -172,9 +180,13 @@
         </div> -->
 
 
-       <!--  <div class="flex justify-content-center">
-            <p-inputOtp [(ngModel)]="value"  [length]="length" />
+        <!--   <div class="flex justify-content-center">
+            <p-inputOtp [(ngModel)]="codigoCurso2" [length]="length" />
         </div> -->
+
+
+
+
 
 
         <div mat-dialog-actions align="end" style="align-items: end;">

@@ -20,5 +20,6 @@ public class CursoRequest {
     public String descripcion;
     public int user_id;
     public int status;
+    public String codigo;
     
 }

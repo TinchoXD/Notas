@@ -48,6 +48,12 @@ public class CursoController {
         return cursoService.getCursoByUserId(id);
     }
 
+    //* VERIFICAR EXISTENCIA CURSO POR CÓDIGO */
+    @GetMapping("/curso/codigo/{codigo}")
+    public boolean getCursoByCodigo(@PathVariable String codigo) {
+        return cursoService.getCursoByCodigo(codigo);
+    }
+
     //* GUARDAR NUEVO CURSO */
     @PostMapping(value = "/curso/agregarCurso")
     public ResponseEntity<Object> postCurso(@RequestBody CursoRequest request)

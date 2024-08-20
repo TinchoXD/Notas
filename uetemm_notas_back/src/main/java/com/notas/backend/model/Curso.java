@@ -70,5 +70,8 @@ public class Curso {
 
     @Column(name = "curs_status", nullable = true)
     public int status;
+
+    @Column(name = "curs_codigo", nullable = true)
+    public String codigo;
     
 }

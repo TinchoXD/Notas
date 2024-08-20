@@ -53,7 +53,7 @@ public class EstudianteService {
                     estudiante.fechaNacimiento = estudianteRequest.fechaNacimiento;
                     estudiante.cedula = estudianteRequest.cedula;
                     estudiante.curso = new Curso(estudianteRequest.curso_id, null, null, null, null, null, null, null,
-                            0);
+                            0, null);
                     estudiante.grupoEtnico = new Catalogo(estudianteRequest.grupoEtnico, null, null, null);
                     estudiante.sexo = new Catalogo(estudianteRequest.sexo, null, null, null);
                     estudiante.domicilio = estudianteRequest.direccionDomicilio;
