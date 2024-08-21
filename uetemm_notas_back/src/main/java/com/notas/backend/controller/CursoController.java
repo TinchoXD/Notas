@@ -54,12 +54,22 @@ public class CursoController {
         return cursoService.getCursoByCodigo(codigo);
     }
 
-    //* GUARDAR NUEVO CURSO */
+    //* GUARDAR NUEVO CURSO */ 
     @PostMapping(value = "/curso/agregarCurso")
     public ResponseEntity<Object> postCurso(@RequestBody CursoRequest request)
     {
         return ResponseEntity.ok(cursoService.postCurso(request));
     }
+
+    
+    //* ACTUALIZAR CURSO */ 
+    @PostMapping(value = "/curso/actualizarCurso")
+    public ResponseEntity<Object> updateCurso(@RequestBody CursoRequest request)
+    {
+        return ResponseEntity.ok(cursoService.updateCurso(request));  
+    }
+
+
    
     //* ELIMINAR CURSO (DESCATALOGAR CURSO - STATUS = 0) */
     @PostMapping(value = "/curso/deleteCurso")

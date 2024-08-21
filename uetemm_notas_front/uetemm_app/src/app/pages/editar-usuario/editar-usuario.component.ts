@@ -18,6 +18,9 @@ import { AlertType } from '../../shared/alert/alertType';
 import { CursoProfesorService } from '../../services/cursoProfesor/curso-profesor.service';
 import { DialogoCursoProfesorComponent } from './dialogoCursoProfesor/dialogo-curso-profesor.component';
 
+
+
+
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
@@ -33,6 +36,8 @@ export class EditarUsuarioComponent implements OnInit {
   userId: number = 0;
   userCI: string = '';
   user_estado_usuario?: boolean;
+  
+
 
   onIcion: string = 'pi pi-check'
 
@@ -75,6 +80,8 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
+    
 
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número

@@ -44,6 +44,9 @@ import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
 import { AsignarCursoComponent } from './pages/estudiante/asignar-curso/asignar-curso.component';
+import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/detalle-curso-profesor.component';
+
+
 
 @NgModule({
   declarations: [
@@ -70,7 +73,8 @@ import { AsignarCursoComponent } from './pages/estudiante/asignar-curso/asignar-
     MisCursosComponent,
     EstudianteComponent,
     EstudianteFormComponent,
-    AsignarCursoComponent 
+    AsignarCursoComponent,
+    DetalleCursoProfesorComponent 
     
   ],
   imports: [

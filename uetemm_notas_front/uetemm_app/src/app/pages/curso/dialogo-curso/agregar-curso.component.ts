@@ -10,6 +10,7 @@ import { CursoService } from '../../../services/curso/curso.service';
 import { CursoRequest } from '../../../services/curso/cursoRequest';
 import { User } from '../../../services/auth/user';
 import { UserService } from '../../../services/user/user.service';
+import { CursoUpdateRequest } from '../../../services/curso/cursoUpdateRequest';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -24,6 +25,8 @@ export class AgregarCursoComponent implements OnInit {
   color: ThemePalette = 'primary';
 
   cursoForm: FormGroup;
+  cursoEditForm: FormGroup;
+
   errorMessage: String = 'Este campo es obligatorio.';
 
   nivelesAsignatura: Catalogo[] = [];
@@ -68,8 +71,12 @@ export class AgregarCursoComponent implements OnInit {
       codigo: [''],
     });
 
-
-
+    this.cursoEditForm = this.fb.group({
+      id: [''],
+      user_id: ['', Validators.required],
+      descripcion: [''],
+      codigo: [''],
+    });
   }
 
   ngOnInit(): void {
@@ -77,11 +84,6 @@ export class AgregarCursoComponent implements OnInit {
       console.log('this.data.cursoEdit', this.data.cursoEdit);
       this.cursoForm.patchValue({
         id: this.data.cursoEdit.id.toString(),
-        nivel: this.data.cursoEdit.nivel.id,
-        subnivel: this.data.cursoEdit.subnivel.id,
-        grado: this.data.cursoEdit.grado.id,
-        paralelo: this.data.cursoEdit.paralelo.id,
-        jornada: this.data.cursoEdit.jornada.id,
         user_id: this.data.cursoEdit.user.id,
         descripcion: this.data.cursoEdit.descripcion,
         codigo: this.data.cursoEdit.codigo,
@@ -94,7 +96,10 @@ export class AgregarCursoComponent implements OnInit {
     this.catalogoService
       .getNivelAsignaturaLista()
       .subscribe(
-        (nivelesAsignatura) => (this.nivelesAsignatura = nivelesAsignatura, console.log('nivelesAsignatura COMPLETO', this.nivelesAsignatura))
+        (nivelesAsignatura) => (
+          (this.nivelesAsignatura = nivelesAsignatura),
+          console.log('nivelesAsignatura COMPLETO', this.nivelesAsignatura)
+        )
       );
     this.catalogoService
       .getSubnivelAsignaturaLista()
@@ -112,9 +117,9 @@ export class AgregarCursoComponent implements OnInit {
       .getAllUser()
       .subscribe(
         (users) =>
-        (this.profesores = users.sort((a, b) =>
-          a.firstname.localeCompare(b.firstname)
-        ))
+          (this.profesores = users.sort((a, b) =>
+            a.firstname.localeCompare(b.firstname)
+          ))
       );
 
     this.catalogoService
@@ -176,7 +181,6 @@ export class AgregarCursoComponent implements OnInit {
     const NOCTURNA = 'Nocturna';
 
     if (!this.data.cursoEdit) {
-
       this.editMode = false;
 
       this.cursoForm.get('nivel')?.valueChanges.subscribe((valueNivel) => {
@@ -340,28 +344,28 @@ export class AgregarCursoComponent implements OnInit {
               CODIGO_SUBNIVEL = 'SUP';
             } else if (
               valueSubnivel ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
+                )?.id ||
               valueSubnivel ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
+                )?.id ||
               valueSubnivel ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  SERVICIOS_HOTELEROS.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    SERVICIOS_HOTELEROS.toLowerCase()
+                )?.id ||
               valueSubnivel ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
-              )?.id
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
+                )?.id
             ) {
               const idsFiltrados = this.grados
                 .filter(
@@ -530,15 +534,15 @@ export class AgregarCursoComponent implements OnInit {
             jornada?.enable();
             if (
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() === ELEMENTAL.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() === ELEMENTAL.toLowerCase()
+                )?.id ||
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() === MEDIA.toLowerCase()
-              )?.id
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() === MEDIA.toLowerCase()
+                )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -577,16 +581,16 @@ export class AgregarCursoComponent implements OnInit {
               ];
             } else if (
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
+                )?.id ||
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
-              )?.id
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
+                )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -604,17 +608,17 @@ export class AgregarCursoComponent implements OnInit {
               ];
             } else if (
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
-              )?.id ||
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
+                )?.id ||
               subnivel?.value ===
-              this.subnivelesAsignatura.find(
-                (nombre) =>
-                  nombre.nombre?.toLowerCase() ===
-                  SERVICIOS_HOTELEROS.toLowerCase()
-              )?.id
+                this.subnivelesAsignatura.find(
+                  (nombre) =>
+                    nombre.nombre?.toLowerCase() ===
+                    SERVICIOS_HOTELEROS.toLowerCase()
+                )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -765,18 +769,18 @@ export class AgregarCursoComponent implements OnInit {
           this.codigo.patchValue(CODIGO_CURSO);
         }
       });
-    }
-    else {
+    } else {
       this.editMode = true;
     }
 
     //*********************** FIN **************************/
     //********* VALIDACION DE PASOS, CREACION CURSO ********/
     //*********************** FIN **************************/
-
-
   }
 
+  get id() {
+    return this.cursoForm.controls['id'];
+  }
   get nivel() {
     return this.cursoForm.controls['nivel'];
   }
@@ -810,20 +814,36 @@ export class AgregarCursoComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (this.editMode) {
-      crear servicio para Actualizar curso
+      this.cursoEditForm.patchValue({
+        id: this.id.value,
+        user_id: this.user.value,
+        descripcion: this.descripcion.value,
+      });
+
+      this.cursoService
+        .updateCurso(this.cursoEditForm.value as unknown as CursoUpdateRequest)
+        .subscribe({
+          next: () => {
+            this.showAlert('Curso actualizado', 'success');
+            this.dialogRef.close(this.cursoForm.value);
+          },
+          error: () => {
+            this.showAlert('Error al actualizar Curso', 'error');
+          },
+        });
+
+      console.log('formUpdate', this.cursoEditForm);
     } else {
-
-
-
       if (this.cursoForm.valid) {
         this.data.cursoEdit;
         this.cursoService.getCursoByCodigo(this.codigo.value).subscribe({
           next: (resp) => {
             if (resp) {
               if (this.data.cursoEdit) {
-                this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
+                this.cursoService.putCurso(
+                  this.cursoForm.value as CursoRequest
+                );
                 this.dialogRef.close(this.cursoForm.value);
               } else {
                 this.showAlert('El curso ya existe', 'error');
@@ -841,7 +861,6 @@ export class AgregarCursoComponent implements OnInit {
         );
       }
     }
-
   }
 
   showAlert(mensaje: string, type: string) {

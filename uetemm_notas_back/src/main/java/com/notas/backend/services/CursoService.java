@@ -48,6 +48,21 @@ public class CursoService {
     }
 
     @Transactional
+    public MessageResponse updateCurso(CursoRequest cursoRequest){
+
+        Optional<Curso> curso = cursoRepository.findById(cursoRequest.id);
+        
+        curso.get().descripcion = cursoRequest.descripcion;
+
+        User user = new User();
+        user.id = cursoRequest.user_id;
+
+        curso.get().user = user;
+
+        return new MessageResponse("El Curso se Actualizó satisfactoriamente");
+    }
+
+    @Transactional
     public MessageResponse postCurso(CursoRequest cursoRequest) {
 
         Catalogo nivel = new Catalogo(cursoRequest.nivel, "", null, null);

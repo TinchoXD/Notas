@@ -1,6 +1,6 @@
-<div class="container-page" >
+<div class="container-page">
     <div class="card">
-       
+
         <div class="row">
             <div class="col-md-10">
                 <p style="font-size: x-large;">Mis Cursos</p>
@@ -8,70 +8,68 @@
             <div class="col-md-2">
             </div>
         </div>
-       
+
 
         <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
-                    [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
-                    [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
-                    [rowsPerPageOptions]="[5, 10, 20]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="nivel.nombre">
-                                Nivel <p-sortIcon field="nivel.nombre" />
-                            </th>
-                            <th pSortableColumn="subnivel.nombre">
-                                SubNivel <p-sortIcon field="subnivel.nombre" />
-                            </th>
-                            <th pSortableColumn="grado.nombre">
-                                Grado <p-sortIcon field="grado.nombre" />
-                            </th>
-                            <th pSortableColumn="paralelo.nombre">
-                                Paralelo <p-sortIcon field="paralelo.nombre" />
-                            </th>
-                            <th pSortableColumn="jornada.nombre">
-                                Jornada <p-sortIcon field="jornada.nombre" />
-                            </th>
-                            <th pSortableColumn="asignatura.nombre">
-                                Asignatura <p-sortIcon field="asignatura.nombre" />
-                            </th>
-                            <th>
-                                Acciones
-                            </th>
-                        </tr>
-                    </ng-template>
+            [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="nivel.nombre">
+                        Nivel <p-sortIcon field="nivel.nombre" />
+                    </th>
+                    <th pSortableColumn="subnivel.nombre">
+                        SubNivel <p-sortIcon field="subnivel.nombre" />
+                    </th>
+                    <th pSortableColumn="grado.nombre">
+                        Grado <p-sortIcon field="grado.nombre" />
+                    </th>
+                    <th pSortableColumn="paralelo.nombre">
+                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                    </th>
+                    <th pSortableColumn="jornada.nombre">
+                        Jornada <p-sortIcon field="jornada.nombre" />
+                    </th>
+                    <th pSortableColumn="asignatura.nombre">
+                        Asignatura <p-sortIcon field="asignatura.nombre" />
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </ng-template>
 
-                    <ng-template pTemplate="body" let-cursoProfesorRow>
-                        <tr>
-                            <td>
-                                {{ cursoProfesorRow.curso.nivel.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.subnivel.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.grado.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.paralelo.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.jornada.nombre }} 
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.asignatura.nombre }} 
-                            </td>
-                            <td>
-                                <p-button pRipple icon="pi pi-eye" severity="info" [rounded]="true"
-                                    [outlined]="true" pTooltip="Ver Curso" class="mr-2"
-                                     />
-                            </td>
-                        </tr>
-                    </ng-template>
+            <ng-template pTemplate="body" let-cursoProfesorRow>
+                <tr>
+                    <td>
+                        {{ cursoProfesorRow.curso.nivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.subnivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.grado.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.paralelo.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.jornada.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.asignatura.nombre }}
+                    </td>
+                    <td>
+                        <p-button pRipple icon="pi pi-eye" severity="info" [rounded]="true" [outlined]="true"
+                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfeso(cursoProfesorRow)"/>
+                    </td>
+                </tr>
+            </ng-template>
 
 
-                </p-table>
+        </p-table>
 
 
 

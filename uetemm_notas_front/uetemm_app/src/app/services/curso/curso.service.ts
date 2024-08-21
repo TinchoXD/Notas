@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment.development';
 import { CursoRequest } from './cursoRequest';
 import { AlertType } from '../../shared/alert/alertType';
 import { AlertService } from '../alert/alert.service';
+import { CursoUpdateRequest } from './cursoUpdateRequest';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -54,7 +55,8 @@ export class CursoService {
   }
 
   putCurso(curso: CursoRequest) {
-    return this.http.post<any>(environment.urlApi + 'cursos/curso/agregarCurso', curso).subscribe({
+    return this.http.post<any>(environment.urlApi + 'cursos/curso/agregarCurso', curso)
+    .subscribe({
       next: () => {
         this.showAlert('Curso guardado', 'success');
       },
@@ -63,6 +65,11 @@ export class CursoService {
         console.log('Error: ', catchError(this.handleError));
       },
     });
+  }
+
+  updateCurso(curso: CursoUpdateRequest) {
+    return this.http.post<any>(environment.urlApi + 'cursos/curso/actualizarCurso', curso)
+    
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -2,8 +2,8 @@
 <div mat-dialog-content class="mt-3 pt-2">
     <form [formGroup]="cursoProfesorForm" (ngSubmit)="onSubmit()">
 
-        id del CursoProfesor <input type="text" formControlName="id" class="form-control"  readonly>
-        id del Profesor<input type="text" formControlName="user_id" class="form-control" readonly> 
+        <input type="text" formControlName="id" class="form-control"  readonly hidden>
+        <input type="text" formControlName="user_id" class="form-control" readonly hidden> 
 
         <div class="container">
             <div class="row mt-3">
