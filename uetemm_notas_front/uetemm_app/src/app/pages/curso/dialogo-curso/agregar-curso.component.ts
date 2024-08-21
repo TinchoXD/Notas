@@ -41,6 +41,8 @@ export class AgregarCursoComponent implements OnInit {
 
   profesores!: User[];
 
+  editMode: boolean = false;
+
   //CODIGO inputOtp
   codigoCurso: any;
   length: number = 10;
@@ -67,7 +69,7 @@ export class AgregarCursoComponent implements OnInit {
     });
 
 
-    
+
   }
 
   ngOnInit(): void {
@@ -110,9 +112,9 @@ export class AgregarCursoComponent implements OnInit {
       .getAllUser()
       .subscribe(
         (users) =>
-          (this.profesores = users.sort((a, b) =>
-            a.firstname.localeCompare(b.firstname)
-          ))
+        (this.profesores = users.sort((a, b) =>
+          a.firstname.localeCompare(b.firstname)
+        ))
       );
 
     this.catalogoService
@@ -174,6 +176,9 @@ export class AgregarCursoComponent implements OnInit {
     const NOCTURNA = 'Nocturna';
 
     if (!this.data.cursoEdit) {
+
+      this.editMode = false;
+
       this.cursoForm.get('nivel')?.valueChanges.subscribe((valueNivel) => {
         if (valueNivel) {
           subnivel?.setValidators([Validators.required]);
@@ -335,28 +340,28 @@ export class AgregarCursoComponent implements OnInit {
               CODIGO_SUBNIVEL = 'SUP';
             } else if (
               valueSubnivel ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
+              )?.id ||
               valueSubnivel ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
+              )?.id ||
               valueSubnivel ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    SERVICIOS_HOTELEROS.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  SERVICIOS_HOTELEROS.toLowerCase()
+              )?.id ||
               valueSubnivel ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
-                )?.id
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
+              )?.id
             ) {
               const idsFiltrados = this.grados
                 .filter(
@@ -525,15 +530,15 @@ export class AgregarCursoComponent implements OnInit {
             jornada?.enable();
             if (
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() === ELEMENTAL.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() === ELEMENTAL.toLowerCase()
+              )?.id ||
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() === MEDIA.toLowerCase()
-                )?.id
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() === MEDIA.toLowerCase()
+              )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -572,16 +577,16 @@ export class AgregarCursoComponent implements OnInit {
               ];
             } else if (
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() === CONTABILIDAD.toLowerCase()
+              )?.id ||
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
-                )?.id
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  MECANIZADO_Y_CONSTRUCCIONES_METALICAS.toLowerCase()
+              )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -599,17 +604,17 @@ export class AgregarCursoComponent implements OnInit {
               ];
             } else if (
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
-                )?.id ||
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  VENTAS_E_INFORMACION_TURISTICA.toLowerCase()
+              )?.id ||
               subnivel?.value ===
-                this.subnivelesAsignatura.find(
-                  (nombre) =>
-                    nombre.nombre?.toLowerCase() ===
-                    SERVICIOS_HOTELEROS.toLowerCase()
-                )?.id
+              this.subnivelesAsignatura.find(
+                (nombre) =>
+                  nombre.nombre?.toLowerCase() ===
+                  SERVICIOS_HOTELEROS.toLowerCase()
+              )?.id
             ) {
               const idsFiltrados = this.jornadas
                 .filter(
@@ -761,77 +766,15 @@ export class AgregarCursoComponent implements OnInit {
         }
       });
     }
+    else {
+      this.editMode = true;
+    }
+
     //*********************** FIN **************************/
     //********* VALIDACION DE PASOS, CREACION CURSO ********/
     //*********************** FIN **************************/
 
-    if (this.data.cursoEdit) {
-      subnivel?.setValidators([Validators.required]);
-      subnivel?.enable();
-      //subnivel?.patchValue(this.subnivel.value);
 
-      console.log('this.nivel.value', this.nivel.value);
-      console.log('this.subnivel.value', this.subnivel.value);
-
-      console.log('this.subnivelesFiltrados',this.subnivelesFiltrados);
-      
-      console.log('this.nivel.value',this.nivel.value);
-      console.log('this.nivelesAsignatura',this.nivelesAsignatura);
-
-      //CONTINUAR AQUI
-
-      if (
-        this.nivel.value ===
-        this.nivelesAsignatura.find(
-          (nombre) =>
-            nombre.nombre?.toLowerCase() === BACHILLERATO_TECNICO.toLowerCase()
-        )?.id
-      ) {
-        const idsFiltrados = this.subnivelesAsignatura
-          .filter(
-            (item) =>
-              item.nombre !== undefined &&
-              [
-                CONTABILIDAD,
-                VENTAS_E_INFORMACION_TURISTICA,
-                SERVICIOS_HOTELEROS,
-                MECANIZADO_Y_CONSTRUCCIONES_METALICAS,
-              ].includes(item.nombre)
-          )
-          .map((item) => item.id); //* ESPECIALIDADES DE Bachillerato Técnico
-        this.subnivelesFiltrados = [
-          ...this.subnivelesAsignatura.filter(
-            (subnivel) =>
-              subnivel.id !== undefined &&
-              idsFiltrados.includes(subnivel.id as number)
-          ),
-        ];
-        CODIGO_NIVEL = 'BAT';
-      } else if (
-        this.nivel.value ===
-        this.nivelesAsignatura.find(
-          (nombre) =>
-            nombre.nombre?.toLowerCase() ===
-            EDUCACIÓN_GENERAL_BASICA.toLowerCase()
-        )?.id
-      ) {
-        const idsFiltrados = this.subnivelesAsignatura
-          .filter(
-            (item) =>
-              item.nombre !== undefined &&
-              [ELEMENTAL, MEDIA, SUPERIOR].includes(item.nombre)
-          )
-          .map((item) => item.id); // SUBNIVELES DE EGB
-        this.subnivelesFiltrados = [
-          ...this.subnivelesAsignatura.filter(
-            (subnivel) =>
-              subnivel.id !== undefined &&
-              idsFiltrados.includes(subnivel.id as number)
-          ),
-        ];
-        CODIGO_NIVEL = 'EGB';
-      }
-    }
   }
 
   get nivel() {
@@ -867,30 +810,38 @@ export class AgregarCursoComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.cursoForm.valid) {
-      this.data.cursoEdit;
 
-      this.cursoService.getCursoByCodigo(this.codigo.value).subscribe({
-        next: (resp) => {
-          if (resp) {
-            if (this.data.cursoEdit) {
+    if (this.editMode) {
+      crear servicio para Actualizar curso
+    } else {
+
+
+
+      if (this.cursoForm.valid) {
+        this.data.cursoEdit;
+        this.cursoService.getCursoByCodigo(this.codigo.value).subscribe({
+          next: (resp) => {
+            if (resp) {
+              if (this.data.cursoEdit) {
+                this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
+                this.dialogRef.close(this.cursoForm.value);
+              } else {
+                this.showAlert('El curso ya existe', 'error');
+              }
+            } else {
               this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
               this.dialogRef.close(this.cursoForm.value);
-            } else {
-              this.showAlert('El curso ya existe', 'error');
             }
-          } else {
-            this.cursoService.putCurso(this.cursoForm.value as CursoRequest);
-            this.dialogRef.close(this.cursoForm.value);
-          }
-        },
-      });
-    } else {
-      this.showAlert(
-        'Error al agregar un nuevo curso, valide los datos del formulario',
-        'error'
-      );
+          },
+        });
+      } else {
+        this.showAlert(
+          'Error al agregar un nuevo curso, valide los datos del formulario',
+          'error'
+        );
+      }
     }
+
   }
 
   showAlert(mensaje: string, type: string) {

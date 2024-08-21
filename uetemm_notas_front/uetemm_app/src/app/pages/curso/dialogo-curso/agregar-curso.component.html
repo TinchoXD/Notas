@@ -3,122 +3,125 @@
 
     <form [formGroup]="cursoForm" (ngSubmit)="onSubmit()">
         <!-- <input type="text" formControlName="user_id" class="form-control" hidden readonly> -->
-        <input type="text" formControlName="id" class="form-control" hidden readonly>
-        <div class="container">
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Nivel</mat-label>
-                        <mat-select formControlName="nivel">
-                            <mat-option *ngFor="let nivel of nivelesAsignatura"
-                                [value]="nivel.id">{{nivel.nombre}}</mat-option>
-                        </mat-select>
-                        @if (nivel.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Sub Nivel</mat-label>
-                        <mat-select [value]="subnivel" formControlName="subnivel">
-                            @for (subnivel of subnivelesFiltrados; track subnivel) {
-                            <mat-option [value]="subnivel.id">{{subnivel.nombre}}</mat-option>
+        <div *ngIf="!editMode">
+            <input type="text" formControlName="id" class="form-control" hidden readonly>
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Nivel</mat-label>
+                            <mat-select formControlName="nivel">
+                                <mat-option *ngFor="let nivel of nivelesAsignatura"
+                                    [value]="nivel.id">{{nivel.nombre}}</mat-option>
+                            </mat-select>
+                            @if (nivel.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
                             }
-                        </mat-select>
-                        @if (subnivel.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Grado</mat-label>
-                        <mat-select [value]="grado" formControlName="grado">
-                            @for (grado of gradosFiltrados; track grado) {
-                            <mat-option [value]="grado.id">{{grado.nombre}}</mat-option>
+                <div class="row mt-3">
+                    <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Sub Nivel</mat-label>
+                            <mat-select [value]="subnivel" formControlName="subnivel">
+                                @for (subnivel of subnivelesFiltrados; track subnivel) {
+                                <mat-option [value]="subnivel.id">{{subnivel.nombre}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (subnivel.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
                             }
-                        </mat-select>
-                        @if (grado.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Paralelo</mat-label>
-                        <mat-select [value]="paralelo" formControlName="paralelo">
-                            @for (paralelo of paralelos; track paralelo) {
-                            <mat-option [value]="paralelo.id">{{paralelo.nombre}}</mat-option>
+                <div class="row mt-3">
+                    <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Grado</mat-label>
+                            <mat-select [value]="grado" formControlName="grado">
+                                @for (grado of gradosFiltrados; track grado) {
+                                <mat-option [value]="grado.id">{{grado.nombre}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (grado.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
                             }
-                        </mat-select>
-                        @if (paralelo.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Jornada</mat-label>
-                        <mat-select [value]="jornada" formControlName="jornada">
-                            @for (jornada of jornadasFiltradas; track jornada) {
-                            <mat-option [value]="jornada.id">{{jornada.nombre}}</mat-option>
+                <div class="row mt-3">
+                    <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Paralelo</mat-label>
+                            <mat-select [value]="paralelo" formControlName="paralelo">
+                                @for (paralelo of paralelos; track paralelo) {
+                                <mat-option [value]="paralelo.id">{{paralelo.nombre}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (paralelo.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
                             }
-                        </mat-select>
-                        @if (jornada.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Tutor</mat-label>
-                        <mat-select [value]="user" formControlName="user_id">
-                            @for (profesor of profesores; track profesor) {
-                            <mat-option [value]="profesor.id">{{profesor.firstname}} {{profesor.lastname}}</mat-option>
+                <div class="row mt-3">
+                    <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Jornada</mat-label>
+                            <mat-select [value]="jornada" formControlName="jornada">
+                                @for (jornada of jornadasFiltradas; track jornada) {
+                                <mat-option [value]="jornada.id">{{jornada.nombre}}</mat-option>
+                                }
+                            </mat-select>
+                            @if (jornada.invalid) {
+                            <mat-error> {{errorMessage}}</mat-error>
                             }
-                        </mat-select>
-                        @if (user.invalid) {
-                        <mat-error> {{errorMessage}}</mat-error>
-                        }
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Descripción / Observaciones</mat-label>
-                        <textarea matInput placeholder="Descripción del Curso" formControlName="descripcion">
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Tutor</mat-label>
+                    <mat-select [value]="user" formControlName="user_id">
+                        @for (profesor of profesores; track profesor) {
+                        <mat-option [value]="profesor.id">{{profesor.firstname}} {{profesor.lastname}}</mat-option>
+                        }
+                    </mat-select>
+                    @if (user.invalid) {
+                    <mat-error> {{errorMessage}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Descripción / Observaciones</mat-label>
+                    <textarea matInput placeholder="Descripción del Curso" formControlName="descripcion">
                         </textarea>
-                    </mat-form-field>
-                </div>
+                </mat-form-field>
             </div>
-            <div class="row mt-3">
-                <div class="col-md-12 " style="margin-left: auto; margin-right: 0;">
-                    <!-- <div class="pb-2 flex justify-content-center">
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 " style="margin-left: auto; margin-right: 0;">
+                <!-- <div class="pb-2 flex justify-content-center">
                         <mat-label>Código del curso (Automático)</mat-label>
                     </div>
                     <div class="flex justify-content-center">
                         <p-inputOtp [length]="length" formControlName="codigo" [disabled]="true" />
                     </div> -->
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Código del Curso (Automático)</mat-label>
-                        <input matInput placeholder="Código del Curso " formControlName="codigo" readonly/>
-                        
-                    </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Código del Curso (Automático)</mat-label>
+                    <input matInput placeholder="Código del Curso " formControlName="codigo" readonly />
+
+                </mat-form-field>
             </div>
         </div>
+
 
 
         <!--  FORMULARIO CON PRIME NG -->
