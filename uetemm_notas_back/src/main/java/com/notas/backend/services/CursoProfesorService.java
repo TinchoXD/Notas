@@ -37,6 +37,13 @@ public class CursoProfesorService {
         List<CursoProfesor> cursos = cursoProfesorRepository.findAll();
         return cursos;
     }
+    
+    
+    public CursoProfesor getCursoProfesorById(int id) {
+        CursoProfesor cursos = cursoProfesorRepository.findById(id);
+        return cursos;
+    }
+
     public List<CursoProfesor> getCursoProfesorActivos() {
         List<CursoProfesor> cursos = cursoProfesorRepository.findByStatus(1);
         return cursos;

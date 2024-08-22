@@ -103,6 +103,6 @@ export class MisCursosComponent implements OnInit {
         .then(() => {
           this.loadingService.hide(); // Oculta el spinner de carga
         });
-    }, 550); // Retraso de 2 segundos antes de la navegación
+    }, 150); // Retraso de 2 segundos antes de la navegación
   }
 }

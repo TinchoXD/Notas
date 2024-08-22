@@ -1,8 +1,53 @@
 <div class="container-page">
     <div class="card">
-        lista de estudiantes
-
-        id del curso {{id}}
-        codigo del curso {{codigo}}
+        <p-table #dt [value]="cursosProfesor" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Curso</th>
+                    <th>Código del Curso</th>
+                    <th>Asignatura</th>
+                    <th>Profesor</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cursoProfesor>
+                <tr>
+                    <td>{{ cursoProfesor.curso.nivel.nombre }} - {{ cursoProfesor.curso.subnivel.nombre }} - {{
+                        cursoProfesor.curso.grado.nombre }} - {{ cursoProfesor.curso.paralelo.nombre }} - {{
+                        cursoProfesor.curso.jornada.nombre }}</td>
+                    <td>{{ cursoProfesor.curso.codigo }}</td>
+                    <td>{{ cursoProfesor.asignatura.nombre }}</td>
+                    <td>{{ cursoProfesor.user.firstname }} {{ cursoProfesor.user.lastname }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <p>Listado de Estudiantes:</p>
+        <p-table #dt [value]="estudiantes" dataKey="id" [rows]="50" [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cedula']"
+            [tableStyle]="{ 'min-width': '75rem;'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="apellidos">Apellidos<p-sortIcon field="apellidos" /></th>
+                    <th pSortableColumn="nombres">Nombres<p-sortIcon field="nombres" /></th>
+                    <th pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
+                    <th >Trimestre I</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-estudianteRow>
+                <tr>
+                    <td>
+                        {{ estudianteRow.apellidos }}
+                    </td>
+                    <td>
+                        {{ estudianteRow.nombres }}
+                    </td>
+                    <td>
+                        {{ estudianteRow.cedula }}
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="estudianteRow.nota" min="0" max="100" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

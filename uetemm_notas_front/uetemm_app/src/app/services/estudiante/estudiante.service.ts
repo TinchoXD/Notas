@@ -30,7 +30,7 @@ export class EstudianteService {
 
   getEstudiantesByCursoId(curso_id: number): Observable<any[]> {
     return this.http
-      .get<any[]>(environment.urlApi + 'estudiante/curso/' + curso_id)
+      .get<any[]>(environment.urlApi + 'estudiantes/estudiante/curso/' + curso_id)
       .pipe(catchError(this.handleError));
   }
   updateEstudent(estudiante: any): Observable<any> {
