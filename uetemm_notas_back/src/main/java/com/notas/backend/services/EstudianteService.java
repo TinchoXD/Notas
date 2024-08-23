@@ -47,8 +47,8 @@ public class EstudianteService {
         try {
             switch (estudianteRequest.form_id) {
                 case "1":
-                    estudiante.nombres = estudianteRequest.nombres;
-                    estudiante.apellidos = estudianteRequest.apellidos;
+                    // estudiante.nombres = estudianteRequest.nombres;
+                    estudiante.apellidosNombres = estudianteRequest.apellidosNombres;
                     estudiante.lugarNacimiento = estudianteRequest.lugarNacimiento;
                     estudiante.fechaNacimiento = estudianteRequest.fechaNacimiento;
                     estudiante.cedula = estudianteRequest.cedula;

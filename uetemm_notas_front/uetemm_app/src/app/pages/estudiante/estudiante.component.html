@@ -2,7 +2,7 @@
     <div class="card">
 
         <p-table #dt [value]="estudiantes" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
-            [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cedula', '']"
+            [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidosNombres', 'cedula', 'curso.codigo']"
             [tableStyle]="{ 'min-width': '75rem;'}">
 
             <ng-template pTemplate="caption">
@@ -20,26 +20,26 @@
             <ng-template pTemplate="header">
 
                 <tr>
-                    <th pSortableColumn="nombres">
+                  <!--   <th pSortableColumn="nombres">
                         Nombres <p-sortIcon field="nombres" />
-                    </th>
-                    <th pSortableColumn="apellidos">
-                        Apellidos <p-sortIcon field="apellidos" />
+                    </th> -->
+                    <th pSortableColumn="apellidosNombres">
+                        Apellidos Nombres<p-sortIcon field="apellidosNombres" />
                     </th>
 
 
-                    <th>Cedula</th>
-                    <th>Grado / Curso</th>
+                    <th pSortableColumn="cedula">Cedula</th>
+                    <th pSortableColumn="curso.codigo">Grado / Curso</th>
 
                     <th>Acciones</th>
                 </tr>
                 <tr>
-                    <th>
+                   <!--  <th>
                         <p-columnFilter type="text" field="nombres" placeholder="Bucar por Nombres"
                             matchMode="contains" />
-                    </th>
+                    </th> -->
                     <th>
-                        <p-columnFilter type="text" field="apellidos" placeholder="Bucar por Apellidos"
+                        <p-columnFilter type="text" field="apellidosNombres" placeholder="Bucar por Apellidos o Nombres"
                             matchMode="contains" />
                     </th>
                     <th>
@@ -47,6 +47,9 @@
                             matchMode="contains" />
                     </th>
                     <th>
+
+                        <p-columnFilter type="text" field="curso.codigo" placeholder="Bucar por Código de Curso"
+                        matchMode="contains" />
                         <!-- 
                             * FILTRO AVANZADO
                             <p-columnFilter field="curso.grado.nombre" matchMode="in" [showMenu]="false">
@@ -79,16 +82,17 @@
 
             <ng-template pTemplate="body" let-estudianteRow>
                 <tr>
-                    <td>
+                   <!--  <td>
                         {{ estudianteRow.nombres }}
-                    </td>
+                    </td> -->
                     <td>
-                        {{ estudianteRow.apellidos }}
+                        {{ estudianteRow.apellidosNombres }}
                     </td>
                     <td>
                         {{ estudianteRow.cedula }}
                     </td>
                     <td>
+                        <strong>{{ estudianteRow.curso ? estudianteRow.curso.codigo : null}}</strong>/ 
                         {{ estudianteRow.curso ? estudianteRow.curso.nivel.nombre : null}} -
                         {{ estudianteRow.curso ? estudianteRow.curso.subnivel.nombre : null }} -
                         <strong>{{ estudianteRow.curso ? estudianteRow.curso.grado.nombre : null }}</strong> -
@@ -97,7 +101,7 @@
                     </td>
                     <td>
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
-                        pTooltip="Editar Curso" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
+                        pTooltip="Editar Estudiante" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
                     </td>
                 </tr>
             </ng-template>

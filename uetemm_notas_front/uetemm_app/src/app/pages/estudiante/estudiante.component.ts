@@ -79,7 +79,7 @@ export class EstudianteComponent implements OnInit {
       this.router.navigate([`/estudiantes/estudiante/${estudiante.id}`]).then(() => {
         this.loadingService.hide(); // Oculta el spinner de carga
       });
-    }, 550); // Retraso de 2 segundos antes de la navegación
+    }, 450); // Retraso de 2 segundos antes de la navegación
 
   }
 

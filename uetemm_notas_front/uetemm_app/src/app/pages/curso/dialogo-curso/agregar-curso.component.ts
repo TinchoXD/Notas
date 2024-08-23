@@ -84,7 +84,7 @@ export class AgregarCursoComponent implements OnInit {
       console.log('this.data.cursoEdit', this.data.cursoEdit);
       this.cursoForm.patchValue({
         id: this.data.cursoEdit.id.toString(),
-        user_id: this.data.cursoEdit.user.id,
+        user_id: this.data.cursoEdit.user ? this.data.cursoEdit.user.id : null,
         descripcion: this.data.cursoEdit.descripcion,
         codigo: this.data.cursoEdit.codigo,
       });
@@ -821,19 +821,21 @@ export class AgregarCursoComponent implements OnInit {
         descripcion: this.descripcion.value,
       });
 
-      this.cursoService
-        .updateCurso(this.cursoEditForm.value as unknown as CursoUpdateRequest)
-        .subscribe({
-          next: () => {
-            this.showAlert('Curso actualizado', 'success');
-            this.dialogRef.close(this.cursoForm.value);
-          },
-          error: () => {
-            this.showAlert('Error al actualizar Curso', 'error');
-          },
-        });
-
-      console.log('formUpdate', this.cursoEditForm);
+      if (this.cursoEditForm.valid) {
+        this.cursoService
+          .updateCurso(
+            this.cursoEditForm.value as unknown as CursoUpdateRequest
+          )
+          .subscribe({
+            next: () => {
+              this.showAlert('Curso actualizado', 'success');
+              this.dialogRef.close(this.cursoForm.value);
+            },
+            error: () => {
+              this.showAlert('Error al actualizar Curso', 'error');
+            },
+          });
+      }
     } else {
       if (this.cursoForm.valid) {
         this.data.cursoEdit;

@@ -22,8 +22,8 @@ public class EstudianteRequest {
     public int id;
     public String form_id;
 
-    public String nombres;
-    public String apellidos;
+    //public String nombres;
+    public String apellidosNombres;
     public String cedula;
     public int curso_id;
     public int grupoEtnico;

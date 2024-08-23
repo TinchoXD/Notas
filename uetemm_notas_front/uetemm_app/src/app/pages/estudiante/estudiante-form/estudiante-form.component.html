@@ -23,7 +23,7 @@
                         <h5 class="text-right"><span class="circle-number mr-3">1</span>Datos del Estudiante</h5>
                     </div>
                     <div class="grid">
-                        <div class="col">
+                        <!-- <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Nombres</mat-label>
                                 <input matInput formControlName="nombres" />
@@ -31,12 +31,12 @@
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
                             </mat-form-field>
-                        </div>
+                        </div> -->
                         <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
-                                <mat-label>Apellidos</mat-label>
-                                <input matInput formControlName="apellidos" />
-                                @if (apellidos.invalid) {
+                                <mat-label>Apellidos y Nombres Completos</mat-label>
+                                <input matInput formControlName="apellidosNombres" />
+                                @if (apellidosNombres.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
                             </mat-form-field>

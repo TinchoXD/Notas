@@ -37,11 +37,11 @@ public class Estudiante {
     @Column(name = "estu_id", nullable = false)
     public int id;
 
-    @Column(name = "estu_nombres", nullable = true)
-    public String nombres;
+/*     @Column(name = "estu_nombres", nullable = true)
+    public String nombres; */
 
-    @Column(name = "estu_apellidos", nullable = true)
-    public String apellidos;
+    @Column(name = "estu_apellidos_nombres", nullable = true)
+    public String apellidosNombres;
 
     @Column(name = "estu_cedula", nullable = true)
     public String cedula;

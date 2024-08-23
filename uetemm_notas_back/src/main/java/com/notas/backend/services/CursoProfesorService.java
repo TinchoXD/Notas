@@ -25,20 +25,18 @@ public class CursoProfesorService {
 
     @Autowired
     CursoRepository cursoRepository;
-    
+
     @Autowired
     CursoProfesorRepository cursoProfesorRepository;
 
     @Autowired
     UserRepository userRepository;
 
-    
     public List<CursoProfesor> getCursoProfesor() {
         List<CursoProfesor> cursos = cursoProfesorRepository.findAll();
         return cursos;
     }
-    
-    
+
     public CursoProfesor getCursoProfesorById(int id) {
         CursoProfesor cursos = cursoProfesorRepository.findById(id);
         return cursos;
@@ -49,44 +47,35 @@ public class CursoProfesorService {
         return cursos;
     }
 
-
     public List<CursoProfesor> getCursoProfesorByUserId(int user_id) {
         List<CursoProfesor> curso = cursoProfesorRepository.findByUserId(user_id);
         return curso;
     }
 
-
-
     @Transactional
     public MessageResponse postCursoProfesor(CursoProfesorRequest cursoProfesorRequest) {
-        
+
         Curso curso = Curso.builder().id(cursoProfesorRequest.getCurso_id()).build();
         Catalogo asignatura = new Catalogo(cursoProfesorRequest.getAsignatura_id(), "", null, null);
         User user = userRepository.findUserById(cursoProfesorRequest.user_id);
 
-        CursoProfesor cursoProfesor = CursoProfesor.builder().id(cursoProfesorRequest.id).curso(curso).asignatura(asignatura).user(user).descripcion("null").status(1).build();
+        CursoProfesor cursoProfesor = CursoProfesor.builder().id(cursoProfesorRequest.id).curso(curso)
+                .asignatura(asignatura).user(user).descripcion("null").status(1).build();
 
         cursoProfesorRepository.save(cursoProfesor);
 
         return new MessageResponse("El Curso-Profesor se agregó satisfactoriamente.");
     }
 
-    
-
-
-
-
-
     public List<Curso> getCursos() {
         List<Curso> cursos = cursoRepository.findAll();
         return cursos;
     }
+
     public List<Curso> getCursosActivos() {
         List<Curso> cursos = cursoRepository.findByStatus(1);
         return cursos;
     }
-
-
 
     @Transactional
     public MessageResponse postCurso(CursoRequest cursoRequest) {
@@ -95,19 +84,23 @@ public class CursoProfesorService {
         Catalogo subnivelAsignatura = new Catalogo(cursoRequest.subnivel, "", null, null);
         Catalogo grado = new Catalogo(cursoRequest.grado, "", null, null);
         Catalogo paralelo = new Catalogo(cursoRequest.paralelo, "", null, null);
-       /*  Catalogo asignatura = new Catalogo(cursoRequest.asignatura, "", null, null); */
+        /*
+         * Catalogo asignatura = new Catalogo(cursoRequest.asignatura, "", null, null);
+         */
         Catalogo jornada = new Catalogo(cursoRequest.jornada, "", null, null);
         User user = new User();
-        if(cursoRequest.user_id != 0){
-           user = User.builder().id(cursoRequest.user_id).build();
-           Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura).grado(grado)
-                   .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion).user(user)
-                   .status(1)
-                   .build();
-           cursoRepository.save(curso);
-        }else{
+        if (cursoRequest.user_id != 0) {
+            user = User.builder().id(cursoRequest.user_id).build();
+            Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura)
+                    .grado(grado)
+                    .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion).user(user)
+                    .status(1)
+                    .build();
+            cursoRepository.save(curso);
+        } else {
             user = User.builder().id(null).build();
-            Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura).grado(grado)
+            Curso curso = Curso.builder().id(cursoRequest.id).nivel(nivelAsignatura).subnivel(subnivelAsignatura)
+                    .grado(grado)
                     .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion)
                     .status(1)
                     .build();
@@ -121,7 +114,7 @@ public class CursoProfesorService {
     public MessageResponse delCurso(CursoRequest cursoRequest) {
 
         Optional<Curso> curso = cursoRepository.findById(cursoRequest.id);
-        
+
         curso.get().status = 0;
 
         cursoRepository.save(curso.get());

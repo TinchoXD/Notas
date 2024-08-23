@@ -70,8 +70,8 @@ export class EstudianteFormComponent implements OnInit {
 
   estudianteForm: FormGroup = this.formBuilder.group({
     id: ['', Validators.required],
-    nombres: ['', Validators.required],
-    apellidos: ['', Validators.required],
+    //nombres: ['', Validators.required],
+    apellidosNombres: ['', Validators.required],
     lugarNacimiento: ['', Validators.required],
     fechaNacimiento: ['', Validators.required],
     cedula: ['', Validators.required],
@@ -241,8 +241,8 @@ export class EstudianteFormComponent implements OnInit {
 
         this.estudianteForm.patchValue({
           id: estudiante.id.toString(),
-          nombres: estudiante.nombres,
-          apellidos: estudiante.apellidos,
+         /*  nombres: estudiante.nombres, */
+          apellidosNombres: estudiante.apellidosNombres,
           lugarNacimiento: estudiante.lugarNacimiento,
           fechaNacimiento: estudiante.fechaNacimiento,
           cedula: estudiante.cedula,
@@ -1032,11 +1032,11 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   //* Form ESTUDIANTE
-  get nombres() {
+/*   get nombres() {
     return this.estudianteForm.controls['nombres'];
-  }
-  get apellidos() {
-    return this.estudianteForm.controls['apellidos'];
+  } */
+  get apellidosNombres() {
+    return this.estudianteForm.controls['apellidosNombres'];
   }
   get lugarNacimiento() {
     return this.estudianteForm.controls['lugarNacimiento'];

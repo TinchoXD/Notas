@@ -83,7 +83,7 @@
                         {{ cursoRow.jornada.nombre }}
                     </td>
                     <td>
-                        {{ cursoRow.user.firstname }} {{ cursoRow.user.lastname }}
+                        {{ cursoRow.user ? cursoRow.user.firstname : null}} {{ cursoRow.user ? cursoRow.user.lastname : null }}
                     </td>
                     <td>
                         {{ cursoRow.descripcion }}
