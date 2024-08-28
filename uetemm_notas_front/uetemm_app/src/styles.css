@@ -1,3 +1,11 @@
+::ng-deep .p-datatable-striped tbody tr:nth-child(odd) {
+  background-color: #ffffff !important;
+}
+
+::ng-deep .p-datatable-striped tbody tr:nth-child(even) {
+  background-color: #d1d6fa5e !important;
+}
+
 html,
 body {
   height: 100%;
@@ -12683,3 +12691,4 @@ body.sidebar-toggled footer.sticky-footer {
   font-size: 24px; /* Tamaño del número */
   font-weight: bold; /* Hacer el número en negrita */
 }
+

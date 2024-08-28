@@ -21,9 +21,15 @@ export class NotaService {
       .pipe(catchError(this.handleError));
   }
 
-  getNotasByEstudianteAndCursoProfesor(estu_id: number, cupr_id: number): Observable<any> {
+  getNotaByEstudianteAndCursoProfesor(estu_id: number, cupr_id: number): Observable<any> {
     return this.http
       .get<any>(environment.urlApi + 'notas/nota/estudiante/'+estu_id+'/cursoProfesor/'+cupr_id)
+      .pipe(catchError(this.handleError));
+  }
+
+  saveNota(nota: any): Observable<any> {
+    return this.http
+      .post<any>(environment.urlApi + 'notas/nota/guardarNota', nota)
       .pipe(catchError(this.handleError));
   }
 

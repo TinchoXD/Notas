@@ -57,7 +57,7 @@ export class EstudianteComponent implements OnInit {
     this.estudianteService.getAllEstudiantes().subscribe({
       next: (estudiantes) => {
         this.loading = false;
-        this.estudiantes = estudiantes
+        this.estudiantes = estudiantes.sort((a, b) => a.apellidosNombres.localeCompare(b.apellidosNombres))
         console.log('estudiantes', estudiantes)
 
 

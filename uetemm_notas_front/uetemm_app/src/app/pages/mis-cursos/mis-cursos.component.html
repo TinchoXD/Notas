@@ -10,39 +10,45 @@
         </div>
 
 
-        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
-            [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
+        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
+            [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre', 'jornada.nombre', 'asignatura.nombre'] "
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="nivel.nombre">
-                        Nivel <p-sortIcon field="nivel.nombre" />
+                    <th pSortableColumn="curso.codigo">
+                        Código <p-sortIcon field="curso.codigo" />
                     </th>
-                    <th pSortableColumn="subnivel.nombre">
-                        SubNivel <p-sortIcon field="subnivel.nombre" />
+                    <th pSortableColumn="curso.nivel.nombre">
+                        Nivel <p-sortIcon field="curso.nivel.nombre" />
                     </th>
-                    <th pSortableColumn="grado.nombre">
-                        Grado <p-sortIcon field="grado.nombre" />
+                    <th pSortableColumn="curso.subnivel.nombre">
+                        SubNivel <p-sortIcon field="curso.subnivel.nombre" />
                     </th>
-                    <th pSortableColumn="paralelo.nombre">
-                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                    <th pSortableColumn="curso.grado.nombre">
+                        Grado <p-sortIcon field="curso.grado.nombre" />
                     </th>
-                    <th pSortableColumn="jornada.nombre">
-                        Jornada <p-sortIcon field="jornada.nombre" />
+                    <th pSortableColumn="curso.paralelo.nombre">
+                        Paralelo <p-sortIcon field="curso.paralelo.nombre" />
+                    </th>
+                    <th pSortableColumn="curso.jornada.nombre">
+                        Jornada <p-sortIcon field="curso.jornada.nombre" />
                     </th>
                     <th pSortableColumn="asignatura.nombre">
                         Asignatura <p-sortIcon field="asignatura.nombre" />
                     </th>
                     <th>
-                        Acciones
+                       
                     </th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-cursoProfesorRow>
                 <tr>
+                    <td>
+                        {{ cursoProfesorRow.curso.codigo }}
+                    </td>
                     <td>
                         {{ cursoProfesorRow.curso.nivel.nombre }}
                     </td>
@@ -63,7 +69,7 @@
                     </td>
                     <td>
                         <p-button pRipple icon="pi pi-eye" severity="info" [rounded]="true" [outlined]="true"
-                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfeso(cursoProfesorRow)"/>
+                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfesor(cursoProfesorRow)"/>
                     </td>
                 </tr>
             </ng-template>

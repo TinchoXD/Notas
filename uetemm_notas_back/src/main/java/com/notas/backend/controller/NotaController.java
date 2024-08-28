@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.notas.backend.model.Nota;
 import com.notas.backend.request.CatalogoRequest;
 import com.notas.backend.request.CursoRequest;
+import com.notas.backend.request.NotaRequest;
 import com.notas.backend.services.CatogoService;
 import com.notas.backend.services.NotaService;
 
@@ -69,7 +70,7 @@ public class NotaController {
     public ResponseEntity<Object> getNotasByEstudianteIdAndCursoProfesorId(@PathVariable int estu_id,
             @PathVariable int cupr_id) {
         try { 
-            List<Nota> notas = notaService.getNotasByEstudianteIdAndCursoProfesorId(estu_id, cupr_id);
+            Nota notas = notaService.getNotaByEstudianteIdAndCursoProfesorId(estu_id, cupr_id);
             return ResponseEntity.ok(notas);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,5 +80,13 @@ public class NotaController {
                     HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping(value = "/nota/guardarNota")
+    public ResponseEntity<Object> postNota(@RequestBody NotaRequest notaRequest) {
+        
+        
+        return ResponseEntity.ok(notaService.postNota(notaRequest));
+    }
+    
 
 }

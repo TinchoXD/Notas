@@ -4,6 +4,9 @@ import { EstudianteService } from '../../services/estudiante/estudiante.service'
 import { CursoProfesorService } from '../../services/cursoProfesor/curso-profesor.service';
 import { UserService } from '../../services/user/user.service';
 import { NotaService } from '../../services/nota/nota.service';
+import { Observable } from 'rxjs';
+import { AlertService } from '../../services/alert/alert.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-detalle-curso-profesor',
@@ -20,7 +23,10 @@ export class DetalleCursoProfesorComponent implements OnInit {
   cursoProfesor: any;
   cursosProfesor: any[] = [];
 
-  nota: any;
+  notaT1: any;
+  notaT2: any;
+  notaT3: any;
+
   notas: any[] = [];
 
   user: any;
@@ -32,9 +38,10 @@ export class DetalleCursoProfesorComponent implements OnInit {
 
   cursoEstudianteNota: any[] = [];
 
-  prueba: any[] = [];
+  notaEstudiante: any[] = [];
 
   cupr_id: any;
+  notaColor: string = 'red';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,7 +49,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
     private userService: UserService,
     private cursoProfesorService: CursoProfesorService,
     private estudianteService: EstudianteService,
-    private notaService: NotaService
+    private notaService: NotaService,
+    private messageServicePNG: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -75,17 +83,24 @@ export class DetalleCursoProfesorComponent implements OnInit {
 
                   this.estudiantes.forEach((estudiante) => {
                     this.notaService
-                      .getNotasByEstudianteAndCursoProfesor(
+                      .getNotaByEstudianteAndCursoProfesor(
                         estudiante.id,
                         this.cupr_id
                       )
                       .subscribe({
-                        next: (data) => {
-                          this.prueba.push(data);
+                        next: (notaEstudiante) => {
+                          this.notaEstudiante.push(notaEstudiante);
+                          this.estudiantes.forEach((estu) => {
+
+                            estu.notaT1 = this.notaEstudiante.find((nota)=> nota?.estudiante.id === estu.id && nota.cursoProfesor.id === this.cursoProfesor_id)?.calificacionT1
+                            estu.notaT2 = this.notaEstudiante.find((nota)=> nota?.estudiante.id === estu.id && nota.cursoProfesor.id === this.cursoProfesor_id)?.calificacionT2
+                            estu.notaT3 = this.notaEstudiante.find((nota)=> nota?.estudiante.id === estu.id && nota.cursoProfesor.id === this.cursoProfesor_id)?.calificacionT3
+                          
+                          });
                         },
                       });
                   });
-                  console.log('ccc', this.prueba);
+                  console.log('ccc', this.notaEstudiante);
                 },
               });
           },
@@ -115,5 +130,77 @@ export class DetalleCursoProfesorComponent implements OnInit {
     });
 
     this.loading = false;
+  }
+
+  guardarNota(notaEstudiante: any) {
+    console.log('estudiante', notaEstudiante);
+    console.log('------');
+    /* console.log('this.cursoProfesor_id', this.cursoProfesor_id);
+    console.log('estudiante ID', estudiante.id);
+    console.log('nota t1', estudiante.notaT1);
+    console.log('nota t2', estudiante.notaT2);
+    console.log('nota t3', estudiante.notaT3);
+    console.log(
+      'nota t1 Cualitativa',
+      this.convertirCulitativo(estudiante.notaT1)
+    );
+    console.log(
+      'nota t2 Cualitativa',
+      this.convertirCulitativo(estudiante.notaT2)
+    );
+    console.log(
+      'nota t3 Cualitativa',
+      this.convertirCulitativo(estudiante.notaT3)
+    ); */
+
+    const nota = {
+      estu_id: notaEstudiante.id,
+      cupr_id: this.cursoProfesor_id,
+      notaT1: notaEstudiante.notaT1,
+      notaT2: notaEstudiante.notaT2,
+      notaT3: notaEstudiante.notaT3,
+    };
+
+    console.log('AAA', nota);
+
+    this.notaService.saveNota(nota).subscribe({
+      next: (res) => {
+        this.messageServicePNG.add({
+          severity: 'success',
+          summary: 'OK',
+          detail: 'Nota guardada',
+        });
+      },
+    });
+  }
+
+  convertirCulitativo(nota: number): string {
+    if (nota >= 9.5) {
+      return 'A+';
+    } else if (nota >= 8.5) {
+      return 'A-';
+    } else if (nota >= 7.5) {
+      return 'B+';
+    } else if (nota >= 6.5) {
+      return 'B-';
+    } else if (nota >= 5.5) {
+      return 'C+';
+    } else if (nota >= 4.5) {
+      return 'C-';
+    } else if (nota >= 3.5) {
+      return 'D+';
+    } else if (nota >= 2.5) {
+      return 'D-';
+    } else if (nota >= 1.5) {
+      return 'E+';
+    } else if (nota >= 0) {
+      return 'E-';
+    }
+
+    return '-';
+  }
+
+  changePage(notaEstudiante: any){
+    this.guardarNota(notaEstudiante);
   }
 }

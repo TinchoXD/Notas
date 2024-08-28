@@ -1,7 +1,7 @@
 <div class="container-page">
     <div class="card">
 
-        <p-table #dt [value]="estudiantes" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+        <p-table #dt [value]="estudiantes" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm"
             [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidosNombres', 'cedula', 'curso.codigo']"
             [tableStyle]="{ 'min-width': '75rem;'}">
 
@@ -28,8 +28,12 @@
                     </th>
 
 
-                    <th pSortableColumn="cedula">Cedula</th>
-                    <th pSortableColumn="curso.codigo">Grado / Curso</th>
+                    <th pSortableColumn="cedula">
+                        Cedula <p-sortIcon field="cedula" />
+                    </th>
+                    <th pSortableColumn="curso.codigo">
+                        Grado / Curso <p-sortIcon field="curso.codigo" />
+                    </th>
 
                     <th>Acciones</th>
                 </tr>
@@ -50,18 +54,18 @@
 
                         <p-columnFilter type="text" field="curso.codigo" placeholder="Bucar por Código de Curso"
                         matchMode="contains" />
-                        <!-- 
-                            * FILTRO AVANZADO
-                            <p-columnFilter field="curso.grado.nombre" matchMode="in" [showMenu]="false">
+                        
+                            
+                            <!-- <p-columnFilter field="curso.codigo" matchMode="in" [showMenu]="false">
                                 <ng-template pTemplate="filter" let-curso let-filter="filterCallback">
     
                                     <p-multiSelect [(ngModel)]="selectedCursos" [options]="cursos" placeholder="Any"
-                                        appendTo="body" (onChange)="filter($event.value)" optionLabel="grado.nombre">
+                                        appendTo="body" (onChange)="filter($event.value)" optionLabel="codigo.codigo">
                                         <ng-template let-option pTemplate="item">
                                             <div class="inline-block vertical-align-middle">
     
                                                 <span class="ml-1 mt-1">
-                                                    {{ option.grado.nombre }}
+                                                    {{ option.codigo }}
                                                 </span>
                                             </div>
                                         </ng-template>

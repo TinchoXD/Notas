@@ -49,6 +49,8 @@ export class EstudianteFormComponent implements OnInit {
   representantePadre: number = 1;
   representanteAdicional: number = 0;
 
+
+
   /* serviciosBasicos: string[] = ['Luz Eléctrica', 'Agua Potable', 'Teléfono', 'Cable', 'Celular', 'Internet']; */
 
   serviciosBasicos: ServicioBasico[] = [
@@ -427,7 +429,7 @@ export class EstudianteFormComponent implements OnInit {
         });
 
         this.seguimientoForm.patchValue({
-          seguimiento: estudiante.seguimiento,
+          seguimiento: estudiante.seguimiento ? estudiante.seguimiento : '',
         });
       },
     });

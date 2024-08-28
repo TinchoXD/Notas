@@ -1,0 +1,18 @@
+.color-malo {
+    color: red; /* Aplica el color rojo o cualquier otro estilo que necesites */
+}
+.color-regular {
+    color: rgb(215, 165, 36); /* Aplica el color rojo o cualquier otro estilo que necesites */
+}
+.color-excelente {
+    color: rgb(100, 225, 100); /* Aplica el color rojo o cualquier otro estilo que necesites */
+}
+
+p.thick {
+    font-weight: bold;
+  }
+
+  ::ng-deep .input-styling input {
+    width: 10vh !important;
+  }
+

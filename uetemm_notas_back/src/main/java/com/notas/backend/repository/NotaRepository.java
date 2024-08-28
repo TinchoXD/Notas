@@ -17,5 +17,8 @@ public interface NotaRepository extends JpaRepository<Nota, Integer> {
     List<Nota> findByCursoProfesorId(int cursoProfesorId);
 
     // Buscar por estudianteId y cursoProfesorId
-    List<Nota> findByEstudianteIdAndCursoProfesorId(int estudianteId, int cursoProfesorId);
+    //List<Nota> findByEstudianteIdAndCursoProfesorId(int estudianteId, int cursoProfesorId);
+   
+    // Buscar por estudianteId y cursoProfesorId
+    Nota findByEstudianteIdAndCursoProfesorId(int estudianteId, int cursoProfesorId);
 }

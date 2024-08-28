@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Curso;
+import com.notas.backend.model.CursoProfesor;
+import com.notas.backend.model.Estudiante;
 import com.notas.backend.model.Nota;
 import com.notas.backend.model.User;
 import com.notas.backend.repository.CatalogoRepository;
 import com.notas.backend.repository.NotaRepository;
 import com.notas.backend.request.CatalogoRequest;
 import com.notas.backend.request.CursoRequest;
+import com.notas.backend.request.NotaRequest;
 import com.notas.backend.response.MessageResponse;
 
 import jakarta.transaction.Transactional;
@@ -35,13 +38,52 @@ public class NotaService {
         List<Nota> resuList = notaRepository.findByEstudianteId(estu_id);
         return resuList;
     }
+
     public List<Nota> getNotasByCursoProfesorId(int cupr_id) {
         List<Nota> resuList = notaRepository.findByCursoProfesorId(cupr_id);
         return resuList;
     }
-    public List<Nota> getNotasByEstudianteIdAndCursoProfesorId(int estu_id, int cupr_id) {
-        List<Nota> resuList = notaRepository.findByEstudianteIdAndCursoProfesorId(estu_id, cupr_id);
-        return resuList;
+
+    public Nota getNotaByEstudianteIdAndCursoProfesorId(int estu_id, int cupr_id) {
+        Nota nota = notaRepository.findByEstudianteIdAndCursoProfesorId(estu_id, cupr_id);
+        return nota;
+    }
+    /*
+     * public List<Nota> getNotasByEstudianteIdAndCursoProfesorId(int estu_id, int
+     * cupr_id) {
+     * List<Nota> resuList =
+     * notaRepository.findByEstudianteIdAndCursoProfesorId(estu_id, cupr_id);
+     * return resuList;
+     * }
+     */
+
+    @Transactional
+    public MessageResponse postNota(NotaRequest notaRequest) {
+
+        System.out.println("notaaaaaaaaa: " + notaRequest);
+
+        Nota nota = notaRepository.findByEstudianteIdAndCursoProfesorId(notaRequest.estu_id, notaRequest.cupr_id);
+
+        if (nota == null) {
+            nota = new Nota();
+
+            Estudiante estudiante = new Estudiante();
+            estudiante.setId(notaRequest.estu_id);
+
+            CursoProfesor cursoProfesor = new CursoProfesor();
+            cursoProfesor.setId(notaRequest.cupr_id);
+
+            nota.setEstudiante(estudiante);
+            nota.setCursoProfesor(cursoProfesor);
+        }
+
+        nota.setCalificacionT1(notaRequest.notaT1);
+        nota.setCalificacionT2(notaRequest.notaT2);
+        nota.setCalificacionT3(notaRequest.notaT3);
+
+        notaRepository.save(nota);
+
+        return new MessageResponse("La Nota se guardó satisfactoriamente");
     }
 
     // !BORRAR ↓↓↓↓

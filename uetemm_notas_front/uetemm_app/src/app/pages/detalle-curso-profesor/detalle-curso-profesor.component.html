@@ -1,5 +1,16 @@
 <div class="container-page">
     <div class="card">
+        <section class="pb-3">
+            <div class="div-button-row">
+                <div class="div-flex-container">
+                    <div class="div-button-container">
+                        <button mat-fab color="primary" matTooltip="Regresar" routerLink="/mis-cursos">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
         <p-table #dtCurso [value]="cursosProfesor" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem'}">
             <ng-template pTemplate="header">
                 <tr>
@@ -21,9 +32,12 @@
             </ng-template>
         </p-table>
         <p>Listado de Estudiantes:</p>
-        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [loading]="loading"
-            [globalFilterFields]="['apellidosNombres', 'cedula']" [tableStyle]="{ 'min-width': '75rem;'}">
 
+
+
+        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [loading]="loading"
+            styleClass="p-datatable-striped p-datatable-sm" [globalFilterFields]="['apellidosNombres', 'cedula']"
+            [tableStyle]="{'min-width': '50rem'}">
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <p-iconField iconPosition="left" class="ml-auto">
@@ -33,18 +47,33 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
+                    <button mat-mini-fab class="ml-3" matTooltip="Autoguardado: los cambios se guardarán automáticamente al registrar la nota">
+                        <mat-icon>save</mat-icon>
+                    </button>
                 </div>
             </ng-template>
-
             <ng-template pTemplate="header">
+
+
+                
                 <tr>
                     <th pSortableColumn="apellidosNombres">Apellidos y Nombres Completos<p-sortIcon
                             field="apellidosNombres" /></th>
                     <!-- <th pSortableColumn="nombres">Nombres<p-sortIcon field="nombres" /></th> -->
                     <th pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
-                    <th>Trimestre I</th>
-                    <th>Trimestre II</th>
-                    <th>Trimestre III</th>
+                    <th pSortableColumn="notaT1">Trimestre I <p-sortIcon field="notaT1" /></th>
+                    <th style="width:5%">Trimestre I Cualitativo</th>
+                    <th pSortableColumn="notaT2">Trimestre II <p-sortIcon field="notaT2" /></th>
+                    <th style="width:5%">Trimestre II Cualitativo</th>
+                    <th pSortableColumn="notaT2">Trimestre III <p-sortIcon field="notaT3" /></th>
+                    <th style="width:5%">Trimestre III Cualitativo</th>
+                    <th>Promedio / Final</th> 
+                    <th></th>
+                    <!-- <th style="width:50%" pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
+                    <th style="width:10%" >Trimestre I</th>
+                    <th style="width:10%">Trimestre II</th>
+                    <th style="width:10%">Trimestre III</th>
+                    <th style="width:10%">guardar</th> -->
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-estudianteRow>
@@ -59,13 +88,36 @@
                         {{ estudianteRow.cedula }}
                     </td>
                     <td>
-                        <input type="number" [(ngModel)]="estudianteRow.nota" min="0" max="100" />
+                        <p-inputNumber [(ngModel)]="estudianteRow.notaT1" mode="decimal" [minFractionDigits]="1"
+                            styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
+                            [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
                     </td>
                     <td>
-                        <input type="number" [(ngModel)]="estudianteRow.nota" min="0" max="100" />
+                        {{convertirCulitativo(estudianteRow.notaT1)}}
+
                     </td>
                     <td>
-                        <input type="number" [(ngModel)]="estudianteRow.nota" min="0" max="100" />
+                        <p-inputNumber [(ngModel)]="estudianteRow.notaT2" mode="decimal" [minFractionDigits]="1"
+                            styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
+                            [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+                    </td>
+                    <td>
+                        {{convertirCulitativo(estudianteRow.notaT2)}}
+                    </td>
+                    <td>
+                        <p-inputNumber [(ngModel)]="estudianteRow.notaT3" mode="decimal" [minFractionDigits]="1"
+                            styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
+                            [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+                    </td>
+                    <td>
+                        {{convertirCulitativo(estudianteRow.notaT3)}}
+                    </td>
+                    <td>
+                        {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}
+
+                    </td>
+                    <td>
+
                     </td>
                 </tr>
             </ng-template>

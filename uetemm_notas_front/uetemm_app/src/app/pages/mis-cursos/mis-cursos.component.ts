@@ -80,7 +80,7 @@ export class MisCursosComponent implements OnInit {
     });
   }
 
-  verCursoProfeso(estudianteRow: any) {
+  verCursoProfesor(estudianteRow: any) {
     console.log(estudianteRow);
 
     // Mostrar el spinner de carga

@@ -134,7 +134,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
     IconFieldModule,
     InputIconModule,
     MultiSelectModule,
-    InputOtpModule
+    InputOtpModule,
+    InputNumberModule,PaginatorModule
   ],
 })
 export class PrimeNGModule {}

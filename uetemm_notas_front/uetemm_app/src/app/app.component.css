@@ -1,3 +1,10 @@
 /* @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css"; */
 
+::ng-deep .p-datatable-striped tbody tr:nth-child(odd) {
+    background-color: #ffffff !important;
+  }
+  
+  ::ng-deep .p-datatable-striped tbody tr:nth-child(even) {
+    background-color: #d1d6fa5e !important;
+  }

@@ -1076,7 +1076,7 @@
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Detalle</mat-label>
                                 <textarea matInput formControlName="seguimiento" rows="20"
-                                    maxlength="8000"></textarea> <mat-hint align="end">{{seguimiento.value.length}} / 8000</mat-hint>  
+                                    maxlength="8000"></textarea> <mat-hint align="end">{{seguimiento ? seguimiento.value.length : 0}} / 8000</mat-hint>  
                                 @if (seguimiento.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
