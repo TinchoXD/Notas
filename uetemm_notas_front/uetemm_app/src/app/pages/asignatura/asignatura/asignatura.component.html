@@ -22,7 +22,7 @@
                         <p-button icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarCurso()"/>
                     </ng-template>
                 </p-toolbar>
-                <p-table #dt [value]="asignaturas" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
+                <p-table #dt [value]="asignaturas" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
                     [globalFilterFields]="['nombre'] "
                     [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
                     [rowsPerPageOptions]="[5, 10, 20]"

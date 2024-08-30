@@ -399,12 +399,12 @@ export class DetalleCursoProfesorComponent implements OnInit {
       ],
       styles: {
         header: {
-          fontSize: 12, // Tamaño de fuente para el encabezado
+          fontSize: 10, // Tamaño de fuente para el encabezado
           bold: true,
           margin: [0, 0, 0, 10] as [number, number, number, number], // Ajustado a 4 números
         },
         tableHeader: {
-          fontSize: 50, // Tamaño de fuente para los encabezados de la tabla
+          fontSize: 18, // Tamaño de fuente para los encabezados de la tabla
           bold: true,
         },
         tableCell: {

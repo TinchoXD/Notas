@@ -104,7 +104,7 @@
             </ng-template>
         </p-toolbar>
 
-        <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" styleClass="{{selectedSize.class}}"
+        <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" styleClass="{{selectedSize.class}} p-datatable-striped"
             [globalFilterFields]="['firstname','lastname','username','role','user_email_institucional', 'user_estado_usuario']"
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
