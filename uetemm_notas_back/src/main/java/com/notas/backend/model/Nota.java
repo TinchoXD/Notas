@@ -63,4 +63,7 @@ public class Nota {
     @Column(name = "nota_aporte_iii_calificacion_cualitativa", nullable = true)
     public String calificacionT3Cualitativa; 
 
+    @Column(name = "nota_aporte_supletorio_calificacion_cuantitativa", nullable = true)
+    public double calificacionSupletorio; 
+
 }

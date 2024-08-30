@@ -40,6 +40,11 @@
             [tableStyle]="{'min-width': '50rem'}">
             <ng-template pTemplate="caption">
                 <div class="flex">
+                    
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                     <p-iconField iconPosition="left" class="ml-auto">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
@@ -47,7 +52,8 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
-                    <button mat-mini-fab class="ml-3" matTooltip="Autoguardado: los cambios se guardarán automáticamente al registrar la nota">
+                    <button mat-mini-fab class="ml-3"
+                        matTooltip="Autoguardado: los cambios se aplicarán automáticamente al registrar la nota">
                         <mat-icon>save</mat-icon>
                     </button>
                 </div>
@@ -55,25 +61,21 @@
             <ng-template pTemplate="header">
 
 
-                
+
                 <tr>
                     <th pSortableColumn="apellidosNombres">Apellidos y Nombres Completos<p-sortIcon
                             field="apellidosNombres" /></th>
-                    <!-- <th pSortableColumn="nombres">Nombres<p-sortIcon field="nombres" /></th> -->
+
                     <th pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
                     <th pSortableColumn="notaT1">Trimestre I <p-sortIcon field="notaT1" /></th>
-                    <th style="width:5%">Trimestre I Cualitativo</th>
+
                     <th pSortableColumn="notaT2">Trimestre II <p-sortIcon field="notaT2" /></th>
-                    <th style="width:5%">Trimestre II Cualitativo</th>
-                    <th pSortableColumn="notaT2">Trimestre III <p-sortIcon field="notaT3" /></th>
-                    <th style="width:5%">Trimestre III Cualitativo</th>
-                    <th>Promedio / Final</th> 
-                    <th></th>
-                    <!-- <th style="width:50%" pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
-                    <th style="width:10%" >Trimestre I</th>
-                    <th style="width:10%">Trimestre II</th>
-                    <th style="width:10%">Trimestre III</th>
-                    <th style="width:10%">guardar</th> -->
+
+                    <th pSortableColumn="notaT3">Trimestre III <p-sortIcon field="notaT3" /></th>
+
+                    <th pSortableColumn="notaFinal">Promedio / Final <p-sortIcon field="notaFinal" /></th>
+                    <th pSortableColumn="notaSupletorio">Supletorio <p-sortIcon field="notaSupletorio" /></th>
+
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-estudianteRow>
@@ -81,9 +83,7 @@
                     <td>
                         {{ estudianteRow.apellidosNombres }}
                     </td>
-                    <!--  <td>
-                        {{ estudianteRow.nombres }}
-                    </td> -->
+
                     <td>
                         {{ estudianteRow.cedula }}
                     </td>
@@ -91,33 +91,51 @@
                         <p-inputNumber [(ngModel)]="estudianteRow.notaT1" mode="decimal" [minFractionDigits]="1"
                             styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow.notaT1), 'color': getNotaColorText(estudianteRow.notaT1)}">
+                            {{convertirCulitativo(estudianteRow.notaT1)}}</span>
                     </td>
-                    <td>
-                        {{convertirCulitativo(estudianteRow.notaT1)}}
 
-                    </td>
                     <td>
                         <p-inputNumber [(ngModel)]="estudianteRow.notaT2" mode="decimal" [minFractionDigits]="1"
                             styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow.notaT2), 'color': getNotaColorText(estudianteRow.notaT2)}">
+                            {{convertirCulitativo(estudianteRow.notaT2)}}</span>
                     </td>
-                    <td>
-                        {{convertirCulitativo(estudianteRow.notaT2)}}
-                    </td>
+
                     <td>
                         <p-inputNumber [(ngModel)]="estudianteRow.notaT3" mode="decimal" [minFractionDigits]="1"
                             styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow.notaT3), 'color': getNotaColorText(estudianteRow.notaT3)}">
+                            {{convertirCulitativo(estudianteRow.notaT3)}}</span>
                     </td>
+
                     <td>
-                        {{convertirCulitativo(estudianteRow.notaT3)}}
-                    </td>
-                    <td>
-                        {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}
+                    
+                        
+
+
+
+
+                        <p-inputNumber [(ngModel)]="estudianteRow.notaFinal" mode="decimal" [minFractionDigits]="1"
+                            [disabled]="true" styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
+                            [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
+
+
+
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3), 'color': getNotaColorText((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}">
+                            {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}</span>
 
                     </td>
                     <td>
-
+                        <p-inputNumber [(ngModel)]="estudianteRow.notaSupletorio" mode="decimal" [minFractionDigits]="1"
+                            styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
+                            [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
                     </td>
                 </tr>
             </ng-template>

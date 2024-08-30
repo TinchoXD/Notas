@@ -80,6 +80,7 @@ public class NotaService {
         nota.setCalificacionT1(notaRequest.notaT1);
         nota.setCalificacionT2(notaRequest.notaT2);
         nota.setCalificacionT3(notaRequest.notaT3);
+        nota.setCalificacionSupletorio(notaRequest.notaSupletorio);
 
         notaRepository.save(nota);
 

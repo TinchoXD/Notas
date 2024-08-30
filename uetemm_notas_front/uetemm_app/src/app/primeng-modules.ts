@@ -106,8 +106,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
 
-
-
 @NgModule({
   exports: [
     BrowserAnimationsModule,
@@ -135,7 +133,9 @@ import { AutoFocusModule } from 'primeng/autofocus';
     InputIconModule,
     MultiSelectModule,
     InputOtpModule,
-    InputNumberModule,PaginatorModule
+    InputNumberModule,
+    PaginatorModule,
+    BadgeModule,
   ],
 })
 export class PrimeNGModule {}

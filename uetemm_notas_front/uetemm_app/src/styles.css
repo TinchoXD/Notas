@@ -12692,3 +12692,16 @@ body.sidebar-toggled footer.sticky-footer {
   font-weight: bold; /* Hacer el número en negrita */
 }
 
+.circle-nota-cualitativa {
+  display: inline-block;
+  width: 35px; /* Ancho del círculo */
+  height: 35px; /* Alto del círculo */
+  line-height: 38px; /* Centrar el número verticalmente */
+  border-radius: 50%; /* Hace que el elemento sea circular */
+  color: white; /* Color del texto blanco */
+  text-align: center; /* Centrar el número horizontalmente */
+  font-size: 16px; /* Tamaño del número */
+  font-weight: bold; /* Hacer el número en negrita */
+  background-color: black; /* Color de fondo negro */
+}
+

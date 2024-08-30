@@ -19,6 +19,7 @@ public class NotaRequest {
     public double notaT1;
     public double notaT2;
     public double notaT3;
+    public double notaSupletorio;
     
     public String notaT1Cualitativa;
     public String notaT2Cualitativa;
