@@ -37,6 +37,11 @@ public class CursoService {
         return curso;
     }
 
+    public Curso getCursoById(int curs_id) {
+        Optional<Curso> curso = cursoRepository.findById(curs_id);
+        return curso.get();
+    }
+
     public boolean getCursoByCodigo(String codigo) {
         Curso curso = cursoRepository.findByCodigo(codigo);
 

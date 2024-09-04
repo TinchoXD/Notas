@@ -45,8 +45,13 @@ import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
 import { AsignarCursoComponent } from './pages/estudiante/asignar-curso/asignar-curso.component';
 import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/detalle-curso-profesor.component';
+import { TutorComponent } from './pages/tutor/tutor.component';
+import { DetalleCursoTutorComponent } from './pages/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID } from '@angular/core';
 
-
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -74,7 +79,9 @@ import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/de
     EstudianteComponent,
     EstudianteFormComponent,
     AsignarCursoComponent,
-    DetalleCursoProfesorComponent 
+    DetalleCursoProfesorComponent,
+    TutorComponent,
+    DetalleCursoTutorComponent 
     
   ],
   imports: [
@@ -98,6 +105,7 @@ import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/de
       { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
       { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
       { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+      { provide: LOCALE_ID, useValue: 'es' }, // Configuración de LOCALE_ID
       MessageService,
       LoadingService,
       provideAnimationsAsync()],

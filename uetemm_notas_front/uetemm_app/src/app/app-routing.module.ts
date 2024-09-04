@@ -14,6 +14,8 @@ import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
 import { EstudianteComponent } from './pages/estudiante/estudiante.component';
 import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
 import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/detalle-curso-profesor.component';
+import { TutorComponent } from './pages/tutor/tutor.component';
+import { DetalleCursoTutorComponent } from './pages/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
@@ -30,6 +32,8 @@ const routes: Routes = [
   { path: 'estudiantes', component: EstudianteComponent, canActivate: [authGuard] },
   { path: 'estudiantes/estudiante/:id', component: EstudianteFormComponent, canActivate: [authGuard] },
   { path: 'mis-cursos/curso/:id', component: DetalleCursoProfesorComponent, canActivate: [authGuard] },
+  { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
+  { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
 
 ];
 

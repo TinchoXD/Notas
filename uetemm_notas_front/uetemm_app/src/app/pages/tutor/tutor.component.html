@@ -1,20 +1,18 @@
 <div class="container-page">
     <div class="card">
-
         <div class="row">
             <div class="col-md-10">
-                <p style="font-size: x-large;">Mis Cursos</p>
+                <p style="font-size: x-large;">Cursos del Tutor: {{user?.firstname}} {{user?.lastname}}</p>
             </div>
             <div class="col-md-2">
             </div>
-        </div>
 
-
-        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
+            <p-table #dt [value]="cursosTutor" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
             [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre', 'jornada.nombre', 'asignatura.nombre'] "
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
+
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="curso.codigo">
@@ -35,48 +33,40 @@
                     <th pSortableColumn="curso.jornada.nombre">
                         Jornada <p-sortIcon field="curso.jornada.nombre" />
                     </th>
-                    <th pSortableColumn="asignatura.nombre">
-                        Asignatura <p-sortIcon field="asignatura.nombre" />
-                    </th>
                     <th>
                     </th>
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-cursoProfesorRow>
+            <ng-template pTemplate="body" let-cursoTutorRow>
                 <tr>
                     <td>
-                        {{ cursoProfesorRow.curso.codigo }}
+                        {{ cursoTutorRow.codigo }}
                     </td>
                     <td>
-                        {{ cursoProfesorRow.curso.nivel.nombre }}
+                        {{ cursoTutorRow.nivel.nombre }}
                     </td>
                     <td>
-                        {{ cursoProfesorRow.curso.subnivel.nombre }}
+                        {{ cursoTutorRow.subnivel.nombre }}
                     </td>
                     <td>
-                        {{ cursoProfesorRow.curso.grado.nombre }}
+                        {{ cursoTutorRow.grado.nombre }}
                     </td>
                     <td>
-                        {{ cursoProfesorRow.curso.paralelo.nombre }}
+                        {{ cursoTutorRow.paralelo.nombre }}
                     </td>
                     <td>
-                        {{ cursoProfesorRow.curso.jornada.nombre }}
-                    </td>
-                    <td>
-                        {{ cursoProfesorRow.asignatura.nombre }}
+                        {{ cursoTutorRow.jornada.nombre }}
                     </td>
                     <td>
                         <p-button pRipple icon="pi pi-eye" severity="info" [rounded]="true" [outlined]="true"
-                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfesor(cursoProfesorRow)"/>
+                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoTutor(cursoTutorRow)"/>
                     </td>
                 </tr>
             </ng-template>
 
+            </p-table>
 
-        </p-table>
-
-
-
+        </div>
     </div>
 </div>

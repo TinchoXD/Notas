@@ -76,6 +76,11 @@ public class Estudiante {
     @Column(name = "estu_lugar_nacimiento", nullable = true)
     public String lugarNacimiento;
 
+    @Column(name = "estu_status", nullable = true)
+    public int estado;
+
+
+
     // ************************* */
     // * DATOS DE LA MADRE */ ****/
     // ************************* */

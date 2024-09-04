@@ -8,6 +8,7 @@ import com.notas.backend.model.Curso;
 import com.notas.backend.model.Estudiante;
 import com.notas.backend.request.CursoRequest;
 import com.notas.backend.request.EstudianteRequest;
+import com.notas.backend.request.EstudianteStatusRequest;
 import com.notas.backend.request.UserRequest;
 import com.notas.backend.response.MessageResponse;
 import com.notas.backend.services.CursoService;
@@ -53,6 +54,12 @@ public class EstudianteController {
     public ResponseEntity<MessageResponse> updateEstudiante(@RequestBody EstudianteRequest estudianteRequest)
     {
         return ResponseEntity.ok(estudianteService.updateEstudiante(estudianteRequest));  
+    }
+
+    @PutMapping("/estudiante/status")
+    public ResponseEntity<MessageResponse> updateEstudianteStatus(@RequestBody EstudianteStatusRequest estudianteStatusRequest)
+    {
+        return ResponseEntity.ok(estudianteService.updateEstudianteStatus(estudianteStatusRequest));  
     }
 
     /*

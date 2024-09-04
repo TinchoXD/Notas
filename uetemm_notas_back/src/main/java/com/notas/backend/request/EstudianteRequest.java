@@ -34,6 +34,7 @@ public class EstudianteRequest {
     public String telefonoCelularPadre;
     public Date fechaNacimiento;
     public String lugarNacimiento;
+    public boolean estado;
 
     // ************************* */
     // * DATOS DE LA MADRE */ ****/

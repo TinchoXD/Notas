@@ -42,9 +42,16 @@ public class CursoProfesorService {
         return cursos;
     }
 
+
+
     public List<CursoProfesor> getCursoProfesorActivos() {
         List<CursoProfesor> cursos = cursoProfesorRepository.findByStatus(1);
         return cursos;
+    }
+
+    public List<CursoProfesor> getCursoProfesorByCursoId(int curs_id) {
+        List<CursoProfesor> curso = cursoProfesorRepository.findByCursoId(curs_id);
+        return curso;
     }
 
     public List<CursoProfesor> getCursoProfesorByUserId(int user_id) {

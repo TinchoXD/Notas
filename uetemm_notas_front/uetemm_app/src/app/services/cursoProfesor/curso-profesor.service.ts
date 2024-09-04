@@ -27,12 +27,19 @@ export class CursoProfesorService {
     .get<any[]>(environment.urlApi + 'cursosProfesor/cursoProfesor/user/'+ user_id )
     .pipe(catchError(this.handleError));
   }
+  
+    getCursoProfesorByCursoId(curs_id: number): Observable<any[]>{
+      return this.http
+      .get<any[]>(environment.urlApi + 'cursosProfesor/cursoProfesor/curso/'+ curs_id )
+      .pipe(catchError(this.handleError));
+    }
 
   getCursoProfesorById(id: number): Observable<any[]>{
     return this.http
     .get<any[]>(environment.urlApi + 'cursosProfesor/cursoProfesor/'+ id )
     .pipe(catchError(this.handleError));
   }
+
 
   putCursoProfesor(cursoProfesor: any){
     return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/agregarCursoProfesor', cursoProfesor).subscribe({

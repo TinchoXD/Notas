@@ -19,72 +19,71 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
 @RestController
 @RequestMapping("/api/cursos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4600"})
+@CrossOrigin(origins = { "http://localhost:4600" })
 public class CursoController {
 
     @Autowired
     CursoService cursoService;
 
-    //* OBTENER TODOS LOS CURSOS */
+    // * OBTENER TODOS LOS CURSOS */
     @GetMapping("/all")
     public List<Curso> getCursos() {
         return cursoService.getCursos();
     }
 
-    //* OBTENER TODOS LOS CURSOS ACTIVOS*/
+    // * OBTENER TODOS LOS CURSOS ACTIVOS*/
     @GetMapping("/allActive")
     public List<Curso> getCursosActivos() {
         return cursoService.getCursosActivos();
     }
 
-    //* OBTENER LOS POR ID DE USUARIO (TUTOR) */
+    // * OBTENER CURSO POR ID */
+    @GetMapping("/curso/{id}")
+    public Curso getCursoById(@PathVariable int id) {
+        return cursoService.getCursoById(id);
+    }
+
+    // * OBTENER LOS POR ID DE USUARIO (TUTOR) */
     @GetMapping("/curso/user/{id}")
     public List<Curso> getCursoByUserId(@PathVariable int id) {
         return cursoService.getCursoByUserId(id);
     }
 
-    //* VERIFICAR EXISTENCIA CURSO POR CÓDIGO */
+
+    // * VERIFICAR EXISTENCIA CURSO POR CÓDIGO */
     @GetMapping("/curso/codigo/{codigo}")
     public boolean getCursoByCodigo(@PathVariable String codigo) {
         return cursoService.getCursoByCodigo(codigo);
     }
 
-    //* GUARDAR NUEVO CURSO */ 
+    // * GUARDAR NUEVO CURSO */
     @PostMapping(value = "/curso/agregarCurso")
-    public ResponseEntity<Object> postCurso(@RequestBody CursoRequest request)
-    {
+    public ResponseEntity<Object> postCurso(@RequestBody CursoRequest request) {
         return ResponseEntity.ok(cursoService.postCurso(request));
     }
 
-    
-    //* ACTUALIZAR CURSO */ 
+    // * ACTUALIZAR CURSO */
     @PostMapping(value = "/curso/actualizarCurso")
-    public ResponseEntity<Object> updateCurso(@RequestBody CursoRequest request)
-    {
-        return ResponseEntity.ok(cursoService.updateCurso(request));  
+    public ResponseEntity<Object> updateCurso(@RequestBody CursoRequest request) {
+        return ResponseEntity.ok(cursoService.updateCurso(request));
     }
 
-
-   
-    //* ELIMINAR CURSO (DESCATALOGAR CURSO - STATUS = 0) */
+    // * ELIMINAR CURSO (DESCATALOGAR CURSO - STATUS = 0) */
     @PostMapping(value = "/curso/deleteCurso")
-    public ResponseEntity<Object> delCurso(@RequestBody CursoRequest request)
-    {
+    public ResponseEntity<Object> delCurso(@RequestBody CursoRequest request) {
         return ResponseEntity.ok(cursoService.delCurso(request));
     }
 
-/* 
-    @GetMapping("/user/verificarUsername/{username}")
-    public Boolean getMethodName(@PathVariable String username) {
-        return userService.verificarUsername(username);
-    } */
-    
 
 
+    /*
+     * @GetMapping("/user/verificarUsername/{username}")
+     * public Boolean getMethodName(@PathVariable String username) {
+     * return userService.verificarUsername(username);
+     * }
+     */
 
 }

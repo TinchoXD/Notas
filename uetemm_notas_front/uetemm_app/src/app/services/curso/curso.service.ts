@@ -24,6 +24,12 @@ export class CursoService {
     .pipe(catchError(this.handleError));
   }
 
+  getCursoById(curs_id: number): Observable<Curso>{
+    return this.http
+    .get<Curso>(environment.urlApi + 'cursos/curso/'+ curs_id)
+    .pipe(catchError(this.handleError));
+  }
+
 /*   getCursosActivos(): Observable<Curso[]>{
     return this.http
     .get<Curso[]>(environment.urlApi + 'cursos/allActive' )

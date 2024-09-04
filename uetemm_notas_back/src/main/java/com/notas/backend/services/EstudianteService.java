@@ -11,6 +11,7 @@ import com.notas.backend.model.Curso;
 import com.notas.backend.model.Estudiante;
 import com.notas.backend.repository.EstudianteRepository;
 import com.notas.backend.request.EstudianteRequest;
+import com.notas.backend.request.EstudianteStatusRequest;
 import com.notas.backend.response.MessageResponse;
 
 import jakarta.persistence.Column;
@@ -153,6 +154,13 @@ public class EstudianteService {
                 case "8":
                     estudiante.seguimiento = estudianteRequest.seguimiento;
                     break;
+
+                // * Actualizar Estado (Activo/Inactivo) */
+                /*
+                 * case "9":
+                 * estudiante.estado = estudianteRequest.estado ? 1 : 0;
+                 * break;
+                 */
                 default:
                     break;
             }
@@ -165,6 +173,22 @@ public class EstudianteService {
 
         } catch (Exception e) {
             return new MessageResponse("Error al guardar los datos del ESTUDIANTE.");
+        }
+    }
+
+    @Transactional
+    public MessageResponse updateEstudianteStatus(EstudianteStatusRequest EstudianteStatusRequest) {
+
+        Estudiante estudiante = estudianteRepository.findById(EstudianteStatusRequest.id);
+
+        try {
+
+            estudiante.estado = EstudianteStatusRequest.estado ? 1 : 0;
+            this.estudianteRepository.save(estudiante);
+
+            return new MessageResponse("El Estado del ESTUDIANTE se actualizó satisfactoriamente.");
+        } catch (Exception e) {
+            return new MessageResponse("Error al guardar El Estado del ESTUDIANTE.");
         }
     }
 

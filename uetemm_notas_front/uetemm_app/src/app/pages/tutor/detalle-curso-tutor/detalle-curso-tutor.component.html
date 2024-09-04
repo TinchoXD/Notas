@@ -1,0 +1,95 @@
+<div class="container-page">
+    <div class="card">
+
+       
+
+        <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Curso</th>
+                    <th>Código del Curso</th>
+                    <th>Profesor</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-curso>
+                <tr>
+                    <td>{{ curso.nivel.nombre }} - {{ curso.subnivel.nombre }} - {{
+                        curso.grado.nombre }} - {{ curso.paralelo.nombre }} - {{
+                        curso.jornada.nombre }}</td>
+                    <td>{{ curso.codigo }}</td>
+                    <td>{{ curso.user.firstname }} {{ curso.user.lastname }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [resizableColumns]="true" [loading]="loading"
+            styleClass="p-datatable-striped p-datatable-sm " [globalFilterFields]="['apellidosNombres', 'cedula']"
+            [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                        class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                    <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Buscar estudiante..."
+                            (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th rowspan="2" pSortableColumn="apellidosNombres">Apellidos y Nombres Completos<p-sortIcon
+                            field="apellidosNombres" /></th>
+                    <th rowspan="2" pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
+                    <ng-container *ngFor="let cursoProfesor of cursosProfesor">
+                        <th style="text-align: center;" class="borde" colspan="6">
+                            {{cursoProfesor.asignatura.nombre}}
+
+                            <p style="color: rgb(105, 105, 105);">
+                                {{cursoProfesor.user.firstname}} {{cursoProfesor.user.lastname}}
+                            </p>
+                        </th>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <ng-container *ngFor="let cursoProfesor of cursosProfesor">
+                        <th class="borde">T1</th>
+                        <th>T2</th>
+                        <th>T3</th>
+                        <th>Final</th>
+                        <th>Supletorio</th>
+                        <th>Estado</th>
+                    </ng-container>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-estudianteRow>
+                <tr>
+                    <td>{{ estudianteRow.apellidosNombres }}</td>
+                    <td>{{ estudianteRow.cedula }}</td>
+                    <ng-container *ngFor="let cursoProfesor of cursosProfesor">
+                        <ng-container *ngFor="let nota of estudianteRow.notas">
+                            <ng-container *ngIf="nota.cursoProfesorId === cursoProfesor.id">
+                                <td class="borde">{{ nota.notaT1 | number: '1.2-2':'es' }}</td>
+                                <td>{{ nota.notaT2 | number: '1.2-2':'es' }}</td>
+                                <td>{{ nota.notaT3 | number: '1.2-2':'es' }}</td>
+                                <td><strong> {{ ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3) | number: '1.2-2':'es'
+                                        }}</strong></td>
+                                <td>{{ nota.supletorio }}</td>
+                                <td>
+                                    <span class="p-1"
+                                        [ngStyle]="{'background-color': estadoColorBackground(estudianteRow, (nota.notaT1 + nota.notaT2 + nota.notaT3) / 3), 'color': estadoColorText(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3)}">
+                                        {{estado(estudianteRow, ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3))}}</span>
+                                </td>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+</div>

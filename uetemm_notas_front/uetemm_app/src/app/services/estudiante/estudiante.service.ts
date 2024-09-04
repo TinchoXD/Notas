@@ -33,8 +33,13 @@ export class EstudianteService {
       .get<any[]>(environment.urlApi + 'estudiantes/estudiante/curso/' + curso_id)
       .pipe(catchError(this.handleError));
   }
+  
   updateEstudent(estudiante: any): Observable<any> {
     return this.http.put(environment.urlApi + 'estudiantes/estudiante', estudiante).pipe(catchError(this.handleError))
+  }
+
+  updateEstudentStatus(status: any): Observable<any> {
+    return this.http.put(environment.urlApi + 'estudiantes/estudiante/status', status).pipe(catchError(this.handleError))
   }
 
 
