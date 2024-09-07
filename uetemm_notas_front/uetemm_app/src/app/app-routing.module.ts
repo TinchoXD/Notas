@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/pages-profesor/dashboard/dashboard.component';
 import { LoginComponent } from './auth/login/login.component';
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
-import { CambiarContrasenaComponent } from './pages/cambiar-contrasena/cambiar-contrasena.component';
-import { AdministracionUsuariosComponent } from './pages/administracion-usuarios/administracion-usuarios.component';
-import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
-import { CursosComponent } from './pages/curso/curso/cursos.component';
-import { AsignaturaComponent } from './pages/asignatura/asignatura/asignatura.component';
+import { UserDetailsComponent } from './pages/pages-profesor/user-details/user-details.component';
+import { CambiarContrasenaComponent } from './pages/pages-profesor/cambiar-contrasena/cambiar-contrasena.component';
+import { AdministracionUsuariosComponent } from './pages/pages-profesor/administracion-usuarios/administracion-usuarios.component';
+import { EditarUsuarioComponent } from './pages/pages-profesor/editar-usuario/editar-usuario.component';
+import { CursosComponent } from './pages/pages-profesor/curso/curso/cursos.component';
+import { AsignaturaComponent } from './pages/pages-profesor/asignatura/asignatura/asignatura.component';
 
 import { authGuard } from './services/auth/auth.guard';
-import { MisCursosComponent } from './pages/mis-cursos/mis-cursos.component';
-import { EstudianteComponent } from './pages/estudiante/estudiante.component';
-import { EstudianteFormComponent } from './pages/estudiante/estudiante-form/estudiante-form.component';
-import { DetalleCursoProfesorComponent } from './pages/detalle-curso-profesor/detalle-curso-profesor.component';
-import { TutorComponent } from './pages/tutor/tutor.component';
-import { DetalleCursoTutorComponent } from './pages/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
+import { MisCursosComponent } from './pages/pages-profesor/mis-cursos/mis-cursos.component';
+import { EstudianteComponent } from './pages/pages-profesor/estudiante/estudiante.component';
+import { EstudianteFormComponent } from './pages/pages-profesor/estudiante/estudiante-form/estudiante-form.component';
+import { DetalleCursoProfesorComponent } from './pages/pages-profesor/detalle-curso-profesor/detalle-curso-profesor.component';
+import { TutorComponent } from './pages/pages-profesor/tutor/tutor.component';
+import { DetalleCursoTutorComponent } from './pages/pages-profesor/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },

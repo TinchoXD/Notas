@@ -3,11 +3,11 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { User } from '../auth/user';
 import { environment } from '../../../environments/environment.development';
-import { PasswordRequest } from '../../pages/cambiar-contrasena/passwordRequest';
+import { PasswordRequest } from '../../pages/pages-profesor/cambiar-contrasena/passwordRequest';
 
 import { LoginService } from '../auth/login.service';
 import { Router } from '@angular/router';
-import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
+import { AddUserRequest } from '../../pages/pages-profesor/agregar-usuario/addUserRequest';
 
 @Injectable({
   providedIn: 'root'

@@ -17,7 +17,7 @@ import { User } from './user';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { AlertService } from '../alert/alert.service';
-import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
+import { AddUserRequest } from '../../pages/pages-profesor/agregar-usuario/addUserRequest';
 import { error } from 'jquery';
 import { AlertType } from '../../shared/alert/alertType';
 import { jwtDecode } from "jwt-decode";
