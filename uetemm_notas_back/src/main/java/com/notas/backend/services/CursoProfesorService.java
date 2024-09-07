@@ -42,6 +42,10 @@ public class CursoProfesorService {
         return cursos;
     }
 
+    public CursoProfesor getCursoProfesorByCursoIdAndAsignaturaId(int user_id, int asig_id) {
+        CursoProfesor cursos = cursoProfesorRepository.findByCursoIdAndAsignaturaId(user_id, asig_id);
+        return cursos;
+    }
 
 
     public List<CursoProfesor> getCursoProfesorActivos() {

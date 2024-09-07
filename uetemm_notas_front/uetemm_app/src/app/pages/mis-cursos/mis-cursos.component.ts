@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class MisCursosComponent implements OnInit {
   errorMessage: String = '';
   cursosProfesor!: any[];
-
+  userData: any = null;
   user: any;
 
   constructor(
@@ -26,6 +26,16 @@ export class MisCursosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe((token) => {
+      if (token) {
+        // Decodifica el token para obtener la información del usuario
+        this.userData = this.loginService.decodeToken(token);
+        this.loginService.verificarCambioDeContrasenia(this.userData)
+
+      }
+    });
+
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;

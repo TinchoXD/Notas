@@ -1,43 +1,65 @@
-<div class="d-flex justify-content-center align-items-center vh-100 background-img" style="padding-left: 20%; ">
+<div class="d-flex justify-content-center align-items-center vh-100 background-img" style="padding-left: 0%; ">
   <div class="container">
-    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-      <div class="text-center mb-5">
-        <img src="assets/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3">
-        <div class="text-900 text-3xl font-medium mb-3">¡Bienvenido!</div>
+    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-12">
+
+      <div class="card">
+        <div class="grid">
+          <div class="col-5 flex align-items-center justify-content-center">
+            <div class="p-fluid">
+              <div class="text-center mb-5">
+                <img src="\assets\img\login\uetemm_logo.jpg" alt="Image" height="150" class="mb-3">
+                <div class="text-900 text-3xl font-medium mb-3">¡Bienvenido!</div>
+              </div>
+
+              <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <p class="text-danger">{{loginError}}</p>
+                <div class="form-group">
+                  <label for="formUsername">Usuario</label>
+                  <input type="email" formControlName="username" class="form-control" id="formUsername"
+                    aria-describedby="emailHelp" placeholder="Enter email" />
+                  <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                    <div *ngIf="username.errors?.['required']">
+                      <span>Nombre de usuario es requerido.</span>
+                    </div>
+                    <div *ngIf="username.errors?.['minlength'] && username.touched">
+                      <span>Debe contener 10 caracteres</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1"
+                    placeholder="Password" />
+                  <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                    <div *ngIf="password.errors?.['required'] && password.touched">
+                      <span>Password es requerido.</span>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <button pButton pRipple label="Iniciar Sesión como Docente" type="submit" icon="pi pi-user"
+                  class="w-full"></button>
+              </form>
+            </div>
+          </div>
+          <div class="col-2">
+            <p-divider layout="vertical">
+              <b>O</b>
+            </p-divider>
+          </div>
+          <div class="col-5 flex align-items-center justify-content-center">
+            <div class="p-fluid">
+              <div class="text-center mb-5">
+                <div class="text-900 text-3xl font-medium mb-3">¡Estudiante!</div>
+              </div>
+              <p-button label="Ver mis Calificaciones" icon="pi pi-book" styleClass="p-button-success"></p-button>
+            </div>
+          </div>
+        </div>
       </div>
-
-      1000000001
-      <br>
-      9999999999
-
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <p class="text-danger">{{loginError}}</p>
-        <div class="form-group">
-          <label for="formUsername">Usuario</label>
-          <input type="email" formControlName="username" class="form-control" id="formUsername"
-            aria-describedby="emailHelp" placeholder="Enter email" />
-          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
-            <div *ngIf="username.errors?.['required']">
-              <span>Nombre de usuario es requerido.</span>
-            </div>
-            <div *ngIf="username.errors?.['minlength'] && username.touched">
-              <span>Debe contener 10 caracteres</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1"
-            placeholder="Password" />
-          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-            <div *ngIf="password.errors?.['required'] && password.touched">
-              <span>Password es requerido.</span>
-            </div>
-          </div>
-        </div>
-        <br />
-        <button pButton pRipple label="Iniciar Sesión" type="submit" icon="pi pi-user" class="w-full"></button>
-      </form>
     </div>
+
+
+
+
   </div>
-</div>

@@ -18,9 +18,6 @@ import { AlertType } from '../../shared/alert/alertType';
 import { CursoProfesorService } from '../../services/cursoProfesor/curso-profesor.service';
 import { DialogoCursoProfesorComponent } from './dialogoCursoProfesor/dialogo-curso-profesor.component';
 
-
-
-
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
@@ -36,10 +33,8 @@ export class EditarUsuarioComponent implements OnInit {
   userId: number = 0;
   userCI: string = '';
   user_estado_usuario?: boolean;
-  
 
-
-  onIcion: string = 'pi pi-check'
+  onIcion: string = 'pi pi-check';
 
   cursosProfesor!: any[];
   cursoProfesor!: any;
@@ -80,23 +75,21 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
-    
-
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
     });
 
-    this.cursoProfesorService.getAllCursoProfesorByProfesorId(this.userId).subscribe({
-      next:(data)=>{
-        this.cursosProfesor = data;
-        console.log('cursosProfesor', this.cursosProfesor)
-      }
-    })
+    this.cursoProfesorService
+      .getAllCursoProfesorByProfesorId(this.userId)
+      .subscribe({
+        next: (data) => {
+          this.cursosProfesor = data;
+          console.log('cursosProfesor', this.cursosProfesor);
+        },
+      });
 
     this.loadUserData();
-    
   }
 
   private loadUserData() {
@@ -201,29 +194,35 @@ export class EditarUsuarioComponent implements OnInit {
       });
   }
 
-  dialogAgregarCursoProfesor(){
-    this.agregarCursoProfesorDialog = true
+  dialogAgregarCursoProfesor() {
+    this.agregarCursoProfesorDialog = true;
     this.submitted = false;
-    this.cursoProfesor = {}
+    this.cursoProfesor = {};
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
       width: '800px',
-      data: {user_id: this.userId}
+      data: { user_id: this.userId },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+
+        console.log('result',result)
+
         this.cursoProfesorService
           .getAllCursoProfesorByProfesorId(this.userId)
-          .subscribe((cursosProfesor) => (this.cursosProfesor = cursosProfesor));
+          .subscribe({
+            next: (cursosProfesor) => {
+              this.cursosProfesor = cursosProfesor;
+            },
+          });
       }
     });
-  } 
+  }
 
-  editarCursoProfesor(cursoProfesorEdit: any){
-
+  editarCursoProfesor(cursoProfesorEdit: any) {
     this.cursoProfesor = cursoProfesorEdit;
-    this.submitted = false
+    this.submitted = false;
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
       width: '800px',
@@ -234,7 +233,11 @@ export class EditarUsuarioComponent implements OnInit {
       if (result) {
         this.cursoProfesorService
           .getAllCursoProfesorByProfesorId(this.userId)
-          .subscribe((cursosProfesor) => (this.cursosProfesor = cursosProfesor));
+          .subscribe({
+            next: (cursosProfesor) => {
+              this.cursosProfesor = cursosProfesor;
+            },
+          });
       }
     });
   }

@@ -38,6 +38,7 @@ public class JwtService {
             .claim("firstName", user.getFirstname())
             .claim("lastName", user.getLastname())
             .claim("user_estado_usuario", user.getUser_estado_usuario())
+            .claim("user_requiere_cambio_contrasena", user.getUser_requiere_cambio_contrasena())
             .subject(user.getUsername())
             .issuedAt(new Date(System.currentTimeMillis()))
             .expiration(new Date(System.currentTimeMillis()+1000*60*60))

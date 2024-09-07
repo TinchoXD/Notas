@@ -5,6 +5,8 @@ import { UserService } from '../../services/user/user.service';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,46 +19,53 @@ export class DashboardComponent implements OnInit {
   user?: User;
   value!: number;
 
+  userData: any = null;
+  private subscription: Subscription = new Subscription();
+
   show() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-}
-  
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Message Content',
+    });
+  }
+
   constructor(
     private loginService: LoginService,
     private userService: UserService,
     private router: Router,
     private messageService: MessageService
-  ) {
-    this.userService.getUser(this.loginService.userToken).subscribe({
-      next: (userData) => {
-        this.user = userData;
-      },
-      error: (errorData) => {
-        console.log("usuario no loggeado.")
-        this.errorMessage = errorData;
-        this.router.navigate(['/iniciar-sesion']);
-      },
-      complete: ()=>{
-        console.info("User Data OK.")
-      }
-    });
-
-    
-  }
-
+  ) {}
 
   ngOnInit(): void {
+
+    //console.log('this.userData',this.userData)
+
+    
+
     this.loginService.currentUserLoggedOn.subscribe({
       next: (userLoggedOn) => {
         this.userLoggedOn = userLoggedOn;
       },
     });
+
+    this.subscription = this.loginService.userData.subscribe((token) => {
+      if (token) {
+        // Decodifica el token para obtener la información del usuario
+        this.userData = this.loginService.decodeToken(token);
+        this.loginService.verificarCambioDeContrasenia(this.userData)
+
+      }
+    });
+
   }
-  
 
-  click(){
-    console.log("valor: ", this.value)
-
+  ngOnDestroy(): void {
+    // Evitar posibles fugas de memoria desuscribiéndose
+    this.subscription.unsubscribe();
   }
 
+  click() {
+    console.log('valor: ', this.value);
+  }
 }

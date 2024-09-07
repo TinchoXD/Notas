@@ -13,8 +13,19 @@ import FileSaver, { FileSaverOptions } from 'file-saver';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { LoginService } from '../../../services/auth/login.service';
 // Necesario para pdfmake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+
+interface Nota {
+  cursoProfesorId: number;
+  nombreAsignatura: string;
+  notaT1: number | null;
+  notaT2: number | null;
+  notaT3: number | null;
+  supletorio: number | null;
+}
 
 @Component({
   selector: 'app-detalle-curso-tutor',
@@ -30,6 +41,7 @@ export class DetalleCursoTutorComponent implements OnInit {
   cursosProfesor: any[] = [];
 
   notaEstudiante: any[] = [];
+  userData: any = null;
 
   loading: boolean = true;
 
@@ -38,10 +50,22 @@ export class DetalleCursoTutorComponent implements OnInit {
     private cursoService: CursoService,
     private estudianteService: EstudianteService,
     private cursoProfesorService: CursoProfesorService,
-    private notaService: NotaService
+    private notaService: NotaService,
+    private loginService: LoginService,
+  
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe((token) => {
+      if (token) {
+        // Decodifica el token para obtener la información del usuario
+        this.userData = this.loginService.decodeToken(token);
+        this.loginService.verificarCambioDeContrasenia(this.userData)
+
+      }
+    });
+
     this.activatedRoute.params.subscribe((params) => {
       this.curs_id = +params['id']; // El signo '+' convierte el string a número
       this.cursoService.getCursoById(this.curs_id).subscribe({
@@ -133,7 +157,7 @@ export class DetalleCursoTutorComponent implements OnInit {
     } else if (notaFinal > 0) {
       return '#f8d7da';
     }
-    return '#e9ecef';
+    return '';
   }
 
   estadoColorText(estudiante:any, notaFinal: number) {
@@ -224,4 +248,101 @@ export class DetalleCursoTutorComponent implements OnInit {
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
     );
   }
+  
+  
+  async exportPDF() {
+    // Crear el encabezado de la tabla
+    const headers = [
+      { text: 'Apellidos y Nombres', style: 'tableHeader' },
+      { text: 'Cédula', style: 'tableHeader' },
+      ...this.cursosProfesor.flatMap(cursoProfesor => [
+        { text: `T1 (${cursoProfesor.asignatura.nombre})`, style: 'tableHeader' },
+        { text: `T2 (${cursoProfesor.asignatura.nombre})`, style: 'tableHeader' },
+        { text: `T3 (${cursoProfesor.asignatura.nombre})`, style: 'tableHeader' },
+        { text: `Final (${cursoProfesor.asignatura.nombre})`, style: 'tableHeader' },
+        { text: `Supletorio (${cursoProfesor.asignatura.nombre})`, style: 'tableHeader' },
+        { text: 'Estado', style: 'tableHeader' },
+      ]),
+    ];
+  
+    // Crear el cuerpo de la tabla
+    const tableBody = [
+      // Encabezado de la tabla
+      headers,
+      // Filas de estudiantes
+      ...this.estudiantes.map(estudiante => {
+        const row = [
+          estudiante.apellidosNombres,
+          estudiante.cedula,
+          ...this.cursosProfesor.flatMap(cursoProfesor => {
+            const nota = estudiante.notas.find((nota: { cursoProfesorId: any; }) => nota.cursoProfesorId === cursoProfesor.id);
+            const finalNota = nota ? (nota.notaT1 + nota.notaT2 + nota.notaT3 || 0) / 3 : null;
+            return [
+              nota?.notaT1 ? nota.notaT1.toFixed(2).replace('.', ',') : '',
+              nota?.notaT2 ? nota.notaT2.toFixed(2).replace('.', ',') : '',
+              nota?.notaT3 ? nota.notaT3.toFixed(2).replace('.', ',') : '',
+              finalNota ? finalNota.toFixed(2).replace('.', ',') : '',
+              nota?.supletorio ? nota.supletorio.toFixed(2).replace('.', ',') : '',
+              this.estado(estudiante, finalNota!),
+            ];
+          }),
+        ];
+        return row;
+      }),
+    ];
+  
+    // Definir la estructura del documento PDF
+    const documentDefinition: TDocumentDefinitions = {
+      pageOrientation: 'landscape', // Cambiar la orientación a horizontal
+      pageMargins: [10, 10, 10, 10], // Ajustar márgenes
+      content: [
+        { text: 'Reporte de Estudiantes', style: 'header' },
+        {
+          table: {
+            headerRows: 1,
+            widths: ['*', '*', ...Array(this.cursosProfesor.length * 6).fill('*')],
+            body: tableBody,
+          },
+          layout: {
+            fillColor: (rowIndex, node, columnIndex) => null,
+            hLineWidth: () => 0, // Sin líneas horizontales
+            vLineWidth: () => 0, // Sin líneas verticales
+            paddingLeft: () => 2, // Ajustar el relleno a la izquierda
+            paddingRight: () => 2, // Ajustar el relleno a la derecha
+            paddingTop: () => 2, // Ajustar el relleno arriba
+            paddingBottom: () => 2, // Ajustar el relleno abajo
+          },
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 10,
+          bold: true,
+          margin: [0, 0, 0, 10],
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 8, // Ajustar tamaño de fuente de encabezado
+          color: 'black',
+        },
+        tableCell: {
+          fontSize: 8, // Tamaño de fuente de las celdas
+          margin: [0, 0, 0, 0], // Eliminar márgenes en las celdas
+        },
+      },
+      defaultStyle: {
+        fontSize: 8, // Tamaño de fuente por defecto
+      },
+    };
+  
+    // Generar el PDF y guardarlo
+    pdfMake.createPdf(documentDefinition).download('reporte_estudiantes.pdf');
+  }
+  
+  
+  
+  
+  
+
+
 }

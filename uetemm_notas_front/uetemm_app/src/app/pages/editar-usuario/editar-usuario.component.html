@@ -114,13 +114,16 @@
                 </p-toolbar>
              
                 <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm" 
-                    [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
+                    [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
                     [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
                     [rowsPerPageOptions]="[5, 10, 20]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
                     <ng-template pTemplate="header">
                         <tr>
+                            <th pSortableColumn="codigo">
+                                Código <p-sortIcon field="codigo" />
+                            </th>
                             <th pSortableColumn="nivel.nombre">
                                 Nivel <p-sortIcon field="nivel.nombre" />
                             </th>
@@ -147,6 +150,9 @@
 
                     <ng-template pTemplate="body" let-cursoProfesorRow>
                         <tr>
+                            <td>
+                                {{ cursoProfesorRow.curso.codigo }}
+                            </td>
                             <td>
                                 {{ cursoProfesorRow.curso.nivel.nombre }}
                             </td>

@@ -38,4 +38,6 @@ export interface User{
     user_nivel: number;
     user_activo: number;
     user_observacion: number;
+
+    user_requiere_cambio_contrasena: number
 }

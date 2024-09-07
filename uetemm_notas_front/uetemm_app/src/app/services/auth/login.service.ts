@@ -21,6 +21,8 @@ import { AddUserRequest } from '../../pages/agregar-usuario/addUserRequest';
 import { error } from 'jquery';
 import { AlertType } from '../../shared/alert/alertType';
 import { jwtDecode } from "jwt-decode";
+import Swal from 'sweetalert2';
+import { UserService } from '../user/user.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -33,7 +35,7 @@ export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>('');
+  currentUserData: BehaviorSubject<string> = new BehaviorSubject<string>(sessionStorage.getItem('token') || '');
 
   userId: number = 0;
   user_estado_usuario: number = 0;
@@ -42,12 +44,13 @@ export class LoginService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+
   ) {
     this.currentUserLoggedOn = new BehaviorSubject<boolean>(
       sessionStorage.getItem('token') != null
     );
-    this.currentUserData = new BehaviorSubject<String>(
+    this.currentUserData = new BehaviorSubject<string>(
       sessionStorage.getItem('token') || ''
     );
   }
@@ -92,6 +95,23 @@ export class LoginService {
     })
   } */
 
+    verificarCambioDeContrasenia(userData: any): void {
+      if (userData.user_requiere_cambio_contrasena === 1) {
+        Swal.fire({
+          title: 'Debe cambiar su contraseña',
+          text: 'Su contraseña ha sido restablecida previamente, por favor establezca una nueva contraseña',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Cambiar contraseña',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['/actualizar-contrasena']);
+          }
+        });
+      }
+    }
+
   register(addUserRequest: AddUserRequest) {
     console.log('addUserRequest:', addUserRequest);
     return this.http
@@ -122,9 +142,13 @@ export class LoginService {
     return throwError(() => new Error('Algo salió mal, intente nuevamente'));
   }
 
-  get userData(): Observable<String> {
+  get userData(): Observable<string> {
     return this.currentUserData.asObservable();
   }
+
+  
+
+
 
   isAuthenticated(): boolean {
     return !!sessionStorage.getItem(this.tokenKey);
@@ -138,7 +162,7 @@ export class LoginService {
     return this.currentUserLoggedOn.asObservable();
   }
 
-  get userToken(): String {
+  get userToken(): string {
     return this.currentUserData.value;
   }
 
@@ -147,13 +171,14 @@ export class LoginService {
   }
 
   // Método para decodificar el token y obtener el payload
-  private decodeToken(token: string): any {
+  decodeToken(token: string): any {
     try {
       return jwtDecode(token);
     } catch (error) {
       return null;
     }
   }
+  
 
   // Método para validar la caducidad del token
   validateToken(): boolean {
@@ -180,4 +205,5 @@ export class LoginService {
       this.router.navigate(['/iniciar-sesion']);
     }
   }
+
 }

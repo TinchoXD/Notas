@@ -7,6 +7,7 @@ import { CursoService } from '../../../services/curso/curso.service';
 import { AsignaturaService } from '../../../services/asignatura/asignatura.service';
 import { CursoProfesorService } from '../../../services/cursoProfesor/curso-profesor.service';
 import { CursoProfesorRequest } from '../../../services/cursoProfesor/cursoProfesorRequest';
+import Swal from 'sweetalert2';
 
 
 function isAlertType(type: string): type is AlertType {
@@ -16,7 +17,7 @@ function isAlertType(type: string): type is AlertType {
 @Component({
   selector: 'app-dialogo-curso-profesor',
   templateUrl: './dialogo-curso-profesor.component.html',
-  styleUrl: './dialogo-curso-profesor.component.css'
+  styleUrl: './dialogo-curso-profesor.component.css',
 })
 export class DialogoCursoProfesorComponent implements OnInit {
   color: ThemePalette = 'primary';
@@ -24,8 +25,10 @@ export class DialogoCursoProfesorComponent implements OnInit {
 
   cursoProfesorForm: FormGroup;
 
-  asignaturas!: any[]
-  cursos!: any[]
+  asignaturas!: any[];
+  cursos!: any[];
+
+  cursoProfesor!: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,9 +36,8 @@ export class DialogoCursoProfesorComponent implements OnInit {
     private fb: FormBuilder,
     private cursoService: CursoService,
     private asignaturaService: AsignaturaService,
-    private cursoProfesorService: CursoProfesorService,
+    private cursoProfesorService: CursoProfesorService
   ) {
-
     this.cursoProfesorForm = this.fb.group({
       id: [''],
       curso_id: ['', Validators.required],
@@ -50,13 +52,17 @@ export class DialogoCursoProfesorComponent implements OnInit {
           const nivelComparison = a.nivel.nombre.localeCompare(b.nivel.nombre);
           if (nivelComparison !== 0) return nivelComparison;
 
-          const subnivelComparison = a.subnivel.nombre.localeCompare(b.subnivel.nombre);
+          const subnivelComparison = a.subnivel.nombre.localeCompare(
+            b.subnivel.nombre
+          );
           if (subnivelComparison !== 0) return subnivelComparison;
 
           const gradoComparison = a.grado.nombre.localeCompare(b.grado.nombre);
           if (gradoComparison !== 0) return gradoComparison;
 
-          const paraleloComparison = a.paralelo.nombre.localeCompare(b.paralelo.nombre);
+          const paraleloComparison = a.paralelo.nombre.localeCompare(
+            b.paralelo.nombre
+          );
           if (paraleloComparison !== 0) return paraleloComparison;
 
           return a.jornada.nombre.localeCompare(b.jornada.nombre);
@@ -64,43 +70,60 @@ export class DialogoCursoProfesorComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching cursos:', err);
-      }
+      },
     });
 
-    this.asignaturaService
-      .getAsignaturasActive()
-      .subscribe(
-        {
-          next: (asignaturas) => {
-            this.asignaturas = asignaturas
-            this.asignaturas.sort((a, b) => a.nombre.localeCompare(b.nombre))
-          }
-        }
-      );
-
-
+    this.asignaturaService.getAsignaturasActive().subscribe({
+      next: (asignaturas) => {
+        this.asignaturas = asignaturas;
+        this.asignaturas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      },
+    });
   }
 
   ngOnInit(): void {
-    if(this.data.cursoProfesorEdit){
-      console.log('cursoProfesorEdit', this.data.cursoProfesorEdit)
+    if (this.data.cursoProfesorEdit) {
+      console.log('cursoProfesorEdit', this.data.cursoProfesorEdit);
       this.cursoProfesorForm.patchValue({
         id: this.data.cursoProfesorEdit.id.toString(),
         curso_id: this.data.cursoProfesorEdit.curso.id,
         asignatura_id: this.data.cursoProfesorEdit.asignatura.id,
         user_id: this.data.cursoProfesorEdit.user.id,
-      })
+      });
     }
   }
 
   onSubmit() {
     if (this.cursoProfesorForm.valid) {
-       this.cursoProfesorService.putCursoProfesor(this.cursoProfesorForm.value as CursoProfesorRequest) 
-       this.dialogRef.close(this.cursoProfesorForm.value);
+
+
+
+      this.cursoProfesorService.getCursoProfesorByCursoIdAndAsignaturaId(this.curso?.value, this.asignatura?.value).subscribe({
+        next:(res)=>{
+
+          if(res){
+            this.cursoProfesor = res
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "¡El docente "+this.cursoProfesor.user.firstname+" "+this.cursoProfesor.user.lastname+", ya tiene asignada la asignatura para este curso!",
+             /*  footer: '<a href="#">Why do I have this issue?</a>' */
+            });
+          } else {
+
+            this.cursoProfesorService.putCursoProfesor(this.cursoProfesorForm.value as CursoProfesorRequest);
+          }
+
+        }
+      })
+
+
+
+      this.dialogRef.close(this.cursoProfesorForm.value);
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.dialogRef.close();
   }
 
@@ -115,5 +138,4 @@ export class DialogoCursoProfesorComponent implements OnInit {
   get curso() {
     return this.cursoProfesorForm.controls['curso_id'];
   }
-
 }

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoadingService } from '../../services/loading/loading.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert/alert.service';
+import { LoginService } from '../../services/auth/login.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -29,6 +30,7 @@ export class EstudianteComponent implements OnInit {
   onIcion: string = 'pi pi-check';
 
   cursos!: any[];
+  userData: any = null;
 
   selectedCursos: any[] = []; // O el tipo específico que corresponda
 
@@ -40,10 +42,22 @@ export class EstudianteComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     //private messageServicePNG: MessageService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe((token) => {
+      if (token) {
+        // Decodifica el token para obtener la información del usuario
+        this.userData = this.loginService.decodeToken(token);
+        this.loginService.verificarCambioDeContrasenia(this.userData)
+
+      }
+    });
+    
+
     this.primengConfig.setTranslation({
       startsWith: 'Empieza con',
       contains: 'Contiene',

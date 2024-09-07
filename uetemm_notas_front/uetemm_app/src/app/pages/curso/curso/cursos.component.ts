@@ -4,6 +4,7 @@ import { AgregarCursoComponent } from '../dialogo-curso/agregar-curso.component'
 import { MatDialog } from '@angular/material/dialog';
 import { CursoService } from '../../../services/curso/curso.service';
 import { DialogoConfirmacionComponent } from '../../../shared/dialogo-confirmacion/dialogo-confirmacion.component';
+import { LoginService } from '../../../services/auth/login.service';
 
 @Component({
   selector: 'app-cursos',
@@ -17,9 +18,20 @@ export class CursosComponent implements OnInit {
   agregarCursoDialog: boolean = false;
   curso!: Curso;
   cursos!: Curso[];
+  userData: any = null;
 
 
   ngOnInit(): void {
+    this.loginService.userData.subscribe((token) => {
+      if (token) {
+        // Decodifica el token para obtener la información del usuario
+        this.userData = this.loginService.decodeToken(token);
+        this.loginService.verificarCambioDeContrasenia(this.userData)
+
+      }
+    });
+
+    
     this.cursoService.getCursosActivos().subscribe({
       next: (data) => {
         this.cursos = data
@@ -30,6 +42,7 @@ export class CursosComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private cursoService: CursoService,
+    private loginService: LoginService
   ) {
 
   }

@@ -11,33 +11,34 @@ import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AgregarUsuarioComponent } from '../agregar-usuario/agregar-usuario.component';
 import { User } from '../../services/auth/user';
-
-
-
-
+import { CursoProfesorService } from '../../services/cursoProfesor/curso-profesor.service';
 
 @Component({
   selector: 'app-administracion-usuarios',
   templateUrl: './administracion-usuarios.component.html',
   styleUrl: './administracion-usuarios.component.css',
-
 })
 export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
-
-
-  displayedColumns: string[] = ['index', 'Nombres', 'Apellidos', 'Cédula', 'Rol', 'E-mail institucional', 'Activo', 'Acciones'];
+  displayedColumns: string[] = [
+    'index',
+    'Nombres',
+    'Apellidos',
+    'Cédula',
+    'Rol',
+    'E-mail institucional',
+    'Activo',
+    'Acciones',
+  ];
   addButtonLabel: string = ''; // Propiedad para controlar el texto del botón
   buttonState: string = 'collapsed'; // Estado inicial de la animación del botón
-  dataSource = new MatTableDataSource<any>;
-  severity: string = 'severity'
+  dataSource = new MatTableDataSource<any>();
+  severity: string = 'severity';
 
   sizes!: any[];
   selectedSize: any = { name: 'Small', class: 'p-datatable-sm' };
 
-  usuarios!: User[];
-
-
-
+  //usuarios!: User[];
+  usuarios!: any[];
 
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
@@ -45,46 +46,69 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     private loginService: LoginService,
     private router: Router,
     private loadingService: LoadingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cursoProfesorService: CursoProfesorService
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.loadingService.hide();
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.loadingService.hide();
+      });
   }
 
   dialogAgregarUsuario(): void {
-  
     const dialogRef = this.dialog.open(AgregarUsuarioComponent, {
-      width: '900px'
+      width: '900px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.userService.getAllUser().subscribe((data)=>(this.usuarios = data))
+        this.userService
+          .getAllUser()
+          .subscribe((data) => (this.usuarios = data));
       }
     });
   }
 
   ngOnInit(): void {
+    this.userService.getAllUser().subscribe({
+      next: (data) => {
+        this.usuarios = data;
+        console.log('USUARIOS', data);
+        this.usuarios.forEach((usuario) => {
+          this.cursoProfesorService.getAllCursoProfesorByProfesorId(usuario.id)
+            .subscribe({
+              next: (cursos) => {
+                usuario.curso = cursos;
     
-    this.userService.getAllUser().subscribe((data)=>(this.usuarios = data))
+                // Extraer los códigos únicos de los cursos
+                const codigosUnicos = Array.from(
+                  new Set(cursos.map((curso: any) => curso.curso.codigo))
+                );
+    
+                // Crear un string concatenado con los códigos únicos
+                usuario.cursosCodigos = codigosUnicos.join('|');
+    
+                console.log('Usuario con cursosCodigos únicos:', usuario.cursosCodigos);
+              },
+            });
+        });
+      },
+    });
 
     this.sizes = [
       { name: 'Small', class: 'p-datatable-sm' },
       { name: 'Normal', class: '' },
-      { name: 'Large',  class: 'p-datatable-lg' }
-  ];
-
+      { name: 'Large', class: 'p-datatable-lg' },
+    ];
   }
+
+
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
@@ -94,10 +118,10 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-      console.log(sortState.direction)
+      console.log(sortState.direction);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
-      console.log(sortState.direction)
+      console.log(sortState.direction);
     }
   }
 
@@ -119,8 +143,4 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     // Define la condición para resaltar la fila
     return row.user_estado_usuario == 0;
   }
-
-
 }
-
-

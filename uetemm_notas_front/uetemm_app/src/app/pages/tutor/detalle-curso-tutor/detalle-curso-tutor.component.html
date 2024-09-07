@@ -1,7 +1,17 @@
 <div class="container-page">
     <div class="card">
 
-       
+        <section class="pb-3">
+            <div class="div-button-row">
+                <div class="div-flex-container">
+                    <div class="div-button-container">
+                        <button mat-fab color="primary" matTooltip="Regresar" routerLink="/cursos-tutor">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem'}">
             <ng-template pTemplate="header">
@@ -29,8 +39,8 @@
                 <div class="flex">
                     <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
                         class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-                    <!-- <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
-                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                     <p-iconField iconPosition="left" class="ml-auto">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>

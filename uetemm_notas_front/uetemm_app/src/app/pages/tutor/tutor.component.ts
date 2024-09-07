@@ -5,6 +5,7 @@ import { UserService } from '../../services/user/user.service';
 import { Curso } from '../../services/curso/curso';
 import { LoadingService } from '../../services/loading/loading.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tutor',
@@ -31,6 +32,16 @@ export class TutorComponent implements OnInit {
         console.log('userData', this.user);
         this.cursoService.getCursoByUserId(this.user.id).subscribe({
           next: (cursosData) => {
+            
+            console.log('cursosData', cursosData);
+            if(cursosData.length === 0){
+              Swal.fire({
+                title: 'Advertencia!',
+                text: 'Su usuario no ha sido asignado como tutor de ningún curso.',
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+              });
+            }
             this.cursosTutor = cursosData;
             console.log('cursosTutor', this.cursosTutor);
           },

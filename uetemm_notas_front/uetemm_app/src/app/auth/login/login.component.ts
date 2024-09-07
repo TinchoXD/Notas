@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { LoginRequest } from '../../services/auth/loginRequest';
+import { UserService } from '../../services/user/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +15,8 @@ export class LoginComponent implements OnInit {
 
   loginError: string = "";
   loginForm: FormGroup;
+
+  errorMessage: string = '';
 
   get username() {
     return this.loginForm.controls['username'];
@@ -30,6 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private userService: UserService,
     private loginService: LoginService) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(10)]],
@@ -65,5 +70,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  
 
 }

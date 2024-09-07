@@ -15,6 +15,12 @@
         <p>User: {{user?.username}}</p>
     </div>
     </div>
+
+    <div *ngIf="userData">
+        <h2>Bienvenido, {{ userData.username }}</h2>
+        <p>ID de usuario: {{ userData.userId }}</p>
+        <p>Estado del usuario: {{ userData.user_estado_usuario }}</p>
+      </div>
 </div>
 
 

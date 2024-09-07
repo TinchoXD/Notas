@@ -104,45 +104,44 @@
             </ng-template>
         </p-toolbar>
 
-        <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true" styleClass="{{selectedSize.class}} p-datatable-striped"
-            [globalFilterFields]="['firstname','lastname','username','role','user_email_institucional', 'user_estado_usuario']"
+        <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true"
+            styleClass="{{selectedSize.class}} p-datatable-striped"
+            [globalFilterFields]="['cursosCodigos', 'firstname', 'lastname', 'username', 'role', 'user_email_institucional', 'user_estado_usuario']"
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
 
             <ng-template pTemplate="header">
                 <tr>
-                    <!-- <th style="width: 4rem">
-                            <p-tableHeaderCheckbox />
-                        </th> -->
-                    <th pSortableColumn="firstname" style="min-width:15rem">
+                    <th pSortableColumn="firstname" >
                         Nombre <p-sortIcon field="firstname" />
                     </th>
                     <th pSortableColumn="lastname">
                         Apellidos <p-sortIcon field="lastname" />
                     </th>
-                    <th pSortableColumn="username" style="min-width:10rem">
-                        Cedula <p-sortIcon field="username" />
+                    <th pSortableColumn="username" >
+                        Cédula <p-sortIcon field="username" />
                     </th>
                     <th pSortableColumn="role">
                         Rol <p-sortIcon field="role" />
                     </th>
-                    <th pSortableColumn="user_email_institucional" style="min-width:10rem">
-                        E-mail Instituiconal <p-sortIcon field="user_email_institucional" />
+                    <th pSortableColumn="user_email_institucional">
+                        E-mail Institucional <p-sortIcon field="user_email_institucional" />
                     </th>
-                    <th pSortableColumn="user_estado_usuario" style="min-width:10rem">
+                    <th pSortableColumn="user_estado_usuario">
                         Estado <p-sortIcon field="user_estado_usuario" />
+                    </th>
+                    <th pSortableColumn="cursosCodigos">
+                        Cursos <p-sortIcon field="cursosCodigos" />
                     </th>
                     <th>
                         Acciones
                     </th>
                 </tr>
             </ng-template>
+
             <ng-template pTemplate="body" let-userRow>
-                <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario===0}">
-                    <!-- <td>
-                            <p-tableCheckbox [value]="product" />
-                        </td> -->
+                <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario === 0}">
                     <td>
                         {{ userRow.firstname }}
                     </td>
@@ -153,22 +152,31 @@
                         {{ userRow.username }}
                     </td>
                     <td>
-                        {{ userRow.role==1?"Administrador":"Usuario" }}
+                        {{ userRow.role == 1 ? 'Administrador' : 'Usuario' }}
                     </td>
                     <td>
                         {{ userRow.user_email_institucional }}
                     </td>
                     <td>
-                        <p-tag *ngIf="userRow.user_estado_usuario==1" [severity]="'success'" value="Activo"
-                            [rounded]="true" /> <p-tag *ngIf="userRow.user_estado_usuario==0" [severity]="'danger'"
-                            value="Inactivo" [rounded]="true" />
+                        <p-tag *ngIf="userRow.user_estado_usuario == 1" [severity]="'success'" value="Activo"
+                            [rounded]="true"></p-tag>
+                        <p-tag *ngIf="userRow.user_estado_usuario == 0" [severity]="'danger'" value="Inactivo"
+                            [rounded]="true"></p-tag>
                     </td>
                     <td>
+                        <!-- <p *ngFor="let curso of userRow.cursos">
+                    {{ curso.curso.codigo }}
+                </p> -->
+                        {{userRow.cursosCodigos}}
+                    </td>
+                    <td>
+
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
-                            pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)" />
+                            pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)"></p-button>
                     </td>
                 </tr>
             </ng-template>
+
         </p-table>
     </div>
 </div>

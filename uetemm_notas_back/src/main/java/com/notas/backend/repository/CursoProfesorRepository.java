@@ -18,6 +18,8 @@ public interface CursoProfesorRepository extends JpaRepository<CursoProfesor,Int
     List<CursoProfesor> findByStatus(int active); 
 
     CursoProfesor findById(int id);
+
+    CursoProfesor findByCursoIdAndAsignaturaId(int curs_id, int asig_id);
     
 
 }

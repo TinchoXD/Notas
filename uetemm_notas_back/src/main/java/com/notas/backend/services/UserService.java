@@ -99,6 +99,8 @@ public class UserService {
             activo = null;
         }
 
+        
+
         UserDTO userDTO = new UserDTO(
                 user.getId(),
                 user.getFirstname(),

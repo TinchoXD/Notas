@@ -46,6 +46,12 @@ public class CursoProfesorController {
     public CursoProfesor getCursoProfesorById(@PathVariable int id) {
         return cursoProfesorService.getCursoProfesorById(id);
     }
+
+    // * OBTENER CURSOS-PROFESOR By CURSO AND ASIGNATURA*/
+    @GetMapping("/cursoProfesor/curso/{user_id}/asignatura/{asig_id}")
+    public CursoProfesor getCursoProfesorByCursoIdAndAsignaturaId(@PathVariable int user_id, @PathVariable int asig_id) {
+        return cursoProfesorService.getCursoProfesorByCursoIdAndAsignaturaId(user_id, asig_id);
+    }
    
     // * OBTENER CURSOS - CURSO By ID*/
     @GetMapping("/cursoProfesor/curso/{id}")

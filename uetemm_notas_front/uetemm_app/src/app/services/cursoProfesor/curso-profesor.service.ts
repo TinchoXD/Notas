@@ -40,6 +40,12 @@ export class CursoProfesorService {
     .pipe(catchError(this.handleError));
   }
 
+  getCursoProfesorByCursoIdAndAsignaturaId(curs_id: number, asig_id: number): Observable<any[]>{
+    return this.http
+    .get<any[]>(environment.urlApi + 'cursosProfesor/cursoProfesor/curso/'+curs_id+'/asignatura/'+asig_id )
+    .pipe(catchError(this.handleError));
+  }
+
 
   putCursoProfesor(cursoProfesor: any){
     return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/agregarCursoProfesor', cursoProfesor).subscribe({
