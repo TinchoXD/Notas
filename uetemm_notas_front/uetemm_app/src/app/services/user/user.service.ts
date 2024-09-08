@@ -8,6 +8,8 @@ import { PasswordRequest } from '../../pages/pages-profesor/cambiar-contrasena/p
 import { LoginService } from '../auth/login.service';
 import { Router } from '@angular/router';
 import { AddUserRequest } from '../../pages/pages-profesor/agregar-usuario/addUserRequest';
+import { of } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,8 @@ export class UserService implements OnInit {
   
   userLoggedOn: boolean = false;
   id: string = ""
+
+  user!: User
 
   ngOnInit(): void {
     this.loginService.currentUserLoggedOn.subscribe({
@@ -39,11 +43,13 @@ export class UserService implements OnInit {
   getUser(token: String): Observable<User> {
     try {
       this.id = JSON.parse(window.atob(token.split('.')[1])).userId;
+      return this.http.get<User>(environment.urlApi + "users/user/" + this.id).pipe(catchError(this.handleError))
     } catch (error) {
       console.log('no existe el totken en la sesión actual')
+      console.log('no existe el totken en la sesión actual')
     }
-    return this.http.get<User>(environment.urlApi + "users/user/" + this.id).pipe(catchError(this.handleError)
-    )
+    
+    return of(); 
   }
 
   getUserById(id: number): Observable<User> {

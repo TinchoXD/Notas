@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.notas.backend.model.Catalogo;
-import com.notas.backend.model.Curso;
 import com.notas.backend.model.Nota;
 
 public interface NotaRepository extends JpaRepository<Nota, Integer> {

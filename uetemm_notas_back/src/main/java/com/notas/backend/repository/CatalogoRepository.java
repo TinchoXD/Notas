@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import com.notas.backend.model.Catalogo;
-import com.notas.backend.model.Curso;
 
 
 public interface CatalogoRepository extends JpaRepository<Catalogo,Integer> {

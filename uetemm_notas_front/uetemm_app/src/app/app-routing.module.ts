@@ -16,9 +16,11 @@ import { EstudianteFormComponent } from './pages/pages-profesor/estudiante/estud
 import { DetalleCursoProfesorComponent } from './pages/pages-profesor/detalle-curso-profesor/detalle-curso-profesor.component';
 import { TutorComponent } from './pages/pages-profesor/tutor/tutor.component';
 import { DetalleCursoTutorComponent } from './pages/pages-profesor/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
+import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
+  { path: 'estudiante/mis-calificaciones', component: MisCalificacionesComponent },
   
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
@@ -34,8 +36,10 @@ const routes: Routes = [
   { path: 'mis-cursos/curso/:id', component: DetalleCursoProfesorComponent, canActivate: [authGuard] },
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
-
+  
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

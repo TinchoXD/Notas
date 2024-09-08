@@ -4,14 +4,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.notas.backend.model.Curso;
 import com.notas.backend.model.Estudiante;
-import com.notas.backend.request.CursoRequest;
 import com.notas.backend.request.EstudianteRequest;
 import com.notas.backend.request.EstudianteStatusRequest;
-import com.notas.backend.request.UserRequest;
 import com.notas.backend.response.MessageResponse;
-import com.notas.backend.services.CursoService;
 import com.notas.backend.services.EstudianteService;
 
 import lombok.RequiredArgsConstructor;

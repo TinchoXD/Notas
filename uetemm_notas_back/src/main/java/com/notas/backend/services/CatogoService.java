@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.notas.backend.model.Catalogo;
-import com.notas.backend.model.Curso;
-import com.notas.backend.model.User;
 import com.notas.backend.repository.CatalogoRepository;
 import com.notas.backend.request.CatalogoRequest;
-import com.notas.backend.request.CursoRequest;
 import com.notas.backend.response.MessageResponse;
 
 import jakarta.transaction.Transactional;

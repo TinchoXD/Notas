@@ -1,11 +1,13 @@
-
 <app-login *ngIf="isLoginPage"></app-login>
 
-<div style="background-color: #fafafa;" *ngIf="!isLoginPage">
-  <ng-container >
-    <app-nav-menu></app-nav-menu>
-    <app-loading></app-loading>
-  </ng-container>
-  
-  <!-- <router-outlet></router-outlet> -->
-</div>
+
+
+<ng-container style="background-color: #fafafa;" *ngIf="!isLoginPage">
+  <app-nav-menu></app-nav-menu>
+  <app-loading></app-loading>
+</ng-container>
+
+
+
+
+<app-mis-calificaciones *ngIf="isMisCalificacionesPage"> </app-mis-calificaciones>

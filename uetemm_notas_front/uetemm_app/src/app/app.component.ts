@@ -12,6 +12,8 @@ export class AppComponent {
   title = 'uetemm_app';
 
   isLoginPage = false;
+  isMisCalificacionesPage = false;
+
 
   constructor(private router: Router) {
     // Suscribirse a los eventos de navegación
@@ -19,8 +21,11 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         // Verifica si la ruta actual es la de login
         this.isLoginPage = this.router.url === '/iniciar-sesion';
+        this.isMisCalificacionesPage = this.router.url === '/estudiante/mis-calificaciones';
       }
     });
   }
+
+  
 
 }

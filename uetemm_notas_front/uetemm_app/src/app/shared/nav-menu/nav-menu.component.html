@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="!esRutaMisCalificaciones()">
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
@@ -51,8 +51,12 @@
     </button> -->
 
 </mat-toolbar>
-<mat-drawer-container autosize>
-    <mat-drawer #drawer opened="true" mode="side" position="start" class="sticky123">
+
+
+
+
+<mat-drawer-container *ngIf="!esRutaMisCalificaciones()" autosize>
+    <mat-drawer #drawer opened="true" mode="side" position="start">
         <mat-nav-list>
 
             <mat-list-item routerLink="/inicio" mat-button>
@@ -76,24 +80,30 @@
             </mat-list-item>
 
             <mat-list-item routerLink="/mis-cursos">
-                <mat-icon >ballot</mat-icon> Mis Cursos
+                <mat-icon>ballot</mat-icon> Mis Cursos
             </mat-list-item>
 
             <mat-list-item routerLink="/estudiantes">
                 <mat-icon>group</mat-icon> Estudiantes
             </mat-list-item>
 
-            <mat-list-item  routerLink="/cursos-tutor">
+            <mat-list-item routerLink="/cursos-tutor">
                 <mat-icon>analytics</mat-icon> Tutor
             </mat-list-item>
 
         </mat-nav-list>
     </mat-drawer>
 
-    <mat-drawer-content >
+    <mat-drawer-content>
         <div style="min-height: 91vh; ">
             <router-outlet></router-outlet>
         </div>
     </mat-drawer-content>
 
+
 </mat-drawer-container>
+
+
+
+<!-- Cuando sea la ruta de mis-calificaciones, se mostrará solo este componente -->
+<!-- <router-outlet *ngIf="esRutaMisCalificaciones()"></router-outlet> -->

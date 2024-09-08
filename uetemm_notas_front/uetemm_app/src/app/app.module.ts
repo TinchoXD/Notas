@@ -51,6 +51,8 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID } from '@angular/core';
 
+import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
+
 
 registerLocaleData(localeEs, 'es');
 
@@ -82,7 +84,9 @@ registerLocaleData(localeEs, 'es');
     AsignarCursoComponent,
     DetalleCursoProfesorComponent,
     TutorComponent,
-    DetalleCursoTutorComponent 
+    DetalleCursoTutorComponent,
+    MisCalificacionesComponent,
+    
     
   ],
   imports: [

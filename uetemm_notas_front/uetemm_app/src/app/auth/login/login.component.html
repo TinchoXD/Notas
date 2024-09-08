@@ -1,7 +1,6 @@
 <div class="d-flex justify-content-center align-items-center vh-100 background-img" style="padding-left: 0%; ">
   <div class="container">
     <div class="surface-card p-4 shadow-2 border-round w-full lg:w-12">
-
       <div class="card">
         <div class="grid">
           <div class="col-5 flex align-items-center justify-content-center">
@@ -10,7 +9,6 @@
                 <img src="\assets\img\login\uetemm_logo.jpg" alt="Image" height="150" class="mb-3">
                 <div class="text-900 text-3xl font-medium mb-3">¡Bienvenido!</div>
               </div>
-
               <form [formGroup]="loginForm" (ngSubmit)="login()">
                 <p class="text-danger">{{loginError}}</p>
                 <div class="form-group">
@@ -52,14 +50,10 @@
               <div class="text-center mb-5">
                 <div class="text-900 text-3xl font-medium mb-3">¡Estudiante!</div>
               </div>
-              <p-button label="Ver mis Calificaciones" icon="pi pi-book" styleClass="p-button-success"></p-button>
+              <p-button label="Ver mis Calificaciones" icon="pi pi-book" styleClass="p-button-success" routerLink="/estudiante/mis-calificaciones" ></p-button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-
   </div>

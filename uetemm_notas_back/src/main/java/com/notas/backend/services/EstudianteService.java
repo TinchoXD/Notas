@@ -1,6 +1,5 @@
 package com.notas.backend.services;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,6 @@ import com.notas.backend.request.EstudianteRequest;
 import com.notas.backend.request.EstudianteStatusRequest;
 import com.notas.backend.response.MessageResponse;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

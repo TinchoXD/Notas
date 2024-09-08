@@ -39,15 +39,28 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //console.log('this.userData',this.userData)
-
     
-
+    this.userService.getUser(this.loginService.userToken).subscribe({
+      next: (userData) => {
+        this.user = userData;
+      },
+      error: (errorData) => {
+        console.log("usuario no loggeado.")
+        this.errorMessage = errorData;
+        this.router.navigate(['/iniciar-sesion']);
+      },
+      complete: ()=>{
+        console.info("User Data OK.")
+      }
+    });
+    
     this.loginService.currentUserLoggedOn.subscribe({
       next: (userLoggedOn) => {
+        console.log('userLoggedOn',userLoggedOn)
         this.userLoggedOn = userLoggedOn;
       },
     });
+    
 
     this.subscription = this.loginService.userData.subscribe((token) => {
       if (token) {
