@@ -31,6 +31,10 @@ public class EstudianteService {
         return estudianteRepository.findById(id);
     }
 
+    public Estudiante getEstudiantesByCedula(String cedula) {
+        return estudianteRepository.findByCedula(cedula);
+    }
+
     public List<Estudiante> getEstudiantesByCurso(int curso_id) {
         return estudianteRepository.findByCursoId(curso_id);
 
@@ -49,6 +53,7 @@ public class EstudianteService {
                     estudiante.lugarNacimiento = estudianteRequest.lugarNacimiento;
                     estudiante.fechaNacimiento = estudianteRequest.fechaNacimiento;
                     estudiante.cedula = estudianteRequest.cedula;
+                    estudiante.palabraSeguridad = estudianteRequest.palabraSeguridad;
                     estudiante.curso = new Curso(estudianteRequest.curso_id, null, null, null, null, null, null, null,
                             0, null);
                     estudiante.grupoEtnico = new Catalogo(estudianteRequest.grupoEtnico, null, null, null);

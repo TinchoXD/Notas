@@ -12705,3 +12705,7 @@ body.sidebar-toggled footer.sticky-footer {
   background-color: black; /* Color de fondo negro */
 }
 
+
+.borde-izq {
+  border-left: 2px solid black;
+}

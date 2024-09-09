@@ -17,11 +17,14 @@ import { DetalleCursoProfesorComponent } from './pages/pages-profesor/detalle-cu
 import { TutorComponent } from './pages/pages-profesor/tutor/tutor.component';
 import { DetalleCursoTutorComponent } from './pages/pages-profesor/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
 import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
-  { path: 'estudiante/mis-calificaciones', component: MisCalificacionesComponent },
+  { path: 'estudiante/mis-calificaciones/:cedulaCodificada', component: MisCalificacionesComponent },
   
+  //{ path: '**', component: PageNotFoundComponent },
+
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },

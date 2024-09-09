@@ -28,6 +28,12 @@ export class EstudianteService {
       .pipe(catchError(this.handleError));
   }
 
+  getEstudianteByCedula(estudiante_cedula: string): Observable<any> {
+    return this.http
+      .get<any>(environment.urlApi + 'estudiantes/estudiante/cedula/' + estudiante_cedula)
+      .pipe(catchError(this.handleError));
+  }
+
   getEstudiantesByCursoId(curso_id: number): Observable<any[]> {
     return this.http
       .get<any[]>(environment.urlApi + 'estudiantes/estudiante/curso/' + curso_id)

@@ -12,7 +12,7 @@
                         <mat-label>Curso</mat-label>
                         <mat-select formControlName="curso_id">
                             <mat-option *ngFor="let curso of cursos"
-                                [value]="curso.id">{{curso.nivel.nombre}} - {{curso.subnivel.nombre}} - {{curso.grado.nombre}} - {{curso.paralelo.nombre}} - {{curso.jornada.nombre}}</mat-option>
+                                [value]="curso.id">{{curso.codigo}} / {{curso.nivel.nombre}} - {{curso.subnivel.nombre}} - {{curso.grado.nombre}} - {{curso.paralelo.nombre}} - {{curso.jornada.nombre}}</mat-option>
                         </mat-select>
                         
                         @if (curso.invalid) {

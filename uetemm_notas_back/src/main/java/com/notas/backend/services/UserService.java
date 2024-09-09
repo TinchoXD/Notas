@@ -99,9 +99,7 @@ public class UserService {
             activo = null;
         }
 
-        
-
-        UserDTO userDTO = new UserDTO(
+        UserDTO userDTO = new UserDTO( 
                 user.getId(),
                 user.getFirstname(),
                 user.getLastname(),
@@ -151,10 +149,10 @@ public class UserService {
      * public User actualizarPersona(User user) {
      * try {
      * Optional<User> userUpdate = userRepository.findById(user.id);
-     * User user2 = userUpdate.get();
-     * user2.setFirstname(user.firstname);
-     * user2.setLastname(user.lastname);
-     * return userRepository.save(user2);
+     * User user = userUpdate.get();
+     * user.setFirstname(user.firstname);
+     * user.setLastname(user.lastname);
+     * return userRepository.save(user);
      * 
      * } catch (Exception e) {
      * e.printStackTrace();
@@ -171,7 +169,7 @@ public class UserService {
         user.setFirstname(userRequest.getFirstname());
         user.setLastname(userRequest.getLastname());
         user.setUsername(userRequest.getUsername());
-        user.setUser_estado_usuario(userRequest.isUser_estado_usuario()==true?1:0);
+        user.setUser_estado_usuario(userRequest.isUser_estado_usuario() == true ? 1 : 0);
 
         userRepository.save(user);
 
@@ -181,78 +179,52 @@ public class UserService {
     @Transactional
     public MessageResponse updateUser(UserRequest userRequest) {
 
+        User user = userRepository.findUserById(userRequest.id);
+
         Catalogo catSexo = new Catalogo(userRequest.getUser_sexo(), "", null, null);
         Catalogo catEstadoCivil = new Catalogo(userRequest.getEstadoCivil(), "", null, null);
         Catalogo catRelacionLaboral = new Catalogo(userRequest.getUser_relacion_laboral(), "", null, null);
         Catalogo catJornadaLaboral = new Catalogo(userRequest.getUser_jornada_laboral(), "", null, null);
         Catalogo catCategoria = new Catalogo(userRequest.getUser_categoria(), "", null, null);
         Catalogo catGrupoEtnico = new Catalogo(userRequest.getUser_grupo_etnico(), "", null, null);
-        Catalogo catNacionalidadIndigena = new Catalogo(userRequest.getUser_nacionalidad_indigena(), "", null, null);
+        Catalogo catNacionalidadIndigena = new Catalogo(0, "", null, null);
+        try {
+            catNacionalidadIndigena = new Catalogo(userRequest.getUser_nacionalidad_indigena(), "", null, null);
+        } catch (Exception e) {
+            catNacionalidadIndigena = null;
+        }
         Catalogo catNivelEducacion = new Catalogo(userRequest.getUser_nivel_educacion(), "", null, null);
-
         Catalogo catActividadLaboral = new Catalogo(userRequest.getUser_actividad_laboral(), "", null, null);
         Catalogo catNivel = new Catalogo(userRequest.getUser_nivel(), "", null, null);
 
-        User user = User.builder()
-                .id(userRequest.id)
-                .firstname(userRequest.getFirstname())
-                .lastname(userRequest.lastname)
-                .user_sexo(catSexo)
-                .pais(userRequest.pais)
-                .role(Role.USER)
-                .estado_civil(catEstadoCivil)
-                .user_direccion(userRequest.user_direccion)
-                .user_telefono_celular(userRequest.user_telefono_celular)
-                .user_telefono_convencional(userRequest.user_telefono_convencional)
-                .user_email_personal(userRequest.user_email_personal)
-                .user_email_institucional(userRequest.user_email_institucional)
-                .user_distrito(userRequest.user_distrito)
-                .user_relacion_laboral(catRelacionLaboral)
-                .user_jornada_laboral(catJornadaLaboral)
-                .user_categoria(catCategoria)
-                .user_grupo_etnico(catGrupoEtnico)
-                .user_nacionalidad_indigena(catNacionalidadIndigena)
-                .user_nivel_educacion(catNivelEducacion)
-                .user_status(userRequest.user_status)
-                .user_fecha_nacimiento(userRequest.user_fecha_nacimiento)
-                .user_titulo_senescyt(userRequest.user_titulo_senescyt)
-                .user_especialidad_accion_personal(userRequest.user_especialidad_accion_personal)
-                .user_estado_usuario(userRequest.user_estado_usuario == true ? 1 : 0)
-                //.user_estado_usuario(userRequest.user_estado_usuario)
-                .user_actividad_laboral(catActividadLaboral)
-                .user_nivel(catNivel)
-                .user_fecha_ingreso_magisterio(userRequest.user_fecha_ingreso_magisterio)
-                .user_fecha_ingreso_institucion(userRequest.user_fecha_ingreso_institucion)
-                .build();
+        user.firstname = userRequest.getFirstname();
+        user.lastname = userRequest.lastname;
+        user.user_sexo = catSexo;
+        user.pais = userRequest.pais;
+        /* user.role = Role.USER; */
+        user.estado_civil = catEstadoCivil;
+        user.user_direccion = userRequest.user_direccion;
+        user.user_telefono_celular = userRequest.user_telefono_celular;
+        user.user_telefono_convencional = userRequest.user_telefono_convencional;
+        user.user_email_personal = userRequest.user_email_personal;
+        user.user_email_institucional = userRequest.user_email_institucional;
+        user.user_distrito = userRequest.user_distrito;
+        user.user_relacion_laboral = catRelacionLaboral;
+        user.user_jornada_laboral = catJornadaLaboral;
+        user.user_categoria = catCategoria;
+        user.user_grupo_etnico = catGrupoEtnico;
+        user.user_nacionalidad_indigena = catNacionalidadIndigena;
+        user.user_nivel_educacion = catNivelEducacion;
+        user.user_status = userRequest.user_status;
+        user.user_fecha_nacimiento = userRequest.user_fecha_nacimiento;
+        user.user_titulo_senescyt = userRequest.user_titulo_senescyt;
+        user.user_especialidad_accion_personal = userRequest.user_especialidad_accion_personal;
+        user.user_actividad_laboral = catActividadLaboral;
+        user.user_nivel = catNivel;
+        user.user_fecha_ingreso_magisterio = userRequest.user_fecha_ingreso_magisterio;
+        user.user_fecha_ingreso_institucion = userRequest.user_fecha_ingreso_institucion;
 
-        userRepository.updateUser(
-                user.id,
-                user.firstname,
-                user.lastname,
-                user.user_sexo,
-                user.pais,
-                user.estado_civil,
-                user.user_direccion,
-                user.user_telefono_celular,
-                user.user_telefono_convencional,
-                user.user_email_personal,
-                user.user_email_institucional,
-                user.user_distrito,
-                user.user_status,
-                user.user_relacion_laboral,
-                user.user_jornada_laboral,
-                user.user_categoria,
-                user.user_grupo_etnico,
-                user.user_nacionalidad_indigena,
-                user.user_nivel_educacion,
-                user.user_estado_usuario,
-                user.user_fecha_nacimiento,
-                user.user_titulo_senescyt,
-                user.user_especialidad_accion_personal,
-                user.user_actividad_laboral,
-                user.user_nivel,
-                user.user_fecha_ingreso_magisterio,
-                user.user_fecha_ingreso_institucion);
+        userRepository.save(user);
 
         return new MessageResponse("El usuario se actualizó satisfactoriamente.");
     }

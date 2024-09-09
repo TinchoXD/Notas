@@ -52,6 +52,8 @@ import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID } from '@angular/core';
 
 import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -86,6 +88,8 @@ registerLocaleData(localeEs, 'es');
     TutorComponent,
     DetalleCursoTutorComponent,
     MisCalificacionesComponent,
+    PageNotFoundComponent,
+    InicioComponent,
     
     
   ],

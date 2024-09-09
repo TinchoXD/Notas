@@ -6,8 +6,7 @@
             <div class="div-button-row">
                 <div class="div-flex-container">
                     <div class="div-button-container">
-                        <button mat-fab color="primary" matTooltip="Regresar"
-                            routerLink="/estudiantes">
+                        <button mat-fab color="primary" matTooltip="Regresar" routerLink="/estudiantes">
                             <mat-icon>keyboard_arrow_left</mat-icon>
                         </button>
                     </div>
@@ -19,7 +18,7 @@
                 <br>
                 <form [formGroup]="estudianteForm" style="width: 99%;">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        
+
                         <h5 class="text-right"><span class="circle-number mr-3">1</span>Datos del Estudiante</h5>
                     </div>
                     <div class="grid">
@@ -49,6 +48,23 @@
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
                             </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Palabra de seguridad</mat-label>
+                                <input matInput formControlName="palabraSeguridad" />
+                                <mat-error *ngIf="palabraSeguridad.hasError('pattern')">
+                                    La palabra de seguridad debe contener solo caracteres alfanuméricos.
+                                </mat-error>
+                                
+                            </mat-form-field>
+
+                        </div>
+                        <div class="pt-3">
+                            <button mat-mini-fab [color]="color" type="button"
+                                matTooltip="Código o palabra de seguridad para ver las notas del Estudiante">
+                                <mat-icon>info</mat-icon>
+                            </button>
                         </div>
                     </div>
                     <div class="grid">
@@ -164,7 +180,8 @@
                     </div>
 
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosEstudiante()">Guardar Datos Estudiante</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosEstudiante()">Guardar
+                            Datos Estudiante</button>
                     </div>
                 </form>
 
@@ -173,7 +190,8 @@
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteMadre"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title><span class="circle-number mr-3">2</span> Datos de la Madre </mat-panel-title>
+                            <mat-panel-title><span class="circle-number mr-3">2</span> Datos de la Madre
+                            </mat-panel-title>
                         </mat-expansion-panel-header>
                         <form [formGroup]="madreForm">
                             <!-- <div class="flex justify-content-between flex-wrap">
@@ -316,7 +334,9 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosMadre()" matTooltip="Establecer la información de la Madre como Representante">Guardar Datos de la
+                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosMadre()"
+                                        matTooltip="Establecer la información de la Madre como Representante">Guardar
+                                        Datos de la
                                         Madre </button>
                                     <button class="mr-2" mat-flat-button type="button" (click)="madreRepresentante()"
                                         [color]="colorInfo">Representante</button>
@@ -332,7 +352,8 @@
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representantePadre"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title> <span class="circle-number mr-3">3</span>Datos del Padre </mat-panel-title>
+                            <mat-panel-title> <span class="circle-number mr-3">3</span>Datos del Padre
+                            </mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <form [formGroup]="padreForm">
@@ -476,9 +497,11 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosPadre()">Guardar Datos del
+                                    <button mat-flat-button type="submit" [color]="color"
+                                        (click)="guardarDatosPadre()">Guardar Datos del
                                         Padre</button>
-                                        <button class="mr-2" mat-flat-button type="button" (click)="padreRepresentante()" matTooltip="Establecer la información del Padre como Representante"
+                                    <button class="mr-2" mat-flat-button type="button" (click)="padreRepresentante()"
+                                        matTooltip="Establecer la información del Padre como Representante"
                                         [color]="colorInfo">Representante</button>
                                 </div>
                             </div>
@@ -492,7 +515,8 @@
                     <mat-expansion-panel style="width: 99%;" [expanded]="step() === representanteAdicional"
                         (opened)="setStep(0)">
                         <mat-expansion-panel-header>
-                            <mat-panel-title><span class="circle-number mr-3">4</span> Datos del Representante</mat-panel-title>
+                            <mat-panel-title><span class="circle-number mr-3">4</span> Datos del
+                                Representante</mat-panel-title>
                         </mat-expansion-panel-header>
 
                         <form [formGroup]="representanteForm">
@@ -643,7 +667,8 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row-reverse flex-wrap">
-                                    <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosRepresentante()">Guardar Datos del
+                                    <button mat-flat-button type="submit" [color]="color"
+                                        (click)="guardarDatosRepresentante()">Guardar Datos del
                                         Representante</button>
                                 </div>
                             </div>
@@ -795,7 +820,8 @@
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosFamiliares()">Guardar datos Familiares</button>
+                        <button mat-flat-button type="submit" [color]="color" (click)="guardarDatosFamiliares()">Guardar
+                            datos Familiares</button>
                     </div>
                 </form>
 
@@ -855,7 +881,8 @@
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color" (click)="guardarAntecedentesMadre()">Guardar Antecedentes de la Madre</button>
+                        <button mat-flat-button type="submit" [color]="color"
+                            (click)="guardarAntecedentesMadre()">Guardar Antecedentes de la Madre</button>
                     </div>
                 </form>
 
@@ -943,14 +970,15 @@
                                 <mat-label>Porcentaje de discapacidad</mat-label>
                                 <input matInput formControlName="antecedentesEstudiantePorcentajeDiscapacidad"
                                     type="number" />
-                                    <mat-icon matSuffix>percent</mat-icon>
+                                <mat-icon matSuffix>percent</mat-icon>
 
                                 @if (antecedentesEstudiantePorcentajeDiscapacidad.hasError('required')) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
-                                @if (antecedentesEstudiantePorcentajeDiscapacidad.hasError('min') || antecedentesEstudiantePorcentajeDiscapacidad.hasError('max')) {
-                                    <mat-error>Debe tener un valor entre 1 y 100</mat-error>
-                                    }
+                                @if (antecedentesEstudiantePorcentajeDiscapacidad.hasError('min') ||
+                                antecedentesEstudiantePorcentajeDiscapacidad.hasError('max')) {
+                                <mat-error>Debe tener un valor entre 1 y 100</mat-error>
+                                }
                             </mat-form-field>
                         </div>
                         <div class="col">
@@ -1049,7 +1077,8 @@
                     </div>
 
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color" (click)="guardarAntecedentesEstudiante()">Guardar Antecedentes del
+                        <button mat-flat-button type="submit" [color]="color"
+                            (click)="guardarAntecedentesEstudiante()">Guardar Antecedentes del
                             Estudiante</button>
                     </div>
                     <br>
@@ -1061,7 +1090,8 @@
                 <form [formGroup]="seguimientoForm" style="width: 99%;">
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="text-right"><span class="circle-number mr-3">8</span>Seguimiento y acompañamiento del estudiante</h5>
+                        <h5 class="text-right"><span class="circle-number mr-3">8</span>Seguimiento y acompañamiento del
+                            estudiante</h5>
                     </div>
 
                     <div class="grid">
@@ -1075,8 +1105,8 @@
                         <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Detalle</mat-label>
-                                <textarea matInput formControlName="seguimiento" rows="20"
-                                    maxlength="8000"></textarea> <mat-hint align="end">{{seguimiento ? seguimiento.value.length : 0}} / 8000</mat-hint>  
+                                <textarea matInput formControlName="seguimiento" rows="20" maxlength="8000"></textarea>
+                                <mat-hint align="end">{{seguimiento ? seguimiento.value.length : 0}} / 8000</mat-hint>
                                 @if (seguimiento.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -1084,7 +1114,8 @@
                         </div>
                     </div>
                     <div class="flex flex-row-reverse flex-wrap">
-                        <button mat-flat-button type="submit" [color]="color" (click)="guardarSeguimientoEstudiante()">Guardar seguimiento</button>
+                        <button mat-flat-button type="submit" [color]="color"
+                            (click)="guardarSeguimientoEstudiante()">Guardar seguimiento</button>
                     </div>
                     <br>
                 </form>

@@ -41,6 +41,11 @@ public class EstudianteController {
         return estudianteService.getEstudianteById(id);
     }
 
+    @GetMapping("/estudiante/cedula/{cedula}")
+    public Estudiante getEstudiantesByCedula(@PathVariable String cedula) {
+        return estudianteService.getEstudiantesByCedula(cedula);
+    }
+
     @GetMapping("/estudiante/curso/{curso_id}")
     public List<Estudiante> getEstudiantesByCurso(@PathVariable int curso_id) {
         return estudianteService.getEstudiantesByCurso(curso_id);

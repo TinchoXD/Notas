@@ -1,20 +1,151 @@
 <div class="container-page">
     <div class="card">
-        
+
         <section class="pb-3">
             <div class="div-button-row">
                 <div class="div-flex-container">
                     <div class="div-button-container">
-                        <button mat-fab color="primary" matTooltip="Regresar" routerLink="/iniciar-sesion" value="Salir"> Regresar
-                            <mat-icon>keyboard_arrow_left</mat-icon> 
+                        <button mat-fab color="primary" matTooltip="Salir" routerLink="/iniciar-sesion" value="Salir">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
         </section>
-        
 
+        <p-divider />
 
+        <div class="grid">
+            <div class="col">
+                <div class="field">
+                    <label for="apellidosNombres">Apellidos y Nombres</label>
+                    <input id="apellidosNombres" type="text"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        readonly value="{{estudiante?.apellidosNombres}}">
+                </div>
+                <div class="field">
+                    <label for="cedula">Cédula de Identidad / Pasaporte</label>
+                    <input id="cedula" type="text"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        readonly value="{{estudiante?.cedula}}">
+                </div>
+            </div>
+            <div class="col">
+                <div class="field">
+                    <label for="curso">Curso</label>
+                    <input id="curso" type="text"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        readonly value="{{ estudiante?.curso.nivel.nombre }} - {{ estudiante?.curso.subnivel.nombre }} - {{
+                            estudiante?.curso.grado.nombre }} - {{ estudiante?.curso.paralelo.nombre }} - {{
+                            estudiante?.curso.jornada.nombre }}">
+                </div>
+                <div class="field">
+                    <label for="cedula">Código del Curso</label>
+                    <input id="cedula" type="text"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                        readonly value="{{ estudiante?.curso.codigo }}">
+                </div>
+            </div>
+        </div>
+
+        <p-divider />
+
+        <p-table #dt [value]="notas" [rows]="50" [paginator]="true" styleClass="p-datatable-sm p-datatable-striped"
+            [globalFilterFields]="['']" [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="cursoProfesor.asignatura.nombre">
+                        Asignatura <p-sortIcon field="cursoProfesor.asignatura.nombre" />
+                    </th>
+                    <th pSortableColumn="profesor">
+                        Profesor <p-sortIcon field="profesor" />
+                    </th>
+                    <th pSortableColumn="calificacionT1">
+                        Trimestre I <p-sortIcon field="calificacionT1" />
+                    </th>
+                    <th>
+
+                    </th>
+                    <th pSortableColumn="calificacionT2">
+                        Trimestre II <p-sortIcon field="calificacionT2" />
+                    </th>
+                    <th>
+
+                    </th>
+                    <th pSortableColumn="calificacionT3">
+                        Trimestre III <p-sortIcon field="calificacionT3" />
+                    </th>
+                    <th>
+
+                    </th>
+                    <th pSortableColumn="calificacionFinal">
+                        Calificación Final <p-sortIcon field="calificacionFinal" />
+                    </th>
+                    <th pSortableColumn="calificacionSupletorio">
+                        Supletorio <p-sortIcon field="calificacionSupletorio" />
+                    </th>
+                    <th >
+                        Estado
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-notaRow>
+                <tr [ngClass]="{'user-disabled': notaRow.user_estado_usuario === 0}">
+                    <td class="p-4">
+                        {{ notaRow.cursoProfesor.asignatura.nombre }}
+                    </td>
+                    <td>
+                        {{ notaRow.cursoProfesor.user.firstname }} {{ notaRow.cursoProfesor.user.lastname }}
+                    </td>
+                    <td style="text-align: center;" class="borde-izq">
+                        {{ notaRow.calificacionT1 | number:'1.2-2'}}
+                    </td>
+                    <td>
+
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT1), 'color': getNotaColorText(notaRow.calificacionT1)}">
+                            {{ convertirCulitativo(notaRow.calificacionT1) }}</span>
+
+                    </td>
+                    <td style="text-align: center;" class="borde-izq">
+                        {{ notaRow.calificacionT2 | number:'1.2-2' }}
+                    </td>
+                    <td>
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT2), 'color': getNotaColorText(notaRow.calificacionT2)}">
+                            {{ convertirCulitativo(notaRow.calificacionT2) }}</span>
+
+                    </td>
+                    <td style="text-align: center;" class="borde-izq">
+                        {{ notaRow.calificacionT3 | number:'1.2-2' }}
+                    </td>
+                    <td>
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT3), 'color': getNotaColorText(notaRow.calificacionT3)}">
+                            {{ convertirCulitativo(notaRow.calificacionT3) }}</span>
+                    </td>
+                    <td style="text-align: center;" class="borde-izq">
+                        <strong> {{ (notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3 | number:'1.2-2'}}</strong>
+                    </td>
+                    <td style="text-align: center;">
+                        {{ notaRow.calificacionSupletorio }}
+                    </td>
+                    <td>
+                        <span class="p-1"
+                            [ngStyle]="{'background-color': estadoColorBackground(notaRow, (notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3), 'color': estadoColorText(notaRow,(notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3)}">
+                            {{estado(notaRow, (notaRow.calificacionT1+ notaRow.calificacionT2+
+                            notaRow.calificacionT3)/3)}}</span>
+
+                    </td>
+
+                </tr>
+            </ng-template>
+
+        </p-table>
 
     </div>
 </div>

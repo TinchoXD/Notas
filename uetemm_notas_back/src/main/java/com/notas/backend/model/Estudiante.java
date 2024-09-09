@@ -46,6 +46,9 @@ public class Estudiante {
     @Column(name = "estu_cedula", nullable = true)
     public String cedula;
 
+    @Column(name = "estu_palabra_seguridad", nullable = true)
+    public String palabraSeguridad;
+
     @ManyToOne
     @JoinColumn(name = "curso_id", nullable = true)
     public Curso curso;

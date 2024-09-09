@@ -5,6 +5,8 @@ import { LoginService } from '../../services/auth/login.service';
 import { LoginRequest } from '../../services/auth/loginRequest';
 import { UserService } from '../../services/user/user.service';
 import Swal from 'sweetalert2';
+import { EstudianteService } from '../../services/estudiante/estudiante.service';
+import { Codec } from '../../services/codec/codec';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,11 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
+  codec: Codec;
+
   loginError: string = "";
   loginForm: FormGroup;
-
+  estudiante: any;
   errorMessage: string = '';
 
   get username() {
@@ -34,12 +38,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private estudianteService: EstudianteService,
     private userService: UserService,
     private loginService: LoginService) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(10)]],
       password: ['', [Validators.required]]
     });
+    this.codec = new Codec(); 
   }
 
   login() {
@@ -66,10 +72,63 @@ export class LoginComponent implements OnInit {
       });
     } else {
       this.loginForm.markAllAsTouched();
-      alert("error en el formulario");
+     
     }
   }
 
-  
+  async verCalificaciones(){
+    const { value: cedula } = await Swal.fire({
+      title: 'Buscar estudiante',
+      input: 'text',
+      inputLabel: 'cédula/pasaporte',
+      inputPlaceholder: 'Ingrese su número de cédula / pasaporte',
+      inputAttributes: {
+        maxlength: '15',
+        autocapitalize: 'off',
+        autocorrect: 'off',
+      },
+    });
+
+    if (cedula) {
+
+      this.estudianteService.getEstudianteByCedula(cedula).subscribe({
+        next:async (estudiante)=>{
+          if(estudiante){
+            
+            this.estudiante = estudiante
+            const { value: palabraSeguridad } = await Swal.fire({
+              title: 'Palabra de seguridad',
+              input: 'text',
+              inputLabel: 'Ingrese su palabra de seguridad',
+              inputPlaceholder: 'Palabra de seguridad',
+              inputAttributes: {
+                maxlength: '10',
+                autocapitalize: 'off',
+                autocorrect: 'off',
+              },
+            });
+
+            if (palabraSeguridad === this.estudiante.palabraSeguridad) {
+
+              this.router.navigateByUrl('/estudiante/mis-calificaciones/'+this.codec.encode(this.estudiante.cedula));
+
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Error al validar la palabra de seguridad del estudiante!",
+              });
+            }
+            
+            
+          }else{
+            Swal.fire('No se encontró Estudiante');
+          }
+
+        }
+      })
+
+    }
+  }
 
 }

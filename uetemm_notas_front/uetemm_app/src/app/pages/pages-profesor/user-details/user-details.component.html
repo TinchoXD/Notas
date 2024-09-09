@@ -209,9 +209,9 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                                <fieldset [disabled]="!habilitarNacionalidadIndigena">
+                                
                                     <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Grupo Étnico OTRO</mat-label>
+                                        <mat-label>Nacionalidad Indígena</mat-label>
                                         <mat-select formControlName="user_nacionalidad_indigena"
                                             [value]="nacionalidadIndigena">
                                             <mat-option
@@ -247,7 +247,7 @@
                                                 El campo 'Grupo Étnico OTRO' es obligatorio.
                                             </div>
                                         </div> -->
-                                </fieldset>
+                                
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -408,7 +408,7 @@
                             <div class="col-md-6">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>País</mat-label>
-                                    <input matInput formControlName="pais" />
+                                    <input matInput formControlName="pais" readonly/>
                                     <span matTextPrefix class="input-icon">
                                         <i class="fa fa-globe" aria-hidden="true"></i>
                                     </span>

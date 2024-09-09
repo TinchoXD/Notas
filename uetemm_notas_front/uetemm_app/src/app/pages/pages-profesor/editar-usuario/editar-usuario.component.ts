@@ -22,6 +22,11 @@ function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
 
+interface rol{
+  value: number,
+  nombre: string,
+}
+
 @Component({
   selector: 'app-editar-usuario',
   templateUrl: './editar-usuario.component.html',
@@ -33,8 +38,10 @@ export class EditarUsuarioComponent implements OnInit {
   userId: number = 0;
   userCI: string = '';
   user_estado_usuario?: boolean;
-
+  requiredErrorMessage: String = 'Este campo es obligatorio.';
   onIcion: string = 'pi pi-check';
+
+  roles: rol[] = []
 
   cursosProfesor!: any[];
   cursoProfesor!: any;
@@ -71,10 +78,17 @@ export class EditarUsuarioComponent implements OnInit {
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     username: ['', Validators.required],
+    rol: ['', Validators.required],
     user_estado_usuario: [''],
   });
 
   ngOnInit(): void {
+
+    this.roles=[
+      {value: 1, nombre: 'ADMIN'},
+      {value: 2, nombre: 'USER'},
+      {value: 3, nombre: 'SECRETARIA'},
+    ]
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
@@ -98,12 +112,15 @@ export class EditarUsuarioComponent implements OnInit {
         this.user = userData;
         this.userCI = userData.username;
 
+        console.log('role', userData)
+
         this.userDetailsForm.patchValue({
           id: userData.id.toString(),
           firstname: userData.firstname,
           lastname: userData.lastname,
           username: userData.username,
           user_estado_usuario: userData.user_estado_usuario,
+          rol: userData.role,
         });
       },
       error: (errorData) => {
@@ -127,6 +144,9 @@ export class EditarUsuarioComponent implements OnInit {
   get estado_usuario() {
     return this.userDetailsForm.controls['user_estado_usuario'];
   }
+  get rol() {
+    return this.userDetailsForm.controls['rol'];
+  }
 
   dialogoResetearContrasenia(): void {
     this.dialogo
@@ -140,9 +160,9 @@ export class EditarUsuarioComponent implements OnInit {
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          //alert("aaa");
+         
           this.resetearContrasenia();
-          //alert("bbb c");
+          
         } else {
           this.dialogo.closeAll();
         }
@@ -200,7 +220,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.cursoProfesor = {};
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
-      width: '800px',
+      width: '1000px',
       data: { user_id: this.userId },
     });
 
@@ -225,7 +245,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.submitted = false;
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
-      width: '800px',
+      width: '1000px',
       data: { cursoProfesorEdit },
     });
 

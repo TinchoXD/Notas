@@ -77,6 +77,7 @@ export class EstudianteFormComponent implements OnInit {
     lugarNacimiento: ['', Validators.required],
     fechaNacimiento: ['', Validators.required],
     cedula: ['', Validators.required],
+    palabraSeguridad: ['', [Validators.pattern(/^[a-zA-Z0-9]+$/)]],
     curso_id: [''],
     curso: ['', Validators.required],
     grupoEtnico: ['', Validators.required],
@@ -248,6 +249,7 @@ export class EstudianteFormComponent implements OnInit {
           lugarNacimiento: estudiante.lugarNacimiento,
           fechaNacimiento: estudiante.fechaNacimiento,
           cedula: estudiante.cedula,
+          palabraSeguridad: estudiante.palabraSeguridad,
           curso_id: estudiante.curso ? estudiante.curso.id : null,
           curso: estudiante.curso
             ? estudiante.curso.nivel.nombre +
@@ -1048,6 +1050,9 @@ export class EstudianteFormComponent implements OnInit {
   }
   get cedula() {
     return this.estudianteForm.controls['cedula'];
+  }
+  get palabraSeguridad() {
+    return this.estudianteForm.controls['palabraSeguridad'];
   }
   get curso() {
     return this.estudianteForm.controls['curso'];

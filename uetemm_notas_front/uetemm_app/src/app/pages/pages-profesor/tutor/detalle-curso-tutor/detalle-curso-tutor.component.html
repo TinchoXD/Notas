@@ -56,7 +56,7 @@
                             field="apellidosNombres" /></th>
                     <th rowspan="2" pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th style="text-align: center;" class="borde" colspan="6">
+                        <th style="text-align: center;" class="borde-izq" colspan="6">
                             {{cursoProfesor.asignatura.nombre}}
 
                             <p style="color: rgb(105, 105, 105);">
@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th class="borde">T1</th>
+                        <th class="borde-izq">T1</th>
                         <th>T2</th>
                         <th>T3</th>
                         <th>Final</th>
@@ -83,7 +83,7 @@
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
                         <ng-container *ngFor="let nota of estudianteRow.notas">
                             <ng-container *ngIf="nota.cursoProfesorId === cursoProfesor.id">
-                                <td class="borde">{{ nota.notaT1 | number: '1.2-2':'es' }}</td>
+                                <td class="borde-izq">{{ nota.notaT1 | number: '1.2-2':'es' }}</td>
                                 <td>{{ nota.notaT2 | number: '1.2-2':'es' }}</td>
                                 <td>{{ nota.notaT3 | number: '1.2-2':'es' }}</td>
                                 <td><strong> {{ ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3) | number: '1.2-2':'es'

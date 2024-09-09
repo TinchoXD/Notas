@@ -19,6 +19,7 @@ public class EstudianteRequest {
     //public String nombres;
     public String apellidosNombres;
     public String cedula;
+    public String palabraSeguridad;
     public int curso_id;
     public int grupoEtnico;
     public int sexo;

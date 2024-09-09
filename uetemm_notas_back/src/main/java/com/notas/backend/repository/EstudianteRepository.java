@@ -14,6 +14,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante,Integer> 
     List<Estudiante> findByCursoId(int curso_id);
 
     Estudiante findById(int id);
+
+    Estudiante findByCedula(String cedula);
     
     /* List<Estudiante> findByStatus(int active);  */
     

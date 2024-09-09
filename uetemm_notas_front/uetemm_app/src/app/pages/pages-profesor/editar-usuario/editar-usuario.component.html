@@ -1,32 +1,37 @@
 <div class="container-page">
-            <div class="card">
-                <section>
-                    <div class="div-button-row">
-                        <div class="div-flex-container">
-                            <div class="div-button-container">
-                                <button mat-fab color="primary" matTooltip="Regresar"
-                                    routerLink="/administracion-usuarios">
-                                    <mat-icon>keyboard_arrow_left</mat-icon>
-                                </button>
-                            </div>
-                        </div>
+    <div class="card">
+        <section>
+            <div class="div-button-row">
+                <div class="div-flex-container">
+                    <div class="div-button-container">
+                        <button mat-fab color="primary" matTooltip="Regresar" routerLink="/administracion-usuarios">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        </button>
                     </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
-                <form [formGroup]="userDetailsForm">
-                    <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <p style="font-size: x-large;">Informacion Personal</p>
-                            </div>
-                            <div class="col-md-2 mt-4">
+        <form [formGroup]="userDetailsForm">
+            <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
 
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <p style="font-size: x-large;">Informacion Personal</p>
+                </div>
+                <div class="col-md-2 mt-4">
 
-                        <div class="row mt-3">
-                            <div class="col-md-3">
+                </div>
+            </div>
+
+
+            <div class="grid nested-grid">
+
+
+                <div class="col-8">
+                    <div class="grid">
+                        <div class="col-6">
+                            <div class="">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Nombres</mat-label>
                                     <input matInput formControlName="firstname" />
@@ -35,178 +40,231 @@
                                     }
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-3">
+                        </div>
+                        <div class="col-6">
+                            <div class="">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Apellidos</mat-label>
                                     <input matInput formControlName="lastname" />
                                     <!--  @if (lastname.invalid) {
-                                    <mat-error> {{errorRequiredMessage}}</mat-error>
-                                    } -->
+                                            <mat-error> {{errorRequiredMessage}}</mat-error>
+                                            } -->
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-3">
-                                <mat-form-field style="width: 70%;" appearance="outline">
+                        </div>
+                        <div class="col-6">
+                            <div class="">
+                                <mat-form-field style="width: 85%;" appearance="outline">
                                     <mat-label>Cédula Identidad / Nombre de Usuario</mat-label>
                                     <input matInput formControlName="username" />
                                     <!--  @if (username.invalid) {
-                                    <mat-error> {{errorRequiredMessage}}</mat-error>
-                                    } -->
-                                </mat-form-field><button mat-mini-fab class="ml-3" [color]="color"
+                                            <mat-error> {{errorRequiredMessage}}</mat-error>
+                                            } -->
+                                </mat-form-field ><button mat-mini-fab class="ml-3" [color]="color"
                                     matTooltip="El número de cédula corresponde a su nombre de usuario">
                                     <mat-icon>info</mat-icon>
                                 </button>
                             </div>
-
-                            <div class="col-md-3">
-                                <section>
-                                    <div class="div-label">
-                                        <h5> <strong>Acciones</strong></h5>
-                                    </div>
-                                </section>
-                                <mat-divider></mat-divider>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="pt-3 pb-3">Habilitar Usuario</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="div-button-row pt-2 pb-2">
-                                            <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
-                                                [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <mat-divider></mat-divider>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class=" pt-2 pb-3">Restablecer contraseña</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="div-button-row pt-1">
-
-                                            <button pButton pRipple [raised]="true" label="Restablecer"
-                                                icon="pi pi-refresh" class="p-button-success"
-                                                (click)="dialogoResetearContrasenia()" severity="warning">
-                                            </button>
-
-
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="">
+                                <mat-form-field style="width: 100%;" appearance="outline">
+                                    <mat-label>Rol</mat-label>
+                                    <mat-select formControlName="rol"
+                                        >
+                                        <mat-option
+                                            *ngFor="let rol of roles"
+                                            [value]="rol.value">{{rol.nombre}}</mat-option>
+                                    </mat-select>
+                                    <span matTextPrefix class="input-icon">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                    </span>
+                                    @if (rol.invalid) {
+                                    <mat-error> {{requiredErrorMessage}}</mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="">
+                        <section>
+                            <div class="div-label">
+                                <h5> <strong>Acciones</strong></h5>
+                            </div>
+                        </section>
+                        <mat-divider></mat-divider>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="pt-3 pb-3">Habilitar Usuario</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="div-button-row pt-2 pb-2">
+                                    <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
+                                        [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo" />
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                </form>
-                <p-divider />
+                        <mat-divider></mat-divider>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class=" pt-2 pb-3">Restablecer contraseña</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="div-button-row pt-1">
 
-                <p style="font-size: x-large;">Asignar Cursos</p>
-
-                <p-toolbar styleClass="mb-4 gap-2">
-                    <ng-template pTemplate="left">
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input pInputText type="text" placeholder="Buscar curso.."
-                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                        </span>
-                    </ng-template>
-                    <ng-template pTemplate="right">
-                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCursoProfesor()" />
-                    </ng-template>
-                </p-toolbar>
-             
-                <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm" 
-                    [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
-                    [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
-                    [rowsPerPageOptions]="[5, 10, 20]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="codigo">
-                                Código <p-sortIcon field="codigo" />
-                            </th>
-                            <th pSortableColumn="nivel.nombre">
-                                Nivel <p-sortIcon field="nivel.nombre" />
-                            </th>
-                            <th pSortableColumn="subnivel.nombre">
-                                SubNivel <p-sortIcon field="subnivel.nombre" />
-                            </th>
-                            <th pSortableColumn="grado.nombre">
-                                Grado <p-sortIcon field="grado.nombre" />
-                            </th>
-                            <th pSortableColumn="paralelo.nombre">
-                                Paralelo <p-sortIcon field="paralelo.nombre" />
-                            </th>
-                            <th pSortableColumn="jornada.nombre">
-                                Jornada <p-sortIcon field="jornada.nombre" />
-                            </th>
-                            <th pSortableColumn="asignatura.nombre">
-                                Asignatura <p-sortIcon field="asignatura.nombre" />
-                            </th>
-                            <th>
-                                Acciones
-                            </th>
-                        </tr>
-                    </ng-template>
-
-                    <ng-template pTemplate="body" let-cursoProfesorRow>
-                        <tr>
-                            <td>
-                                {{ cursoProfesorRow.curso.codigo }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.nivel.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.subnivel.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.grado.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.paralelo.nombre }}
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.curso.jornada.nombre }} 
-                            </td>
-                            <td>
-                                {{ cursoProfesorRow.asignatura.nombre }} 
-                            </td>
-                            <td>
-                                <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true"
-                                    [outlined]="true" pTooltip="Editar Curso" class="mr-2"
-                                    (click)="editarCursoProfesor(cursoProfesorRow)" />
-                            </td>
-                        </tr>
-                    </ng-template>
+                                    <button pButton pRipple [raised]="true" label="Restablecer" icon="pi pi-refresh"
+                                        class="p-button-success" (click)="dialogoResetearContrasenia()"
+                                        severity="warning">
+                                    </button>
 
 
-                </p-table>
-             
-             
-                <p-divider />
-                
-                
-
-
-
-
-                <p-divider />
-
-
-
-
-                <p> el id es {{userId}}</p>
-                <div class="container mt-5 text-center">
-                    <div class="row">
-                        <div class="btn-group">
-                            <button class="btn btn-outline-danger" (click)="dialogoCancelar()">
-                                <i class="fa fa-times"></i>
-                                Cancelar</button>
-                            <button type="submit" (click)="dialogoGuardarInformacion()" class="btn btn-success ml-3">
-                                <i class="fa fa-check"></i>
-                                Guardar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </form>
+
+
+
+        <form [formGroup]="userDetailsForm">
+            <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
+            <fieldset>
+
+
+                <div class="row mt-3">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+
+
+
+        <p-divider />
+
+        <p style="font-size: x-large;">Asignar Cursos</p>
+
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Buscar curso.."
+                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                </span>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCursoProfesor()" />
+            </ng-template>
+        </p-toolbar>
+
+        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
+            [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="codigo">
+                        Código <p-sortIcon field="codigo" />
+                    </th>
+                    <th pSortableColumn="nivel.nombre">
+                        Nivel <p-sortIcon field="nivel.nombre" />
+                    </th>
+                    <th pSortableColumn="subnivel.nombre">
+                        SubNivel <p-sortIcon field="subnivel.nombre" />
+                    </th>
+                    <th pSortableColumn="grado.nombre">
+                        Grado <p-sortIcon field="grado.nombre" />
+                    </th>
+                    <th pSortableColumn="paralelo.nombre">
+                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                    </th>
+                    <th pSortableColumn="jornada.nombre">
+                        Jornada <p-sortIcon field="jornada.nombre" />
+                    </th>
+                    <th pSortableColumn="asignatura.nombre">
+                        Asignatura <p-sortIcon field="asignatura.nombre" />
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-cursoProfesorRow>
+                <tr>
+                    <td>
+                        {{ cursoProfesorRow.curso.codigo }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.nivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.subnivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.grado.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.paralelo.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.curso.jornada.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoProfesorRow.asignatura.nombre }}
+                    </td>
+                    <td>
+                        <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
+                            pTooltip="Editar Curso" class="mr-2" (click)="editarCursoProfesor(cursoProfesorRow)" />
+                    </td>
+                </tr>
+            </ng-template>
+
+
+        </p-table>
+
+
+        <p-divider />
+
+
+
+
+
+
+        <p-divider />
+
+
+
+
+        <p> el id es {{userId}}</p>
+        <div class="container mt-5 text-center">
+            <div class="row">
+                <div class="btn-group">
+                    <button class="btn btn-outline-danger" (click)="dialogoCancelar()">
+                        <i class="fa fa-times"></i>
+                        Cancelar</button>
+                    <button type="submit" (click)="dialogoGuardarInformacion()" class="btn btn-success ml-3">
+                        <i class="fa fa-check"></i>
+                        Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
