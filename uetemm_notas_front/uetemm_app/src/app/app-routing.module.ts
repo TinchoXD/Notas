@@ -18,6 +18,7 @@ import { TutorComponent } from './pages/pages-profesor/tutor/tutor.component';
 import { DetalleCursoTutorComponent } from './pages/pages-profesor/tutor/detalle-curso-tutor/detalle-curso-tutor.component';
 import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
 
 const routes: Routes = [
   { path: 'iniciar-sesion', component: LoginComponent },
@@ -26,7 +27,7 @@ const routes: Routes = [
   //{ path: '**', component: PageNotFoundComponent },
 
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-  { path: 'inicio', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'inicio2', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent, canActivate: [authGuard] },
   { path: 'administracion-usuarios', component: AdministracionUsuariosComponent, canActivate: [authGuard] },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'mis-cursos/curso/:id', component: DetalleCursoProfesorComponent, canActivate: [authGuard] },
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
+  { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
   
 ];
 

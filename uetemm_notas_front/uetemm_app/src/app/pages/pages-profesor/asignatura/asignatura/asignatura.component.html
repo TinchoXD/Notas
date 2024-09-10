@@ -14,12 +14,12 @@
                     <ng-template pTemplate="left">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" placeholder="Buscar curso.."
+                            <input pInputText type="text" placeholder="Buscar Asignatura.."
                                 (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
                         </span>
                     </ng-template>
                     <ng-template pTemplate="right">
-                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarCurso()"/>
+                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarAsignatura()"/>
                     </ng-template>
                 </p-toolbar>
                 <p-table #dt [value]="asignaturas" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"

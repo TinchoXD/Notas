@@ -44,7 +44,7 @@ export class AsignaturaComponent implements OnInit {
     })
   }
 
-  dialogAgregarCurso() {
+  dialogAgregarAsignatura() {
     this.asignaturaDialog = true;
     this.submitted = false;
     this.asignatura = {};

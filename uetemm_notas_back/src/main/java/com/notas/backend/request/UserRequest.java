@@ -17,6 +17,7 @@ public class UserRequest {
     public String username;
     public String firstname;
     public String lastname;
+    public Integer rol;
     public Integer user_sexo;
     public String pais;
     public Integer estadoCivil;

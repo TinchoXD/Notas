@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/api/estudiantes")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "http://localhost:4600" })
+@CrossOrigin(origins = { "*" })
+/* @CrossOrigin(origins = { "http://localhost:4600" }) */
 public class EstudianteController {
 
     @Autowired

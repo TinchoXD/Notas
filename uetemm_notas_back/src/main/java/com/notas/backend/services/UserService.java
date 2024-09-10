@@ -99,13 +99,32 @@ public class UserService {
             activo = null;
         }
 
+        int roleId = 0;
+
+        switch (user.role) {
+            case ADMIN:
+                roleId = 1;
+                break;
+        
+            case USER:
+                roleId = 2;
+                break;
+        
+            case SECRETARIA:
+                roleId = 3;
+                break;
+        
+            default:
+                break;
+        }
+
         UserDTO userDTO = new UserDTO( 
                 user.getId(),
                 user.getFirstname(),
                 user.getLastname(),
                 sexo,
                 user.getUsername(),
-                1,
+                roleId,
                 user.getPais(),
                 estadoCivil,
                 relacionLaboral,
@@ -166,10 +185,29 @@ public class UserService {
 
         User user = userRepository.findUserById(userRequest.id);
 
+        Role rol;
+        switch (userRequest.getRol()) {
+            case 1:
+                rol = Role.ADMIN;
+                break;
+            case 2:
+                rol = Role.USER;
+                break;
+            case 3:
+                rol = Role.SECRETARIA;
+                break;
+
+            default:
+                rol = Role.USER;
+                break;
+        }
+
         user.setFirstname(userRequest.getFirstname());
         user.setLastname(userRequest.getLastname());
         user.setUsername(userRequest.getUsername());
         user.setUser_estado_usuario(userRequest.isUser_estado_usuario() == true ? 1 : 0);
+
+        user.setRole(rol);
 
         userRepository.save(user);
 

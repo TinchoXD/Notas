@@ -85,9 +85,9 @@ export class EditarUsuarioComponent implements OnInit {
   ngOnInit(): void {
 
     this.roles=[
-      {value: 1, nombre: 'ADMIN'},
-      {value: 2, nombre: 'USER'},
-      {value: 3, nombre: 'SECRETARIA'},
+      {value: 1, nombre: 'Administrador'},
+      {value: 2, nombre: 'Docente'},
+      {value: 3, nombre: 'Secretaria'},
     ]
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
@@ -182,6 +182,7 @@ export class EditarUsuarioComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           if (this.userDetailsForm.valid) {
+            console.log('this.userDetailsForm',this.userDetailsForm)
             this.guardarInformacionUsuario();
           } else {
             this.showAlert(

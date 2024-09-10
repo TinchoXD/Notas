@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4600"})
+@CrossOrigin(origins = {"*"})
+/* @CrossOrigin(origins = {"http://localhost:4600"}) */
 public class UserController {
 
     @Autowired

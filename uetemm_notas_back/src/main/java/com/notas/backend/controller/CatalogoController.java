@@ -19,7 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/catalogos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "http://localhost:4600" })
+@CrossOrigin(origins = { "*" })
+/* @CrossOrigin(origins = { "http://localhost:4600" }) */
 public class CatalogoController {
 
     @Autowired
