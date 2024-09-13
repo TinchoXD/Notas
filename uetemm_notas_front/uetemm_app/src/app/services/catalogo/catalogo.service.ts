@@ -3,7 +3,7 @@ import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Catalogo } from './catalogo';
-import { error } from 'jquery';
+
 import { CatalogoRequest } from './catalogoRequest';
 import { AlertType } from '../../shared/alert/alertType';
 import { AlertService } from '../alert/alert.service';

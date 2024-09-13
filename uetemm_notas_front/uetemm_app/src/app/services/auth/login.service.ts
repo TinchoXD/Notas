@@ -18,9 +18,9 @@ import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { AlertService } from '../alert/alert.service';
 import { AddUserRequest } from '../../pages/pages-profesor/agregar-usuario/addUserRequest';
-import { error } from 'jquery';
+
 import { AlertType } from '../../shared/alert/alertType';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { UserService } from '../user/user.service';
 
@@ -35,7 +35,9 @@ export class LoginService {
   currentUserLoggedOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  currentUserData: BehaviorSubject<string> = new BehaviorSubject<string>(sessionStorage.getItem('token') || '');
+  currentUserData: BehaviorSubject<string> = new BehaviorSubject<string>(
+    sessionStorage.getItem('token') || ''
+  );
 
   userId: number = 0;
   user_estado_usuario: number = 0;
@@ -44,8 +46,7 @@ export class LoginService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private alertService: AlertService,
-
+    private alertService: AlertService
   ) {
     this.currentUserLoggedOn = new BehaviorSubject<boolean>(
       sessionStorage.getItem('token') != null
@@ -95,22 +96,22 @@ export class LoginService {
     })
   } */
 
-    verificarCambioDeContrasenia(userData: any): void {
-      if (userData.user_requiere_cambio_contrasena === 1) {
-        Swal.fire({
-          title: 'Debe cambiar su contraseña',
-          text: 'Su contraseña ha sido restablecida previamente, por favor establezca una nueva contraseña',
-          icon: 'warning',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Cambiar contraseña',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate(['/actualizar-contrasena']);
-          }
-        });
-      }
+  verificarCambioDeContrasenia(userData: any): void {
+    if (userData.user_requiere_cambio_contrasena === 1) {
+      Swal.fire({
+        title: 'Debe cambiar su contraseña',
+        text: 'Su contraseña ha sido restablecida previamente, por favor establezca una nueva contraseña',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Cambiar contraseña',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/actualizar-contrasena']);
+        }
+      });
     }
+  }
 
   register(addUserRequest: AddUserRequest) {
     console.log('addUserRequest:', addUserRequest);
@@ -146,10 +147,6 @@ export class LoginService {
     return this.currentUserData.asObservable();
   }
 
-  
-
-
-
   isAuthenticated(): boolean {
     return !!sessionStorage.getItem(this.tokenKey);
   }
@@ -178,7 +175,6 @@ export class LoginService {
       return null;
     }
   }
-  
 
   // Método para validar la caducidad del token
   validateToken(): boolean {
@@ -205,5 +201,4 @@ export class LoginService {
       this.router.navigate(['/iniciar-sesion']);
     }
   }
-
 }
