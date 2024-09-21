@@ -26,7 +26,7 @@ public class AuthService {
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         String token = jwtService.getToken(user);
-        if (user.getUser_estado_usuario() == null) {
+        if (user.getUser_estado_usuario() == null) { 
             user.setUser_status(0);
         }
         if (user.getUser_estado_usuario() == 1) {

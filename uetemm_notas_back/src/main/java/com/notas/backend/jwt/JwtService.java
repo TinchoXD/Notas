@@ -23,8 +23,9 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    String SECRET_KEY;
+   /*  @Value("${jwt.secret}")
+    String SECRET_KEY; */
+    String SECRET_KEY = "SAdeyoyfMblKRifWjxYEnjGOaNUJSTHdLu/fPEyL6no="; 
 
     public String getToken(User user) {
         return getToken(new HashMap<>(), user);
