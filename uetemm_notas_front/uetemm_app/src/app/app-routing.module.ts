@@ -21,6 +21,8 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
 
 const routes: Routes = [
+ 
+ 
   { path: 'iniciar-sesion', component: LoginComponent },
   { path: 'estudiante/mis-calificaciones/:cedulaCodificada', component: MisCalificacionesComponent },
   
@@ -41,6 +43,9 @@ const routes: Routes = [
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
   { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
+  { path: 'notfound', component: PageNotFoundComponent, canActivate: [authGuard] },
+
+  { path: '**', redirectTo: '/notfound' },
   
 ];
 
