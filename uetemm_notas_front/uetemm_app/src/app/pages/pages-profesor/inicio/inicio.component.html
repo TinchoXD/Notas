@@ -4,12 +4,12 @@
         <div class="grid">
             <div class="col-4" style="" *ngFor="let cursoProfesor of cursosProfesor; let i = index">
                 <div class=" p-3 border-round-sm">
-                    <p-card [style]="{'margin-bottom': '0em', 'min-height': '20rem'}" styleClass="shadow-5">
+                    <p-card [style]="{'margin-bottom': '0em', 'min-height': '15rem'}" styleClass="shadow-5">
                         <ng-template pTemplate="header">
                             <div [style]="{'min-height': '0rem'}" class="p-4 border-round-sm"
                                 (click)="navegarADetalle(cursoProfesor.id)"
                                 style="cursor: pointer; background-color: #929FDD;" pTooltip="Ver Curso">
-                                <p style="font-size: large;"><strong> {{ cursoProfesor.asignatura.nombre }}</strong></p>
+                                <p style="font-size: medium;"><strong> {{ cursoProfesor.asignatura.nombre }}</strong></p>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="subtitle">

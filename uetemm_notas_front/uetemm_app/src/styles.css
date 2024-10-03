@@ -6,6 +6,15 @@
   background-color: #d1d6fa5e !important;
 }
 
+/* Establecer el tamaño de fuente global para componentes PrimeNG */
+:root {
+  --font-size: 12px; /* Tamaño global */
+}
+
+.p-button, .p-inputtext, .p-datatable , .p-card {
+  font-size: var(--font-size);
+}
+
 html,
 body {
   height: 100%;
