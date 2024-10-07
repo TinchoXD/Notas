@@ -223,7 +223,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
       return 'D-';
     } else if (nota >= 1.5) {
       return 'E+';
-    } else if (nota >= 0) {
+    } else if (nota > 0) {
       return 'E-';
     }
 
@@ -352,8 +352,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
             'Docente: ' +
             this.cursoProfesor.user.firstname +
             ' ' +
-            this.cursoProfesor.user.lastname, 
-            style: 'header'
+            this.cursoProfesor.user.lastname,
+          style: 'header',
         },
         {
           table: {
@@ -420,5 +420,12 @@ export class DetalleCursoProfesorComponent implements OnInit {
     pdfMake
       .createPdf(documentDefinition)
       .download(`estudiantes_export_${new Date().getTime()}.pdf`);
+  }
+
+  redondear(t1: number, t2: number, t3: number): number {
+    if(t1 || t2 || t3){
+      return Math.round((t1 + t2 + t3) / 3);
+    }
+    return 0
   }
 }

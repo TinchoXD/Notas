@@ -12709,3 +12709,11 @@ body.sidebar-toggled footer.sticky-footer {
 .borde-izq {
   border-left: 2px solid black;
 }
+
+.borde-izq-dotted {
+  border-left: 1px dotted lightgray;
+}
+
+.asignatura-complementaria{
+  background-color: #A9D08E;
+}

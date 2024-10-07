@@ -12,7 +12,7 @@
         <button [matMenuTriggerFor]="product" mat-menu-item>Product</button>
     </mat-menu> -->
 
-    <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">{{user?.firstname}}
+    <button class="btn btn-outline-success" mat-button [matMenuTriggerFor]="menu">{{user?.firstname}} {{user?.lastname}}
         <mat-icon>person</mat-icon> </button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/inicio">Inicio</button>

@@ -31,6 +31,7 @@ export class AgregarUsuarioComponent {
   roles: Rol[] = [
     {value: '1', viewValue: 'Administrador'},
     {value: '2', viewValue: 'Usuario'},
+    {value: '3', viewValue: 'Secretaria'},
   ];
   errorMessage: String = 'Este campo es obligatorio.';
   existeUsername: boolean = false;

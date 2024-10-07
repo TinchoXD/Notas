@@ -75,8 +75,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             @Param(value = "user_requiere_cambio_contrasena") Integer requiereCambio);
 
     @Modifying
-    @Query(value = "insert into User u (u.firstname , u.lastname, u.username, u.password, u.user_email_personal, u.role) values (:firstname, :lastname, :username, :password, :user_email_personal, :role)")
+    @Query(value = "insert into User u (u.firstname , u.lastname, u.username, u.password, u.user_email_personal, u.role,  u.user_estado_usuario) values (:firstname, :lastname, :username, :password, :user_email_personal, :role, :user_estado_usuario)")
     @Transactional
-    void saveNewUser(@Param("firstname") String firstname, @Param("lastname") String lastname, @Param("username") String username, @Param("password") String password,  @Param("user_email_personal") String user_email_personal,  @Param("role") String role);
+    void saveNewUser(@Param("firstname") String firstname, @Param("lastname") String lastname, @Param("username") String username, @Param("password") String password,  @Param("user_email_personal") String user_email_personal,  @Param("role") String role, @Param("user_estado_usuario") int user_estado_usuario);
 
 }

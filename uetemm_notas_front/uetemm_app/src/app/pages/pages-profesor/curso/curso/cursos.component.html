@@ -34,6 +34,9 @@
             [showCurrentPageReport]="true">
             <ng-template pTemplate="header">
                 <tr>
+                    <th >
+                        #
+                    </th>
                     <th pSortableColumn="nivel.nombre">
                         Nivel <p-sortIcon field="nivel.nombre" />
                     </th>
@@ -65,8 +68,11 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-cursoRow>
+            <ng-template pTemplate="body" let-cursoRow let-rowIndex="rowIndex">
                 <tr>
+                    <td>
+                        {{ rowIndex + 1 }}
+                    </td>
                     <td>
                         {{ cursoRow.nivel.nombre }}
                     </td>

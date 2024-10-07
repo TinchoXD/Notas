@@ -1,6 +1,5 @@
 <div class="container-page">
     <div class="card">
-
         <section class="pb-3">
             <div class="div-button-row">
                 <div class="div-flex-container">
@@ -13,7 +12,7 @@
             </div>
         </section>
 
-        <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem'}">
+        <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem' }">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Curso</th>
@@ -23,18 +22,20 @@
             </ng-template>
             <ng-template pTemplate="body" let-curso>
                 <tr>
-                    <td>{{ curso.nivel.nombre }} - {{ curso.subnivel.nombre }} - {{
-                        curso.grado.nombre }} - {{ curso.paralelo.nombre }} - {{
-                        curso.jornada.nombre }}</td>
+                    <td>
+                        {{ curso.nivel.nombre }} - {{ curso.subnivel.nombre }} -
+                        {{ curso.grado.nombre }} - {{ curso.paralelo.nombre }} -
+                        {{ curso.jornada.nombre }}
+                    </td>
                     <td>{{ curso.codigo }}</td>
                     <td>{{ curso.user.firstname }} {{ curso.user.lastname }}</td>
                 </tr>
             </ng-template>
         </p-table>
 
-        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [resizableColumns]="true" [loading]="loading"
-            styleClass="p-datatable-striped p-datatable-sm " [globalFilterFields]="['apellidosNombres', 'cedula']"
-            [tableStyle]="{'min-width': '50rem'}">
+        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [resizableColumns]="true"
+            [loading]="loading" styleClass="p-datatable-striped p-datatable-sm "
+            [globalFilterFields]="['apellidosNombres', 'cedula']" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
@@ -52,28 +53,43 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th rowspan="2" pSortableColumn="apellidosNombres">Apellidos y Nombres Completos<p-sortIcon
-                            field="apellidosNombres" /></th>
-                    <th rowspan="2" pSortableColumn="cedula">Cédula<p-sortIcon field="cedula" /></th>
+                    <th rowspan="2" pSortableColumn="apellidosNombres">
+                        Apellidos y Nombres Completos<p-sortIcon field="apellidosNombres" />
+                    </th>
+                    <th rowspan="2">Cédula</th>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th style="text-align: center;" class="borde-izq" colspan="6">
-                            {{cursoProfesor.asignatura.nombre}}
+                        <th style="text-align: center" class="borde-izq" colspan="10">
+                            {{ cursoProfesor.asignatura.nombre }}
 
-                            <p style="color: rgb(105, 105, 105);">
-                                {{cursoProfesor.user.firstname}} {{cursoProfesor.user.lastname}}
+                            <p style="color: rgb(105, 105, 105)">
+                                {{ cursoProfesor.user.firstname }}
+                                {{ cursoProfesor.user.lastname }}
                             </p>
                         </th>
                     </ng-container>
+                    <!-- Animación a la Lectura -->
+                    <th colspan="8" class="borde-izq asignatura-complementaria" style="text-align: center;" >Animación a la Lectura</th>
+                    <!--  <th colspan="6"  class="borde-izq">Acompañamiento Integral en el Aula</th>
+                    <th colspan="6"  class="borde-izq">Evaluación de comportamiento</th> -->
+                    <th colspan="2" rowspan="2" class="borde-izq " style="text-align: center;" >Promedio Anual</th>
                 </tr>
                 <tr>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th class="borde-izq">T1</th>
-                        <th>T2</th>
-                        <th>T3</th>
-                        <th>Final</th>
-                        <th>Supletorio</th>
-                        <th>Estado</th>
+                        <th colspan="2" class="borde-izq" style="text-align: center;">T1</th>
+                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">T2</th>
+                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">T3</th>
+                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">Promedio</th>
+                        <th style="text-align: center;" class="borde-izq-dotted">Supletorio</th>
+                        <th style="text-align: center;" class="borde-izq-dotted">Obs.</th>
                     </ng-container>
+
+                    <th colspan="2" class="borde-izq">T1</th>
+                    <th colspan="2">T2</th>
+                    <th colspan="2">T3</th>
+                    <th>Pond.</th>
+                    <th>Cuali</th>
+
+
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-estudianteRow>
@@ -83,23 +99,86 @@
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
                         <ng-container *ngFor="let nota of estudianteRow.notas">
                             <ng-container *ngIf="nota.cursoProfesorId === cursoProfesor.id">
-                                <td class="borde-izq">{{ nota.notaT1 | number: '1.2-2':'es' }}</td>
-                                <td>{{ nota.notaT2 | number: '1.2-2':'es' }}</td>
-                                <td>{{ nota.notaT3 | number: '1.2-2':'es' }}</td>
-                                <td><strong> {{ ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3) | number: '1.2-2':'es'
-                                        }}</strong></td>
-                                <td>{{ nota.supletorio }}</td>
+                                <td class="borde-izq">
+                                    {{ redondear(nota.notaT1) | number : "1.2-2" : "es" }}
+                                </td>
+                                <td >
+                                    <span class="circle-nota-cualitativa ml-3"
+                                        [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT1), 'color': getNotaColorText(nota.notaT1)}">
+                                        {{convertirCulitativo(nota.notaT1)}}</span>
+                                </td>
+                                <td class="borde-izq-dotted">{{ redondear(nota.notaT2) | number : "1.2-2" : "es" }}</td>
+                                <td >
+                                    <span class="circle-nota-cualitativa ml-3"
+                                        [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT2), 'color': getNotaColorText(nota.notaT2)}">
+                                        {{convertirCulitativo(nota.notaT2)}}</span>
+                                </td>
+                                <td class="borde-izq-dotted">{{ redondear(nota.notaT3) | number : "1.2-2" : "es" }}</td>
                                 <td>
+                                    <span class="circle-nota-cualitativa ml-3"
+                                        [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT3), 'color': getNotaColorText(nota.notaT3)}">
+                                        {{convertirCulitativo(nota.notaT3)}}</span>
+                                </td>
+                                <td class="borde-izq-dotted">
+                                    <strong>
+                                        {{
+                                        redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3)
+                                        | number : "1.2-2" : "es"
+                                        }}</strong>
+                                </td>
+                                <td >
+                                    <span class="circle-nota-cualitativa ml-3"
+                                        [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3)), 'color': getNotaColorText(redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3))}">
+                                        {{convertirCulitativo(redondearNotaFinal(nota.notaT1 , nota.notaT2 ,
+                                        nota.notaT3))}}</span>
+                                </td>
+                                <td class="borde-izq-dotted">{{ nota.supletorio }}</td>
+                                <td class="borde-izq-dotted">
                                     <span class="p-1"
-                                        [ngStyle]="{'background-color': estadoColorBackground(estudianteRow, (nota.notaT1 + nota.notaT2 + nota.notaT3) / 3), 'color': estadoColorText(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3)}">
-                                        {{estado(estudianteRow, ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3))}}</span>
+                                        [ngStyle]="{'background-color': estadoColorBackground(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3),color: estadoColorText(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3)}">
+                                        {{ estado( estudianteRow, (nota.notaT1 + nota.notaT2 + nota.notaT3) / 3
+                                        )}}</span>
                                 </td>
                             </ng-container>
                         </ng-container>
                     </ng-container>
+
+                    <td class="borde-izq">
+                        2
+                    </td>
+                    <td>
+                        A
+                    </td>
+                    <td class="borde-izq-dotted">
+                        2
+                    </td>
+                    <td>
+                        A
+                    </td>
+                    <td class="borde-izq-dotted">
+                        2
+                    </td>
+                    <td>
+                        A
+                    </td>
+                    <td>
+                        A
+                    </td>
+                    <td>
+                        A
+                    </td>
+
+                    <!-- PROMEDIO ANUAL -->
+                    <td class="borde-izq" style="text-align: center;">
+                        
+                    </td>
+                    <td style="text-align: center;">
+                        A
+                    </td>
+                    <!-- PROMEDIO ANUAL -->
+
                 </tr>
             </ng-template>
         </p-table>
-
     </div>
 </div>

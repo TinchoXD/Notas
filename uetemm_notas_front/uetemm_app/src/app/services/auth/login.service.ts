@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from './loginRequest';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import {
   Observable,
   catchError,

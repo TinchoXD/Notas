@@ -72,6 +72,8 @@ public class CursoProfesorController {
     public ResponseEntity<Object> postCurso(@RequestBody CursoProfesorRequest request) {
         return ResponseEntity.ok(cursoProfesorService.postCursoProfesor(request));
     }
+    
+
 
 
 

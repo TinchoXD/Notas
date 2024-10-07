@@ -113,6 +113,9 @@
 
             <ng-template pTemplate="header">
                 <tr>
+                    <th >
+                        # 
+                    </th>
                     <th pSortableColumn="firstname" >
                         Nombre <p-sortIcon field="firstname" />
                     </th>
@@ -140,8 +143,11 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-userRow>
+            <ng-template pTemplate="body" let-userRow let-rowIndex="rowIndex">
                 <tr [ngClass]="{'user-disabled': userRow.user_estado_usuario === 0}">
+                    <td>
+                        {{ rowIndex + 1 }}
+                    </td>
                     <td>
                         {{ userRow.firstname }}
                     </td>

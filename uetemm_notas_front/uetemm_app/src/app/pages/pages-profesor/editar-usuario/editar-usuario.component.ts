@@ -221,6 +221,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.cursoProfesor = {};
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
+     
       width: '1000px',
       data: { user_id: this.userId },
     });

@@ -55,7 +55,7 @@
                         <div class="col-6">
                             <div class="">
                                 <mat-form-field style="width: 85%;" appearance="outline">
-                                    <mat-label>Cédula Identidad / Nombre de Usuario</mat-label>
+                                    <mat-label>Cédula Identidad (Nombre de Usuario)</mat-label>
                                     <input matInput formControlName="username" />
                                     <!--  @if (username.invalid) {
                                             <mat-error> {{errorRequiredMessage}}</mat-error>
@@ -169,17 +169,20 @@
                 </span>
             </ng-template>
             <ng-template pTemplate="right">
-                <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCursoProfesor()" />
+                <p-button icon="pi pi-plus" class="mr-2" label="Asignar Curso" (click)="dialogAgregarCursoProfesor()" />
             </ng-template>
         </p-toolbar>
 
-        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-sm"
+        <p-table #dt [value]="cursosProfesor" [rows]="20" [paginator]="true" styleClass="p-datatable-sm"
             [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
             <ng-template pTemplate="header">
                 <tr>
+                    <th >
+                        id
+                    </th>
                     <th pSortableColumn="codigo">
                         Código <p-sortIcon field="codigo" />
                     </th>
@@ -209,6 +212,9 @@
 
             <ng-template pTemplate="body" let-cursoProfesorRow>
                 <tr>
+                    <td>
+                        {{ cursoProfesorRow.id }}
+                    </td>
                     <td>
                         {{ cursoProfesorRow.curso.codigo }}
                     </td>

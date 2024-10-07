@@ -43,6 +43,8 @@ export class DetalleCursoTutorComponent implements OnInit {
   notaEstudiante: any[] = [];
   userData: any = null;
 
+  promedioAnual!: number
+
   loading: boolean = true;
 
   constructor(
@@ -62,10 +64,8 @@ export class DetalleCursoTutorComponent implements OnInit {
         // Decodifica el token para obtener la información del usuario
         this.userData = this.loginService.decodeToken(token);
         this.loginService.verificarCambioDeContrasenia(this.userData)
-
       }
     });
-
     this.activatedRoute.params.subscribe((params) => {
       this.curs_id = +params['id']; // El signo '+' convierte el string a número
       this.cursoService.getCursoById(this.curs_id).subscribe({
@@ -75,7 +75,6 @@ export class DetalleCursoTutorComponent implements OnInit {
           console.log('curso', this.curso);
           console.log('this.curso.user', this.curso.user);
           this.cursos.push(this.curso);
-
           // Obtiene los estudiantes asociados al curso actual
           this.estudianteService
             .getEstudiantesByCursoId(this.curs_id)
@@ -83,21 +82,22 @@ export class DetalleCursoTutorComponent implements OnInit {
               next: (estudiantes) => {
                 this.estudiantes = estudiantes;
                 console.log('estudiantes', this.estudiantes);
-
                 this.cursoProfesorService
                   .getCursoProfesorByCursoId(this.curs_id)
                   .subscribe({
                     next: (cursosProfesor) => {
-                      console.log('estudiantes 123123123123S', cursosProfesor);
-
                       this.cursosProfesor = cursosProfesor;
                       console.log('this.cursosProfesor', this.cursosProfesor);
-
                       this.estudiantes.forEach((estudiante) => {
                         // Inicializa un arreglo para almacenar las notas de cada asignatura
                         estudiante.notas = [];
-
+                        let promedioAnual = 0
+                        let numCursos = 0;
+                        let promedioAsignatura = 0
+                        
+                        
                         this.cursosProfesor.forEach((cursoProfesor) => {
+                          numCursos ++
                           // Obtiene las notas del estudiante para cada cursoProfesor
                           this.notaService
                             .getNotaByEstudianteAndCursoProfesor(
@@ -118,10 +118,19 @@ export class DetalleCursoTutorComponent implements OnInit {
                                     notas?.calificacionSupletorio || null,
                                 });
                                 this.loading = false;
+                                promedioAsignatura = (notas?.calificacionT1 + notas?.calificacionT2 + notas?.calificacionT3)/3
+                                promedioAnual += promedioAsignatura 
+
+                                console.log ('promedioAnual', promedioAnual)
+
                               },
-                              
                             });
                         });
+                        
+                        //promedioAnual = promedioAnual/numCursos
+                       /*  console.log('Número de CURSOS:', numCursos)
+                        console.log('promedioAnual 123:', promedioAnual) */
+                
                       });
                     },
                   });
@@ -142,7 +151,7 @@ export class DetalleCursoTutorComponent implements OnInit {
     if (notaFinal >= 7) {
       return 'Aprobado';
     } else if (notaFinal > 0) {
-      return 'Reprobado';
+      return 'Refuerzo Académico';
     }
     return '-';
   }
@@ -339,9 +348,74 @@ export class DetalleCursoTutorComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).download('reporte_estudiantes.pdf');
   }
   
+
+  convertirCulitativo(nota: number): string {
+    if (nota >= 9.5) {
+      return 'A+';
+    } else if (nota >= 8.5) {
+      return 'A-';
+    } else if (nota >= 7.5) {
+      return 'B+';
+    } else if (nota >= 6.5) {
+      return 'B-';
+    } else if (nota >= 5.5) {
+      return 'C+';
+    } else if (nota >= 4.5) {
+      return 'C-';
+    } else if (nota >= 3.5) {
+      return 'D+';
+    } else if (nota >= 2.5) {
+      return 'D-';
+    } else if (nota >= 1.5) {
+      return 'E+';
+    } else if (nota > 0) {
+      return 'E-';
+    }
+
+    return '-';
+  }
+
+  getNotaColorBackground(nota: number): string {
+    if (nota >= 9) {
+      return '#d4edda'; // Success - verde claro
+    } else if (nota >= 7) {
+      return '#fff3cd'; // Info - amarillo claro
+    } else if (nota >= 5) {
+      return '#ffeeba'; // Warning - amarillo oscuro
+    } else if (nota > 0) {
+      return '#f8d7da'; // Danger - rojo claro
+    } else {
+      return '#e9ecef'; // Secondary - gris claro
+    }
+  }
+
+  getNotaColorText(nota: number): string {
+    if (nota >= 9) {
+      return '#155724'; // Success - verde oscuro
+    } else if (nota >= 7) {
+      return '#856404'; // Info - amarillo oscuro
+    } else if (nota >= 5) {
+      return '#6c757d'; // Warning - gris oscuro
+    } else if (nota > 0) {
+      return '#721c24'; // Danger - rojo oscuro
+    } else {
+      return '#6c757d'; // Secondary - gris oscuro
+    }
+  }
   
+  redondear(nota: number): number {
+    if(nota){
+      return Math.round(nota);
+    }
+    return 0
+  }
   
-  
+  redondearNotaFinal(t1: number, t2: number, t3: number): number {
+    if(t1 || t2 || t3){
+      return Math.round((t1 + t2 + t3) / 3);
+    }
+    return 0
+  }
   
 
 

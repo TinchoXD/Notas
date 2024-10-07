@@ -10,7 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './shared/nav/nav.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { UserDetailsComponent } from './pages/pages-profesor/user-details/user-details.component';
 import { JwtInterceptoprService } from './services/auth/jwt-interceptor.service';
 import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
@@ -58,66 +58,58 @@ import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component'
 
 registerLocaleData(localeEs, 'es');
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    DashboardComponent,
-    LoginComponent,
-    NavComponent,
-    UserDetailsComponent,
-    CambiarContrasenaComponent,
-    DialogoConfirmacionComponent,
-    NavMenuComponent,
-    AlertComponent,
-    AdministracionUsuariosComponent,
-    EditarUsuarioComponent,
-    LoadingComponent,
-    AgregarUsuarioComponent,
-    AgregarCursoComponent,
-    CursosComponent,
-    DialogoAsignaturaComponent,
-    AsignaturaComponent,
-    DialogoCursoProfesorComponent,
-    MisCursosComponent,
-    EstudianteComponent,
-    EstudianteFormComponent,
-    AsignarCursoComponent,
-    DetalleCursoProfesorComponent,
-    TutorComponent,
-    DetalleCursoTutorComponent,
-    MisCalificacionesComponent,
-    PageNotFoundComponent,
-    InicioComponent,
-    
-    
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatMenuModule,
-    MaterialModule,
-    OverlayModule,
-    MatNativeDateModule,
-    PrimeNGModule,
-    FormsModule,
-    AsyncPipe
-  ],
-  providers:
-    [
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
-      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
-      { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-      { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-      { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
-      { provide: LOCALE_ID, useValue: 'es' }, // Configuración de LOCALE_ID
-      MessageService,
-      LoadingService,
-      provideAnimationsAsync()],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        DashboardComponent,
+        LoginComponent,
+        NavComponent,
+        UserDetailsComponent,
+        CambiarContrasenaComponent,
+        DialogoConfirmacionComponent,
+        NavMenuComponent,
+        AlertComponent,
+        AdministracionUsuariosComponent,
+        EditarUsuarioComponent,
+        LoadingComponent,
+        AgregarUsuarioComponent,
+        AgregarCursoComponent,
+        CursosComponent,
+        DialogoAsignaturaComponent,
+        AsignaturaComponent,
+        DialogoCursoProfesorComponent,
+        MisCursosComponent,
+        EstudianteComponent,
+        EstudianteFormComponent,
+        AsignarCursoComponent,
+        DetalleCursoProfesorComponent,
+        TutorComponent,
+        DetalleCursoTutorComponent,
+        MisCalificacionesComponent,
+        PageNotFoundComponent,
+        InicioComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        ReactiveFormsModule,
+        MatMenuModule,
+        MaterialModule,
+        OverlayModule,
+        MatNativeDateModule,
+        PrimeNGModule,
+        FormsModule,
+        AsyncPipe], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+        { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+        { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+        { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+        { provide: LOCALE_ID, useValue: 'es' }, // Configuración de LOCALE_ID
+        MessageService,
+        LoadingService,
+        provideAnimationsAsync(),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

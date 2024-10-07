@@ -74,13 +74,14 @@ public class AuthService {
                 .lastname(request.lastname)
                 .user_email_personal(request.email)
                 .role(rol)
+                .user_estado_usuario(1)
                 .user_requiere_cambio_contrasena(1)
                 .build();
 
         /* userRepository.save(user); */
 
 
-            userRepository.saveNewUser(user.getFirstname(),user.getLastname(),user.getUsername(), user.getPassword(),user.getUser_email_personal(), user.getRole().name());
+            userRepository.saveNewUser(user.getFirstname(),user.getLastname(),user.getUsername(), user.getPassword(),user.getUser_email_personal(), user.getRole().name(), user.getUser_estado_usuario());
 
 
         return AuthResponse.builder()

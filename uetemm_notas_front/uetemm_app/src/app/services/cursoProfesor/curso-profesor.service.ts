@@ -48,6 +48,7 @@ export class CursoProfesorService {
 
 
   putCursoProfesor(cursoProfesor: any){
+    console.log('putCursoProfesor', cursoProfesor)
     return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/agregarCursoProfesor', cursoProfesor).subscribe({
       next: () => {
         this.showAlert('Curso guardado', 'success');

@@ -8,7 +8,7 @@ import { AsignaturaService } from '../../../../services/asignatura/asignatura.se
 import { CursoProfesorService } from '../../../../services/cursoProfesor/curso-profesor.service';
 import { CursoProfesorRequest } from '../../../../services/cursoProfesor/cursoProfesorRequest';
 import Swal from 'sweetalert2';
-
+import { MessageService } from 'primeng/api';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -29,6 +29,9 @@ export class DialogoCursoProfesorComponent implements OnInit {
   cursos!: any[];
 
   cursoProfesor!: any;
+  cursoProfesorId!: any;
+
+  seleccionMultiple: any = true
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,7 +39,8 @@ export class DialogoCursoProfesorComponent implements OnInit {
     private fb: FormBuilder,
     private cursoService: CursoService,
     private asignaturaService: AsignaturaService,
-    private cursoProfesorService: CursoProfesorService
+    private cursoProfesorService: CursoProfesorService,
+    private messageServicePNG: MessageService,
   ) {
     this.cursoProfesorForm = this.fb.group({
       id: [''],
@@ -82,42 +86,87 @@ export class DialogoCursoProfesorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cursoProfesorId = undefined
     if (this.data.cursoProfesorEdit) {
       console.log('cursoProfesorEdit', this.data.cursoProfesorEdit);
+
+      this.seleccionMultiple = false
+
       this.cursoProfesorForm.patchValue({
         id: this.data.cursoProfesorEdit.id.toString(),
         curso_id: this.data.cursoProfesorEdit.curso.id,
         asignatura_id: this.data.cursoProfesorEdit.asignatura.id,
         user_id: this.data.cursoProfesorEdit.user.id,
       });
+      this.cursoProfesorId = this.data.cursoProfesorEdit.id
     }
   }
 
   onSubmit() {
+    console.log('this.cursoProfesor', this.cursoProfesor)
+
+    
     if (this.cursoProfesorForm.valid) {
 
 
-
-      this.cursoProfesorService.getCursoProfesorByCursoIdAndAsignaturaId(this.curso?.value, this.asignatura?.value).subscribe({
-        next:(res)=>{
-
-          if(res){
-            this.cursoProfesor = res
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "¡El docente "+this.cursoProfesor.user.firstname+" "+this.cursoProfesor.user.lastname+", ya tiene asignada la asignatura para este curso!",
-             /*  footer: '<a href="#">Why do I have this issue?</a>' */
-            });
-          } else {
-
-            this.cursoProfesorService.putCursoProfesor(this.cursoProfesorForm.value as CursoProfesorRequest);
-          }
-
-        }
-      })
+      let asignaturas = []
+      
+      if(this.asignatura?.value.length == undefined){
+        console.log('this.asignatura?.value.length', this.asignatura?.value.length);
+        console.log('If SI');
+        asignaturas = [this.asignatura?.value]
+      }else{
+        console.log('this.asignatura?.value.length', this.asignatura?.value.length);
+        console.log('If NO');
+        asignaturas = this.asignatura?.value
+      }
 
 
+      asignaturas.forEach((asigId: number) => {
+        console.log(asigId);
+
+        this.cursoProfesorService
+          .getCursoProfesorByCursoIdAndAsignaturaId(this.curso?.value, asigId)
+          .subscribe({
+            next: (res) => {
+              this.cursoProfesor = res;
+              if (res) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text:
+                    '¡El docente ' +
+                    this.cursoProfesor.user.firstname +
+                    ' ' +
+                    this.cursoProfesor.user.lastname +
+                    ', ya tiene asignada la asignatura para este curso!',
+                  /*  footer: '<a href="#">Why do I have this issue?</a>' */
+                });
+              } else {
+
+                let cursoProfesor = {
+                  id: this.cursoProfesorId,
+                  curso_id: this.curso?.value,
+                  asignatura_id: asigId,
+                  user_id: this.user.value,
+                };
+
+                this.cursoProfesorService.putCursoProfesor(cursoProfesor);
+
+                this.messageServicePNG.add({
+                  severity: 'success',
+                  summary: 'Curso Agregado',
+                  detail:
+                    'El Curso se ha agregado existosamente',
+                });
+
+                /*  this.cursoProfesorService.putCursoProfesor(
+                  this.cursoProfesorForm.value as CursoProfesorRequest
+               ); */
+              }
+            },
+          });
+      });
 
       this.dialogRef.close(this.cursoProfesorForm.value);
     }
