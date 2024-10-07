@@ -139,6 +139,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
     PaginatorModule,
     BadgeModule,
     ChartModule,
+    SkeletonModule,
+    
   ],
 })
 export class PrimeNGModule {}
