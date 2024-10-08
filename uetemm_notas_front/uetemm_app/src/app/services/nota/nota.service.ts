@@ -33,6 +33,40 @@ export class NotaService {
       .pipe(catchError(this.handleError));
   }
 
+  /*
+    *===============================
+    * Nota Animacion a la Lectura
+    *===============================
+    */
+
+    getNotaAnimacionLecturaByEstudianteIdAndCursoId(estu_id: number, curs_id: number): Observable<any> {
+      return this.http
+        .get<any>(environment.urlApi + 'notas/notaAnimacionLectura/estudiante/'+estu_id+'/curso/'+curs_id)
+        .pipe(catchError(this.handleError));
+    }
+
+     /*
+    *===============================
+    * Nota ACOMPAÑAMIENTO INTEGRAL EN EL AULA												
+    *===============================
+    */
+    getNotaAcompaniamientoIntegralAulaByEstudianteIdAndCursoId(estu_id: number, curs_id: number): Observable<any> {
+      return this.http
+        .get<any>(environment.urlApi + 'notas/notaAcompaniamientoIntegralAula/estudiante/'+estu_id+'/curso/'+curs_id)
+        .pipe(catchError(this.handleError));
+    }
+
+         /*
+    *===============================
+    * Nota COMPORTAMIENTO
+    *===============================
+    */
+    getNotaComportamientoByEstudianteIdAndCursoId(estu_id: number, curs_id: number): Observable<any> {
+      return this.http
+        .get<any>(environment.urlApi + 'notas/notaComportamiento/estudiante/'+estu_id+'/curso/'+curs_id)
+        .pipe(catchError(this.handleError));
+    }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error('Se ha producido un error ', error.error);

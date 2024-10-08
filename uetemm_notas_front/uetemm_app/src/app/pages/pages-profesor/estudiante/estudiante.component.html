@@ -1,12 +1,11 @@
+
+
 <div class="container-page">
     <div class="card">
-
-        <p-table #dt [value]="estudiantes" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
-            styleClass="p-datatable-striped p-datatable-sm" [loading]="loading" [paginator]="true"
-            [globalFilterFields]="['nombres', 'apellidosNombres', 'cedula', 'curso.codigo']"
-            [tableStyle]="{ 'min-width': '75rem;'}">
-
-            <ng-template pTemplate="caption">
+        <p-table #dt [value]="estudiantes" dataKey="id" styleClass="p-datatable-striped p-datatable-sm"
+            [loading]="loading" [globalFilterFields]="['nombres', 'apellidosNombres', 'cedula', 'curso.codigo']"
+            [tableStyle]="{ 'min-width': '75rem;'}" [scrollable]="true" scrollHeight="100vh" [rows]="100">
+            <!-- <ng-template pTemplate="caption">
                 <div class="flex">
                     <p-iconField iconPosition="left" class="ml-auto">
                         <p-inputIcon>
@@ -16,42 +15,26 @@
                             (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
                 </div>
-            </ng-template>
-
+            </ng-template> -->
             <ng-template pTemplate="header">
-
-
-
                 <tr>
-                    <!--   <th pSortableColumn="nombres">
-                        Nombres <p-sortIcon field="nombres" />
-                    </th> -->
                     <th>
                         #
                     </th>
                     <th pSortableColumn="apellidosNombres">
                         Apellidos Nombres<p-sortIcon field="apellidosNombres" />
                     </th>
-
-
-                    <th pSortableColumn="cedula">
-                        Cedula <p-sortIcon field="cedula" />
+                    <th>
+                        Cedula
                     </th>
                     <th pSortableColumn="curso.codigo">
                         Grado / Curso <p-sortIcon field="curso.codigo" />
                     </th>
-
                     <th></th>
                     <th pSortableColumn="estado">Estado <p-sortIcon field="estado" /></th>
                 </tr>
                 <tr>
-                    <!--  <th>
-                        <p-columnFilter type="text" field="nombres" placeholder="Bucar por Nombres"
-                            matchMode="contains" />
-                    </th> -->
-                    <th>
-
-                    </th>
+                    <th> </th>
                     <th>
                         <p-columnFilter type="text" field="apellidosNombres" placeholder="Bucar por Apellidos o Nombres"
                             matchMode="contains" />
@@ -61,38 +44,13 @@
                             matchMode="contains" />
                     </th>
                     <th>
-
                         <p-columnFilter type="text" field="curso.codigo" placeholder="Bucar por Código de Curso"
                             matchMode="contains" />
-
-
-                        <!-- <p-columnFilter field="curso.codigo" matchMode="in" [showMenu]="false">
-                                <ng-template pTemplate="filter" let-curso let-filter="filterCallback">
-    
-                                    <p-multiSelect [(ngModel)]="selectedCursos" [options]="cursos" placeholder="Any"
-                                        appendTo="body" (onChange)="filter($event.value)" optionLabel="codigo.codigo">
-                                        <ng-template let-option pTemplate="item">
-                                            <div class="inline-block vertical-align-middle">
-    
-                                                <span class="ml-1 mt-1">
-                                                    {{ option.codigo }}
-                                                </span>
-                                            </div>
-                                        </ng-template>
-                                    </p-multiSelect>
-    
-                                </ng-template>
-                            </p-columnFilter> -->
-
                     </th>
-
-
-
+                    <th> </th>
+                    <th> </th>
                 </tr>
-
-
             </ng-template>
-
             <ng-template pTemplate="body" let-estudianteRow let-rowIndex="rowIndex">
                 <tr>
                     <td>
@@ -115,11 +73,11 @@
                     <td>
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Estudiante" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
-
                     </td>
                     <td>
                         <p-toggleButton [(ngModel)]="estudianteRow.estado" onLabel="Activo" [onIcon]="onIcion"
-                            offIcon="pi pi-ban" offLabel="Inactivo" (onChange)="activarDesactivar($event, estudianteRow)"/>
+                            offIcon="pi pi-ban" offLabel="Inactivo"
+                            (onChange)="activarDesactivar($event, estudianteRow)" />
                     </td>
                 </tr>
             </ng-template>

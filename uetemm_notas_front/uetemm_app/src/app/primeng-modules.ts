@@ -140,6 +140,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
     BadgeModule,
     ChartModule,
     SkeletonModule,
+    OverlayPanelModule,
     
   ],
 })

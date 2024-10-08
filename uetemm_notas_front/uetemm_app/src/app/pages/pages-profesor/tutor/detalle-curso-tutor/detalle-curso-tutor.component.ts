@@ -5,6 +5,8 @@ import { Curso } from '../../../../services/curso/curso';
 import { EstudianteService } from '../../../../services/estudiante/estudiante.service';
 import { CursoProfesorService } from '../../../../services/cursoProfesor/curso-profesor.service';
 import { NotaService } from '../../../../services/nota/nota.service';
+import { CalificacionService } from '../../../../services/calificacion/calificacion';
+
 
 import * as XLSX from 'xlsx';
 //import * as FileSaver from 'file-saver';
@@ -12,7 +14,7 @@ import FileSaver, { FileSaverOptions } from 'file-saver';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { style } from '@angular/animations';
+import { animate, style } from '@angular/animations';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { LoginService } from '../../../../services/auth/login.service';
 // Necesario para pdfmake
@@ -27,12 +29,19 @@ interface Nota {
   supletorio: number | null;
 }
 
+interface Frecuencia {
+  nombre: string;
+  value: number;
+}
+
 @Component({
   selector: 'app-detalle-curso-tutor',
   templateUrl: './detalle-curso-tutor.component.html',
   styleUrl: './detalle-curso-tutor.component.css',
 })
 export class DetalleCursoTutorComponent implements OnInit {
+
+
   curs_id: number = 0;
   curso!: any;
   cursos: Curso[] = [];
@@ -43,9 +52,14 @@ export class DetalleCursoTutorComponent implements OnInit {
   notaEstudiante: any[] = [];
   userData: any = null;
 
-  promedioAnual!: number
+  promedioAnualFrozen: boolean = false
 
   loading: boolean = true;
+
+  frecuencia: Frecuencia[] = []
+
+  test!: Frecuencia
+  
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,10 +68,24 @@ export class DetalleCursoTutorComponent implements OnInit {
     private cursoProfesorService: CursoProfesorService,
     private notaService: NotaService,
     private loginService: LoginService,
+    private calificacionService: CalificacionService,
   
   ) {}
 
   ngOnInit(): void {
+
+    this.frecuencia = [
+      { nombre: 'S', value: 4 },
+      { nombre: 'F', value: 3 },
+      { nombre: 'O', value: 2 },
+      { nombre: 'N', value: 1 },
+    ];
+    /* this.frecuencia = [
+      { nombre: 'Siempre', value: 4 },
+      { nombre: 'Frecuentemente', value: 3 },
+      { nombre: 'Ocasionalmente', value: 2 },
+      { nombre: 'Nunca', value: 1 },
+    ]; */
 
     this.loginService.userData.subscribe((token) => {
       if (token) {
@@ -70,75 +98,94 @@ export class DetalleCursoTutorComponent implements OnInit {
       this.curs_id = +params['id']; // El signo '+' convierte el string a número
       this.cursoService.getCursoById(this.curs_id).subscribe({
         next: (cursos) => {
-          //this.loading = true;
           this.curso = cursos;
           console.log('curso', this.curso);
           console.log('this.curso.user', this.curso.user);
           this.cursos.push(this.curso);
           // Obtiene los estudiantes asociados al curso actual
-          this.estudianteService
-            .getEstudiantesByCursoId(this.curs_id)
-            .subscribe({
-              next: (estudiantes) => {
-                this.estudiantes = estudiantes;
-                console.log('estudiantes', this.estudiantes);
-                this.cursoProfesorService
-                  .getCursoProfesorByCursoId(this.curs_id)
-                  .subscribe({
-                    next: (cursosProfesor) => {
-                      this.cursosProfesor = cursosProfesor;
-                      console.log('this.cursosProfesor', this.cursosProfesor);
-                      this.estudiantes.forEach((estudiante) => {
-                        // Inicializa un arreglo para almacenar las notas de cada asignatura
-                        estudiante.notas = [];
-                        let promedioAnual = 0
-                        let numCursos = 0;
-                        let promedioAsignatura = 0
-                        
-                        
-                        this.cursosProfesor.forEach((cursoProfesor) => {
-                          numCursos ++
-                          // Obtiene las notas del estudiante para cada cursoProfesor
-                          this.notaService
-                            .getNotaByEstudianteAndCursoProfesor(
-                              estudiante.id,
-                              cursoProfesor.id
-                            )
-                            .subscribe({
-                              next: (notas) => {
-                                // Añade las notas al arreglo `notas` del estudiante
-                                estudiante.notas.push({
-                                  cursoProfesorId: cursoProfesor.id,
-                                  nombreAsignatura:
-                                    cursoProfesor.nombreAsignatura, // Suponiendo que `cursoProfesor` tiene el nombre de la asignatura
-                                  notaT1: notas?.calificacionT1 || null,
-                                  notaT2: notas?.calificacionT2 || null,
-                                  notaT3: notas?.calificacionT3 || null,
-                                  supletorio:
-                                    notas?.calificacionSupletorio || null,
-                                });
-                                this.loading = false;
-                                promedioAsignatura = (notas?.calificacionT1 + notas?.calificacionT2 + notas?.calificacionT3)/3
-                                promedioAnual += promedioAsignatura 
-
-                                console.log ('promedioAnual', promedioAnual)
-
-                              },
+          this.estudianteService.getEstudiantesByCursoId(this.curs_id).subscribe({
+            next: (estudiantes) => {
+              this.estudiantes = estudiantes;
+              console.log('estudiantes', this.estudiantes);
+    
+              // Obtiene los profesores del curso
+              this.cursoProfesorService.getCursoProfesorByCursoId(this.curs_id).subscribe({
+                next: (cursosProfesor) => {
+                  this.cursosProfesor = cursosProfesor;
+                  console.log('this.cursosProfesor', this.cursosProfesor);
+    
+                  // Itera sobre cada estudiante
+                  this.estudiantes.forEach((estudiante) => {
+                    estudiante.notaAnimacionLectura = { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                    estudiante.notaAcompaniamientoIntegralAula = { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                    estudiante.notaComportamiento = { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                    estudiante.notas = []; // Inicializa el array de notas del estudiante
+                    let totalNotas = 0;
+                    let numCursos = 0;
+    
+                    // Itera sobre cada asignatura del curso
+                    this.cursosProfesor.forEach((cursoProfesor, index, array) => {
+                      numCursos++;
+                      // Obtiene las notas del estudiante para cada cursoProfesor
+                      this.notaService
+                        .getNotaByEstudianteAndCursoProfesor(estudiante.id, cursoProfesor.id)
+                        .subscribe({
+                          next: (notas) => {
+                            // Añade las notas al array de `notas` del estudiante
+                            estudiante.notas.push({
+                              cursoProfesorId: cursoProfesor.id,
+                              nombreAsignatura: cursoProfesor.nombreAsignatura, // Asignatura del curso
+                              notaT1: notas?.calificacionT1 || 0,
+                              notaT2: notas?.calificacionT2 || 0,
+                              notaT3: notas?.calificacionT3 || 0,
+                              supletorio: notas?.calificacionSupletorio || null,
+                              notaAnimacionLectura: null
                             });
+    
+                            // Calcula el promedio de la asignatura actual
+                            const promedioAsignatura = ((notas?.calificacionT1 || 0) + (notas?.calificacionT2 || 0) + (notas?.calificacionT3 || 0)) / 3;
+                            totalNotas += promedioAsignatura; // Suma el promedio de la asignatura
+    
+                            // Si ya hemos iterado sobre todas las asignaturas
+                            if (index === array.length - 1) {
+                              // Calcula el promedio anual
+                              estudiante.promedioAnual = totalNotas / numCursos;
+                              
+                            }
+    
+                            // Detén el loading cuando todas las notas han sido procesadas
+                            if (this.estudiantes.every(e => e.promedioAnual !== undefined)) {
+                              this.loading = false;
+                            }
+                          },
                         });
-                        
-                        //promedioAnual = promedioAnual/numCursos
-                       /*  console.log('Número de CURSOS:', numCursos)
-                        console.log('promedioAnual 123:', promedioAnual) */
-                
-                      });
-                    },
+                    });
+                    this.notaService.getNotaAnimacionLecturaByEstudianteIdAndCursoId(estudiante.id, this.curs_id).subscribe({
+                      next: (notaAnimacionLectura) => {
+                        estudiante.notaAnimacionLectura = notaAnimacionLectura || { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                      }
+                    });
+                    this.notaService.getNotaAcompaniamientoIntegralAulaByEstudianteIdAndCursoId(estudiante.id, this.curs_id).subscribe({
+                      next: (notaAcompaniamientoIntegralAula) => {
+                        estudiante.notaAcompaniamientoIntegralAula = notaAcompaniamientoIntegralAula || { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                      }
+                    });
+                    this.notaService.getNotaComportamientoByEstudianteIdAndCursoId(estudiante.id, this.curs_id).subscribe({
+                      next: (notaComportamiento) => {
+                        estudiante.notaComportamiento = notaComportamiento || { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
+                      }
+                    });
                   });
-              },
-            });
+                  
+                },
+              });
+              
+            },
+          });
         },
       });
     });
+    
   }
 
   estado(estudiante:any, notaFinal: number) {
@@ -349,72 +396,25 @@ export class DetalleCursoTutorComponent implements OnInit {
   }
   
 
-  convertirCulitativo(nota: number): string {
-    if (nota >= 9.5) {
-      return 'A+';
-    } else if (nota >= 8.5) {
-      return 'A-';
-    } else if (nota >= 7.5) {
-      return 'B+';
-    } else if (nota >= 6.5) {
-      return 'B-';
-    } else if (nota >= 5.5) {
-      return 'C+';
-    } else if (nota >= 4.5) {
-      return 'C-';
-    } else if (nota >= 3.5) {
-      return 'D+';
-    } else if (nota >= 2.5) {
-      return 'D-';
-    } else if (nota >= 1.5) {
-      return 'E+';
-    } else if (nota > 0) {
-      return 'E-';
-    }
 
-    return '-';
+  convertirCulitativo(nota: number): string {
+    return this.calificacionService.convertirCualitativo(nota)
   }
 
   getNotaColorBackground(nota: number): string {
-    if (nota >= 9) {
-      return '#d4edda'; // Success - verde claro
-    } else if (nota >= 7) {
-      return '#fff3cd'; // Info - amarillo claro
-    } else if (nota >= 5) {
-      return '#ffeeba'; // Warning - amarillo oscuro
-    } else if (nota > 0) {
-      return '#f8d7da'; // Danger - rojo claro
-    } else {
-      return '#e9ecef'; // Secondary - gris claro
-    }
+    return this.calificacionService.getNotaColorBackground(nota)
   }
 
   getNotaColorText(nota: number): string {
-    if (nota >= 9) {
-      return '#155724'; // Success - verde oscuro
-    } else if (nota >= 7) {
-      return '#856404'; // Info - amarillo oscuro
-    } else if (nota >= 5) {
-      return '#6c757d'; // Warning - gris oscuro
-    } else if (nota > 0) {
-      return '#721c24'; // Danger - rojo oscuro
-    } else {
-      return '#6c757d'; // Secondary - gris oscuro
-    }
+   return this.calificacionService.getNotaColorText(nota)
   }
   
   redondear(nota: number): number {
-    if(nota){
-      return Math.round(nota);
-    }
-    return 0
+    return this.calificacionService.redondear(nota)
   }
   
   redondearNotaFinal(t1: number, t2: number, t3: number): number {
-    if(t1 || t2 || t3){
-      return Math.round((t1 + t2 + t3) / 3);
-    }
-    return 0
+   return this.calificacionService.redondearNotaFinal(t1,t2,t3)
   }
   
 

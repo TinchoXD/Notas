@@ -20,3 +20,7 @@
     60%{background-position:0%  50%, 50% 100%,100%   0%}
     80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
+
+::ng-deep .input-styling input {
+  width: 7vh !important;
+}

@@ -121,7 +121,7 @@
 
 
 
-                        <p-inputNumber [ngModel]="redondear(estudianteRow.notaT1,estudianteRow.notaT2,estudianteRow.notaT3)" mode="decimal" [minFractionDigits]="1"
+                        <p-inputNumber [ngModel]="redondearNotaFinal(estudianteRow.notaT1,estudianteRow.notaT2,estudianteRow.notaT3)" mode="decimal" [minFractionDigits]="1"
                             [disabled]="true" styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
 

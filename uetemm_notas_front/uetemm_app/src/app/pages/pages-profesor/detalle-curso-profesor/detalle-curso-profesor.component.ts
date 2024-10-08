@@ -15,6 +15,7 @@ import FileSaver, { FileSaverOptions } from 'file-saver';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
+import { CalificacionService } from '../../../services/calificacion/calificacion';
 // Necesario para pdfmake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -60,7 +61,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
     private cursoProfesorService: CursoProfesorService,
     private estudianteService: EstudianteService,
     private notaService: NotaService,
-    private messageServicePNG: MessageService
+    private messageServicePNG: MessageService,
+    private calificacionService: CalificacionService,
   ) {}
 
   ngOnInit(): void {
@@ -204,59 +206,29 @@ export class DetalleCursoProfesorComponent implements OnInit {
     });
   }
 
-  convertirCulitativo(nota: number): string {
-    if (nota >= 9.5) {
-      return 'A+';
-    } else if (nota >= 8.5) {
-      return 'A-';
-    } else if (nota >= 7.5) {
-      return 'B+';
-    } else if (nota >= 6.5) {
-      return 'B-';
-    } else if (nota >= 5.5) {
-      return 'C+';
-    } else if (nota >= 4.5) {
-      return 'C-';
-    } else if (nota >= 3.5) {
-      return 'D+';
-    } else if (nota >= 2.5) {
-      return 'D-';
-    } else if (nota >= 1.5) {
-      return 'E+';
-    } else if (nota > 0) {
-      return 'E-';
-    }
+  
 
-    return '-';
+  convertirCulitativo(nota: number): string {
+    return this.calificacionService.convertirCualitativo(nota)
   }
 
   getNotaColorBackground(nota: number): string {
-    if (nota >= 9) {
-      return '#d4edda'; // Success - verde claro
-    } else if (nota >= 7) {
-      return '#fff3cd'; // Info - amarillo claro
-    } else if (nota >= 5) {
-      return '#ffeeba'; // Warning - amarillo oscuro
-    } else if (nota > 0) {
-      return '#f8d7da'; // Danger - rojo claro
-    } else {
-      return '#e9ecef'; // Secondary - gris claro
-    }
+    return this.calificacionService.getNotaColorBackground(nota)
   }
 
   getNotaColorText(nota: number): string {
-    if (nota >= 9) {
-      return '#155724'; // Success - verde oscuro
-    } else if (nota >= 7) {
-      return '#856404'; // Info - amarillo oscuro
-    } else if (nota >= 5) {
-      return '#6c757d'; // Warning - gris oscuro
-    } else if (nota > 0) {
-      return '#721c24'; // Danger - rojo oscuro
-    } else {
-      return '#6c757d'; // Secondary - gris oscuro
-    }
+   return this.calificacionService.getNotaColorText(nota)
   }
+  
+  redondear(nota: number): number {
+    return this.calificacionService.redondear(nota)
+  }
+  
+  redondearNotaFinal(t1: number, t2: number, t3: number): number {
+   return this.calificacionService.redondearNotaFinal(t1,t2,t3)
+  }
+  
+
 
   changePage(notaEstudiante: any) {
     this.guardarNota(notaEstudiante);
@@ -422,10 +394,5 @@ export class DetalleCursoProfesorComponent implements OnInit {
       .download(`estudiantes_export_${new Date().getTime()}.pdf`);
   }
 
-  redondear(t1: number, t2: number, t3: number): number {
-    if(t1 || t2 || t3){
-      return Math.round((t1 + t2 + t3) / 3);
-    }
-    return 0
-  }
+  
 }

@@ -6,23 +6,29 @@
   background-color: #d1d6fa5e !important;
 }
 
+::ng-deep .input-styling input {
+  width: 8vh !important;
+}
+
 /* Establecer el tamaño de fuente global para componentes PrimeNG */
 :root {
   --font-size: 12px; /* Tamaño global */
 }
 
-.p-button, .p-inputtext, .p-datatable , .p-card {
+.p-button, .p-inputtext, .p-datatable , .p-card, .p-table {
   font-size: var(--font-size);
 }
 
 html,
 body {
   height: 100%;
+  
 }
 
 body {
   margin: 10;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  
 }
 
 /* .ng-valid:not(form):not(div):not(mat-form-field):not(mat-select):not(input.mat-mdc-input-element):not(mat-slide-toggle).ng-touched{
@@ -12716,7 +12722,15 @@ body.sidebar-toggled footer.sticky-footer {
 
 
 .borde-izq {
-  border-left: 2px solid black;
+  border-left: 2px solid gray;
+}
+
+.borde-der {
+  border-right: 1px solid gray;
+}
+
+.borde-inf {
+  border-bottom: 1px dotted lightgray;
 }
 
 .borde-izq-dotted {
@@ -12725,4 +12739,9 @@ body.sidebar-toggled footer.sticky-footer {
 
 .asignatura-complementaria{
   background-color: #A9D08E;
+}
+
+.promedio-anual{
+  background-color: #f4b619;
+  font-size: larger;
 }

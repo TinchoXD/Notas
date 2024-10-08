@@ -49,7 +49,7 @@ public class EstudianteController {
 
     @GetMapping("/estudiante/curso/{curso_id}")
     public List<Estudiante> getEstudiantesByCurso(@PathVariable int curso_id) {
-        return estudianteService.getEstudiantesByCurso(curso_id);
+        return estudianteService.getEstudiantesByCurso(curso_id); 
     }
 
     @PutMapping("/estudiante")
