@@ -71,4 +71,43 @@ export class CalificacionService {
     }
     return 0;
   }
+
+  convertirCualitativoComportamiento(nota: number): string {
+    if (nota >= 3.5) {
+      return 'S';
+    } else if (nota >= 2.5) {
+      return 'F';
+    } else if (nota >= 1.5) {
+      return 'O';
+    } else if (nota > 0) {
+      return 'N';
+    } 
+      return '-';
+  }
+
+  getNotaComportamientoColorBackground(nota: number): string {
+    if (nota == 4) {
+      return '#d4edda'; // Success - verde claro
+    } else if (nota == 3) {
+      return '#fff3cd'; // Info - amarillo claro
+    } else if (nota == 2) {
+      return '#ffeeba'; // Warning - amarillo oscuro
+    } else if (nota == 1) {
+      return '#f8d7da'; // Danger - rojo claro
+    } 
+      return '#e9ecef'; // Secondary - gris claro
+  }
+
+  getNotaComportamientoColorText(nota: number): string {
+    if (nota == 4) {
+     return '#155724'; // Success - verde oscuro
+    } else if (nota == 3) {
+      return '#856404'; // Info - amarillo oscuro
+    } else if (nota == 2) {
+      return '#6c757d'; // Warning - gris oscuro
+    } else if (nota == 1) {
+      return '#721c24'; // Danger - rojo oscuro
+    } 
+    return '#6c757d'; // Secondary - gris oscuro
+  }
 }

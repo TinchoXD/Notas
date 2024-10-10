@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.notas.backend.model.Nota;
 import com.notas.backend.model.NotaAcompaniamientoIntegralAula;
 import com.notas.backend.model.NotaAnimacionLectura;
+import com.notas.backend.request.NotaComplementariaRequest;
 import com.notas.backend.request.NotaRequest;
 import com.notas.backend.services.CatogoService;
 import com.notas.backend.services.NotaService;
@@ -100,11 +101,9 @@ public class NotaAcompaniamientoIntegralAulaController {
         }
     }
 
-    @PostMapping(value = "/nota/guardarNota")
-    public ResponseEntity<Object> postNota(@RequestBody NotaRequest notaRequest) {
-        
-        
-        return ResponseEntity.ok(notaService.postNota(notaRequest));
+    @PostMapping(value = "/nota/guardarNotaAcompaniamientoIntegralAula")
+    public ResponseEntity<Object> postNota(@RequestBody NotaComplementariaRequest notaRequest) {
+        return ResponseEntity.ok(notaService.postNotaAcompaniamientoIntegralAula(notaRequest));
     }
     
 

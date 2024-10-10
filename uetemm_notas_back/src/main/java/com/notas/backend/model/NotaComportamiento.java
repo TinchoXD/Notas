@@ -38,13 +38,13 @@ public class NotaComportamiento {
     public int id;
 
     @Column(name = "noco_aporte_i", nullable = true)
-    public int calificacionT1;
+    public double calificacionT1;
 
     @Column(name = "noco_aporte_ii", nullable = true)
-    public int calificacionT2;
+    public double calificacionT2;
 
     @Column(name = "noco_aporte_iii", nullable = true)
-    public int calificacionT3;
+    public double calificacionT3;
 
     @ManyToOne
     @JoinColumn(name = "curs_id", nullable = true)

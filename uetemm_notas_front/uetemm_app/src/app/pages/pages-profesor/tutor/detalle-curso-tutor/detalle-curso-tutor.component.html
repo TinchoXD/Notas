@@ -15,7 +15,10 @@
                 </div>
             </div>
             <div class="flex-grow-1 flex align-items-center justify-content-center">
-                <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem' }">
+                {{ curso?.nivel.nombre }} - {{ curso?.subnivel.nombre }} -
+                {{ curso?.grado.nombre }} - {{ curso?.paralelo.nombre }} -
+                {{ curso?.jornada.nombre }}
+                <!-- <p-table #dtCurso [value]="cursos" dataKey="id" [rows]="10" [tableStyle]="{ 'min-width': '75rem' }">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Curso</th>
@@ -34,22 +37,25 @@
                             <td>{{ curso.user.firstname }} {{ curso.user.lastname }}</td>
                         </tr>
                     </ng-template>
-                </p-table>
+                </p-table> -->
+
             </div>
         </div>
 
 
-      
 
-        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [rows]="100" [resizableColumns]="true"
-            [loading]="loading" styleClass=" p-datatable-sm " [scrollable]="true" scrollHeight="550px"
+
+        <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [resizableColumns]="true" [loading]="loading"
+            styleClass=" p-datatable-sm " [scrollable]="true" scrollHeight="625px"
             [globalFilterFields]="['apellidosNombres', 'cedula']" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                    <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
                         class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
-                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+                    <p-toggleButton [(ngModel)]="nombresApellidoFrozen" [onIcon]="'pi pi-lock'" class="mr-2"
+                        offIcon="pi pi-lock-open" [onLabel]="'Nombres y Apellidos'" offLabel="Nombres y Apellidos" />
                     <p-toggleButton [(ngModel)]="promedioAnualFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"
                         [onLabel]="'Promedio Anual'" offLabel="Promedio Anual" />
                     <p-iconField iconPosition="left" class="ml-auto">
@@ -63,12 +69,18 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th rowspan="2" pSortableColumn="apellidosNombres" pFrozenColumn>
+                    <th rowspan="2" pSortableColumn="apellidosNombres" pFrozenColumn [frozen]="nombresApellidoFrozen"
+                        style="background-color: #d1d6fa">
+                        #
+                    </th>
+                    <th rowspan="2" pSortableColumn="apellidosNombres" pFrozenColumn [frozen]="nombresApellidoFrozen"
+                        style="background-color: #d1d6fa">
                         Apellidos y Nombres Completos<p-sortIcon field="apellidosNombres" />
                     </th>
-                    <th rowspan="2">Cédula</th>
+                    <th rowspan="2" style="background-color: #d1d6fa">Cédula</th>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th style="text-align: center" class="borde-izq" colspan="10">
+                        <th style="background-color: #d1d6fa; text-align: center" class="borde-izq"
+                            [attr.colspan]="colSpanSupletorio">
                             <h6>{{ cursoProfesor.asignatura.nombre }}</h6>
 
                             <p style="color: rgb(105, 105, 105)">
@@ -92,20 +104,21 @@
 
 
                     <!-- COMPORTAMIENTO -->
-                    <th colspan="4"  class="borde-izq asignatura-complementaria" style="text-align: center;">
+                    <th colspan="4" class="borde-izq asignatura-complementaria" style="text-align: center;">
+
                         <h6>Comportamiento</h6>
-                        
-                            <p-button (onClick)="op.toggle($event)" icon="pi pi-info-circle" label=""  />
-                            <p-overlayPanel #op>
-                                <div class="flex flex-column gap-2 w-12rem">
-                                    <ul>
-                                        <li> S - Siempre</li>
-                                        <li> F - Frecuentemente</li>
-                                        <li> O - Ocasionalmente</li>
-                                        <li> N - Nunca</li>
-                                      </ul>
-                                </div>
-                            </p-overlayPanel>
+
+                        <p-button (onClick)="op.toggle($event)" icon="pi pi-info-circle" label="" />
+                        <p-overlayPanel #op>
+                            <div class="flex flex-column gap-2 w-12rem">
+                                <ul>
+                                    <li> S - Siempre</li>
+                                    <li> F - Frecuentemente</li>
+                                    <li> O - Ocasionalmente</li>
+                                    <li> N - Nunca</li>
+                                </ul>
+                            </div>
+                        </p-overlayPanel>
                     </th>
                     <!-- COMPORTAMIENTO -->
 
@@ -115,81 +128,96 @@
                 </tr>
                 <tr>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
-                        <th colspan="2" class="borde-izq" style="text-align: center;">T1</th>
-                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">T2</th>
-                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">T3</th>
-                        <th colspan="2" style="text-align: center;" class="borde-izq-dotted">Promedio</th>
-                        <th style="text-align: center;" class="borde-izq-dotted">Supletorio</th>
-                        <th style="text-align: center;" class="borde-izq-dotted">Obs.</th>
+                        <th colspan="2" class="borde-izq" style="text-align: center; background-color: #d1d6fa">T1</th>
+                        <th colspan="2" style="text-align: center; background-color: #d1d6fa" class="borde-izq-dotted">
+                            T2</th>
+                        <th colspan="2" style="text-align: center; background-color: #d1d6fa" class="borde-izq-dotted">
+                            T3</th>
+                        <th colspan="2" style="text-align: center; background-color: #d1d6fa" class="borde-izq-dotted">
+                            Promedio</th>
+                        <th style="text-align: center; background-color: #d1d6fa" class="borde-izq-dotted"
+                            *ngIf="aplicaSupletorio">Supletorio
+                        </th>
+                        <th style="text-align: center; background-color: #d1d6fa" class="borde-izq-dotted">Obs.</th>
                     </ng-container>
 
                     <!-- ANIMACIÓN A LA LECTURA -->
-                    <th style="text-align: center;" class="asignatura-complementaria borde-izq" colspan="2">T1</th>
-                    <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T2</th>
-                    <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T3</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">Pond.</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">Cuali</th>
+                    <ng-container>
+                        <th style="text-align: center;" class="asignatura-complementaria borde-izq" colspan="2">T1</th>
+                        <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T2</th>
+                        <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T3</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">Pond.</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">Cuali</th>
+                    </ng-container>
                     <!-- ANIMACIÓN A LA LECTURA -->
 
                     <!-- ACOMPAÑAMIENTO INTEGRAL EN EL AULA -->
-                    <th style="text-align: center;" class="asignatura-complementaria borde-izq" colspan="2">T1</th>
-                    <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T2</th>
-                    <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T3</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">Pond.</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">Cuali</th>
+                    <ng-container>
+                        <th style="text-align: center;" class="asignatura-complementaria borde-izq" colspan="2">T1</th>
+                        <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T2</th>
+                        <th style="text-align: center;" class="asignatura-complementaria" colspan="2">T3</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">Pond.</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">Cuali</th>
+                    </ng-container>
                     <!-- ACOMPAÑAMIENTO INTEGRAL EN EL AULA -->
-                    
+
                     <!-- COMPORTAMIENTO -->
-                    <th style="text-align: center;" class="asignatura-complementaria borde-izq">T1</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">T2</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">T3</th>
-                    <th style="text-align: center;" class="asignatura-complementaria">PF.</th>
+                    <ng-container>
+                        <th style="text-align: center;" class="asignatura-complementaria borde-izq">T1</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">T2</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">T3</th>
+                        <th style="text-align: center;" class="asignatura-complementaria">PF.</th>
+                    </ng-container>
                     <!-- COMPORTAMIENTO -->
 
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-estudianteRow>
+            <ng-template pTemplate="body" let-estudianteRow let-rowIndex="rowIndex">
                 <tr class="borde-inf">
-                    <td pFrozenColumn>{{ estudianteRow.apellidosNombres }}</td>
+                    <td pFrozenColumn [frozen]="nombresApellidoFrozen"> <strong>{{ rowIndex+1 }}</strong></td>
+                    <td pFrozenColumn [frozen]="nombresApellidoFrozen">{{ estudianteRow.apellidosNombres }}</td>
                     <td>{{ estudianteRow.cedula }}</td>
                     <ng-container *ngFor="let cursoProfesor of cursosProfesor">
                         <ng-container *ngFor="let nota of estudianteRow.notas">
                             <ng-container *ngIf="nota.cursoProfesorId === cursoProfesor.id">
-                                <td class="borde-izq">
-                                    {{ redondear(nota.notaT1) | number : "1.2-2" : "es" }}
+                                <td class="borde-izq" style="text-align: center;">
+                                    {{ redondear(nota.notaT1) | number : "1.1-1" : "es" }}
                                 </td>
-                                <td>
+                                <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT1), 'color': getNotaColorText(nota.notaT1)}">
                                         {{convertirCulitativo(nota.notaT1)}}</span>
                                 </td>
-                                <td class="borde-izq-dotted">{{ redondear(nota.notaT2) | number : "1.2-2" : "es" }}</td>
-                                <td>
+                                <td style="text-align: center;" class="borde-izq-dotted">{{ redondear(nota.notaT2) |
+                                    number : "1.1-1" : "es" }}</td>
+                                <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT2), 'color': getNotaColorText(nota.notaT2)}">
                                         {{convertirCulitativo(nota.notaT2)}}</span>
                                 </td>
-                                <td class="borde-izq-dotted">{{ redondear(nota.notaT3) | number : "1.2-2" : "es" }}</td>
-                                <td>
+                                <td style="text-align: center;" class="borde-izq-dotted">{{ redondear(nota.notaT3) |
+                                    number : "1.1-1" : "es" }}</td>
+                                <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT3), 'color': getNotaColorText(nota.notaT3)}">
                                         {{convertirCulitativo(nota.notaT3)}}</span>
                                 </td>
-                                <td class="borde-izq-dotted">
+                                <td class="borde-izq-dotted" style="background-color: #d1d6fa5e; text-align: center;">
                                     <strong>
                                         {{
                                         redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3)
-                                        | number : "1.2-2" : "es"
+                                        | number : "1.1-1" : "es"
                                         }}</strong>
                                 </td>
-                                <td>
+                                <td style="background-color: #d1d6fa5e; text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3)), 'color': getNotaColorText(redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3))}">
                                         {{convertirCulitativo(redondearNotaFinal(nota.notaT1 , nota.notaT2 ,
                                         nota.notaT3))}}</span>
                                 </td>
-                                <td class="borde-izq-dotted">{{ nota.supletorio }}</td>
-                                <td class="borde-izq-dotted">
+                                <td style="text-align: center;" class="borde-izq-dotted" *ngIf="aplicaSupletorio">{{
+                                    nota.supletorio }}</td>
+                                <td style="text-align: center;" class="borde-izq-dotted">
                                     <span class="p-1" style="border-radius: 50px;"
                                         [ngStyle]="{'background-color': estadoColorBackground(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3),color: estadoColorText(estudianteRow,(nota.notaT1 + nota.notaT2 + nota.notaT3) / 3)}">
                                         {{ estado( estudianteRow, (nota.notaT1 + nota.notaT2 + nota.notaT3) / 3
@@ -200,142 +228,149 @@
                     </ng-container>
 
                     <!-- ANIMACIÓN A LA LECTURA -->
-                    <td class="borde-izq">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT1" mode="decimal"
-                            [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00" [maxlength]="4"
-                            outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT1)}">
-                            {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT1)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT2" mode="decimal"
-                            [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00" [maxlength]="4"
-                            outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT2)}">
-                            {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT2)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT3" mode="decimal"
-                            [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00" [maxlength]="4"
-                            outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT3)}">
-                            {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT3)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <strong>{{
-                            redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 ,
-                            estudianteRow?.notaAnimacionLectura.calificacionT2 ,
-                            estudianteRow?.notaAnimacionLectura.calificacionT3)
-                            | number : "1.2-2" : "es"
-                            }}
-                        </strong>
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3))}">
-                            {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1
-                            , estudianteRow?.notaAnimacionLectura.calificacionT2 ,
-                            estudianteRow?.notaAnimacionLectura.calificacionT3))}}</span>
-                    </td>
+                    <ng-container>
+                        <td class="borde-izq">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT1"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
+                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT1)}">
+                                {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT1)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT2"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
+                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT2)}">
+                                {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT2)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT3"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
+                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT3)}">
+                                {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT3)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted" style="background-color: #A9D08E33">
+                            <strong>{{
+                                redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 ,
+                                estudianteRow?.notaAnimacionLectura.calificacionT2 ,
+                                estudianteRow?.notaAnimacionLectura.calificacionT3)
+                                | number : "1.1-1" : "es"
+                                }}
+                            </strong>
+                        </td>
+                        <td style="background-color: #A9D08E33">
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3))}">
+                                {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1
+                                , estudianteRow?.notaAnimacionLectura.calificacionT2 ,
+                                estudianteRow?.notaAnimacionLectura.calificacionT3))}}</span>
+                        </td>
+                    </ng-container>
                     <!-- ANIMACIÓN A LA LECTURA -->
 
                     <!-- ACOMPAÑAMIENTO INTEGRAL EN EL AULA -->
-                    <td class="borde-izq">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1"
-                            mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
-                            [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}">
-                            {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2"
-                            mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
-                            [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}">
-                            {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3"
-                            mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
-                            [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10" />
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}">
-                            {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}}</span>
-                    </td>
-                    <td class="borde-izq-dotted">
-                        <strong>{{
-                            redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 ,
-                            estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 ,
-                            estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)
-                            | number : "1.2-2" : "es"
-                            }}
-                        </strong>
-                    </td>
-                    <td>
-                        <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3))}">
-                            {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1
-                            , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 ,
-                            estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3))}}</span>
-                    </td>
+                    <ng-container>
+                        <td class="borde-izq">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
+                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
+                                (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}">
+                                {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
+                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
+                                (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}">
+                                {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted">
+                            <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3"
+                                mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
+                                [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
+                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
+                                (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
+                        </td>
+                        <td>
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}">
+                                {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}}</span>
+                        </td>
+                        <td class="borde-izq-dotted" style="background-color: #A9D08E33">
+                            <strong>{{
+                                redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 ,
+                                estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 ,
+                                estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)
+                                | number : "1.1-1" : "es"
+                                }}
+                            </strong>
+                        </td>
+                        <td style="background-color: #A9D08E33">
+                            <span class="circle-nota-cualitativa ml-3"
+                                [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3))}">
+                                {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1
+                                , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 ,
+                                estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3))}}</span>
+                        </td>
+                    </ng-container>
                     <!-- ACOMPAÑAMIENTO INTEGRAL EN EL AULA -->
 
                     <!-- COMPORTAMIENTO -->
-                     <td  class="borde-izq"> 
-                        
-                        <p-dropdown appendTo="body"  
-                        [options]="frecuencia" 
-                        [(ngModel)]="estudianteRow.notaComportamiento.calificacionT1"
-                        [checkmark]="true" 
-                        optionLabel="nombre" 
-                        optionValue="value"
-                        placeholder="Selec." />
-                    
+                    <td class="borde-izq">
+                        <p-dropdown appendTo="body" [options]="frecuencia"
+                            [(ngModel)]="estudianteRow.notaComportamiento.calificacionT1" [checkmark]="true"
+                            optionLabel="nombre" optionValue="value" placeholder="-"
+                            (onChange)="changePageComportamiento(estudianteRow)" />
                     </td>
-                     <td>
-                        <p-dropdown appendTo="body" 
-                        [options]="frecuencia" 
-                        [(ngModel)]="estudianteRow.notaComportamiento.calificacionT2"
-                        [checkmark]="true" 
-                        optionLabel="nombre" 
-                        optionValue="value"
-                        placeholder="Selec." />
+                    <td>
+                        <p-dropdown appendTo="body" [options]="frecuencia"
+                            [(ngModel)]="estudianteRow.notaComportamiento.calificacionT2" [checkmark]="true"
+                            optionLabel="nombre" optionValue="value" placeholder="-"
+                            (onChange)="changePageComportamiento(estudianteRow)" />
                     </td>
-                     <td><p-dropdown appendTo="body" 
-                        [options]="frecuencia" 
-                        [(ngModel)]="estudianteRow.notaComportamiento.calificacionT3"
-                        [checkmark]="true" 
-                        optionLabel="nombre" 
-                        optionValue="value"
-                        placeholder="Selec." />
+                    <td><p-dropdown appendTo="body" [options]="frecuencia"
+                            [(ngModel)]="estudianteRow.notaComportamiento.calificacionT3" [checkmark]="true"
+                            optionLabel="nombre" optionValue="value" placeholder="-"
+                            (onChange)="changePageComportamiento(estudianteRow)" />
                     </td>
-                     <td>4</td>
+                    <td style="background-color: #A9D08E33">
+                        <span class="circle-nota-cualitativa ml-3"
+                            [ngStyle]="{'background-color': getNotaComportamientoColorBackground(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3)), 'color': getNotaComportamientoColorText(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3))}">
+                            {{convertirCualitativoComportamiento(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3))}}
+                        </span>
+                    </td>
                     <!-- COMPORTAMIENTO -->
 
 
                     <!-- PROMEDIO ANUAL -->
-                    <td class="borde-izq" style="text-align: center; background-color: #f7f1e0;" pFrozenColumn
+                    <td class="borde-izq" style="text-align: center; background-color: #FAF7EC;" pFrozenColumn
                         [frozen]="promedioAnualFrozen" alignFrozen="right">
-                        <strong>{{ redondear(estudianteRow.promedioAnual) | number : '1.2-2' : 'es' }}</strong>
+                        <strong>{{ redondear(estudianteRow.promedioAnual) | number : '1.1-1' : 'es' }}</strong>
                     </td>
-                    <td style="text-align: center; background-color: #f7f1e0;" pFrozenColumn
+                    <td style="text-align: center; background-color: #FAF7EC;" pFrozenColumn
                         [frozen]="promedioAnualFrozen" alignFrozen="right">
                         <span class="circle-nota-cualitativa ml-3"
                             [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow.promedioAnual), 'color': getNotaColorText(estudianteRow.promedioAnual)}">

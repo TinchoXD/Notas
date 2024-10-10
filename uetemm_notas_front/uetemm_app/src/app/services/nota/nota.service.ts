@@ -45,6 +45,12 @@ export class NotaService {
         .pipe(catchError(this.handleError));
     }
 
+    saveNotaAnimacionLectura(notaAnimacionLectura: any): Observable<any> {
+      return this.http
+        .post<any>(environment.urlApi + 'notas/notaAnimacionLectura/nota/guardarNotaAnimacionLectura', notaAnimacionLectura)
+        .pipe(catchError(this.handleError));
+    }
+
      /*
     *===============================
     * Nota ACOMPAÑAMIENTO INTEGRAL EN EL AULA												
@@ -53,6 +59,12 @@ export class NotaService {
     getNotaAcompaniamientoIntegralAulaByEstudianteIdAndCursoId(estu_id: number, curs_id: number): Observable<any> {
       return this.http
         .get<any>(environment.urlApi + 'notas/notaAcompaniamientoIntegralAula/estudiante/'+estu_id+'/curso/'+curs_id)
+        .pipe(catchError(this.handleError));
+    }
+
+    saveNotaAcompaniamientoIntegralAula(notaAcompaniamientoIntegralAula: any): Observable<any> {
+      return this.http
+        .post<any>(environment.urlApi + 'notas/notaAcompaniamientoIntegralAula/nota/guardarNotaAcompaniamientoIntegralAula', notaAcompaniamientoIntegralAula)
         .pipe(catchError(this.handleError));
     }
 
@@ -66,6 +78,13 @@ export class NotaService {
         .get<any>(environment.urlApi + 'notas/notaComportamiento/estudiante/'+estu_id+'/curso/'+curs_id)
         .pipe(catchError(this.handleError));
     }
+
+    saveNotaComportamiento(notaComportamiento: any): Observable<any> {
+      return this.http
+        .post<any>(environment.urlApi + 'notas/notaComportamiento/nota/guardarNotaComportamiento', notaComportamiento)
+        .pipe(catchError(this.handleError));
+    }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

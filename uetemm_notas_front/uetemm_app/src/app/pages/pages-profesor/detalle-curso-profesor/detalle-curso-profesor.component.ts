@@ -15,7 +15,7 @@ import FileSaver, { FileSaverOptions } from 'file-saver';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
-import { CalificacionService } from '../../../services/calificacion/calificacion';
+import { CalificacionService } from '../../../services/calificacion/calificacion.service';
 // Necesario para pdfmake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -164,26 +164,6 @@ export class DetalleCursoProfesorComponent implements OnInit {
   }
 
   guardarNota(notaEstudiante: any) {
-    console.log('estudiante', notaEstudiante);
-    console.log('------');
-    /* console.log('this.cursoProfesor_id', this.cursoProfesor_id);
-    console.log('estudiante ID', estudiante.id);
-    console.log('nota t1', estudiante.notaT1);
-    console.log('nota t2', estudiante.notaT2);
-    console.log('nota t3', estudiante.notaT3);
-    console.log(
-      'nota t1 Cualitativa',
-      this.convertirCulitativo(estudiante.notaT1)
-    );
-    console.log(
-      'nota t2 Cualitativa',
-      this.convertirCulitativo(estudiante.notaT2)
-    );
-    console.log(
-      'nota t3 Cualitativa',
-      this.convertirCulitativo(estudiante.notaT3)
-    ); */
-
     const nota = {
       estu_id: notaEstudiante.id,
       cupr_id: this.cursoProfesor_id,
@@ -192,9 +172,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
       notaT3: notaEstudiante.notaT3,
       notaSupletorio: notaEstudiante.notaSupletorio,
     };
-
     console.log('AAA', nota);
-
     this.notaService.saveNota(nota).subscribe({
       next: (res) => {
         this.messageServicePNG.add({
@@ -205,8 +183,6 @@ export class DetalleCursoProfesorComponent implements OnInit {
       },
     });
   }
-
-  
 
   convertirCulitativo(nota: number): string {
     return this.calificacionService.convertirCualitativo(nota)
