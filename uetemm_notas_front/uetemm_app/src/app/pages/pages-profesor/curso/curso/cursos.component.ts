@@ -19,9 +19,17 @@ export class CursosComponent implements OnInit {
   curso!: Curso;
   cursos!: Curso[];
   userData: any = null;
+  userDataToken!: any
 
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+      }
+    })
+
     this.loginService.userData.subscribe((token) => {
       if (token) {
         // Decodifica el token para obtener la información del usuario

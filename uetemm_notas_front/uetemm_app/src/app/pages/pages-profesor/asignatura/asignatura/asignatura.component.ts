@@ -18,8 +18,16 @@ export class AsignaturaComponent implements OnInit {
   asignaturas!: Catalogo[];
   userData: any = null;
   submitted: boolean = false;
+  userDataToken!: any
+  
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+      }
+    })
 
     this.loginService.userData.subscribe((token) => {
       if (token) {

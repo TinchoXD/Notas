@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent {
   userLoggedOn: boolean = false;
+  userDataToken!: any;
   user?: User;
   errorMessage: String = '';
 
@@ -28,6 +29,7 @@ export class NavMenuComponent {
   ) {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
+        console.info("userDatauserDatauserDatauserDatauserData", userData);
         this.user = userData;
       },
       error: (errorData) => {
@@ -68,6 +70,12 @@ export class NavMenuComponent {
 
   ngOnInit(): void {
     //this.esRutaMisCalificaciones();
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+      }
+    })
 
     this.loginService.currentUserLoggedOn.subscribe({
       next: (userLoggedOn) => {

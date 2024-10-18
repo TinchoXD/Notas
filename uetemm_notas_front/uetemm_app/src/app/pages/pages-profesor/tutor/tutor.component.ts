@@ -29,7 +29,7 @@ export class TutorComponent implements OnInit {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
-        console.log('userData', this.user);
+        console.log('userData bbbbbbbbbb', this.user);
         this.cursoService.getCursoByUserId(this.user.id).subscribe({
           next: (cursosData) => {
             

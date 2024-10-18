@@ -105,6 +105,7 @@ body {
   --danger: #e74a3b;
   --light: #f8f9fc;
   --dark: #5a5c69;
+  --text-color-secondary: #5a5c69;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -12691,7 +12692,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .container-page {
-  padding: 3%;
+  padding: 1.5%;
 }
 
 .circle-number {
@@ -12744,4 +12745,8 @@ body.sidebar-toggled footer.sticky-footer {
 .promedio-anual{
   background-color: #f9e0a6;
   font-size: larger;
+}
+
+.dialog-blur {
+  filter: blur(5px);
 }

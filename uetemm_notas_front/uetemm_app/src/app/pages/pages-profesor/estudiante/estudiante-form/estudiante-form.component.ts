@@ -17,6 +17,7 @@ import { AsignarCursoComponent } from '../asignar-curso/asignar-curso.component'
 import { MessageService } from 'primeng/api';
 import { __values } from 'tslib';
 import { LoadingService } from '../../../../services/loading/loading.service';
+import { LoginService } from '../../../../services/auth/login.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -48,7 +49,9 @@ export class EstudianteFormComponent implements OnInit {
   representanteMadre: number = 1;
   representantePadre: number = 1;
   representanteAdicional: number = 0;
+  modalVisible = true;
 
+  userDataToken!: any
 
 
   /* serviciosBasicos: string[] = ['Luz Eléctrica', 'Agua Potable', 'Teléfono', 'Cable', 'Celular', 'Internet']; */
@@ -230,10 +233,26 @@ export class EstudianteFormComponent implements OnInit {
     public dialog: MatDialog,
     private messageServicePNG: MessageService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
+
+
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+        console.log('aasdasdasdasd', this.userDataToken)
+        if(this.userDataToken.role === 'ADMIN'){
+          this.modalVisible = false
+        }else{
+        }
+      },
+
+    })
+
     this.activatedRoute.params.subscribe((params) => {
       this.estudiante_id = +params['id']; // El signo '+' convierte el string a número
     });

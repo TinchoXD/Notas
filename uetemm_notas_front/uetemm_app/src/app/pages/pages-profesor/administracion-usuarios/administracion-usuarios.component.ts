@@ -36,6 +36,7 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
 
   sizes!: any[];
   selectedSize: any = { name: 'Small', class: 'p-datatable-sm' };
+  userDataToken!: any
 
   //usuarios!: User[];
   usuarios!: any[];
@@ -71,6 +72,13 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+      }
+    })
+
     this.userService.getAllUser().subscribe({
       next: (data) => {
         this.usuarios = data;

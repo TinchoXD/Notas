@@ -1,3 +1,4 @@
+<p-toast />
 <div class="container-page">
     <div class="card">
 
@@ -46,7 +47,7 @@
 
 
         <p-table #dtEstudiante [value]="estudiantes" dataKey="id" [resizableColumns]="true" [loading]="loading"
-            styleClass=" p-datatable-sm " [scrollable]="true" scrollHeight="625px"
+            styleClass=" p-datatable-sm " [scrollable]="true" scrollHeight="65vh"
             [globalFilterFields]="['apellidosNombres', 'cedula']" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="caption">
                 <div class="flex">
@@ -65,6 +66,10 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
+                    <button mat-mini-fab class="ml-3"
+                        matTooltip="Autoguardado: los cambios se aplicarán automáticamente al registrar la nota">
+                        <mat-icon>save</mat-icon>
+                    </button>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
@@ -229,40 +234,40 @@
 
                     <!-- ANIMACIÓN A LA LECTURA -->
                     <ng-container>
-                        <td class="borde-izq">
+                        <td class="borde-izq" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT1"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                                (onBlur)="changePageAnimacionLectura(estudianteRow)"/>
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT1)}">
                                 {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT1)}}</span>
                         </td>
-                        <td class="borde-izq-dotted">
+                        <td class="borde-izq-dotted" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT2"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                                (onBlur)="changePageAnimacionLectura(estudianteRow)" />
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT2)}">
                                 {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT2)}}</span>
                         </td>
-                        <td class="borde-izq-dotted">
+                        <td class="borde-izq-dotted" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT3"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                                (onInput)="changePageAnimacionLectura(estudianteRow)" />
+                                (onBlur)="changePageAnimacionLectura(estudianteRow)" />
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAnimacionLectura.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAnimacionLectura.calificacionT3)}">
                                 {{convertirCulitativo(estudianteRow?.notaAnimacionLectura.calificacionT3)}}</span>
                         </td>
-                        <td class="borde-izq-dotted" style="background-color: #A9D08E33">
+                        <td class="borde-izq-dotted" style="background-color: #A9D08E33; text-align: center">
                             <strong>{{
                                 redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 ,
                                 estudianteRow?.notaAnimacionLectura.calificacionT2 ,
@@ -271,7 +276,7 @@
                                 }}
                             </strong>
                         </td>
-                        <td style="background-color: #A9D08E33">
+                        <td style="background-color: #A9D08E33; text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3))}">
                                 {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1
@@ -283,23 +288,21 @@
 
                     <!-- ACOMPAÑAMIENTO INTEGRAL EN EL AULA -->
                     <ng-container>
-                        <td class="borde-izq">
+                        <td class="borde-izq" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
-                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
                                 (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}">
                                 {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1)}}</span>
                         </td>
-                        <td class="borde-izq-dotted">
+                        <td class="borde-izq-dotted" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
-                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
                                 (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
                         </td>
                         <td>
@@ -307,19 +310,18 @@
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}">
                                 {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2)}}</span>
                         </td>
-                        <td class="borde-izq-dotted">
+                        <td class="borde-izq-dotted" style="text-align: center">
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="1" [max]="10"
-                                (onInput)="changePageAcompaniamientoIntegralAula(estudianteRow)"
                                 (onBlur)="changePageAcompaniamientoIntegralAula(estudianteRow)" />
                         </td>
-                        <td>
+                        <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3), 'color': getNotaColorText(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}">
                                 {{convertirCulitativo(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)}}</span>
                         </td>
-                        <td class="borde-izq-dotted" style="background-color: #A9D08E33">
+                        <td class="borde-izq-dotted" style="background-color: #A9D08E33; text-align: center">
                             <strong>{{
                                 redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 ,
                                 estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 ,
@@ -328,7 +330,7 @@
                                 }}
                             </strong>
                         </td>
-                        <td style="background-color: #A9D08E33">
+                        <td style="background-color: #A9D08E33; text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
                                 [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT2 , estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT3))}">
                                 {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAcompaniamientoIntegralAula.calificacionT1
@@ -356,7 +358,7 @@
                             optionLabel="nombre" optionValue="value" placeholder="-"
                             (onChange)="changePageComportamiento(estudianteRow)" />
                     </td>
-                    <td style="background-color: #A9D08E33">
+                    <td style="background-color: #A9D08E33; text-align: center">
                         <span class="circle-nota-cualitativa ml-3"
                             [ngStyle]="{'background-color': getNotaComportamientoColorBackground(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3)), 'color': getNotaComportamientoColorText(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3))}">
                             {{convertirCualitativoComportamiento(redondear((estudianteRow.notaComportamiento.calificacionT1+estudianteRow.notaComportamiento.calificacionT2+estudianteRow.notaComportamiento.calificacionT3)/3))}}

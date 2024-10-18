@@ -42,8 +42,8 @@ export class DetalleCursoTutorComponent implements OnInit {
   notaEstudiante: any[] = [];
   userData: any = null;
 
-  aplicaSupletorio!: boolean
-  colSpanSupletorio!: number
+  aplicaSupletorio!: boolean;
+  colSpanSupletorio!: number;
 
   promedioAnualFrozen: boolean = false;
   nombresApellidoFrozen: boolean = true;
@@ -182,11 +182,11 @@ export class DetalleCursoTutorComponent implements OnInit {
     //*************************** CODIGO OPTIMIZADO *************************************/
     //***********************************************************************************/
     this.activatedRoute.params
-    .pipe(
-      switchMap((params) => {
-        this.curs_id = +params['id']; // Convierte el parámetro 'id' a número
-        return forkJoin([
-          this.cursoService.getCursoById(this.curs_id), // Obtiene el curso
+      .pipe(
+        switchMap((params) => {
+          this.curs_id = +params['id']; // Convierte el parámetro 'id' a número
+          return forkJoin([
+            this.cursoService.getCursoById(this.curs_id), // Obtiene el curso
             this.estudianteService.getEstudiantesByCursoId(this.curs_id), // Obtiene estudiantes
             this.cursoProfesorService.getCursoProfesorByCursoId(this.curs_id), // Obtiene profesores del curso
           ]);
@@ -194,19 +194,19 @@ export class DetalleCursoTutorComponent implements OnInit {
       )
       .subscribe({
         next: ([curso, estudiantes, cursosProfesor]) => {
-          this.curso = curso
-          
-          console.log('CURSO', curso)
-          console.log('this.curso', this.curso)
-          
+          this.curso = curso;
+
+          console.log('CURSO', curso);
+          console.log('this.curso', this.curso);
+
           //Validación de Nivel y Subnivel del Curso
           //************** CONDICION PARA MOSTRAR EL CAMPO DE SUPLETORIO *************/
-          if(this.curso.nivel.id === 123 && this.curso.subnivel.id === 99){
-           this.aplicaSupletorio = false
-           this.colSpanSupletorio = 9
+          if (this.curso.nivel.id === 123 && this.curso.subnivel.id === 99) {
+            this.aplicaSupletorio = false;
+            this.colSpanSupletorio = 9;
           } else {
-            this.aplicaSupletorio = true
-            this.colSpanSupletorio = 10
+            this.aplicaSupletorio = true;
+            this.colSpanSupletorio = 10;
           }
 
           this.estudiantes = estudiantes;
@@ -326,13 +326,13 @@ export class DetalleCursoTutorComponent implements OnInit {
   estado(estudiante: any, notaFinal: number) {
     // console.log(estudiante.estado)
     if (estudiante.estado === 0) {
-      return 'DESERTOR';
+      return 'Retirado';
     }
 
     if (notaFinal >= 7) {
       return 'Aprobado';
     } else if (notaFinal > 0) {
-      return 'Refuerzo Académico';
+      return 'Refuerzo \nAcadémico';
     }
     return '-';
   }
@@ -567,11 +567,17 @@ export class DetalleCursoTutorComponent implements OnInit {
       estu_id: notaAnimacionLecturaEstudiante.id,
       curs_id: this.curs_id,
       notaT1:
-        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT1,
+        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT1 > 10
+          ? 10
+          : notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT1,
       notaT2:
-        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT2,
+        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT2 > 10
+          ? 10
+          : notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT2,
       notaT3:
-        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT3,
+        notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT3 > 10
+          ? 10
+          : notaAnimacionLecturaEstudiante.notaAnimacionLectura.calificacionT3,
     };
     this.notaService.saveNotaAnimacionLectura(notaAnimacionLectura).subscribe({
       next: () => {},
@@ -600,13 +606,22 @@ export class DetalleCursoTutorComponent implements OnInit {
       curs_id: this.curs_id,
       notaT1:
         notaAcompaniamientoIntegralAulaEstudiante
-          .notaAcompaniamientoIntegralAula.calificacionT1,
+          .notaAcompaniamientoIntegralAula.calificacionT1 > 10
+          ? 10
+          : notaAcompaniamientoIntegralAulaEstudiante
+              .notaAcompaniamientoIntegralAula.calificacionT1,
       notaT2:
         notaAcompaniamientoIntegralAulaEstudiante
-          .notaAcompaniamientoIntegralAula.calificacionT2,
+          .notaAcompaniamientoIntegralAula.calificacionT2 > 10
+          ? 10
+          : notaAcompaniamientoIntegralAulaEstudiante
+              .notaAcompaniamientoIntegralAula.calificacionT2,
       notaT3:
         notaAcompaniamientoIntegralAulaEstudiante
-          .notaAcompaniamientoIntegralAula.calificacionT3,
+          .notaAcompaniamientoIntegralAula.calificacionT3 > 10
+          ? 10
+          : notaAcompaniamientoIntegralAulaEstudiante
+              .notaAcompaniamientoIntegralAula.calificacionT3,
     };
     this.notaService
       .saveNotaAcompaniamientoIntegralAula(notaAcompaniamientoIntegralAula)
@@ -629,9 +644,18 @@ export class DetalleCursoTutorComponent implements OnInit {
     const notaComportamiento = {
       estu_id: notaComportamientoEstudiante.id,
       curs_id: this.curs_id,
-      notaT1: notaComportamientoEstudiante.notaComportamiento.calificacionT1,
-      notaT2: notaComportamientoEstudiante.notaComportamiento.calificacionT2,
-      notaT3: notaComportamientoEstudiante.notaComportamiento.calificacionT3,
+      notaT1:
+        notaComportamientoEstudiante.notaComportamiento.calificacionT1 > 4
+          ? 4
+          : notaComportamientoEstudiante.notaComportamiento.calificacionT1,
+      notaT2:
+        notaComportamientoEstudiante.notaComportamiento.calificacionT2 > 4
+          ? 4
+          : notaComportamientoEstudiante.notaComportamiento.calificacionT2,
+      notaT3:
+        notaComportamientoEstudiante.notaComportamiento.calificacionT3 > 4
+          ? 4
+          : notaComportamientoEstudiante.notaComportamiento.calificacionT3,
     };
     this.notaService.saveNotaComportamiento(notaComportamiento).subscribe({
       next: () => {},

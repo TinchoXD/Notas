@@ -22,7 +22,7 @@ export class EstudianteComponent implements OnInit {
   submitted: boolean = false;
   color: ThemePalette = 'primary';
   loading: boolean = true;
-
+  userDataToken!: any
   estudiante!: any;
   estudiantes!: any[];
   checked: boolean = true;
@@ -47,6 +47,12 @@ export class EstudianteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+      }
+    })
 
     this.loginService.userData.subscribe((token) => {
       if (token) {

@@ -54,6 +54,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   checked: boolean = true;
   value: number = 50;
+
+  modalVisible = true;
+
+  userDataToken!: any
   /* public resetPasswordRequest: PasswordRequest */
   public resetPasswordRequest: PasswordRequest = {
     id: 0,
@@ -83,6 +87,18 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+        console.log('aasdasdasdasd', this.userDataToken)
+        if(this.userDataToken.role === 'ADMIN'){
+          this.modalVisible = false
+        }else{
+        }
+      },
+
+    })
 
     this.roles=[
       {value: 1, nombre: 'Administrador'},

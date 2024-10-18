@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   errorMessage: String = '';
   user?: User;
   value!: number;
+  userDataToken!: any
 
   userData: any = null;
   private subscription: Subscription = new Subscription();
@@ -38,6 +39,13 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next:(userDataToken)=>{
+        this.userDataToken = this.loginService.decodeToken(userDataToken)
+        console.log('userDataToken',this.userDataToken)
+      }
+    })
 
     
     this.userService.getUser(this.loginService.userToken).subscribe({

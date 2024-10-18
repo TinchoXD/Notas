@@ -69,7 +69,7 @@ public class User implements UserDetails {
     public Catalogo user_nivel_educacion;
     @ManyToOne
     @JoinColumn(name = "user_categoria", nullable = true)
-    public Catalogo user_categoria;
+    public Catalogo user_categoria; 
     @ManyToOne
     @JoinColumn(name = "user_grupo_etnico", nullable = true)
     public Catalogo user_grupo_etnico;

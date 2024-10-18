@@ -159,11 +159,7 @@ export class LoginService {
     return this.currentUserData.value;
   }
 
-  // Retornar Rol del usurio
-  get userRol(): Observable<string>{
-    
-    return new Observable
-  }
+
 
   getuserIdsession(): number {
     return this.userId;

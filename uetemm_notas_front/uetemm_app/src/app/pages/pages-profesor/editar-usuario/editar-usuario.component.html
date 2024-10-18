@@ -1,4 +1,4 @@
-<div class="container-page">
+<div class="container-page" [ngClass]="{'dialog-blur': modalVisible }">
     <div class="card">
         <section>
             <div class="div-button-row">
@@ -11,23 +11,16 @@
                 </div>
             </div>
         </section>
-
         <form [formGroup]="userDetailsForm">
             <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
-
             <div class="row">
                 <div class="col-md-10">
                     <p style="font-size: x-large;">Informacion Personal</p>
                 </div>
                 <div class="col-md-2 mt-4">
-
                 </div>
             </div>
-
-
             <div class="grid nested-grid">
-
-
                 <div class="col-8">
                     <div class="grid">
                         <div class="col-6">
@@ -60,7 +53,7 @@
                                     <!--  @if (username.invalid) {
                                             <mat-error> {{errorRequiredMessage}}</mat-error>
                                             } -->
-                                </mat-form-field ><button mat-mini-fab class="ml-3" [color]="color"
+                                </mat-form-field><button mat-mini-fab class="ml-3" [color]="color"
                                     matTooltip="El número de cédula corresponde a su nombre de usuario">
                                     <mat-icon>info</mat-icon>
                                 </button>
@@ -70,10 +63,8 @@
                             <div class="">
                                 <mat-form-field style="width: 100%;" appearance="outline">
                                     <mat-label>Rol</mat-label>
-                                    <mat-select formControlName="rol"
-                                        >
-                                        <mat-option
-                                            *ngFor="let rol of roles"
+                                    <mat-select formControlName="rol">
+                                        <mat-option *ngFor="let rol of roles"
                                             [value]="rol.value">{{rol.nombre}}</mat-option>
                                     </mat-select>
                                     <span matTextPrefix class="input-icon">
@@ -113,13 +104,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="div-button-row pt-1">
-
                                     <button pButton pRipple [raised]="true" label="Restablecer" icon="pi pi-refresh"
                                         class="p-button-success" (click)="dialogoResetearContrasenia()"
                                         severity="warning">
                                     </button>
-
-
                                 </div>
                             </div>
                         </div>
@@ -127,39 +115,23 @@
                 </div>
             </div>
         </form>
-
-
-
         <form [formGroup]="userDetailsForm">
             <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
             <fieldset>
-
-
                 <div class="row mt-3">
                     <div class="col-md-3">
-
                     </div>
                     <div class="col-md-3">
-
                     </div>
                     <div class="col-md-3">
-
                     </div>
-
                     <div class="col-md-3">
-
                     </div>
                 </div>
             </fieldset>
         </form>
-
-
-
-
         <p-divider />
-
         <p style="font-size: x-large;">Asignar Cursos</p>
-
         <p-toolbar styleClass="mb-4 gap-2">
             <ng-template pTemplate="left">
                 <span class="p-input-icon-left">
@@ -172,7 +144,6 @@
                 <p-button icon="pi pi-plus" class="mr-2" label="Asignar Curso" (click)="dialogAgregarCursoProfesor()" />
             </ng-template>
         </p-toolbar>
-
         <p-table #dt [value]="cursosProfesor" [rows]="20" [paginator]="true" styleClass="p-datatable-sm"
             [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'asignatura.nombre'] "
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
@@ -180,7 +151,7 @@
             [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
             <ng-template pTemplate="header">
                 <tr>
-                    <th >
+                    <th>
                         id
                     </th>
                     <th pSortableColumn="codigo">
@@ -209,7 +180,6 @@
                     </th>
                 </tr>
             </ng-template>
-
             <ng-template pTemplate="body" let-cursoProfesorRow>
                 <tr>
                     <td>
@@ -242,24 +212,7 @@
                     </td>
                 </tr>
             </ng-template>
-
-
         </p-table>
-
-
-        <p-divider />
-
-
-
-
-
-
-        <p-divider />
-
-
-
-
-        <p> el id es {{userId}}</p>
         <div class="container mt-5 text-center">
             <div class="row">
                 <div class="btn-group">
@@ -274,3 +227,19 @@
         </div>
     </div>
 </div>
+
+<p-dialog [(visible)]="modalVisible" [modal]="true" [closable]="false"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '25vw' }" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <i class='pi pi-exclamation-triangle' style='margin-right: 8px; color: orange;'></i>
+            <span class="font-bold white-space-nowrap">
+                Acceso Denegado
+            </span>
+        </div>
+    </ng-template>
+    <p>
+        Su rol de usuario no le permite visualizar esta página
+    </p>
+</p-dialog>

@@ -19,7 +19,7 @@
 
             <ng-template pTemplate="right">
 
-                <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCurso()" />
+                <p-button *ngIf="userDataToken.role === 'ADMIN'" icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCurso()" />
 
 
             </ng-template>
@@ -29,7 +29,7 @@
 
         <p-table #dt [value]="cursos" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
             [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'descripcion', 'codigo'] "
-            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20, 50, 100]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
             <ng-template pTemplate="header">
@@ -62,7 +62,7 @@
                         Código <p-sortIcon field="codigo" />
                     </th>
 
-                    <th>
+                    <th *ngIf="userDataToken.role === 'ADMIN'" >
                         Acciones
                     </th>
                 </tr>
@@ -99,7 +99,7 @@
                     </td>
 
 
-                    <td>
+                    <td *ngIf="userDataToken.role === 'ADMIN'" >
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Curso" class="mr-2" (click)="editarCurso(cursoRow)" />
                         <!-- <p-button pRipple icon="pi pi-trash" severity="warning" [rounded]="true" [outlined]="true"

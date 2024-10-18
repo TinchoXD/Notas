@@ -100,7 +100,7 @@
                 <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" />
             </ng-template>
             <ng-template pTemplate="right">
-                <p-button icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarUsuario()" />
+                <p-button *ngIf="userDataToken.role === 'ADMIN'"  icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarUsuario()" />
             </ng-template>
         </p-toolbar>
 
@@ -137,7 +137,7 @@
                     <th pSortableColumn="cursosCodigos">
                         Cursos <p-sortIcon field="cursosCodigos" />
                     </th>
-                    <th>
+                    <th *ngIf="userDataToken.role === 'ADMIN'" >
                         Acciones
                     </th>
                 </tr>
@@ -175,7 +175,7 @@
                 </p> -->
                         {{userRow.cursosCodigos}}
                     </td>
-                    <td>
+                    <td *ngIf="userDataToken.role === 'ADMIN'" >
 
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)"></p-button>

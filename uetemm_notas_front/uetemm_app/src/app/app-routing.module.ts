@@ -29,6 +29,7 @@ const routes: Routes = [
   //{ path: '**', component: PageNotFoundComponent },
 
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+  { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
   { path: 'inicio2', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'informacion-personal', component: UserDetailsComponent, canActivate: [authGuard] },
   { path: 'actualizar-contrasena', component: CambiarContrasenaComponent, canActivate: [authGuard] },
@@ -42,7 +43,6 @@ const routes: Routes = [
   { path: 'mis-cursos/curso/:id', component: DetalleCursoProfesorComponent, canActivate: [authGuard] },
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
-  { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
   { path: 'notfound', component: PageNotFoundComponent, canActivate: [authGuard] },
 
   { path: '**', redirectTo: '/notfound' },

@@ -62,7 +62,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
     private estudianteService: EstudianteService,
     private notaService: NotaService,
     private messageServicePNG: MessageService,
-    private calificacionService: CalificacionService,
+    private calificacionService: CalificacionService
   ) {}
 
   ngOnInit(): void {
@@ -167,14 +167,16 @@ export class DetalleCursoProfesorComponent implements OnInit {
     const nota = {
       estu_id: notaEstudiante.id,
       cupr_id: this.cursoProfesor_id,
-      notaT1: notaEstudiante.notaT1,
-      notaT2: notaEstudiante.notaT2,
-      notaT3: notaEstudiante.notaT3,
-      notaSupletorio: notaEstudiante.notaSupletorio,
+      notaT1: notaEstudiante.notaT1 > 10 ? 10 : notaEstudiante.notaT1,
+      notaT2: notaEstudiante.notaT2 > 10 ? 10 : notaEstudiante.notaT2,
+      notaT3: notaEstudiante.notaT3 > 10 ? 10 : notaEstudiante.notaT3,
+      notaSupletorio:
+        notaEstudiante.notaSupletorio > 10 ? 10 : notaEstudiante.notaSupletorio,
     };
     console.log('AAA', nota);
     this.notaService.saveNota(nota).subscribe({
-      next: (res) => {
+      next: () => {},
+      complete: () => {
         this.messageServicePNG.add({
           severity: 'success',
           summary: 'OK',
@@ -185,26 +187,24 @@ export class DetalleCursoProfesorComponent implements OnInit {
   }
 
   convertirCulitativo(nota: number): string {
-    return this.calificacionService.convertirCualitativo(nota)
+    return this.calificacionService.convertirCualitativo(nota);
   }
 
   getNotaColorBackground(nota: number): string {
-    return this.calificacionService.getNotaColorBackground(nota)
+    return this.calificacionService.getNotaColorBackground(nota);
   }
 
   getNotaColorText(nota: number): string {
-   return this.calificacionService.getNotaColorText(nota)
+    return this.calificacionService.getNotaColorText(nota);
   }
-  
-  redondear(nota: number): number {
-    return this.calificacionService.redondear(nota)
-  }
-  
-  redondearNotaFinal(t1: number, t2: number, t3: number): number {
-   return this.calificacionService.redondearNotaFinal(t1,t2,t3)
-  }
-  
 
+  redondear(nota: number): number {
+    return this.calificacionService.redondear(nota);
+  }
+
+  redondearNotaFinal(t1: number, t2: number, t3: number): number {
+    return this.calificacionService.redondearNotaFinal(t1, t2, t3);
+  }
 
   changePage(notaEstudiante: any) {
     this.guardarNota(notaEstudiante);
@@ -363,12 +363,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
         fontSize: 8, // Tamaño de fuente por defecto
       },
     };
-
     // Genera y guarda el archivo PDF
     pdfMake
       .createPdf(documentDefinition)
       .download(`estudiantes_export_${new Date().getTime()}.pdf`);
   }
-
-  
 }

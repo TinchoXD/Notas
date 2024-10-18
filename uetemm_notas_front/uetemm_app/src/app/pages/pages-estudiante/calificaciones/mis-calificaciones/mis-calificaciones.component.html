@@ -13,8 +13,6 @@
             </div>
         </section>
 
-        <p-divider />
-
         <div class="grid">
             <div class="col">
                 <div class="field">
@@ -48,104 +46,124 @@
             </div>
         </div>
 
-        <p-divider />
 
-        <p-table #dt [value]="notas" [rows]="50" [paginator]="true" styleClass="p-datatable-sm p-datatable-striped"
-            [globalFilterFields]="['']" [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+        <p-table #dt [value]="notas" [rows]="50" styleClass="p-datatable-sm p-datatable-striped"
+            [globalFilterFields]="['']" [tableStyle]="{ 'min-width': '75rem' }" dataKey="id"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
-
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportarPDF()"
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                </div>
+            </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="cursoProfesor.asignatura.nombre">
+                    <th style="text-align: center; background-color: #d1d6fa">
+                        #
+                    </th>
+                    <th pSortableColumn="cursoProfesor.asignatura.nombre"
+                        style="text-align: center; background-color: #d1d6fa">
                         Asignatura <p-sortIcon field="cursoProfesor.asignatura.nombre" />
                     </th>
-                    <th pSortableColumn="profesor">
+                    <th pSortableColumn="profesor" style="text-align: center; background-color: #d1d6fa">
                         Profesor <p-sortIcon field="profesor" />
                     </th>
-                    <th pSortableColumn="calificacionT1">
+                    <th pSortableColumn="calificacionT1" colspan="2"
+                        style="text-align: center; background-color: #d1d6fa">
                         Trimestre I <p-sortIcon field="calificacionT1" />
                     </th>
-                    <th>
-
-                    </th>
-                    <th pSortableColumn="calificacionT2">
+                    <th pSortableColumn="calificacionT2" colspan="2"
+                        style="text-align: center; background-color: #d1d6fa">
                         Trimestre II <p-sortIcon field="calificacionT2" />
                     </th>
-                    <th>
-
-                    </th>
-                    <th pSortableColumn="calificacionT3">
+                    <th pSortableColumn="calificacionT3" colspan="2"
+                        style="text-align: center; background-color: #d1d6fa">
                         Trimestre III <p-sortIcon field="calificacionT3" />
                     </th>
-                    <th>
-
+                    <th pSortableColumn="calificacionFinal" style="text-align: center; background-color: #d1d6fa">
+                        Promedio Final <p-sortIcon field="calificacionFinal" />
                     </th>
-                    <th pSortableColumn="calificacionFinal">
-                        Calificación Final <p-sortIcon field="calificacionFinal" />
-                    </th>
-                    <th pSortableColumn="calificacionSupletorio">
+                    <th pSortableColumn="calificacionSupletorio" style="text-align: center; background-color: #d1d6fa">
                         Supletorio <p-sortIcon field="calificacionSupletorio" />
                     </th>
-                    <th >
+                    <th style="text-align: center; background-color: #d1d6fa">
                         Estado
                     </th>
                 </tr>
             </ng-template>
-
-            <ng-template pTemplate="body" let-notaRow>
+            <ng-template pTemplate="body" let-notaRow let-rowIndex="rowIndex">
                 <tr [ngClass]="{'user-disabled': notaRow.user_estado_usuario === 0}">
+                    <td>
+                        {{rowIndex+1}}
+                    </td>
                     <td class="p-4">
-                        {{ notaRow.cursoProfesor.asignatura.nombre }}
+                        {{ notaRow.cursoProfesor?.asignatura.nombre}}
                     </td>
                     <td>
-                        {{ notaRow.cursoProfesor.user.firstname }} {{ notaRow.cursoProfesor.user.lastname }}
+                        {{ notaRow.cursoProfesor?.user?.firstname }} {{ notaRow.cursoProfesor?.user?.lastname }}
                     </td>
                     <td style="text-align: center;" class="borde-izq">
-                        {{ notaRow.calificacionT1 | number:'1.2-2'}}
+                        {{ redondear(notaRow.calificacionT1) | number:'1.1-1'}}
                     </td>
                     <td>
 
                         <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre !== 'Comportamiento'"
                             [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT1), 'color': getNotaColorText(notaRow.calificacionT1)}">
-                            {{ convertirCulitativo(notaRow.calificacionT1) }}</span>
+                            {{ convertirCulitativo(notaRow.calificacionT1) }} </span>
+
+                        <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre === 'Comportamiento'"
+                            [ngStyle]="{'background-color': getNotaComportamientoColorBackground(notaRow.calificacionT1), 'color': getNotaComportamientoColorText(notaRow.calificacionT1)}">
+                            {{ convertirCualitativoComportamiento(notaRow.calificacionT1) }} </span>
 
                     </td>
                     <td style="text-align: center;" class="borde-izq">
-                        {{ notaRow.calificacionT2 | number:'1.2-2' }}
+                        {{ redondear(notaRow.calificacionT2) | number:'1.1-1' }}
                     </td>
                     <td>
                         <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre !== 'Comportamiento'"
                             [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT2), 'color': getNotaColorText(notaRow.calificacionT2)}">
                             {{ convertirCulitativo(notaRow.calificacionT2) }}</span>
-
+                        <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre === 'Comportamiento'"
+                            [ngStyle]="{'background-color': getNotaComportamientoColorBackground(notaRow.calificacionT2), 'color': getNotaComportamientoColorText(notaRow.calificacionT2)}">
+                            {{ convertirCualitativoComportamiento(notaRow.calificacionT2) }}</span>
                     </td>
                     <td style="text-align: center;" class="borde-izq">
-                        {{ notaRow.calificacionT3 | number:'1.2-2' }}
+                        {{ redondear(notaRow.calificacionT3) | number:'1.1-1' }}
                     </td>
                     <td>
                         <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre !== 'Comportamiento'"
                             [ngStyle]="{'background-color': getNotaColorBackground(notaRow.calificacionT3), 'color': getNotaColorText(notaRow.calificacionT3)}">
                             {{ convertirCulitativo(notaRow.calificacionT3) }}</span>
+                        <span class="circle-nota-cualitativa ml-3"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre === 'Comportamiento'"
+                            [ngStyle]="{'background-color': getNotaComportamientoColorBackground(notaRow.calificacionT3), 'color': getNotaComportamientoColorText(notaRow.calificacionT3)}">
+                            {{ convertirCualitativoComportamiento(notaRow.calificacionT3) }}</span>
                     </td>
                     <td style="text-align: center;" class="borde-izq">
-                        <strong> {{ (notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3 | number:'1.2-2'}}</strong>
+                        <strong> {{ redondear((notaRow.calificacionT1+ notaRow.calificacionT2+
+                            notaRow.calificacionT3)/3) | number:'1.1-1'}}</strong>
                     </td>
                     <td style="text-align: center;">
-                        {{ notaRow.calificacionSupletorio }}
+                        {{ notaRow.calificacionSupletorio === 0 ? 'N/A' : notaRow.calificacionSupletorio }}
                     </td>
-                    <td>
+                    <td style="text-align: center; ">
                         <span class="p-1"
+                            *ngIf="notaRow.cursoProfesor?.asignatura.nombre !== 'Comportamiento' && notaRow.cursoProfesor?.asignatura.nombre !== 'Acompañamiento Integral en el Aula' && notaRow.cursoProfesor?.asignatura.nombre !== 'Animación a la Lectura'"
                             [ngStyle]="{'background-color': estadoColorBackground(notaRow, (notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3), 'color': estadoColorText(notaRow,(notaRow.calificacionT1+ notaRow.calificacionT2+ notaRow.calificacionT3)/3)}">
                             {{estado(notaRow, (notaRow.calificacionT1+ notaRow.calificacionT2+
                             notaRow.calificacionT3)/3)}}</span>
-
                     </td>
-
                 </tr>
             </ng-template>
-
         </p-table>
-
+        <div style=" text-align: center;">
+            <p>S - SIEMPRE  |   F - FRECUENTEMENTE  |   O - OCASIONALMENTE   |  N - NUNCA</p>
+        </div>
     </div>
 </div>

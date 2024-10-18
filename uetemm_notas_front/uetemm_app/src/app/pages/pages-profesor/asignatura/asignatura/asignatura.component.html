@@ -19,7 +19,7 @@
                         </span>
                     </ng-template>
                     <ng-template pTemplate="right">
-                        <p-button icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarAsignatura()"/>
+                        <p-button  icon="pi pi-plus" class="mr-2" label="Nuevo"  (click)="dialogAgregarAsignatura()" *ngIf="userDataToken.role === 'ADMIN'"/>
                     </ng-template>
                 </p-toolbar>
                 <p-table #dt [value]="asignaturas" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
@@ -33,7 +33,7 @@
                             <th pSortableColumn="nombre">
                                 Asignatura <p-sortIcon field="nombre" />
                             </th>
-                            <th>
+                            <th *ngIf="userDataToken.role === 'ADMIN'">
                                 Acciones
                             </th>
                         </tr>
@@ -44,7 +44,7 @@
                             <td>
                                 {{ asignaturaRow.nombre }}
                             </td>
-                            <td>
+                            <td *ngIf="userDataToken.role === 'ADMIN'">
                                 <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true"
                                     [outlined]="true" pTooltip="Editar Asignatura" class="mr-2"
                                     (click)="editarAsignatura(asignaturaRow)" />

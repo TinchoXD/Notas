@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
         this.userData = this.loginService.decodeToken(token);
         this.loginService.verificarCambioDeContrasenia(this.userData)
 
-        console.log('ROL del Usuario', this.userData)
+        console.log('userData 123123123', this.userData)
 
       }
     });
