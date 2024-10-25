@@ -12723,7 +12723,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 
 .borde-izq {
-  border-left: 2px solid gray;
+  border-left: 1px dotted gray;
 }
 
 .borde-der {

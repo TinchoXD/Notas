@@ -259,7 +259,7 @@ export class DetalleCursoTutorComponent implements OnInit {
                         notaT1: notas?.calificacionT1 || 0,
                         notaT2: notas?.calificacionT2 || 0,
                         notaT3: notas?.calificacionT3 || 0,
-                        supletorio: notas?.calificacionSupletorio || null,
+                        supletorio: notas?.calificacionSupletorio || '-',
                       }))
                     )
                 )
@@ -274,20 +274,20 @@ export class DetalleCursoTutorComponent implements OnInit {
                 ]) => {
                   // Asigna todas las notas al estudiante
                   estudiante.notaAnimacionLectura = notaAnimacionLectura || {
-                    calificacionT1: 0,
-                    calificacionT2: 0,
-                    calificacionT3: 0,
+                    calificacionT1: null,
+                    calificacionT2: null,
+                    calificacionT3: null,
                   };
                   estudiante.notaAcompaniamientoIntegralAula =
                     notaAcompaniamientoIntegralAula || {
-                      calificacionT1: 0,
-                      calificacionT2: 0,
-                      calificacionT3: 0,
+                      calificacionT1: null,
+                      calificacionT2: null,
+                      calificacionT3: null,
                     };
                   estudiante.notaComportamiento = notaComportamiento || {
-                    calificacionT1: 0,
-                    calificacionT2: 0,
-                    calificacionT3: 0,
+                    calificacionT1: null,
+                    calificacionT2: null,
+                    calificacionT3: null,
                   };
                   estudiante.notas = notasCurso;
                   // Calcular promedio del estudiante

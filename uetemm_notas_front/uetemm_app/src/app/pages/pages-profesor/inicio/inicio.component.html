@@ -1,7 +1,9 @@
 <div class="container-page">
     <div class="card">
-        mis Cursos
-        <div class="grid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-right">Mis Cursos</h5>
+        </div>
+        <!-- <div class="grid">
             <div class="col-4" style="background-color: #ffffff00;"
                 *ngFor="let cursoProfesor of cursosProfesor; let index = index">
                 <div class=" p-3 border-round-sm">
@@ -25,32 +27,30 @@
                     </p-card>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="grid">
-            <div class="col-4" style="background-color: #ffffff00;" *ngFor="let curso of asignaturasPorCurso | keyvalue">
-              <p-card styleClass="shadow-5">
-                <ng-template pTemplate="header">
-                  <div [style]="{'min-height': '0rem'}" class="p-4 border-round-sm" style="background-color: #929FDD;">
-                    <p style="font-size: medium;"><strong> {{ curso.key }}</strong></p>
-                  </div>
-                </ng-template>
-                <ng-container>
-                  <div
-                    class="mb-1"
-                    *ngFor="let asignatura of curso.value"
-                    (click)="navegarADetalle(asignatura.cursoProfesor_id)"
-                    style="cursor: pointer;"
-                  >
-                    <i class="pi pi-angle-right" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
-                  </div>
-                </ng-container>
-              </p-card>
+            <div class="col-4" style="background-color: #ffffff00;"
+                *ngFor="let curso of asignaturasPorCurso | keyvalue">
+                <p-card styleClass="shadow-5">
+                    <ng-template pTemplate="header">
+                        <div [style]="{'min-height': '0rem'}" class="p-4 border-round-sm"
+                            style="background-color: #4456b9; color: white;">
+                            <p style="font-size: medium;"><strong> <i class="pi pi-book" style="font-size: 1.5rem"></i> {{ curso.key }}</strong></p>
+                        </div>
+                    </ng-template>
+                    <ng-container>
+                        <div class="mb-1" *ngFor="let asignatura of curso.value" matTooltip="Ver curso"
+                            (click)="navegarADetalle(asignatura.cursoProfesor_id)" style="cursor: pointer;">
+                            <i class="pi pi-angle-right" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
+                        </div>
+                    </ng-container>
+                </p-card>
             </div>
-          </div>
+        </div>
 
 
         <div class="grid">
-            <div class="col-6" *ngFor="let cursoProfesor of cursosProfesor; let i = index">
+            <div class="col-4" *ngFor="let cursoProfesor of cursosProfesor; let i = index">
                 <div class="card">
                     <h5>{{cursoProfesor.asignatura.nombre}}</h5>
                     <p-chart type="line" [data]="data[i]" [options]="options" />

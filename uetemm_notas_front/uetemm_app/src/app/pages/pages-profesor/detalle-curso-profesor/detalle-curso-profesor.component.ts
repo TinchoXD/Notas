@@ -54,6 +54,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
   cupr_id: any;
   notaColor: string = '#aaaaaa55';
 
+  aplicaSupletorio!: boolean;
+  colSpanSupletorio!: number;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: ActivatedRoute,
@@ -86,12 +89,40 @@ export class DetalleCursoProfesorComponent implements OnInit {
             console.log('aaaa', this.cursoProfesor);
             this.cupr_id = this.cursoProfesor.id;
 
+            if (
+              this.cursoProfesor.curso.nivel.nombre ===
+              'Educación General Básica'
+            ) {
+              if (
+                this.cursoProfesor.curso.grado.nombre === '4to' ||
+                this.cursoProfesor.curso.grado.nombre === '5to' ||
+                this.cursoProfesor.curso.grado.nombre === '6to' ||
+                this.cursoProfesor.curso.grado.nombre === '7mo' ||
+                this.cursoProfesor.curso.grado.nombre === '8vo' ||
+                this.cursoProfesor.curso.grado.nombre === '9no' ||
+                this.cursoProfesor.curso.grado.nombre === '10mo'
+              ) {
+                this.aplicaSupletorio = true;
+                alert('aplica supletorio ' + this.aplicaSupletorio)
+              } else {
+                this.aplicaSupletorio = false;
+                alert('aplica supletorio ' + this.aplicaSupletorio)
+              }
+            } else if (
+              this.cursoProfesor.curso.nivel.nombre === 'Bachillerato Técnico'
+            ) {
+              this.aplicaSupletorio = true;
+              alert('aplica supletorio ' + this.aplicaSupletorio)
+            } else {
+              this.aplicaSupletorio = false;
+              alert('aplica supletorio ' + this.aplicaSupletorio)
+            }
+
             this.estudianteService
               .getEstudiantesByCursoId(this.cursoProfesor.curso.id)
               .subscribe({
                 next: (estudiantes) => {
                   this.estudiantes = estudiantes;
-                  console.log('bbbb', this.estudiantes);
 
                   this.estudiantes.forEach((estudiante) => {
                     this.notaService
@@ -215,19 +246,33 @@ export class DetalleCursoProfesorComponent implements OnInit {
 
   // Método para exportar a Excel
   exportExcel() {
-    // Mapea los datos de los estudiantes para incluir solo los campos necesarios
-    const filteredData = this.estudiantes.map((estudiante) => ({
-      apellidosNombres: estudiante.apellidosNombres,
-      cedula: estudiante.cedula,
-      notaT1: estudiante.notaT1,
-      notaT2: estudiante.notaT2,
-      notaT3: estudiante.notaT3,
-      notaFinal: estudiante.notaFinal
-        ? estudiante.notaFinal.toFixed(2).replace('.', ',')
-        : '',
-      //      notaFinal: estudiante.notaFinal !== undefined ? estudiante.notaFinal.toFixed(2) : '',
-      notaSupletorio: estudiante.notaSupletorio,
-    }));
+    let filteredData
+
+    if(this.aplicaSupletorio){
+      filteredData = this.estudiantes.map((estudiante) => ({
+        apellidosNombres: estudiante.apellidosNombres,
+        cedula: estudiante.cedula,
+        notaT1: estudiante.notaT1,
+        notaT2: estudiante.notaT2,
+        notaT3: estudiante.notaT3,
+        notaFinal: estudiante.notaFinal
+          ? estudiante.notaFinal.toFixed(1).replace('.', ',')
+          : '',
+        columnaSupletorio: estudiante.notaSupletorio,
+      }));
+    } else {
+      filteredData = this.estudiantes.map((estudiante) => ({
+        apellidosNombres: estudiante.apellidosNombres,
+        cedula: estudiante.cedula,
+        notaT1: estudiante.notaT1,
+        notaT2: estudiante.notaT2,
+        notaT3: estudiante.notaT3,
+        notaFinal: estudiante.notaFinal
+          ? estudiante.notaFinal.toFixed(1).replace('.', ',')
+          : '',
+      }));
+    }
+ 
 
     // Crea una hoja de Excel a partir de los datos filtrados
     const worksheet = XLSX.utils.json_to_sheet(filteredData);
@@ -306,7 +351,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
         {
           table: {
             headerRows: 1,
-            widths: [20, 180, 60, 25, 25, 25, 25, 40, 40], // Anchos de las columnas en píxeles
+            widths: this.aplicaSupletorio ? [20, 180, 60, 25, 25, 25, 25, 40, 40] : [20, 185, 65, 30, 30, 30, 30, 45], // Anchos de las columnas en píxeles
             body: [
               [
                 'No.',
@@ -316,7 +361,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
                 'Nota T2',
                 'Nota T3',
                 'Nota Final',
-                'Supletorio',
+                this.aplicaSupletorio ? 'Supletorio' : null,
               ],
               ...filteredData.map((estudiante, index) =>
                 [
@@ -335,9 +380,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
                         (estudiante.NotaT3 || 0)) /
                       3
                     : '-',
-                  estudiante.NotaSupletorio,
+                  this.aplicaSupletorio ? estudiante.NotaSupletorio : null,
                 ].map((cell) =>
-                  typeof cell === 'number' ? cell.toFixed(2) : cell
+                  typeof cell === 'number' ? cell.toFixed(1) : cell
                 )
               ),
             ],

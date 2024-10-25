@@ -123,9 +123,9 @@ private agruparAsignaturasPorCurso(
   cursosProfesor.forEach((cursoProfesor) => {
     const nombreCurso =
       cursoProfesor.curso.grado.nombre +
-      ' ' +
+      ' "' +
       cursoProfesor.curso.paralelo.nombre +
-      ' de ' +
+      '" de ' +
       cursoProfesor.curso.nivel.nombre +
       ' Jornada: ' +
       cursoProfesor.curso.jornada.nombre +

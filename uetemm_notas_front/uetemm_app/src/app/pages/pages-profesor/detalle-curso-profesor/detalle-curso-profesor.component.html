@@ -51,7 +51,7 @@
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
                         class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                     <div style="text-align: center; align-content: center;">
-                        <p>{{cursoProfesor?.asignatura.nombre}}</p>
+                        <h3>{{cursoProfesor?.asignatura.nombre}}</h3>
                     </div>
 
                     <p-iconField iconPosition="left" class="ml-auto">
@@ -94,7 +94,7 @@
                         Promedio <p-sortIcon field="notaFinal" />
                     </th>
 
-                    <th pSortableColumn="notaSupletorio" style="text-align: center;">
+                    <th *ngIf="aplicaSupletorio" pSortableColumn="notaSupletorio" style="text-align: center;">
                         Supletorio<p-sortIcon field="notaSupletorio" />
                     </th>
                 </tr>
@@ -155,7 +155,7 @@
                             {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}</span>
                     </td>
 
-                    <td class="borde-izq" style="text-align: center;">
+                    <td *ngIf="aplicaSupletorio" class="borde-izq" style="text-align: center;">
                         <p-inputNumber [(ngModel)]="estudianteRow.notaSupletorio" mode="decimal" [minFractionDigits]="1"
                             styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onBlur)="changePage(estudianteRow)" />
