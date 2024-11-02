@@ -62,6 +62,10 @@ export class CursoProfesorService {
   reasignarCursoProfesor(cursoProfesor: any){
     return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/reasignarCursoProfesor', cursoProfesor)
   }
+  
+  eliminarCursoProfesor(cursoProfesor: any){
+    return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/eliminarCursoProfesor', cursoProfesor)
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

@@ -4,6 +4,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { ThemePalette } from '@angular/material/core';
 import { CursoProfesorService } from '../../../../services/cursoProfesor/curso-profesor.service';
 import Swal from 'sweetalert2';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-reasignar-curso-profesor',
@@ -15,6 +16,7 @@ export class ReasignarCursoProfesorComponent implements OnInit {
   users: any[] = [];
   userSelected!: any;
   color: ThemePalette = 'primary';
+  error = false;
 
   ngOnInit(): void {
     this.cursoProfesor = this.data;
@@ -30,7 +32,8 @@ export class ReasignarCursoProfesorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ReasignarCursoProfesorComponent>,
     private userService: UserService,
-    private cursoProfesorService: CursoProfesorService
+    private cursoProfesorService: CursoProfesorService,
+    private messageServicePNG: MessageService,
   ) {}
 
   onCancel() {
@@ -39,8 +42,9 @@ export class ReasignarCursoProfesorComponent implements OnInit {
   }
 
   reasignar() {
+    
     if (this.userSelected?.id > 0) {
-
+      this.error = false
       Swal.fire({
         title: "¿Reasigar la asigntatura al nuevo profesor?",
         //showDenyButton: true,
@@ -62,7 +66,7 @@ export class ReasignarCursoProfesorComponent implements OnInit {
         .subscribe({
           next: (res) => {
             if(res){
-              Swal.fire("Materias reasignada!", "", "success");
+              Swal.fire("Materia reasignada!", "", "success");
               this.dialogRef.close();
               this.userSelected = {};
             }
@@ -76,6 +80,15 @@ export class ReasignarCursoProfesorComponent implements OnInit {
 
       
     } else {
+
+      this.error = true
+
+      this.messageServicePNG.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Seleccione el docente.',
+      });
+
     }
   }
 }

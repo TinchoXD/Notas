@@ -134,7 +134,6 @@ public class CursoProfesorService {
     @Transactional
     public MessageResponse reasignarCursoProfesor(CursoProfesorRequest cursoProfesorRequest) {
 
-
         CursoProfesor curso = cursoProfesorRepository.findById(cursoProfesorRequest.id);
 
         User nuevoUser = userRepository.findUserById(cursoProfesorRequest.user_id);
@@ -144,6 +143,21 @@ public class CursoProfesorService {
         cursoProfesorRepository.save(curso);
 
         return new MessageResponse("Se ha Reasignado el CursoProfesor.");
+    }
+
+    @Transactional
+    public MessageResponse eliminarCurso(CursoProfesorRequest cursoProfesorRequest) {
+
+        try {
+            CursoProfesor curso = cursoProfesorRepository.findById(cursoProfesorRequest.id);
+            cursoProfesorRepository.delete(curso);
+
+            return new MessageResponse("El Curso se Eliminó de la Base de datos satisfactoriamente.");
+        } catch (Exception e) {
+
+            return new MessageResponse("Error al eliminar el CursoProfesor. detalle: " + e);
+        }
+
     }
 
 }

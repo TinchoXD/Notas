@@ -303,7 +303,6 @@ export class EditarUsuarioComponent implements OnInit {
                 summary: 'Curso Reasignado',
                 detail: '',
               });
-              
             },
           });
       }
@@ -322,17 +321,16 @@ export class EditarUsuarioComponent implements OnInit {
     );
 
     reasignarCursoProfesorDialog.afterClosed().subscribe({
-      next:()=>{
+      next: () => {
         this.cursoProfesorService
-        .getAllCursoProfesorByProfesorId(this.userId)
-        .subscribe({
-          next: (cursosProfesor) => {
-            this.cursosProfesor = cursosProfesor;
-
-          },
-        });
-      }
-    })
+          .getAllCursoProfesorByProfesorId(this.userId)
+          .subscribe({
+            next: (cursosProfesor) => {
+              this.cursosProfesor = cursosProfesor;
+            },
+          });
+      },
+    });
   }
 
   async resetearContrasenia() {
@@ -381,5 +379,48 @@ export class EditarUsuarioComponent implements OnInit {
         detail: 'El usuario ha sido Deshabilitado',
       });
     }
+  }
+
+  eliminarCursoProfesor(cursoProfesor: any) {
+    Swal.fire({
+      title: '¿Está seguro de eliminar la asigntaruda del Curso?',
+      text: 'Si ya existen notas registradas en esta asignatura, no podrá eliminar esta asignatura!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarla!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cursoProfesorService
+          .eliminarCursoProfesor(cursoProfesor)
+          .subscribe({
+            next: (res) => {
+              this.cursoProfesorService
+                .getAllCursoProfesorByProfesorId(this.userId)
+                .subscribe({
+                  next: (data) => {
+                    this.cursosProfesor = data;
+                    console.log('cursosProfesor', this.cursosProfesor);
+                  },
+                });
+              Swal.fire({
+                title: 'Eliminada!',
+                text: 'la asignatura del Curso ha sido eliminada.',
+                icon: 'success',
+              });
+            },
+            error: (error) => {
+              Swal.fire({
+                title: 'Error',
+                text:
+                  'No se puede eliminar la asignatura del curso, detalle del error: ' +
+                  error.error,
+                icon: 'error',
+              });
+            },
+          });
+      }
+    });
   }
 }

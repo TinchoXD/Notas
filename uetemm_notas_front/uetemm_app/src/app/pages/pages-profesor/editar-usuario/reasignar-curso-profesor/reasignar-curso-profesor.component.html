@@ -1,6 +1,6 @@
 <p-toast />
 <h1 mat-dialog-title>Reasignar Curso</h1>
-<p-card >
+<p-card>
 
     <div mat-dialog-content class="">
 
@@ -32,11 +32,14 @@
 
         <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Seleccionar un nuevo docente</mat-label>
-            <mat-select [(value)]="userSelected" required="true">
+            <mat-select [(ngModel)]="userSelected">
                 <mat-option *ngFor="let user of users" [value]="user">{{user.firstname}}
                     {{user.lastname}}</mat-option>
             </mat-select>
         </mat-form-field>
+        @if ( error ) {
+        <mat-error> Debe seleccionar un Docente </mat-error>
+        }
 
     </div>
 
@@ -45,5 +48,5 @@
         <button mat-flat-button type="submit" [color]="color" (click)="reasignar()">Guardar</button>
     </div>
 
-   
+
 </p-card>

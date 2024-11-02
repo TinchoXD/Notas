@@ -103,6 +103,12 @@ public class CursoProfesorController {
         return ResponseEntity.ok(cursoService.delCurso(request));
     }
 
+    // * ELIMINAR CURSO BDD */
+    @PostMapping(value = "/cursoProfesor/eliminarCursoProfesor")
+    public ResponseEntity<Object> eliminarCurso(@RequestBody CursoProfesorRequest request) {
+        return ResponseEntity.ok(cursoProfesorService.eliminarCurso(request));
+    }
+
 
 
 

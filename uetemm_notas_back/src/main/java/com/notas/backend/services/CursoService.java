@@ -106,7 +106,8 @@ public class CursoService {
         curso.get().status = 0;
 
         cursoRepository.save(curso.get());
-        return new MessageResponse("El Curso se Eliminó satisfactoriamente.");
+        return new MessageResponse("El  satisfactoriamente.");
     }
+
 
 }
