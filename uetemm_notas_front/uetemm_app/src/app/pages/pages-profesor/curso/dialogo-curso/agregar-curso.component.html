@@ -86,7 +86,7 @@
             <div class="col-md-12" style="margin-left: auto; margin-right: 0;">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Tutor</mat-label>
-                    <mat-select [value]="user" formControlName="user_id">
+                    <mat-select [value]="user" formControlName="user_id" (selectionChange)="verficarTutor($event)">
                         @for (profesor of profesores; track profesor) {
                         <mat-option [value]="profesor.id">{{profesor.firstname}} {{profesor.lastname}}</mat-option>
                         }

@@ -11,6 +11,9 @@ import { CursoRequest } from '../../../../services/curso/cursoRequest';
 import { User } from '../../../../services/auth/user';
 import { UserService } from '../../../../services/user/user.service';
 import { CursoUpdateRequest } from '../../../../services/curso/cursoUpdateRequest';
+import { MatSelectChange } from '@angular/material/select';
+import { CursoProfesorService } from '../../../../services/cursoProfesor/curso-profesor.service';
+import Swal from 'sweetalert2';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -869,5 +872,21 @@ export class AgregarCursoComponent implements OnInit {
     if (isAlertType(type)) {
       this.alertService.showAlert(mensaje, type);
     }
+  }
+
+  verficarTutor(event: MatSelectChange): void {
+    const selectedUserId = event.value;
+    this.cursoService.getCursoByUserId(selectedUserId).subscribe({
+      next: (res) => {
+        if (res.length > 0) {
+          Swal.fire({
+            title: 'Advertencia!',
+            text: 'El profesor seleccionado ya ha sido asignado como Tutor.',
+            icon: 'warning',
+            confirmButtonText: 'Ok',
+          });
+        }
+      },
+    });
   }
 }

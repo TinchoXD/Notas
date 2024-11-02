@@ -17,14 +17,19 @@ import { CursoService } from '../../../services/curso/curso.service';
 import { AlertType } from '../../../shared/alert/alertType';
 import { CursoProfesorService } from '../../../services/cursoProfesor/curso-profesor.service';
 import { DialogoCursoProfesorComponent } from './dialogoCursoProfesor/dialogo-curso-profesor.component';
+import Swal from 'sweetalert2';
+import { ToggleButtonChangeEvent } from 'primeng/togglebutton';
+import { MessageService } from 'primeng/api';
+import { PrimeIcons, MenuItem } from 'primeng/api';
+import { ReasignarCursoProfesorComponent } from './reasignar-curso-profesor/reasignar-curso-profesor.component';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
 
-interface rol{
-  value: number,
-  nombre: string,
+interface rol {
+  value: number;
+  nombre: string;
 }
 
 @Component({
@@ -41,7 +46,7 @@ export class EditarUsuarioComponent implements OnInit {
   requiredErrorMessage: String = 'Este campo es obligatorio.';
   onIcion: string = 'pi pi-check';
 
-  roles: rol[] = []
+  roles: rol[] = [];
 
   cursosProfesor!: any[];
   cursoProfesor!: any;
@@ -57,7 +62,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   modalVisible = true;
 
-  userDataToken!: any
+  userDataToken!: any;
   /* public resetPasswordRequest: PasswordRequest */
   public resetPasswordRequest: PasswordRequest = {
     id: 0,
@@ -74,7 +79,8 @@ export class EditarUsuarioComponent implements OnInit {
     private router: Router,
     private cursoService: CursoService,
     private dialog: MatDialog,
-    private cursoProfesorService: CursoProfesorService
+    private cursoProfesorService: CursoProfesorService,
+    private messageService: MessageService
   ) {}
 
   userDetailsForm: FormGroup = this.formBuilder.group({
@@ -87,24 +93,22 @@ export class EditarUsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
     this.loginService.userData.subscribe({
-      next:(userDataToken)=>{
-        this.userDataToken = this.loginService.decodeToken(userDataToken)
-        console.log('aasdasdasdasd', this.userDataToken)
-        if(this.userDataToken.role === 'ADMIN'){
-          this.modalVisible = false
-        }else{
+      next: (userDataToken) => {
+        this.userDataToken = this.loginService.decodeToken(userDataToken);
+        console.log('aasdasdasdasd', this.userDataToken);
+        if (this.userDataToken.role === 'ADMIN') {
+          this.modalVisible = false;
+        } else {
         }
       },
+    });
 
-    })
-
-    this.roles=[
-      {value: 1, nombre: 'Administrador'},
-      {value: 2, nombre: 'Docente'},
-      {value: 3, nombre: 'Secretaria'},
-    ]
+    this.roles = [
+      { value: 1, nombre: 'Administrador' },
+      { value: 2, nombre: 'Docente' },
+      { value: 3, nombre: 'Secretaria' },
+    ];
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
       console.log(this.userId);
@@ -128,7 +132,7 @@ export class EditarUsuarioComponent implements OnInit {
         this.user = userData;
         this.userCI = userData.username;
 
-        console.log('role', userData)
+        console.log('role', userData);
 
         this.userDetailsForm.patchValue({
           id: userData.id.toString(),
@@ -165,7 +169,28 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   dialogoResetearContrasenia(): void {
-    this.dialogo
+    Swal.fire({
+      title: '¿Desea restablecer la contraseña del usuario?',
+      showDenyButton: true,
+      icon: 'warning',
+      //showCancelButton: true,
+      confirmButtonText: 'Restablecer',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.resetearContrasenia();
+        Swal.fire(
+          'Contraseña restablecida!',
+          'La nueva contraseña es el número de cédula del usuario, notificar al docente que debe cambiarla en su siguiente inicio de sesión.',
+          'success'
+        );
+      } else if (result.isDenied) {
+        //Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+
+    /* this.dialogo
       .open(DialogoConfirmacionComponent, {
         data: {
           icon: `warning`,
@@ -182,7 +207,7 @@ export class EditarUsuarioComponent implements OnInit {
         } else {
           this.dialogo.closeAll();
         }
-      });
+      }); */
   }
 
   dialogoGuardarInformacion(): void {
@@ -198,7 +223,7 @@ export class EditarUsuarioComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           if (this.userDetailsForm.valid) {
-            console.log('this.userDetailsForm',this.userDetailsForm)
+            console.log('this.userDetailsForm', this.userDetailsForm);
             this.guardarInformacionUsuario();
           } else {
             this.showAlert(
@@ -237,15 +262,13 @@ export class EditarUsuarioComponent implements OnInit {
     this.cursoProfesor = {};
 
     const dialogRef = this.dialog.open(DialogoCursoProfesorComponent, {
-     
       width: '1000px',
       data: { user_id: this.userId },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-
-        console.log('result',result)
+        console.log('result', result);
 
         this.cursoProfesorService
           .getAllCursoProfesorByProfesorId(this.userId)
@@ -274,10 +297,42 @@ export class EditarUsuarioComponent implements OnInit {
           .subscribe({
             next: (cursosProfesor) => {
               this.cursosProfesor = cursosProfesor;
+
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Curso Reasignado',
+                detail: '',
+              });
+              
             },
           });
       }
     });
+  }
+
+  reasignarCursoProfesor(cursoProfesor: any) {
+    this.submitted = false;
+
+    const reasignarCursoProfesorDialog = this.dialog.open(
+      ReasignarCursoProfesorComponent,
+      {
+        width: '1000px',
+        data: cursoProfesor,
+      }
+    );
+
+    reasignarCursoProfesorDialog.afterClosed().subscribe({
+      next:()=>{
+        this.cursoProfesorService
+        .getAllCursoProfesorByProfesorId(this.userId)
+        .subscribe({
+          next: (cursosProfesor) => {
+            this.cursosProfesor = cursosProfesor;
+
+          },
+        });
+      }
+    })
   }
 
   async resetearContrasenia() {
@@ -309,6 +364,22 @@ export class EditarUsuarioComponent implements OnInit {
   showAlert(mensaje: string, type: string) {
     if (isAlertType(type)) {
       this.alertService.showAlert(mensaje, type);
+    }
+  }
+
+  habilitarDesabilitarAlert(event: ToggleButtonChangeEvent) {
+    if (event.checked) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Usuario Habilitado',
+        detail: 'El usuario ha sido Habilitado',
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Usuario Habilitado',
+        detail: 'El usuario ha sido Deshabilitado',
+      });
     }
   }
 }

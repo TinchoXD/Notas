@@ -1,3 +1,4 @@
+<p-toast />
 <div class="container-page" [ngClass]="{'dialog-blur': modalVisible }">
     <div class="card">
         <section>
@@ -92,7 +93,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="div-button-row pt-2 pb-2">
-                                    <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
+                                    <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo" (onChange)="habilitarDesabilitarAlert($event)"
                                         [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo" />
                                 </div>
                             </div>
@@ -151,9 +152,9 @@
             [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>
+                   <!--  <th>
                         id
-                    </th>
+                    </th> -->
                     <th pSortableColumn="codigo">
                         Código <p-sortIcon field="codigo" />
                     </th>
@@ -182,9 +183,9 @@
             </ng-template>
             <ng-template pTemplate="body" let-cursoProfesorRow>
                 <tr>
-                    <td>
+                   <!--  <td>
                         {{ cursoProfesorRow.id }}
-                    </td>
+                    </td> -->
                     <td>
                         {{ cursoProfesorRow.curso.codigo }}
                     </td>
@@ -209,6 +210,8 @@
                     <td>
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Curso" class="mr-2" (click)="editarCursoProfesor(cursoProfesorRow)" />
+                        <p-button pRipple icon="pi pi-angle-double-right" severity="warning" [rounded]="true" [outlined]="true"
+                            pTooltip="Reasignar Curso" class="mr-2" (click)="reasignarCursoProfesor(cursoProfesorRow)" />
                     </td>
                 </tr>
             </ng-template>
