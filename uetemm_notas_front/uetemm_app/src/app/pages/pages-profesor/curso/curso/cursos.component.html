@@ -10,50 +10,144 @@
         <p-toast />
         <p-toolbar styleClass="mb-4 gap-2">
             <ng-template pTemplate="left">
-                <span class="p-input-icon-left">
+                <!--   <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Buscar curso.."
                         (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
-                </span>
+                </span> -->
             </ng-template>
 
             <ng-template pTemplate="right">
 
-                <p-button *ngIf="userDataToken.role === 'ADMIN'" icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarCurso()" />
+                <p-button *ngIf="userDataToken.role === 'ADMIN'" icon="pi pi-plus" class="mr-2" label="Nuevo"
+                    (click)="dialogAgregarCurso()" />
 
 
             </ng-template>
         </p-toolbar>
 
-        
+
 
         <p-table #dt [value]="cursos" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
             [globalFilterFields]="['nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre', 'descripcion', 'codigo'] "
-            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20, 50, 100]"
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+            [rowsPerPageOptions]="[5, 10, 20, 50, 100]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
             <ng-template pTemplate="header">
                 <tr>
-                    <th >
+                    <th>
                         #
                     </th>
                     <th pSortableColumn="nivel.nombre">
                         Nivel <p-sortIcon field="nivel.nombre" />
-                    </th>
-                    <th pSortableColumn="subnivel.nombre">
-                        SubNivel <p-sortIcon field="subnivel.nombre" />
-                    </th>
-                    <th pSortableColumn="grado.nombre">
-                        Grado <p-sortIcon field="grado.nombre" />
-                    </th>
-                    <th pSortableColumn="paralelo.nombre">
-                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                        <p-columnFilter field="nivel" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Nivel</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="nivelFiltro" placeholder="Cualquiera"
+                                    (onChange)="filter($event.value)" optionLabel="nombre">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="inline-block vertical-align-middle">
+                                            <span class="ml-1 mt-1">{{ option.nombre }}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
                     </th>
                     <th pSortableColumn="jornada.nombre">
                         Jornada <p-sortIcon field="jornada.nombre" />
+                        <p-columnFilter field="jornada" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Nivel</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="jornadaFiltro" placeholder="Cualquiera"
+                                    (onChange)="filter($event.value)" optionLabel="nombre">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="inline-block vertical-align-middle">
+                                            <span class="ml-1 mt-1">{{ option.nombre }}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
                     </th>
+                    <th pSortableColumn="subnivel.nombre">
+                        SubNivel <p-sortIcon field="subnivel.nombre" />
+                        <p-columnFilter field="subnivel" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Nivel</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="subnivelFiltro" placeholder="Cualquiera"
+                                    (onChange)="filter($event.value)" optionLabel="nombre">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="inline-block vertical-align-middle">
+                                            <span class="ml-1 mt-1">{{ option.nombre }}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="grado.nombre">
+                        Grado <p-sortIcon field="grado.nombre" />
+                        <p-columnFilter field="grado" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Nivel</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="gradoFiltro" placeholder="Cualquiera"
+                                    (onChange)="filter($event.value)" optionLabel="nombre">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="inline-block vertical-align-middle">
+                                            <span class="ml-1 mt-1">{{ option.nombre }}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    </th>
+                    <th pSortableColumn="paralelo.nombre">
+                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                        <p-columnFilter field="paralelo" matchMode="in" display="menu" [showMatchModes]="false"
+                            [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Nivel</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="paraleloFiltro" placeholder="Cualquiera"
+                                    (onChange)="filter($event.value)" optionLabel="nombre">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="inline-block vertical-align-middle">
+                                            <span class="ml-1 mt-1">{{ option.nombre }}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    </th>
+
                     <th pSortableColumn="user.firstname">
                         Tutor <p-sortIcon field="user.firstname" />
+
                     </th>
                     <th pSortableColumn="descripcion">
                         Descripcion <p-sortIcon field="descripcion" />
@@ -62,7 +156,7 @@
                         Código <p-sortIcon field="codigo" />
                     </th>
 
-                    <th *ngIf="userDataToken.role === 'ADMIN'" >
+                    <th *ngIf="userDataToken.role === 'ADMIN'">
                         Acciones
                     </th>
                 </tr>
@@ -77,7 +171,7 @@
                         {{ cursoRow.nivel.nombre }}
                     </td>
                     <td>
-                        {{ cursoRow.subnivel.nombre }}
+                        {{ cursoRow.jornada.nombre }}
                     </td>
                     <td>
                         {{ cursoRow.grado.nombre }}
@@ -86,10 +180,11 @@
                         {{ cursoRow.paralelo.nombre }}
                     </td>
                     <td>
-                        {{ cursoRow.jornada.nombre }}
+                        {{ cursoRow.subnivel.nombre }}
                     </td>
                     <td>
-                        {{ cursoRow.user ? cursoRow.user.firstname : null}} {{ cursoRow.user ? cursoRow.user.lastname : null }}
+                        {{ cursoRow.user ? cursoRow.user.firstname : null}} {{ cursoRow.user ? cursoRow.user.lastname :
+                        null }}
                     </td>
                     <td>
                         {{ cursoRow.descripcion }}
@@ -99,7 +194,7 @@
                     </td>
 
 
-                    <td *ngIf="userDataToken.role === 'ADMIN'" >
+                    <td *ngIf="userDataToken.role === 'ADMIN'">
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Curso" class="mr-2" (click)="editarCurso(cursoRow)" />
                         <!-- <p-button pRipple icon="pi pi-trash" severity="warning" [rounded]="true" [outlined]="true"

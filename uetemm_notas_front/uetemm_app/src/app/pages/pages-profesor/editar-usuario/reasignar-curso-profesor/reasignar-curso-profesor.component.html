@@ -1,0 +1,52 @@
+<p-toast />
+<h1 mat-dialog-title>Reasignar Curso</h1>
+<p-card>
+
+    <div mat-dialog-content class="">
+
+
+
+        <p-divider align="left" type="solid">
+            <b>Asignatura</b>
+        </p-divider>
+
+        <p class="m-0">
+            {{cursoProfesor.asignatura.nombre}}
+        </p>
+
+        <p-divider align="left" type="solid">
+            <b>Curso</b>
+        </p-divider>
+
+        <p class="m-0">
+            {{ cursoProfesor.curso.nivel.nombre }} - {{ cursoProfesor.curso.subnivel.nombre }} - {{
+            cursoProfesor.curso.grado.nombre }} - {{ cursoProfesor.curso.paralelo.nombre }} - {{
+            cursoProfesor.curso.jornada.nombre }}
+        </p>
+
+        <p-divider align="left" type="solid">
+            <b>Nuevo profesor</b>
+        </p-divider>
+
+
+
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Seleccionar un nuevo docente</mat-label>
+            <mat-select [(ngModel)]="userSelected">
+                <mat-option *ngFor="let user of users" [value]="user">{{user.firstname}}
+                    {{user.lastname}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        @if ( error ) {
+        <mat-error> Debe seleccionar un Docente </mat-error>
+        }
+
+    </div>
+
+    <div mat-dialog-actions align="end" style="align-items: end;">
+        <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+        <button mat-flat-button type="submit" [color]="color" (click)="reasignar()">Guardar</button>
+    </div>
+
+
+</p-card>

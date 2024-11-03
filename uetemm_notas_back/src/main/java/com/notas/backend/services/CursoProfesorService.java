@@ -47,7 +47,6 @@ public class CursoProfesorService {
         return cursos;
     }
 
-
     public List<CursoProfesor> getCursoProfesorActivos() {
         List<CursoProfesor> cursos = cursoProfesorRepository.findByStatus(1);
         return cursos;
@@ -130,6 +129,35 @@ public class CursoProfesorService {
 
         cursoRepository.save(curso.get());
         return new MessageResponse("El Curso se Eliminó satisfactoriamente.");
+    }
+
+    @Transactional
+    public MessageResponse reasignarCursoProfesor(CursoProfesorRequest cursoProfesorRequest) {
+
+        CursoProfesor curso = cursoProfesorRepository.findById(cursoProfesorRequest.id);
+
+        User nuevoUser = userRepository.findUserById(cursoProfesorRequest.user_id);
+
+        curso.setUser(nuevoUser);
+
+        cursoProfesorRepository.save(curso);
+
+        return new MessageResponse("Se ha Reasignado el CursoProfesor.");
+    }
+
+    @Transactional
+    public MessageResponse eliminarCurso(CursoProfesorRequest cursoProfesorRequest) {
+
+        try {
+            CursoProfesor curso = cursoProfesorRepository.findById(cursoProfesorRequest.id);
+            cursoProfesorRepository.delete(curso);
+
+            return new MessageResponse("El Curso se Eliminó de la Base de datos satisfactoriamente.");
+        } catch (Exception e) {
+
+            return new MessageResponse("Error al eliminar el CursoProfesor. detalle: " + e);
+        }
+
     }
 
 }

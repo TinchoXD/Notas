@@ -73,7 +73,12 @@ public class CursoProfesorController {
         return ResponseEntity.ok(cursoProfesorService.postCursoProfesor(request));
     }
     
-
+    // * REASIGNAR CURSO-PROFESOR
+    @PostMapping(value = "/cursoProfesor/reasignarCursoProfesor")
+    public ResponseEntity<Object> reasignarCursoProfesor(@RequestBody CursoProfesorRequest request) {  
+        return ResponseEntity.ok(cursoProfesorService.reasignarCursoProfesor(request));
+    }
+    
 
 
 
@@ -97,6 +102,13 @@ public class CursoProfesorController {
     public ResponseEntity<Object> delCurso(@RequestBody CursoRequest request) {
         return ResponseEntity.ok(cursoService.delCurso(request));
     }
+
+    // * ELIMINAR CURSO BDD */
+    @PostMapping(value = "/cursoProfesor/eliminarCursoProfesor")
+    public ResponseEntity<Object> eliminarCurso(@RequestBody CursoProfesorRequest request) {
+        return ResponseEntity.ok(cursoProfesorService.eliminarCurso(request));
+    }
+
 
 
 
