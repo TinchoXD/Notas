@@ -51,10 +51,10 @@
             [globalFilterFields]="['apellidosNombres', 'cedula']" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="caption">
                 <div class="flex">
-                    <!-- <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                    <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
                         class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
-                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button> -->
+                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                     <p-toggleButton [(ngModel)]="nombresApellidoFrozen" [onIcon]="'pi pi-lock'" class="mr-2"
                         offIcon="pi pi-lock-open" [onLabel]="'Nombres y Apellidos'" offLabel="Nombres y Apellidos" />
                     <p-toggleButton [(ngModel)]="promedioAnualFrozen" [onIcon]="'pi pi-lock'" offIcon="pi pi-lock-open"

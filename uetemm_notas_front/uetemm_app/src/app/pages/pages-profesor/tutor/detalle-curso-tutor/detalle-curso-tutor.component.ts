@@ -385,24 +385,16 @@ export class DetalleCursoTutorComponent implements OnInit {
             );
             const nombreAsignatura = asignatura.asignatura.nombre;
 
-            acc[`T1 (${nombreAsignatura})`] = nota.notaT1
-              ? nota.notaT1.toFixed(2).replace('.', ',')
-              : '';
-            acc[`T2 (${nombreAsignatura})`] = nota.notaT2
-              ? nota.notaT2.toFixed(2).replace('.', ',')
-              : '';
-            acc[`T3 (${nombreAsignatura})`] = nota.notaT3
-              ? nota.notaT3.toFixed(2).replace('.', ',')
-              : '';
-            acc[`Final (${nombreAsignatura})`] = (
-              (nota.notaT1 + nota.notaT2 + nota.notaT3) /
-              3
-            )
-              .toFixed(2)
-              .replace('.', ',');
+            acc[`T1 (${nombreAsignatura})`] = Math.trunc(nota.notaT1*100)/100
+             ;
+            acc[`T2 (${nombreAsignatura})`] = Math.trunc(nota.notaT2*100)/100
+             ;
+            acc[`T3 (${nombreAsignatura})`] =Math.trunc(nota.notaT3*100)/100
+              ;
+            acc[`Final (${nombreAsignatura})`] = Math.trunc(((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3)*100) / 100
+              
             acc[`Supletorio (${nombreAsignatura})`] = nota.supletorio
-              ? nota.supletorio.toFixed(2).replace('.', ',')
-              : '';
+              ;
             return acc;
           },
           Promise.resolve({})
@@ -491,13 +483,12 @@ export class DetalleCursoTutorComponent implements OnInit {
               ? (nota.notaT1 + nota.notaT2 + nota.notaT3 || 0) / 3
               : null;
             return [
-              nota?.notaT1 ? nota.notaT1.toFixed(2).replace('.', ',') : '',
-              nota?.notaT2 ? nota.notaT2.toFixed(2).replace('.', ',') : '',
-              nota?.notaT3 ? nota.notaT3.toFixed(2).replace('.', ',') : '',
-              finalNota ? finalNota.toFixed(2).replace('.', ',') : '',
+              nota?.notaT1 ,
+              nota?.notaT2 ,
+              nota?.notaT3 ,
+              finalNota ,
               nota?.supletorio
-                ? nota.supletorio.toFixed(2).replace('.', ',')
-                : '',
+                ,
               this.estado(estudiante, finalNota!),
             ];
           }),
