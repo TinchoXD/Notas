@@ -61,7 +61,7 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
-                    
+
                     <button mat-mini-fab class="ml-3"
                         matTooltip="Autoguardado: los cambios se aplicarán automáticamente al registrar la nota">
                         <mat-icon>save</mat-icon>
@@ -143,15 +143,14 @@
 
                     <td class="borde-izq" style="text-align: center;">
                         <p-inputNumber
-                            [ngModel]="redondearNotaFinal(estudianteRow.notaT1,estudianteRow.notaT2,estudianteRow.notaT3)"
-                            mode="decimal" [minFractionDigits]="1" [disabled]="true" styleClass="input-styling"
-                            placeholder="0,00" [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                            (onInput)="changePage(estudianteRow)" />
+                            [ngModel]="truncarADosDecimales(((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3))"
+                            mode="decimal" [disabled]="true" styleClass="input-styling" placeholder="0,00"
+                            [maxlength]="4" outlined [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
 
                     </td>
                     <td style="text-align: center;">
                         <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3), 'color': getNotaColorText((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}">
+                            [ngStyle]="{'background-color': getNotaColorBackground(truncarADosDecimales((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)), 'color': getNotaColorText(truncarADosDecimales((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3))}">
                             {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}</span>
                     </td>
 

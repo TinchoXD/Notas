@@ -206,6 +206,10 @@ export class DetalleCursoProfesorComponent implements OnInit {
     return this.calificacionService.redondearNotaFinal(t1, t2, t3);
   }
 
+  truncarADosDecimales(nota: number): number {
+    return this.calificacionService.truncarADosDecimales(nota);
+  }
+
   changePage(notaEstudiante: any) {
     this.guardarNota(notaEstudiante);
     notaEstudiante.notaFinal =
@@ -315,7 +319,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
                 'Nota T1',
                 'Nota T2',
                 'Nota T3',
-                'Nota Final',
+                'Promedio',
                 'Supletorio',
               ],
               ...filteredData.map((estudiante, index) =>
@@ -326,18 +330,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
                   estudiante.NotaT1,
                   estudiante.NotaT2,
                   estudiante.NotaT3,
-                  ((estudiante.NotaT1 || 0) +
-                    (estudiante.NotaT2 || 0) +
-                    (estudiante.NotaT3 || 0)) /
-                  3
-                    ? ((estudiante.NotaT1 || 0) +
-                        (estudiante.NotaT2 || 0) +
-                        (estudiante.NotaT3 || 0)) /
-                      3
-                    : '-',
-                  estudiante.NotaSupletorio,
-                ].map((cell) =>
-                  typeof cell === 'number' ? cell.toFixed(2) : cell
+                  ((estudiante.NotaT1 || 0) +(estudiante.NotaT2 || 0) +(estudiante.NotaT3 || 0)) /3 ? ((estudiante.NotaT1 || 0) +(estudiante.NotaT2 || 0) +(estudiante.NotaT3 || 0)) / 3 : '-', estudiante.NotaSupletorio, ].map((cell) =>
+                  typeof cell === 'number' ? this.truncarADosDecimales(cell) : cell
                 )
               ),
             ],
