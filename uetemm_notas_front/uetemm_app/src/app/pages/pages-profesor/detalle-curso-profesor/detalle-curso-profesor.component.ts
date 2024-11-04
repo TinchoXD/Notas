@@ -16,6 +16,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
 import { CalificacionService } from '../../../services/calificacion/calificacion.service';
+import { CursoService } from '../../../services/curso/curso.service';
 // Necesario para pdfmake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -54,6 +55,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
   cupr_id: any;
   notaColor: string = '#aaaaaa55';
 
+  aplicaSupletorio!: boolean;
+  colSpanSupletorio!: number;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: ActivatedRoute,
@@ -62,7 +66,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
     private estudianteService: EstudianteService,
     private notaService: NotaService,
     private messageServicePNG: MessageService,
-    private calificacionService: CalificacionService
+    private calificacionService: CalificacionService,
+    private cursoService: CursoService
   ) {}
 
   ngOnInit(): void {
@@ -75,24 +80,21 @@ export class DetalleCursoProfesorComponent implements OnInit {
 
     this.activatedRoute.params.subscribe((params) => {
       this.cursoProfesor_id = +params['id']; // El signo '+' convierte el string a número
-
       this.cursoProfesorService
         .getCursoProfesorById(this.cursoProfesor_id)
         .subscribe({
           next: (data) => {
             this.cursoProfesor = data;
             this.cursosProfesor.push(this.cursoProfesor);
-
-            console.log('aaaa', this.cursoProfesor);
             this.cupr_id = this.cursoProfesor.id;
-
+            this.aplicaSupletorio = this.cursoService.validaAplicaSupletorio(
+              this.cursoProfesor.curso
+            );
             this.estudianteService
               .getEstudiantesByCursoId(this.cursoProfesor.curso.id)
               .subscribe({
                 next: (estudiantes) => {
                   this.estudiantes = estudiantes;
-                  console.log('bbbb', this.estudiantes);
-
                   this.estudiantes.forEach((estudiante) => {
                     this.notaService
                       .getNotaByEstudianteAndCursoProfesor(
@@ -136,33 +138,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
               });
           },
         });
-
-      /* 
-        
-
-
-
-        private markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      } else {
-        control.markAsTouched();
-      }
     });
-  }
-        
-        */
-
-      /*       this.notaService.getNotasByEstudianteAndCursoProfesor(
-        this.estudiante,
-        this.cursoProfesor_id
-      ); */
-    });
-
     this.loading = false;
   }
-
   guardarNota(notaEstudiante: any) {
     const nota = {
       estu_id: notaEstudiante.id,
@@ -212,9 +190,10 @@ export class DetalleCursoProfesorComponent implements OnInit {
 
   changePage(notaEstudiante: any) {
     this.guardarNota(notaEstudiante);
-    notaEstudiante.notaFinal =
+    notaEstudiante.notaFinal = this.truncarADosDecimales(
       (notaEstudiante.notaT1 + notaEstudiante.notaT2 + notaEstudiante.notaT3) /
-      3;
+        3
+    );
   }
 
   // Método para exportar a Excel
@@ -227,7 +206,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
       notaT2: estudiante.notaT2,
       notaT3: estudiante.notaT3,
       notaFinal: estudiante.notaFinal
-        ? estudiante.notaFinal.toFixed(2).replace('.', ',')
+        ? this.truncarADosDecimales(estudiante.notaFinal)
+            .toString()
+            .replace('.', ',')
         : '',
       //      notaFinal: estudiante.notaFinal !== undefined ? estudiante.notaFinal.toFixed(2) : '',
       notaSupletorio: estudiante.notaSupletorio,
@@ -274,7 +255,9 @@ export class DetalleCursoProfesorComponent implements OnInit {
           ? estudiante.notaSupletorio
           : '-',
       NotaFinal:
-        estudiante.notaFinal !== undefined ? estudiante.notaFinal : '-',
+        estudiante.notaFinal !== undefined
+          ? this.truncarADosDecimales(estudiante.notaFinal)
+          : '-',
     }));
 
     // Define el contenido del PDF
@@ -330,8 +313,22 @@ export class DetalleCursoProfesorComponent implements OnInit {
                   estudiante.NotaT1,
                   estudiante.NotaT2,
                   estudiante.NotaT3,
-                  ((estudiante.NotaT1 || 0) +(estudiante.NotaT2 || 0) +(estudiante.NotaT3 || 0)) /3 ? ((estudiante.NotaT1 || 0) +(estudiante.NotaT2 || 0) +(estudiante.NotaT3 || 0)) / 3 : '-', estudiante.NotaSupletorio, ].map((cell) =>
-                  typeof cell === 'number' ? this.truncarADosDecimales(cell) : cell
+                  ((estudiante.NotaT1 || 0) +
+                    (estudiante.NotaT2 || 0) +
+                    (estudiante.NotaT3 || 0)) /
+                  3
+                    ? this.truncarADosDecimales(
+                        ((estudiante.NotaT1 || 0) +
+                          (estudiante.NotaT2 || 0) +
+                          (estudiante.NotaT3 || 0)) /
+                          3
+                      )
+                    : '-',
+                  estudiante.NotaSupletorio,
+                ].map((cell) =>
+                  typeof cell === 'number'
+                    ? this.truncarADosDecimales(cell)
+                    : cell
                 )
               ),
             ],

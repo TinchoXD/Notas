@@ -174,13 +174,13 @@
                         {{ cursoRow.jornada.nombre }}
                     </td>
                     <td>
+                        {{ cursoRow.subnivel.nombre }}
+                    </td>
+                    <td>
                         {{ cursoRow.grado.nombre }}
                     </td>
                     <td>
                         {{ cursoRow.paralelo.nombre }}
-                    </td>
-                    <td>
-                        {{ cursoRow.subnivel.nombre }}
                     </td>
                     <td>
                         {{ cursoRow.user ? cursoRow.user.firstname : null}} {{ cursoRow.user ? cursoRow.user.lastname :
@@ -197,6 +197,11 @@
                     <td *ngIf="userDataToken.role === 'ADMIN'">
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Curso" class="mr-2" (click)="editarCurso(cursoRow)" />
+
+                        <p-button pRipple icon="pi pi-book" severity="info" [rounded]="true" [outlined]="true"
+                            pTooltip="Ver Notas del Curso" class="mr-2" (click)="verNotas(cursoRow)" />
+
+                            
                         <!-- <p-button pRipple icon="pi pi-trash" severity="warning" [rounded]="true" [outlined]="true"
                             pTooltip="Eliminar Curso" class="mr-2" (click)="eliminarCurso(cursoRow)" /> -->
                     </td>

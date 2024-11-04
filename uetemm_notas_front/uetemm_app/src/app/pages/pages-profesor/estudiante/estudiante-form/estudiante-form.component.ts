@@ -50,9 +50,9 @@ export class EstudianteFormComponent implements OnInit {
   representantePadre: number = 1;
   representanteAdicional: number = 0;
   modalVisible = true;
+  readonly = true;
 
-  userDataToken!: any
-
+  userDataToken!: any;
 
   /* serviciosBasicos: string[] = ['Luz Eléctrica', 'Agua Potable', 'Teléfono', 'Cable', 'Celular', 'Internet']; */
 
@@ -238,23 +238,37 @@ export class EstudianteFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-
-
-    this.loginService.userData.subscribe({
-      next:(userDataToken)=>{
-        this.userDataToken = this.loginService.decodeToken(userDataToken)
-        console.log('aasdasdasdasd', this.userDataToken)
-        if(this.userDataToken.role === 'ADMIN'){
-          this.modalVisible = false
-        }else{
-        }
-      },
-
-    })
+    this.modalVisible = false;
 
     this.activatedRoute.params.subscribe((params) => {
       this.estudiante_id = +params['id']; // El signo '+' convierte el string a número
+    });
+
+    this.loginService.userData.subscribe({
+      next: (userDataToken) => {
+        this.userDataToken = this.loginService.decodeToken(userDataToken);
+        console.log('aasdasdasdasd', this.userDataToken);
+        if (this.userDataToken.role === 'ADMIN') {
+          this.readonly = false;
+          this.modalVisible = false;
+        } else {
+          this.estudianteService
+            .getEstudianteById(this.estudiante_id)
+            .subscribe({
+              next: (estudianteData) => {
+                if (
+                  this.userDataToken.userId === estudianteData.curso.user?.id
+                ) {
+                  this.readonly = false;
+                }
+                else {
+                  this.readonly = true;
+                  this.modalVisible = true;
+                }
+              },
+            });
+        }
+      },
     });
 
     this.estudianteService.getEstudianteById(this.estudiante_id).subscribe({
@@ -263,7 +277,7 @@ export class EstudianteFormComponent implements OnInit {
 
         this.estudianteForm.patchValue({
           id: estudiante.id.toString(),
-         /*  nombres: estudiante.nombres, */
+          /*  nombres: estudiante.nombres, */
           apellidosNombres: estudiante.apellidosNombres,
           lugarNacimiento: estudiante.lugarNacimiento,
           fechaNacimiento: estudiante.fechaNacimiento,
@@ -1055,7 +1069,7 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   //* Form ESTUDIANTE
-/*   get nombres() {
+  /*   get nombres() {
     return this.estudianteForm.controls['nombres'];
   } */
   get apellidosNombres() {

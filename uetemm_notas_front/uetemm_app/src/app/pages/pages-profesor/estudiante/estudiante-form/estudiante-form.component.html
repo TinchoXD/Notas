@@ -16,7 +16,7 @@
         <mat-tab-group>
             <mat-tab label="Estudiante / Representante">
                 <br>
-                <form [formGroup]="estudianteForm" style="width: 99%;">
+                <form [formGroup]="estudianteForm" style="width: 99%;" >
                     <div class="d-flex justify-content-between align-items-center mb-3">
 
                         <h5 class="text-right"><span class="circle-number mr-3">1</span>Datos del Estudiante</h5>
@@ -32,9 +32,9 @@
                             </mat-form-field>
                         </div> -->
                         <div class="col">
-                            <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-form-field style="width: 100%;" appearance="outline" >
                                 <mat-label>Apellidos y Nombres Completos</mat-label>
-                                <input matInput formControlName="apellidosNombres" />
+                                <input matInput formControlName="apellidosNombres" [readonly]="readonly"/>
                                 @if (apellidosNombres.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -43,7 +43,7 @@
                         <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Cédula</mat-label>
-                                <input matInput formControlName="cedula" />
+                                <input matInput formControlName="cedula" [readonly]="readonly"/>
                                 @if (cedula.invalid) {
                                 <mat-error> {{errorMessage}}</mat-error>
                                 }
@@ -52,7 +52,7 @@
                         <div class="col">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Palabra de seguridad</mat-label>
-                                <input matInput formControlName="palabraSeguridad" />
+                                <input matInput formControlName="palabraSeguridad" [readonly]="readonly"/>
                                 <mat-error *ngIf="palabraSeguridad.hasError('pattern')">
                                     La palabra de seguridad debe contener solo caracteres alfanuméricos.
                                 </mat-error>
@@ -61,7 +61,7 @@
 
                         </div>
                         <div class="pt-3">
-                            <button mat-mini-fab [color]="color" type="button"
+                            <button mat-mini-fab [color]="color" type="button" [disabled]="readonly"
                                 matTooltip="Código o palabra de seguridad para ver las notas del Estudiante">
                                 <mat-icon>info</mat-icon>
                             </button>
@@ -1141,6 +1141,12 @@
         </div>
     </ng-template>
     <p>
-        Su rol de usuario no le permite visualizar esta página
+        El contendido de esta página no está disponible para su usuario por una de las siguientes razones:
+    </p>
+    <p>
+        * Su rol de usuario no le permite visualizar esta página
+    </p>
+    <p>
+        * No es tutor de este curso
     </p>
 </p-dialog>

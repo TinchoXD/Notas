@@ -6,11 +6,14 @@ import { CursoService } from '../../../../services/curso/curso.service';
 import { DialogoConfirmacionComponent } from '../../../../shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { LoginService } from '../../../../services/auth/login.service';
 import { PrimeNGConfig } from 'primeng/api';
+import Swal from 'sweetalert2';
+import { DialogoVerNotasCursoComponent } from '../dialogo-ver-notas-curso/dialogo-ver-notas-curso.component';
 
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css',
+  
 })
 export class CursosComponent implements OnInit {
   submitted: boolean = false;
@@ -191,5 +194,18 @@ export class CursosComponent implements OnInit {
   }
   agregarCurso() {
     this.submitted = true;
+  }
+
+  verNotas(curso: any){
+    
+    this.dialog.open(DialogoVerNotasCursoComponent,
+      {
+        width: '700px',
+        data: {
+          curso: curso
+        }
+      }
+    )
+
   }
 }

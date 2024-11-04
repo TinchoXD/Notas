@@ -90,11 +90,11 @@ export class MisCursosComponent implements OnInit {
     });
   }
 
-  verCursoProfesor(estudianteRow: any) {
-    console.log(estudianteRow);
+  verCursoProfesor(cursoProfesor: any) {
+    console.log(cursoProfesor);
 
     // Mostrar el spinner de carga
-    this.loadingService.show();
+
 
     /* NAVEGACION POR PARÁMETROS HACIA UNA RUTA 
     setTimeout(() => {
@@ -109,10 +109,21 @@ export class MisCursosComponent implements OnInit {
     this.loadingService.show();
     setTimeout(() => {
       this.router
-        .navigate([`/mis-cursos/curso/${estudianteRow.id}`])
+        .navigate([`/mis-cursos/curso/${cursoProfesor.id}`])
         .then(() => {
           this.loadingService.hide(); // Oculta el spinner de carga
         });
     }, 150); // Retraso de 2 segundos antes de la navegación
+  }
+
+  verEstudiantesCurso(cursoProfesor: any){
+    this.loadingService.show();
+    setTimeout(() => {
+      this.router
+        .navigate([`/estudiantes/curso/${cursoProfesor.curso.id}`])
+        .then(() => {
+          this.loadingService.hide(); // Oculta el spinner de carga
+        });
+    }, 500); // Retraso de 2 segundos antes de la navegación
   }
 }

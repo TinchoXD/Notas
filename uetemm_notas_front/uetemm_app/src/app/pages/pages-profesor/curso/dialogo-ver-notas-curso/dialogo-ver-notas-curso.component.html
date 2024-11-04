@@ -1,0 +1,27 @@
+<div class="container-page">
+    <div class="card">
+        <div class="flex">
+            <div class="flex-1 h-4rem ">
+                <h5><strong>Ver todas notas del Curso:</strong></h5>
+            </div>
+            <div class="flex-2 h-4rem">
+                <p-button pRipple icon="pi pi-book" severity="success" [rounded]="true" [outlined]="true" class="mr-2"
+                    label="Ver todas las notas" (click)="verTodasLasNotas(curso)" />
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <h5 class="mb-4"> <strong> Ver notas del Curso por asignatura:</strong></h5>
+        <div class="flex" *ngFor="let cursoProfesor of cursosProfesor">
+            <div class="flex-1 h-4rem ">
+                {{cursoProfesor.asignatura.nombre}}
+            </div>
+            <div class="flex-2 h-4rem">
+                <p-button pRipple icon="pi pi-book" severity="success" [rounded]="true" [outlined]="true" class="mr-2"
+                    label="Ver notas" (click)="verNotasPorAsignatura(cursoProfesor)" />
+            </div>
+        </div>
+    </div>
+    <div style="text-align: end; align-items: end;">
+        <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+</div>

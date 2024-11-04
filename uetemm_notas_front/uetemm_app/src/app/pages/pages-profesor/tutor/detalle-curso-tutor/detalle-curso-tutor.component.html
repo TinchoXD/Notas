@@ -186,7 +186,7 @@
                         <ng-container *ngFor="let nota of estudianteRow.notas">
                             <ng-container *ngIf="nota.cursoProfesorId === cursoProfesor.id">
                                 <td class="borde-izq" style="text-align: center;">
-                                    {{ redondear(nota.notaT1) | number : "1.1-1" : "es" }}
+                                    {{ redondear(nota.notaT1) | number : "1.1-2" : "es" }}
                                 </td>
                                 <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
@@ -194,14 +194,14 @@
                                         {{convertirCulitativo(nota.notaT1)}}</span>
                                 </td>
                                 <td style="text-align: center;" class="borde-izq-dotted">{{ redondear(nota.notaT2) |
-                                    number : "1.1-1" : "es" }}</td>
+                                    number : "1.1-2" : "es" }}</td>
                                 <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT2), 'color': getNotaColorText(nota.notaT2)}">
                                         {{convertirCulitativo(nota.notaT2)}}</span>
                                 </td>
                                 <td style="text-align: center;" class="borde-izq-dotted">{{ redondear(nota.notaT3) |
-                                    number : "1.1-1" : "es" }}</td>
+                                    number : "1.1-2" : "es" }}</td>
                                 <td style="text-align: center;">
                                     <span class="circle-nota-cualitativa ml-3"
                                         [ngStyle]="{'background-color': getNotaColorBackground(nota.notaT3), 'color': getNotaColorText(nota.notaT3)}">
@@ -210,8 +210,8 @@
                                 <td class="borde-izq-dotted" style="background-color: #d1d6fa5e; text-align: center;">
                                     <strong>
                                         {{
-                                        redondearNotaFinal(nota.notaT1 , nota.notaT2 , nota.notaT3)
-                                        | number : "1.1-1" : "es"
+                                        truncarADosDecimales((nota.notaT1 + nota.notaT2 + nota.notaT3/3))
+                                        | number : "1.1-2" : "es"
                                         }}</strong>
                                 </td>
                                 <td style="background-color: #d1d6fa5e; text-align: center;">
@@ -238,7 +238,7 @@
                             <p-inputNumber [(ngModel)]="estudianteRow?.notaAnimacionLectura.calificacionT1"
                                 mode="decimal" [minFractionDigits]="1" styleClass="input-styling" placeholder="0,00"
                                 [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                                (onBlur)="changePageAnimacionLectura(estudianteRow)"/>
+                                (onBlur)="changePageAnimacionLectura(estudianteRow)" />
                         </td>
                         <td style="text-align: center">
                             <span class="circle-nota-cualitativa ml-3"
@@ -269,19 +269,24 @@
                         </td>
                         <td class="borde-izq-dotted" style="background-color: #A9D08E33; text-align: center">
                             <strong>{{
-                                redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 ,
-                                estudianteRow?.notaAnimacionLectura.calificacionT2 ,
-                                estudianteRow?.notaAnimacionLectura.calificacionT3)
-                                | number : "1.1-1" : "es"
+                                truncarADosDecimales((estudianteRow?.notaAnimacionLectura.calificacionT1 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT2 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT3)/3)
+                                | number : "1.1-2" : "es"
                                 }}
                             </strong>
                         </td>
                         <td style="background-color: #A9D08E33; text-align: center">
-                            <span class="circle-nota-cualitativa ml-3"
-                                [ngStyle]="{'background-color': getNotaColorBackground(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3)), 'color': getNotaColorText(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1 , estudianteRow?.notaAnimacionLectura.calificacionT2 , estudianteRow?.notaAnimacionLectura.calificacionT3))}">
-                                {{convertirCulitativo(redondearNotaFinal(estudianteRow?.notaAnimacionLectura.calificacionT1
-                                , estudianteRow?.notaAnimacionLectura.calificacionT2 ,
-                                estudianteRow?.notaAnimacionLectura.calificacionT3))}}</span>
+                            <span class="circle-nota-cualitativa ml-3" [ngStyle]="{'background-color': getNotaColorBackground(truncarADosDecimales((estudianteRow?.notaAnimacionLectura.calificacionT1 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT2 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT3)/3)),
+                                'color': getNotaColorText(truncarADosDecimales((estudianteRow?.notaAnimacionLectura.calificacionT1 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT2 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT3)/3))}">
+                                {{convertirCulitativo(truncarADosDecimales((estudianteRow?.notaAnimacionLectura.calificacionT1
+                                +
+                                estudianteRow?.notaAnimacionLectura.calificacionT2 +
+                                estudianteRow?.notaAnimacionLectura.calificacionT3)/3))}}</span>
                         </td>
                     </ng-container>
                     <!-- ANIMACIÓN A LA LECTURA -->
