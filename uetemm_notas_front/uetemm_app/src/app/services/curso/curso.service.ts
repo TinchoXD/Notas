@@ -18,28 +18,28 @@ function isAlertType(type: string): type is AlertType {
 export class CursoService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
-  getCurso(): Observable<Curso[]>{
+  getCurso(): Observable<Curso[]> {
     return this.http
-    .get<Curso[]>(environment.urlApi + 'cursos/all' )
-    .pipe(catchError(this.handleError));
+      .get<Curso[]>(environment.urlApi + 'cursos/all')
+      .pipe(catchError(this.handleError));
   }
 
-  getCursoById(curs_id: number): Observable<Curso>{
+  getCursoById(curs_id: number): Observable<Curso> {
     return this.http
-    .get<Curso>(environment.urlApi + 'cursos/curso/'+ curs_id)
-    .pipe(catchError(this.handleError));
+      .get<Curso>(environment.urlApi + 'cursos/curso/' + curs_id)
+      .pipe(catchError(this.handleError));
   }
 
-/*   getCursosActivos(): Observable<Curso[]>{
+  /*   getCursosActivos(): Observable<Curso[]>{
     return this.http
     .get<Curso[]>(environment.urlApi + 'cursos/allActive' )
     .pipe(catchError(this.handleError));
   } */
 
-  getCursosActivos(): Observable<any[]>{
+  getCursosActivos(): Observable<any[]> {
     return this.http
-    .get<any[]>(environment.urlApi + 'cursos/allActive' )
-    .pipe(catchError(this.handleError));
+      .get<any[]>(environment.urlApi + 'cursos/allActive')
+      .pipe(catchError(this.handleError));
   }
 
   getCursoByUserId(user_id: number): Observable<Curso[]> {
@@ -61,21 +61,24 @@ export class CursoService {
   }
 
   putCurso(curso: CursoRequest) {
-    return this.http.post<any>(environment.urlApi + 'cursos/curso/agregarCurso', curso)
-    .subscribe({
-      next: () => {
-        this.showAlert('Curso guardado', 'success');
-      },
-      error: () => {
-        this.showAlert('Error al registrar Curso', 'error');
-        console.log('Error: ', catchError(this.handleError));
-      },
-    });
+    return this.http
+      .post<any>(environment.urlApi + 'cursos/curso/agregarCurso', curso)
+      .subscribe({
+        next: () => {
+          this.showAlert('Curso guardado', 'success');
+        },
+        error: () => {
+          this.showAlert('Error al registrar Curso', 'error');
+          console.log('Error: ', catchError(this.handleError));
+        },
+      });
   }
 
   updateCurso(curso: CursoUpdateRequest) {
-    return this.http.post<any>(environment.urlApi + 'cursos/curso/actualizarCurso', curso)
-    
+    return this.http.post<any>(
+      environment.urlApi + 'cursos/curso/actualizarCurso',
+      curso
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -90,6 +93,28 @@ export class CursoService {
   showAlert(mensaje: string, type: string) {
     if (isAlertType(type)) {
       this.alertService.showAlert(mensaje, type);
+    }
+  }
+
+  validaAplicaSupletorio(curso: any): boolean {
+    if (curso.nivel.nombre === 'Educación General Básica') {
+      if (
+        curso.grado.nombre === '4to' ||
+        curso.grado.nombre === '5to' ||
+        curso.grado.nombre === '6to' ||
+        curso.grado.nombre === '7mo' ||
+        curso.grado.nombre === '8vo' ||
+        curso.grado.nombre === '9no' ||
+        curso.grado.nombre === '10mo'
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (curso.nivel.nombre === 'Bachillerato Técnico') {
+      return true;
+    } else {
+      return false;
     }
   }
 }

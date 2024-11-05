@@ -64,7 +64,7 @@ setTimeout(() => {
   });
 }, 550);  */
 
-    this.loadingService.show();
+
     setTimeout(() => {
       this.router
         .navigate([`/notas-cursos/curso/${cursoTutor.id}`])
@@ -72,5 +72,16 @@ setTimeout(() => {
           this.loadingService.hide(); // Oculta el spinner de carga
         });
     }, 150); // Retraso de 2 segundos antes de la navegación
+  }
+  verEstudiantesCurso(cursoProfesor: any){
+    console.log(cursoProfesor)
+    this.loadingService.show();
+    setTimeout(() => {
+      this.router
+        .navigate([`/estudiantes/curso/${cursoProfesor.id}`])
+        .then(() => {
+          this.loadingService.hide(); // Oculta el spinner de carga
+        });
+    }, 500); // Retraso de 2 segundos antes de la navegación
   }
 }

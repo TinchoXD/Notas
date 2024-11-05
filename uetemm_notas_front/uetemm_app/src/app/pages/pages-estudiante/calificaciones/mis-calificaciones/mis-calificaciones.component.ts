@@ -255,7 +255,7 @@ export class MisCalificacionesComponent implements OnInit {
 
       contenidoTabla.push([
         { text: nota.cursoProfesor.asignatura.nombre },
-        { text: this.convertirCulitativo(nota.calificacionT1) },
+        { text: nota.calificacionT1 + ' - ' +this.convertirCulitativo(nota.calificacionT1) },
         { text: this.convertirCulitativo(nota.calificacionT2) },
         { text: this.convertirCulitativo(nota.calificacionT3) },
         { text: this.convertirCulitativo(promedioTrimestral) },

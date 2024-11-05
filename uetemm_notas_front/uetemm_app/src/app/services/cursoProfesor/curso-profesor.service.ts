@@ -48,7 +48,6 @@ export class CursoProfesorService {
 
 
   putCursoProfesor(cursoProfesor: any){
-    console.log('putCursoProfesor', cursoProfesor)
     return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/agregarCursoProfesor', cursoProfesor).subscribe({
       next: () => {
         this.showAlert('Curso guardado', 'success');
@@ -58,7 +57,14 @@ export class CursoProfesorService {
         console.log('Error: ', catchError(this.handleError));
       },
     });
+  }
 
+  reasignarCursoProfesor(cursoProfesor: any){
+    return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/reasignarCursoProfesor', cursoProfesor)
+  }
+  
+  eliminarCursoProfesor(cursoProfesor: any){
+    return this.http.post<any>(environment.urlApi + 'cursosProfesor/cursoProfesor/eliminarCursoProfesor', cursoProfesor)
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -75,4 +81,6 @@ export class CursoProfesorService {
       this.alertService.showAlert(mensaje, type);
     }
   }
+
+ 
 }

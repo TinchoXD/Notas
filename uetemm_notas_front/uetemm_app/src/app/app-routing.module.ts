@@ -19,6 +19,7 @@ import { DetalleCursoTutorComponent } from './pages/pages-profesor/tutor/detalle
 import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
+import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-curso/estudiantes-curso.component';
 
 const routes: Routes = [
  
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'mis-cursos', component: MisCursosComponent, canActivate: [authGuard] },
   { path: 'mis-cursos/curso/:id', component: DetalleCursoProfesorComponent, canActivate: [authGuard] },
   { path: 'estudiantes', component: EstudianteComponent, canActivate: [authGuard] },
+  { path: 'estudiantes/curso/:id', component: EstudiantesCursoComponent, canActivate: [authGuard] },
   { path: 'estudiantes/estudiante/:id', component: EstudianteFormComponent, canActivate: [authGuard] },
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },

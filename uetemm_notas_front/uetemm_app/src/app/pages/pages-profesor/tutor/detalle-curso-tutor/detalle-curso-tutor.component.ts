@@ -200,14 +200,16 @@ export class DetalleCursoTutorComponent implements OnInit {
           console.log('this.curso', this.curso);
 
           //Validación de Nivel y Subnivel del Curso
-          //************** CONDICION PARA MOSTRAR EL CAMPO DE SUPLETORIO *************/
-          if (this.curso.nivel.id === 123 && this.curso.subnivel.id === 99) {
-            this.aplicaSupletorio = false;
-            this.colSpanSupletorio = 9;
-          } else {
-            this.aplicaSupletorio = true;
+          //************** CONDICION PARA MOSTRAR EL CAMPO DE SUPLETORIO *************
+          this.aplicaSupletorio = this.cursoService.validaAplicaSupletorio(
+            this.curso
+          );
+          if (this.aplicaSupletorio) {
             this.colSpanSupletorio = 10;
+          } else {
+            this.colSpanSupletorio = 9;
           }
+          console.log('aplica Supletorio', this.aplicaSupletorio);
 
           this.estudiantes = estudiantes;
           this.estudiantes.forEach((estudiante) => {
@@ -259,7 +261,7 @@ export class DetalleCursoTutorComponent implements OnInit {
                         notaT1: notas?.calificacionT1 || 0,
                         notaT2: notas?.calificacionT2 || 0,
                         notaT3: notas?.calificacionT3 || 0,
-                        supletorio: notas?.calificacionSupletorio || '-',
+                        supletorio: notas?.calificacionSupletorio || null,
                       }))
                     )
                 )
@@ -274,20 +276,20 @@ export class DetalleCursoTutorComponent implements OnInit {
                 ]) => {
                   // Asigna todas las notas al estudiante
                   estudiante.notaAnimacionLectura = notaAnimacionLectura || {
-                    calificacionT1: null,
-                    calificacionT2: null,
-                    calificacionT3: null,
+                    calificacionT1: 0,
+                    calificacionT2: 0,
+                    calificacionT3: 0,
                   };
                   estudiante.notaAcompaniamientoIntegralAula =
                     notaAcompaniamientoIntegralAula || {
-                      calificacionT1: null,
-                      calificacionT2: null,
-                      calificacionT3: null,
+                      calificacionT1: 0,
+                      calificacionT2: 0,
+                      calificacionT3: 0,
                     };
                   estudiante.notaComportamiento = notaComportamiento || {
-                    calificacionT1: null,
-                    calificacionT2: null,
-                    calificacionT3: null,
+                    calificacionT1: 0,
+                    calificacionT2: 0,
+                    calificacionT3: 0,
                   };
                   estudiante.notas = notasCurso;
                   // Calcular promedio del estudiante
@@ -385,24 +387,18 @@ export class DetalleCursoTutorComponent implements OnInit {
             );
             const nombreAsignatura = asignatura.asignatura.nombre;
 
-            acc[`T1 (${nombreAsignatura})`] = nota.notaT1
-              ? nota.notaT1.toFixed(2).replace('.', ',')
-              : '';
-            acc[`T2 (${nombreAsignatura})`] = nota.notaT2
-              ? nota.notaT2.toFixed(2).replace('.', ',')
-              : '';
-            acc[`T3 (${nombreAsignatura})`] = nota.notaT3
-              ? nota.notaT3.toFixed(2).replace('.', ',')
-              : '';
-            acc[`Final (${nombreAsignatura})`] = (
-              (nota.notaT1 + nota.notaT2 + nota.notaT3) /
-              3
-            )
-              .toFixed(2)
-              .replace('.', ',');
-            acc[`Supletorio (${nombreAsignatura})`] = nota.supletorio
-              ? nota.supletorio.toFixed(2).replace('.', ',')
-              : '';
+            acc[`T1 (${nombreAsignatura})`] =
+              Math.trunc(nota.notaT1 * 100) / 100;
+            acc[`T2 (${nombreAsignatura})`] =
+              Math.trunc(nota.notaT2 * 100) / 100;
+            acc[`T3 (${nombreAsignatura})`] =
+              Math.trunc(nota.notaT3 * 100) / 100;
+            acc[`Final (${nombreAsignatura})`] =
+              Math.trunc(
+                ((nota.notaT1 + nota.notaT2 + nota.notaT3) / 3) * 100
+              ) / 100;
+
+            acc[`Supletorio (${nombreAsignatura})`] = nota.supletorio;
             return acc;
           },
           Promise.resolve({})
@@ -491,13 +487,11 @@ export class DetalleCursoTutorComponent implements OnInit {
               ? (nota.notaT1 + nota.notaT2 + nota.notaT3 || 0) / 3
               : null;
             return [
-              nota?.notaT1 ? nota.notaT1.toFixed(2).replace('.', ',') : '',
-              nota?.notaT2 ? nota.notaT2.toFixed(2).replace('.', ',') : '',
-              nota?.notaT3 ? nota.notaT3.toFixed(2).replace('.', ',') : '',
-              finalNota ? finalNota.toFixed(2).replace('.', ',') : '',
-              nota?.supletorio
-                ? nota.supletorio.toFixed(2).replace('.', ',')
-                : '',
+              nota?.notaT1,
+              nota?.notaT2,
+              nota?.notaT3,
+              finalNota,
+              nota?.supletorio,
               this.estado(estudiante, finalNota!),
             ];
           }),
@@ -705,5 +699,9 @@ export class DetalleCursoTutorComponent implements OnInit {
     return this.calificacionService.getNotaComportamientoColorText(
       notaComportamiento
     );
+  }
+
+  truncarADosDecimales(nota: number): number {
+    return this.calificacionService.truncarADosDecimales(nota);
   }
 }

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalificacionService {
-
   convertirCualitativo(nota: number): string {
     if (nota >= 9.5) {
       return 'A+';
@@ -81,8 +80,8 @@ export class CalificacionService {
       return 'O';
     } else if (nota > 0) {
       return 'N';
-    } 
-      return '-';
+    }
+    return '-';
   }
 
   getNotaComportamientoColorBackground(nota: number): string {
@@ -94,20 +93,24 @@ export class CalificacionService {
       return '#ffeeba'; // Warning - amarillo oscuro
     } else if (nota == 1) {
       return '#f8d7da'; // Danger - rojo claro
-    } 
-      return '#e9ecef'; // Secondary - gris claro
+    }
+    return '#e9ecef'; // Secondary - gris claro
   }
 
   getNotaComportamientoColorText(nota: number): string {
     if (nota == 4) {
-     return '#155724'; // Success - verde oscuro
+      return '#155724'; // Success - verde oscuro
     } else if (nota == 3) {
       return '#856404'; // Info - amarillo oscuro
     } else if (nota == 2) {
       return '#6c757d'; // Warning - gris oscuro
     } else if (nota == 1) {
       return '#721c24'; // Danger - rojo oscuro
-    } 
+    }
     return '#6c757d'; // Secondary - gris oscuro
+  }
+
+  truncarADosDecimales(valor: number): number {
+    return Math.trunc((valor+0.0001) * 100) / 100;
   }
 }

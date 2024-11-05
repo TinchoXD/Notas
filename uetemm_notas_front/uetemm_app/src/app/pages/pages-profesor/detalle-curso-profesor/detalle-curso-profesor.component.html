@@ -51,7 +51,7 @@
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
                         class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
                     <div style="text-align: center; align-content: center;">
-                        <h3>{{cursoProfesor?.asignatura.nombre}}</h3>
+                        <h2>{{cursoProfesor?.asignatura.nombre}}</h2>
                     </div>
 
                     <p-iconField iconPosition="left" class="ml-auto">
@@ -61,7 +61,7 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
-                    
+
                     <button mat-mini-fab class="ml-3"
                         matTooltip="Autoguardado: los cambios se aplicarán automáticamente al registrar la nota">
                         <mat-icon>save</mat-icon>
@@ -94,7 +94,7 @@
                         Promedio <p-sortIcon field="notaFinal" />
                     </th>
 
-                    <th *ngIf="aplicaSupletorio" pSortableColumn="notaSupletorio" style="text-align: center;">
+                    <th pSortableColumn="notaSupletorio" style="text-align: center;">
                         Supletorio<p-sortIcon field="notaSupletorio" />
                     </th>
                 </tr>
@@ -143,19 +143,18 @@
 
                     <td class="borde-izq" style="text-align: center;">
                         <p-inputNumber
-                            [ngModel]="redondearNotaFinal(estudianteRow.notaT1,estudianteRow.notaT2,estudianteRow.notaT3)"
-                            mode="decimal" [minFractionDigits]="1" [disabled]="true" styleClass="input-styling"
-                            placeholder="0,00" [maxlength]="4" outlined [maxFractionDigits]="2" [min]="0" [max]="10"
-                            (onInput)="changePage(estudianteRow)" />
+                            [ngModel]="truncarADosDecimales(((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3))"
+                            mode="decimal" [disabled]="true" styleClass="input-styling" placeholder="0,00"
+                            [maxlength]="4" outlined [min]="0" [max]="10" (onInput)="changePage(estudianteRow)" />
 
                     </td>
                     <td style="text-align: center;">
                         <span class="circle-nota-cualitativa ml-3"
-                            [ngStyle]="{'background-color': getNotaColorBackground((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3), 'color': getNotaColorText((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}">
+                            [ngStyle]="{'background-color': getNotaColorBackground(truncarADosDecimales((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)), 'color': getNotaColorText(truncarADosDecimales((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3))}">
                             {{convertirCulitativo((estudianteRow.notaT1+estudianteRow.notaT2+estudianteRow.notaT3)/3)}}</span>
                     </td>
 
-                    <td *ngIf="aplicaSupletorio" class="borde-izq" style="text-align: center;">
+                    <td class="borde-izq" style="text-align: center;">
                         <p-inputNumber [(ngModel)]="estudianteRow.notaSupletorio" mode="decimal" [minFractionDigits]="1"
                             styleClass="input-styling" placeholder="0,00" [maxlength]="4" outlined
                             [maxFractionDigits]="2" [min]="0" [max]="10" (onBlur)="changePage(estudianteRow)" />

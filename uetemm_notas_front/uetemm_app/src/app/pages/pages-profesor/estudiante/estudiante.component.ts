@@ -76,21 +76,21 @@ export class EstudianteComponent implements OnInit {
 
     this.estudianteService.getAllEstudiantes().subscribe({
       next: (estudiantes) => {
-        this.loading = false;
         this.estudiantes = estudiantes.sort((a, b) =>
           a.apellidosNombres.localeCompare(b.apellidosNombres)
-        );
-        console.log('estudiantes', estudiantes);
-
-        // Crear lista para filtro de Cursos (sin repetir)
-        this.cursos = estudiantes
-          .map((estudiante) => estudiante.curso)
-          .filter(
-            (curso, index, self) =>
-              index === self.findIndex((c) => c?.id === curso?.id)
-          );
-
-        console.log('Cursos distintos:', this.cursos);
+      );
+      console.log('estudiantes', estudiantes);
+      
+      // Crear lista para filtro de Cursos (sin repetir)
+      this.cursos = estudiantes
+      .map((estudiante) => estudiante.curso)
+      .filter(
+        (curso, index, self) =>
+          index === self.findIndex((c) => c?.id === curso?.id)
+      );
+      
+      console.log('Cursos distintos:', this.cursos);
+      this.loading = false;
       },
     });
   }

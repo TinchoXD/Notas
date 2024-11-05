@@ -54,6 +54,9 @@ import { LOCALE_ID } from '@angular/core';
 import { MisCalificacionesComponent } from './pages/pages-estudiante/calificaciones/mis-calificaciones/mis-calificaciones.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
+import { ReasignarCursoProfesorComponent } from './pages/pages-profesor/editar-usuario/reasignar-curso-profesor/reasignar-curso-profesor.component';
+import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-curso/estudiantes-curso.component';
+import { DialogoVerNotasCursoComponent } from './pages/pages-profesor/curso/dialogo-ver-notas-curso/dialogo-ver-notas-curso.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -89,6 +92,9 @@ registerLocaleData(localeEs, 'es');
         MisCalificacionesComponent,
         PageNotFoundComponent,
         InicioComponent,
+        ReasignarCursoProfesorComponent,
+        EstudiantesCursoComponent,
+        DialogoVerNotasCursoComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
