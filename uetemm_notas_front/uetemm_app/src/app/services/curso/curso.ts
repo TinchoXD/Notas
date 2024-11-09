@@ -8,5 +8,5 @@ export interface Curso {
     descripcion?: string;
     nivel?: number;
     subnivel?: number;
-    user?: number;
+    user?: any;
   }

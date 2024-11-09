@@ -69,7 +69,6 @@ export class CursoService {
         },
         error: () => {
           this.showAlert('Error al registrar Curso', 'error');
-          console.log('Error: ', catchError(this.handleError));
         },
       });
   }
@@ -81,19 +80,19 @@ export class CursoService {
     );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('Se ha producido un error ', error.error);
-    } else {
-      console.error('Backend retornó el código de estado ', error);
-    }
-    return throwError(() => new Error('Algo salió mal, intente nuevamente'));
+  updateTutorCurso(curso: CursoUpdateRequest) {
+    return this.http.post<any>(
+      environment.urlApi + 'cursos/curso/actualizarTutorCurso',
+      curso
+    );
   }
 
-  showAlert(mensaje: string, type: string) {
-    if (isAlertType(type)) {
-      this.alertService.showAlert(mensaje, type);
-    }
+  eliminarTutorCurso(curso: CursoUpdateRequest) {
+
+    return this.http.post<any>(
+      environment.urlApi + 'cursos/curso/eliminarTutorCurso',
+      curso
+    );
   }
 
   validaAplicaSupletorio(curso: any): boolean {
@@ -115,6 +114,21 @@ export class CursoService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('Se ha producido un error ', error.error);
+    } else {
+      console.error('Backend retornó el código de estado ', error);
+    }
+    return throwError(() => new Error('Algo salió mal, intente nuevamente'));
+  }
+
+  showAlert(mensaje: string, type: string) {
+    if (isAlertType(type)) {
+      this.alertService.showAlert(mensaje, type);
     }
   }
 }

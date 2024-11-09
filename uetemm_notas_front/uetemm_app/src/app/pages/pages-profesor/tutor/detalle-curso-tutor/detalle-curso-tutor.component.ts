@@ -95,8 +95,6 @@ export class DetalleCursoTutorComponent implements OnInit {
       this.cursoService.getCursoById(this.curs_id).subscribe({
         next: (cursos) => {
           this.curso = cursos;
-          console.log('curso', this.curso);
-          console.log('this.curso.user', this.curso.user);
           this.cursos.push(this.curso);
           // Obtiene los estudiantes asociados al curso actual
           this.estudianteService.getEstudiantesByCursoId(this.curs_id).subscribe({
@@ -107,12 +105,10 @@ export class DetalleCursoTutorComponent implements OnInit {
                 estudiante.notaAcompaniamientoIntegralAula = { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
                 estudiante.notaComportamiento = { calificacionT1: 0, calificacionT2: 0, calificacionT3: 0 };
               });
-              console.log('estudiantes', this.estudiantes);
               // Obtiene los profesores del curso
               this.cursoProfesorService.getCursoProfesorByCursoId(this.curs_id).subscribe({
                 next: (cursosProfesor) => {
                   this.cursosProfesor = cursosProfesor;
-                  console.log('this.cursosProfesor', this.cursosProfesor);
                   // Itera sobre cada estudiante
                   this.estudiantes.forEach((estudiante) => {
                     
@@ -195,10 +191,6 @@ export class DetalleCursoTutorComponent implements OnInit {
       .subscribe({
         next: ([curso, estudiantes, cursosProfesor]) => {
           this.curso = curso;
-
-          console.log('CURSO', curso);
-          console.log('this.curso', this.curso);
-
           //Validación de Nivel y Subnivel del Curso
           //************** CONDICION PARA MOSTRAR EL CAMPO DE SUPLETORIO *************
           this.aplicaSupletorio = this.cursoService.validaAplicaSupletorio(
@@ -209,8 +201,6 @@ export class DetalleCursoTutorComponent implements OnInit {
           } else {
             this.colSpanSupletorio = 9;
           }
-          console.log('aplica Supletorio', this.aplicaSupletorio);
-
           this.estudiantes = estudiantes;
           this.estudiantes.forEach((estudiante) => {
             estudiante.notaAnimacionLectura = {
@@ -326,7 +316,6 @@ export class DetalleCursoTutorComponent implements OnInit {
   }
 
   estado(estudiante: any, notaFinal: number) {
-    // console.log(estudiante.estado)
     if (estudiante.estado === 0) {
       return 'Retirado';
     }

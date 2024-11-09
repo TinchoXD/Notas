@@ -44,7 +44,6 @@ export class MisCursosComponent implements OnInit {
           .subscribe({
             next: (cursos) => {
               this.cursosProfesor = cursos;
-              console.log(this.cursosProfesor);
               this.cursosProfesor.sort((a, b) => {
                 const nivelComparison = a.curso.nivel.nombre.localeCompare(
                   b.curso.nivel.nombre
@@ -91,10 +90,7 @@ export class MisCursosComponent implements OnInit {
   }
 
   verCursoProfesor(cursoProfesor: any) {
-    console.log(cursoProfesor);
-
     // Mostrar el spinner de carga
-
 
     /* NAVEGACION POR PARÁMETROS HACIA UNA RUTA 
     setTimeout(() => {

@@ -1,34 +1,59 @@
 <div class="container-page">
   <div class="card">
-    <h3>
-      mis Cursos
-    </h3>
-    <div class="grid">
-      <div class="col-4" style="background-color: #ffffff00;" *ngFor="let curso of asignaturasPorCurso | keyvalue">
-        <p-card styleClass="shadow-5">
-          <ng-template pTemplate="header">
-            <div [style]="{'min-height': '0rem'}" class="p-4 border-round-sm" style="background-color: #929FDD;">
-              <p style="font-size: medium;"><strong> {{ curso.key }}</strong></p>
-            </div>
-          </ng-template>
-          <ng-container>
-            <div class="mb-1" *ngFor="let asignatura of curso.value"
-              (click)="navegarADetalle(asignatura.cursoProfesor_id)" style="cursor: pointer;">
-              <i class="pi pi-angle-right" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
-            </div>
-          </ng-container>
-        </p-card>
-      </div>
-    </div>
 
 
-    <div class="grid">
-      <div class="col-6" *ngFor="let cursoProfesor of cursosProfesor; let i = index">
-        <div class="card">
-          <h5>{{cursoProfesor.asignatura.nombre}}</h5>
-          <p-chart type="line" [data]="data[i]" [options]="options" />
+    <p-tabView>
+      <p-tabPanel header="Mis Cursos">
+        <h4>
+          Mis cursos
+        </h4>
+        <div class="grid">
+          <div class="col-4" style="background-color: #ffffff00;" *ngFor="let curso of asignaturasPorCurso | keyvalue">
+            <p-card styleClass="shadow-5">
+              <ng-template pTemplate="header">
+                <div [style]="{'min-height': '0rem'}" class="p-4 border-round-sm" style="background-color: #929FDD;">
+                  <p style="font-size: medium;"><strong> {{ curso.key }}</strong></p>
+                </div>
+              </ng-template>
+              <ng-container>
+                <div class="asignatura" *ngFor="let asignatura of curso.value"
+                  (click)="navegarADetalle(asignatura.cursoProfesor_id)" style="cursor: pointer;">
+                  <i class="pi pi-angle-right" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
+                </div>
+              </ng-container>
+            </p-card>
+          </div>
         </div>
-      </div>
-    </div>
+      </p-tabPanel>
+      <p-tabPanel header="Header II">
+        <div *ngFor="let curso of asignaturasPorCurso | keyvalue">
+          <div style="background-color: #d7daea; border-radius: 20px; padding-top: 8px; padding-bottom: 1px; padding-right: 10px; padding-left: 10px;">
+            <p style="font-size: large;"><strong><i class="pi pi-angle-right" style="font-size: 1rem;"></i> {{ curso.key
+                }}</strong></p>
+          </div>
+          <div class=" grid">
+            <ng-container>
+              <div class="col-6 " *ngFor="let asignatura of curso.value; let i = index">
+                <i class="pi pi-circle-fill" style="font-size: 1rem; cursor: pointer;"></i>
+                <p class="asignatura" style="cursor: pointer;" (click)="navegarADetalle(asignatura.cursoProfesor_id)" pTooltip="Ir al curso">{{
+                  asignatura.nombreAsignatura }}</p>
+                  
+                <p-chart height="300px" type="line" [data]="asignatura.dataNotas" [options]="options" />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Header III">
+        <p>
+          At vero eos et accusamus et iusto odio dignissimos...
+        </p>
+      </p-tabPanel>
+    </p-tabView>
+
+
+
+
+
   </div>
 </div>

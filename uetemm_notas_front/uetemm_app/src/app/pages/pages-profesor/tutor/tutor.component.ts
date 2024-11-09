@@ -29,11 +29,9 @@ export class TutorComponent implements OnInit {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
-        console.log('userData bbbbbbbbbb', this.user);
         this.cursoService.getCursoByUserId(this.user.id).subscribe({
           next: (cursosData) => {
             
-            console.log('cursosData', cursosData);
             if(cursosData.length === 0){
               Swal.fire({
                 title: 'Advertencia!',
@@ -43,7 +41,6 @@ export class TutorComponent implements OnInit {
               });
             }
             this.cursosTutor = cursosData;
-            console.log('cursosTutor', this.cursosTutor);
           },
         });
       },
@@ -74,7 +71,6 @@ setTimeout(() => {
     }, 150); // Retraso de 2 segundos antes de la navegación
   }
   verEstudiantesCurso(cursoProfesor: any){
-    console.log(cursoProfesor)
     this.loadingService.show();
     setTimeout(() => {
       this.router

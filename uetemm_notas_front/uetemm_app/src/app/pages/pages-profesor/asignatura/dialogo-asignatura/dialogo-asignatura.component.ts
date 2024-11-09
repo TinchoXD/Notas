@@ -45,7 +45,6 @@ export class DialogoAsignaturaComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log('this.asignaturaForm', this.asignaturaForm)
     if (this.asignaturaForm.valid) {
       this.catalogoService.putAsignatura(this.asignaturaForm.value as CatalogoRequest);
       this.dialogRef.close(this.asignaturaForm.value);

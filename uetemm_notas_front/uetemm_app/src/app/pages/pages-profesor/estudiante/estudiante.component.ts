@@ -22,7 +22,7 @@ export class EstudianteComponent implements OnInit {
   submitted: boolean = false;
   color: ThemePalette = 'primary';
   loading: boolean = true;
-  userDataToken!: any
+  userDataToken!: any;
   estudiante!: any;
   estudiantes!: any[];
   checked: boolean = true;
@@ -43,26 +43,23 @@ export class EstudianteComponent implements OnInit {
     private alertService: AlertService,
     //private messageServicePNG: MessageService,
     private messageService: MessageService,
-    private loginService: LoginService,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
-
     this.loginService.userData.subscribe({
-      next:(userDataToken)=>{
-        this.userDataToken = this.loginService.decodeToken(userDataToken)
-      }
-    })
+      next: (userDataToken) => {
+        this.userDataToken = this.loginService.decodeToken(userDataToken);
+      },
+    });
 
     this.loginService.userData.subscribe((token) => {
       if (token) {
         // Decodifica el token para obtener la información del usuario
         this.userData = this.loginService.decodeToken(token);
-        this.loginService.verificarCambioDeContrasenia(this.userData)
-
+        this.loginService.verificarCambioDeContrasenia(this.userData);
       }
     });
-    
 
     this.primengConfig.setTranslation({
       startsWith: 'Empieza con',
@@ -78,19 +75,17 @@ export class EstudianteComponent implements OnInit {
       next: (estudiantes) => {
         this.estudiantes = estudiantes.sort((a, b) =>
           a.apellidosNombres.localeCompare(b.apellidosNombres)
-      );
-      console.log('estudiantes', estudiantes);
-      
-      // Crear lista para filtro de Cursos (sin repetir)
-      this.cursos = estudiantes
-      .map((estudiante) => estudiante.curso)
-      .filter(
-        (curso, index, self) =>
-          index === self.findIndex((c) => c?.id === curso?.id)
-      );
-      
-      console.log('Cursos distintos:', this.cursos);
-      this.loading = false;
+        );
+
+        // Crear lista para filtro de Cursos (sin repetir)
+        this.cursos = estudiantes
+          .map((estudiante) => estudiante.curso)
+          .filter(
+            (curso, index, self) =>
+              index === self.findIndex((c) => c?.id === curso?.id)
+          );
+
+        this.loading = false;
       },
     });
   }
@@ -114,8 +109,6 @@ export class EstudianteComponent implements OnInit {
       id: estudiante.id,
       estado: valor.checked,
     };
-
-    console.log('55555555', status);
 
     this.estudianteService.updateEstudentStatus(status).subscribe({
       next: () => {

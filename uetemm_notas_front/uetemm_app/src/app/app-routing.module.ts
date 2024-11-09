@@ -20,6 +20,7 @@ import { MisCalificacionesComponent } from './pages/pages-estudiante/calificacio
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
 import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-curso/estudiantes-curso.component';
+import { ConfiguracionesComponent } from './pages/pages-profesor/configuraciones/configuraciones.component';
 
 const routes: Routes = [
  
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: 'estudiantes/estudiante/:id', component: EstudianteFormComponent, canActivate: [authGuard] },
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
+  { path: 'configuracion', component: ConfiguracionesComponent, canActivate: [authGuard] },
   { path: 'notfound', component: PageNotFoundComponent, canActivate: [authGuard] },
 
   { path: '**', redirectTo: '/notfound' },

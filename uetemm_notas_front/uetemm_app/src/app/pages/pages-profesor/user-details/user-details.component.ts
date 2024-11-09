@@ -123,7 +123,6 @@ export class UserDetailsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.grupoEtnico?.valueChanges.subscribe((value) => {
-      console.log(value);
 
       const nacionalidadIndigena = this.nacionalidadIndigena;
 
@@ -149,7 +148,6 @@ export class UserDetailsComponent implements OnInit {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
         this.user = userData;
-        console.log('user DATA', userData);
 
         this.userDetailsForm.patchValue({
           id: userData.id.toString(),
@@ -211,7 +209,6 @@ export class UserDetailsComponent implements OnInit {
         this.errorMessage = errorData;
       },
       complete: () => {
-        console.info('User Data loaded');
       },
     });
   }
@@ -222,7 +219,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoSexo = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -233,7 +229,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoEstadoCivil = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -244,7 +239,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoRelacionLaboral = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -254,7 +248,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoJornadaLaboral = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -265,7 +258,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoCategoria = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -276,7 +268,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoGrupoEtnico = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -287,7 +278,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoNacionalidadIndigena = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -298,7 +288,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoNivelEducacion = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -309,7 +298,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoActividadLaboral = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -320,7 +308,6 @@ export class UserDetailsComponent implements OnInit {
         this.catalogoNivel = data;
       },
       error: (error) => {
-        console.error('Error fetching catalogos', error);
       },
     });
   }
@@ -407,7 +394,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   async saveUserDetailsData() {
-    console.log('userDetailsForm', this.userDetailsForm);
     if (this.userDetailsForm.valid) {
       try {
         await firstValueFrom(
@@ -423,7 +409,6 @@ export class UserDetailsComponent implements OnInit {
         );
         this.router.navigateByUrl('/informacion-personal');
       } catch (errorData) {
-        console.error(errorData);
       }
     } else {
       this.showAlert(

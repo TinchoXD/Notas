@@ -100,7 +100,8 @@
                 <p-dropdown [options]="sizes" [(ngModel)]="selectedSize" optionLabel="name" />
             </ng-template>
             <ng-template pTemplate="right">
-                <p-button *ngIf="userDataToken.role === 'ADMIN'"  icon="pi pi-plus" class="mr-2" label="Nuevo" (click)="dialogAgregarUsuario()" />
+                <p-button *ngIf="userDataToken.role === 'ADMIN'" icon="pi pi-plus" class="mr-2" label="Nuevo"
+                    (click)="dialogAgregarUsuario()" />
             </ng-template>
         </p-toolbar>
 
@@ -113,16 +114,16 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th >
-                        # 
+                    <th>
+                        #
                     </th>
-                    <th pSortableColumn="firstname" >
+                    <th pSortableColumn="firstname">
                         Nombre <p-sortIcon field="firstname" />
                     </th>
                     <th pSortableColumn="lastname">
                         Apellidos <p-sortIcon field="lastname" />
                     </th>
-                    <th pSortableColumn="username" >
+                    <th pSortableColumn="username">
                         Cédula <p-sortIcon field="username" />
                     </th>
                     <th pSortableColumn="role">
@@ -137,7 +138,7 @@
                     <th pSortableColumn="cursosCodigos">
                         Cursos <p-sortIcon field="cursosCodigos" />
                     </th>
-                    <th *ngIf="userDataToken.role === 'ADMIN'" >
+                    <th *ngIf="userDataToken.role === 'ADMIN'">
                         Acciones
                     </th>
                 </tr>
@@ -173,9 +174,16 @@
                         <!-- <p *ngFor="let curso of userRow.cursos">
                     {{ curso.curso.codigo }}
                 </p> -->
-                        {{userRow.cursosCodigos}}
+
+                        <ul>
+                            <li *ngFor="let curso of userRow.cursosUnicos">
+                                {{curso}}
+                            </li>
+                        </ul>
+
+                        <!-- {{userRow.cursosCodigos}} -->
                     </td>
-                    <td *ngIf="userDataToken.role === 'ADMIN'" >
+                    <td *ngIf="userDataToken.role === 'ADMIN'">
 
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Usuario" class="mr-2" (click)="editar(userRow.id)"></p-button>

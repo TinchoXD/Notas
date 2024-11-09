@@ -90,7 +90,6 @@ export class CambiarContrasenaComponent {
   }
 
   hidePassToggle() {
-    console.log(this.password)
     if (this.hidePass) {
       this.hidePass = false
       this.inputPassType = "text";

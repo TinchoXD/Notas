@@ -141,6 +141,10 @@ import { AutoFocusModule } from 'primeng/autofocus';
     ChartModule,
     SkeletonModule,
     OverlayPanelModule,
+    TabViewModule,
+    SliderModule,
+    CalendarModule,
+    
     
   ],
 })

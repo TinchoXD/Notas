@@ -16,7 +16,7 @@
             <input type="text" formControlName="id" class="form-control" id="inputId" hidden readonly>
             <div class="row">
                 <div class="col-md-10">
-                    <p style="font-size: x-large;">Informacion Personal</p>
+                    <p style="font-size: large;"><b>Informacion Personal</b></p>
                 </div>
                 <div class="col-md-2 mt-4">
                 </div>
@@ -93,8 +93,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="div-button-row pt-2 pb-2">
-                                    <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo" (onChange)="habilitarDesabilitarAlert($event)"
-                                        [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo" />
+                                    <p-toggleButton formControlName="user_estado_usuario" onLabel="Activo"
+                                        (onChange)="habilitarDesabilitarAlert($event)" [onIcon]="onIcion"
+                                        offIcon="pi pi-ban" offLabel="Inactivo" />
                                 </div>
                             </div>
                         </div>
@@ -131,10 +132,87 @@
                 </div>
             </fieldset>
         </form>
-        <p-divider />
-        <p style="font-size: x-large;">Asignar Cursos</p>
         <p-toolbar styleClass="mb-4 gap-2">
             <ng-template pTemplate="left">
+                <p style="font-size: large;"><b>Asignar como Tutor de un curso</b></p>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button icon="pi pi-plus" class="mr-2" label="Asignar Tutor para Curso"
+                    (click)="dialogAgregarCursoTutor()" />
+            </ng-template>
+        </p-toolbar>
+        <p-table #dtTutor [value]="cursosTutor" [rows]="20" [paginator]="true" styleClass="p-datatable-sm"
+            [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre','user.firstname','user.lastname', 'jornada.nombre'] "
+            [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th pSortableColumn="codigo">
+                        Código <p-sortIcon field="codigo" />
+                    </th>
+                    <th pSortableColumn="nivel.nombre">
+                        Nivel <p-sortIcon field="nivel.nombre" />
+                    </th>
+                    <th pSortableColumn="subnivel.nombre">
+                        SubNivel <p-sortIcon field="subnivel.nombre" />
+                    </th>
+                    <th pSortableColumn="grado.nombre">
+                        Grado <p-sortIcon field="grado.nombre" />
+                    </th>
+                    <th pSortableColumn="paralelo.nombre">
+                        Paralelo <p-sortIcon field="paralelo.nombre" />
+                    </th>
+                    <th pSortableColumn="jornada.nombre">
+                        Jornada <p-sortIcon field="jornada.nombre" />
+                    </th>
+                    <th style="text-align: center;">
+                        Acciones
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cursoRow let-rowIndex="rowIndex">
+                <tr>
+                    <td>
+                        {{ rowIndex + 1 }}
+                    </td>
+                    <td>
+                        {{ cursoRow.codigo }}
+                    </td>
+                    <td>
+                        {{ cursoRow.nivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoRow.subnivel.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoRow.grado.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoRow.paralelo.nombre }}
+                    </td>
+                    <td>
+                        {{ cursoRow.jornada.nombre }}
+                    </td>
+
+                    <td style="text-align: center;">
+                        <p-button pRipple icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
+                            pTooltip="Eliminar" class="mr-2" (click)="eliminarTutor(cursoRow)" />
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+        
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <p style="font-size: large;"><b>Asignar Cursos - Asignatura</b></p>
+            </ng-template>
+            <ng-template pTemplate="center">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Buscar curso.."
@@ -142,7 +220,8 @@
                 </span>
             </ng-template>
             <ng-template pTemplate="right">
-                <p-button icon="pi pi-plus" class="mr-2" label="Asignar Curso" (click)="dialogAgregarCursoProfesor()" />
+                <p-button icon="pi pi-plus" class="mr-2" label="Asignar Curso - Asignatura"
+                    (click)="dialogAgregarCursoProfesor()" />
             </ng-template>
         </p-toolbar>
         <p-table #dt [value]="cursosProfesor" [rows]="20" [paginator]="true" styleClass="p-datatable-sm"
@@ -152,9 +231,9 @@
             [showCurrentPageReport]="true" emptyMessage="No hay cursos disponibles">
             <ng-template pTemplate="header">
                 <tr>
-                   <!--  <th>
-                        id
-                    </th> -->
+                    <th>
+                        #
+                    </th>
                     <th pSortableColumn="codigo">
                         Código <p-sortIcon field="codigo" />
                     </th>
@@ -181,11 +260,11 @@
                     </th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-cursoProfesorRow>
+            <ng-template pTemplate="body" let-cursoProfesorRow let-rowIndex="rowIndex">
                 <tr>
-                   <!--  <td>
-                        {{ cursoProfesorRow.id }}
-                    </td> -->
+                    <td>
+                        {{ rowIndex + 1 }}
+                    </td>
                     <td>
                         {{ cursoProfesorRow.curso.codigo }}
                     </td>
@@ -210,8 +289,9 @@
                     <td>
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Curso" class="mr-2" (click)="editarCursoProfesor(cursoProfesorRow)" />
-                        <p-button pRipple icon="pi pi-angle-double-right" severity="warning" [rounded]="true" [outlined]="true"
-                            pTooltip="Reasignar Curso" class="mr-2" (click)="reasignarCursoProfesor(cursoProfesorRow)" />
+                        <p-button pRipple icon="pi pi-angle-double-right" severity="warning" [rounded]="true"
+                            [outlined]="true" pTooltip="Reasignar Curso" class="mr-2"
+                            (click)="reasignarCursoProfesor(cursoProfesorRow)" />
                         <p-button pRipple icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
                             pTooltip="Eliminar" class="mr-2" (click)="eliminarCursoProfesor(cursoProfesorRow)" />
                     </td>

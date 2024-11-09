@@ -26,7 +26,6 @@ export class UserService implements OnInit {
   ngOnInit(): void {
     this.loginService.currentUserLoggedOn.subscribe({
       next: (userLoggedOn) => {
-        console.log("oninit")
         this.userLoggedOn = userLoggedOn;
       },
     });
@@ -45,8 +44,7 @@ export class UserService implements OnInit {
       this.id = JSON.parse(window.atob(token.split('.')[1])).userId;
       return this.http.get<User>(environment.urlApi + "users/user/" + this.id).pipe(catchError(this.handleError))
     } catch (error) {
-      console.log('no existe el totken en la sesión actual')
-      console.log('no existe el totken en la sesión actual')
+      console.log('error: ' + error)
     }
     
     return of(); 

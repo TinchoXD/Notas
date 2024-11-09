@@ -247,7 +247,6 @@ export class EstudianteFormComponent implements OnInit {
     this.loginService.userData.subscribe({
       next: (userDataToken) => {
         this.userDataToken = this.loginService.decodeToken(userDataToken);
-        console.log('aasdasdasdasd', this.userDataToken);
         if (this.userDataToken.role === 'ADMIN') {
           this.readonly = false;
           this.modalVisible = false;
@@ -260,8 +259,7 @@ export class EstudianteFormComponent implements OnInit {
                   this.userDataToken.userId === estudianteData.curso.user?.id
                 ) {
                   this.readonly = false;
-                }
-                else {
+                } else {
                   this.readonly = true;
                   this.modalVisible = true;
                 }
@@ -273,8 +271,6 @@ export class EstudianteFormComponent implements OnInit {
 
     this.estudianteService.getEstudianteById(this.estudiante_id).subscribe({
       next: (estudiante) => {
-        console.log('DATOS DEL ESTUDIANTE, DESDE API', estudiante);
-
         this.estudianteForm.patchValue({
           id: estudiante.id.toString(),
           /*  nombres: estudiante.nombres, */
@@ -748,7 +744,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarDatosEstudiante() {
-    console.log('Estudiante', this.estudianteForm);
     if (this.estudianteForm.valid) {
       this.estudianteForm.addControl('form_id', new FormControl('1'));
       this.loadingService.show();
@@ -784,7 +779,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarDatosMadre() {
-    console.log('Madre', this.madreForm);
     if (this.madreForm.valid) {
       this.madreForm.addControl('id', new FormControl(this.estudiante_id));
       this.madreForm.addControl('form_id', new FormControl('2'));
@@ -818,7 +812,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarDatosPadre() {
-    console.log('Padre', this.padreForm);
     if (this.padreForm.valid) {
       this.padreForm.addControl('id', new FormControl(this.estudiante_id));
       this.padreForm.addControl('form_id', new FormControl('3'));
@@ -852,7 +845,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarDatosRepresentante() {
-    console.log('Representante', this.representanteForm);
     if (this.representanteForm.valid) {
       this.representanteForm.addControl(
         'id',
@@ -891,7 +883,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarDatosFamiliares() {
-    console.log('datos Familiares', this.datosFamiliaresForm);
     if (this.datosFamiliaresForm.valid) {
       this.datosFamiliaresFormAux.addControl(
         'id',
@@ -917,7 +908,6 @@ export class EstudianteFormComponent implements OnInit {
         familiaTipoViviendaOtro: this.familiaTipoViviendaOtro.value,
         familiaServiciosBasicos: this.familiaServiciosBasicos.value.join(','),
       });
-      console.log('datos Familiares AUX', this.datosFamiliaresFormAux);
       setTimeout(() => {
         this.estudianteService
           .updateEstudent(this.datosFamiliaresFormAux.value)
@@ -949,7 +939,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarAntecedentesMadre() {
-    console.log('Antecedentes Madre', this.antecedentesMadreForm);
     if (this.antecedentesMadreForm.valid) {
       this.antecedentesMadreForm.addControl(
         'id',
@@ -988,7 +977,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarAntecedentesEstudiante() {
-    console.log('Antecedentes Estudiante', this.antecedentesEstudianteForm);
     if (this.antecedentesEstudianteForm.valid) {
       this.antecedentesEstudianteForm.addControl(
         'id',
@@ -1030,7 +1018,6 @@ export class EstudianteFormComponent implements OnInit {
   }
 
   guardarSeguimientoEstudiante() {
-    console.log('Seguimiento Estudiante', this.seguimientoForm);
     if (this.seguimientoForm.valid) {
       this.seguimientoForm.addControl(
         'id',
@@ -1377,9 +1364,7 @@ export class EstudianteFormComponent implements OnInit {
       next: (data) => {
         this.catalogoGrupoEtnico = data;
       },
-      error: (error) => {
-        console.error('Error fetching catalogos - Grupo Etnico', error);
-      },
+      error: (error) => {},
     });
   }
   private loadCatalogoSexo() {
@@ -1387,9 +1372,7 @@ export class EstudianteFormComponent implements OnInit {
       next: (data) => {
         this.catalogoSexo = data;
       },
-      error: (error) => {
-        console.error('Error fetching catalogos - Sexo', error);
-      },
+      error: (error) => {},
     });
   }
   private loadCatalogoEstadoCivil() {
@@ -1397,9 +1380,7 @@ export class EstudianteFormComponent implements OnInit {
       next: (data) => {
         this.catalogoEstadoCivil = data;
       },
-      error: (error) => {
-        console.error('Error fetching catalogos - Estado Civil', error);
-      },
+      error: (error) => {},
     });
   }
   private loadCatalogoNivelInstruccion() {
@@ -1407,9 +1388,7 @@ export class EstudianteFormComponent implements OnInit {
       next: (data) => {
         this.catalogoNivelInstruccion = data;
       },
-      error: (error) => {
-        console.error('Error fetching catalogos - Nivel Instruccion', error);
-      },
+      error: (error) => {},
     });
   }
 }

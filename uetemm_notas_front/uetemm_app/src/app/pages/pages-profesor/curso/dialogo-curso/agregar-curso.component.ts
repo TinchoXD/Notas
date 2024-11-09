@@ -84,7 +84,6 @@ export class AgregarCursoComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.cursoEdit) {
-      console.log('this.data.cursoEdit', this.data.cursoEdit);
       this.cursoForm.patchValue({
         id: this.data.cursoEdit.id.toString(),
         user_id: this.data.cursoEdit.user ? this.data.cursoEdit.user.id : null,
@@ -93,15 +92,14 @@ export class AgregarCursoComponent implements OnInit {
       });
     }
 
-    console.log('Nivel : ', this.nivel.value);
+
     this.subnivelesFiltrados;
 
     this.catalogoService
       .getNivelAsignaturaLista()
       .subscribe(
         (nivelesAsignatura) => (
-          (this.nivelesAsignatura = nivelesAsignatura),
-          console.log('nivelesAsignatura COMPLETO', this.nivelesAsignatura)
+          (this.nivelesAsignatura = nivelesAsignatura)
         )
       );
     this.catalogoService
@@ -255,7 +253,7 @@ export class AgregarCursoComponent implements OnInit {
             CODIGO_PARALELO +
             CODIGO_JORNADA;
           this.codigoCurso = CODIGO_CURSO;
-          console.log('CODIGO !!!', CODIGO_CURSO);
+
 
           this.codigo.patchValue(CODIGO_CURSO);
         } else {
@@ -429,7 +427,7 @@ export class AgregarCursoComponent implements OnInit {
               CODIGO_PARALELO +
               CODIGO_JORNADA;
             this.codigoCurso = CODIGO_CURSO;
-            console.log('CODIGO !!!', CODIGO_CURSO);
+
 
             this.codigo.patchValue(CODIGO_CURSO);
           } else {
@@ -523,7 +521,7 @@ export class AgregarCursoComponent implements OnInit {
             CODIGO_PARALELO +
             CODIGO_JORNADA;
           this.codigoCurso = CODIGO_CURSO;
-          console.log('CODIGO !!!', CODIGO_CURSO);
+
 
           this.codigo.patchValue(CODIGO_CURSO);
         }
@@ -726,7 +724,7 @@ export class AgregarCursoComponent implements OnInit {
               CODIGO_PARALELO +
               CODIGO_JORNADA;
             this.codigoCurso = CODIGO_CURSO;
-            console.log('CODIGO !!!', CODIGO_CURSO);
+
 
             this.codigo.patchValue(CODIGO_CURSO);
           }
@@ -767,7 +765,7 @@ export class AgregarCursoComponent implements OnInit {
             CODIGO_PARALELO +
             CODIGO_JORNADA;
           this.codigoCurso = CODIGO_CURSO;
-          console.log('CODIGO !!!', CODIGO_CURSO);
+
 
           this.codigo.patchValue(CODIGO_CURSO);
         }

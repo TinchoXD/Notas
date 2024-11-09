@@ -71,6 +71,20 @@ public class CursoController {
     public ResponseEntity<Object> updateCurso(@RequestBody CursoRequest request) {
         return ResponseEntity.ok(cursoService.updateCurso(request));
     }
+    
+    // * ACTUALIZAR TUTOR CURSO */
+    @PostMapping(value = "/curso/actualizarTutorCurso")
+    public ResponseEntity<Object> updateTutorCurso(@RequestBody CursoRequest request) {
+        return ResponseEntity.ok(cursoService.updateTutorCurso(request));
+    }
+    
+    // * ELIMINAR TUTOR DEL CURSO */
+    @PostMapping(value = "/curso/eliminarTutorCurso")
+    public ResponseEntity<Object> eliminarTutorCurso(@RequestBody CursoRequest request) {
+        return ResponseEntity.ok(cursoService.eliminarTutorCurso(request));
+    }
+
+
 
     // * ELIMINAR CURSO (DESCATALOGAR CURSO - STATUS = 0) */
     @PostMapping(value = "/curso/deleteCurso")

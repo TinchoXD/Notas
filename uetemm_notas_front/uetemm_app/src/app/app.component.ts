@@ -34,9 +34,6 @@ export class AppComponent implements OnInit {
         // Decodifica el token para obtener la información del usuario
         this.userData = this.loginService.decodeToken(token);
         this.loginService.verificarCambioDeContrasenia(this.userData)
-
-        console.log('userData 123123123', this.userData)
-
       }
     });
   }

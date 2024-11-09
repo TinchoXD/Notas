@@ -85,7 +85,6 @@ export class CatalogoService {
       },
       error: () => {
         this.showAlert('Error al agregar Asignatura', 'error');
-        console.log('Error: ', catchError(this.handleError));
       },
     });
   }

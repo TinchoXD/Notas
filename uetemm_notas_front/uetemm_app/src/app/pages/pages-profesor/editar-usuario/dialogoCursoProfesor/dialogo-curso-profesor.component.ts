@@ -73,7 +73,6 @@ export class DialogoCursoProfesorComponent implements OnInit {
         });
       },
       error: (err) => {
-        console.error('Error fetching cursos:', err);
       },
     });
 
@@ -88,7 +87,6 @@ export class DialogoCursoProfesorComponent implements OnInit {
   ngOnInit(): void {
     this.cursoProfesorId = undefined
     if (this.data.cursoProfesorEdit) {
-      console.log('cursoProfesorEdit', this.data.cursoProfesorEdit);
 
       this.seleccionMultiple = false
 
@@ -103,7 +101,6 @@ export class DialogoCursoProfesorComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.cursoProfesor', this.cursoProfesor)
 
     
     if (this.cursoProfesorForm.valid) {
@@ -112,18 +109,13 @@ export class DialogoCursoProfesorComponent implements OnInit {
       let asignaturas = []
       
       if(this.asignatura?.value.length == undefined){
-        console.log('this.asignatura?.value.length', this.asignatura?.value.length);
-        console.log('If SI');
         asignaturas = [this.asignatura?.value]
       }else{
-        console.log('this.asignatura?.value.length', this.asignatura?.value.length);
-        console.log('If NO');
         asignaturas = this.asignatura?.value
       }
 
 
       asignaturas.forEach((asigId: number) => {
-        console.log(asigId);
 
         this.cursoProfesorService
           .getCursoProfesorByCursoIdAndAsignaturaId(this.curso?.value, asigId)

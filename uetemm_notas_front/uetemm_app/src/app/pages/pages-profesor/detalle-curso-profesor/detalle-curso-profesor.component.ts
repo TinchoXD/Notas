@@ -133,7 +133,6 @@ export class DetalleCursoProfesorComponent implements OnInit {
                         },
                       });
                   });
-                  console.log('ccc', this.notaEstudiante);
                 },
               });
           },
@@ -151,7 +150,6 @@ export class DetalleCursoProfesorComponent implements OnInit {
       notaSupletorio:
         notaEstudiante.notaSupletorio > 10 ? 10 : notaEstudiante.notaSupletorio,
     };
-    console.log('AAA', nota);
     this.notaService.saveNota(nota).subscribe({
       next: () => {},
       complete: () => {

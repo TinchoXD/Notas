@@ -68,33 +68,33 @@
                 <mat-icon>home</mat-icon> Home
             </mat-list-item>
 
-            <mat-list-item routerLink="/asignaturas" >
+            <mat-list-item routerLink="/asignaturas" *ngIf="userDataToken.role === 'ADMIN'" >
                 <mat-icon>library_books</mat-icon> Asignaturas
             </mat-list-item>
 
-            <mat-list-item routerLink="/cursos">
+            <mat-list-item routerLink="/cursos" *ngIf="userDataToken.role === 'ADMIN'">
                 <mat-icon>school</mat-icon> Cursos
             </mat-list-item>
 
-            <mat-list-item routerLink="/administracion-usuarios">
+            <mat-list-item routerLink="/administracion-usuarios" *ngIf="userDataToken.role === 'ADMIN'">
                 <mat-icon>group</mat-icon> Profesores
             </mat-list-item>
 
             <mat-list-item routerLink="/mis-cursos">
                 <mat-icon>ballot</mat-icon> Mis Cursos
             </mat-list-item>
-           <!-- 
-            <mat-list-item routerLink="/mis-cursos">
-                <mat-icon>group</mat-icon> Mis Estudiantes
-            </mat-list-item> -->
-
+            
             <mat-list-item routerLink="/estudiantes">
                 <mat-icon>group</mat-icon> Estudiantes
             </mat-list-item>
-
+            
             <mat-list-item routerLink="/cursos-tutor">
                 <mat-icon>analytics</mat-icon> Tutor
             </mat-list-item>
+            
+             <mat-list-item routerLink="/configuracion">
+                 <mat-icon>settings</mat-icon> Configuración
+             </mat-list-item>
 
         </mat-nav-list>
     </mat-drawer>

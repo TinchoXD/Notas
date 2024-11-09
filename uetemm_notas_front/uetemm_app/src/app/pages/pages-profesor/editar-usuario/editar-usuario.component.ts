@@ -22,6 +22,7 @@ import { ToggleButtonChangeEvent } from 'primeng/togglebutton';
 import { MessageService } from 'primeng/api';
 import { PrimeIcons, MenuItem } from 'primeng/api';
 import { ReasignarCursoProfesorComponent } from './reasignar-curso-profesor/reasignar-curso-profesor.component';
+import { DialogoCursoTutorComponent } from './dialogo-curso-tutor/dialogo-curso-tutor.component';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -39,6 +40,7 @@ interface rol {
 })
 export class EditarUsuarioComponent implements OnInit {
   agregarCursoProfesorDialog: boolean = false;
+  agregarCursoTutorDialog: boolean = false;
   user?: User;
   userId: number = 0;
   userCI: string = '';
@@ -63,6 +65,9 @@ export class EditarUsuarioComponent implements OnInit {
   modalVisible = true;
 
   userDataToken!: any;
+
+  cursoTutor: any;
+  cursosTutor: any[] = [];
   /* public resetPasswordRequest: PasswordRequest */
   public resetPasswordRequest: PasswordRequest = {
     id: 0,
@@ -96,7 +101,6 @@ export class EditarUsuarioComponent implements OnInit {
     this.loginService.userData.subscribe({
       next: (userDataToken) => {
         this.userDataToken = this.loginService.decodeToken(userDataToken);
-        console.log('aasdasdasdasd', this.userDataToken);
         if (this.userDataToken.role === 'ADMIN') {
           this.modalVisible = false;
         } else {
@@ -111,7 +115,11 @@ export class EditarUsuarioComponent implements OnInit {
     ];
     this.activatedRoute.params.subscribe((params) => {
       this.userId = +params['id']; // El signo '+' convierte el string a número
-      console.log(this.userId);
+      this.cursoService.getCursoByUserId(this.userId).subscribe({
+        next: (cursos) => {
+          this.cursosTutor = cursos;
+        },
+      });
     });
 
     this.cursoProfesorService
@@ -119,7 +127,6 @@ export class EditarUsuarioComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.cursosProfesor = data;
-          console.log('cursosProfesor', this.cursosProfesor);
         },
       });
 
@@ -132,7 +139,6 @@ export class EditarUsuarioComponent implements OnInit {
         this.user = userData;
         this.userCI = userData.username;
 
-        console.log('role', userData);
 
         this.userDetailsForm.patchValue({
           id: userData.id.toString(),
@@ -147,7 +153,6 @@ export class EditarUsuarioComponent implements OnInit {
         this.errorMessage = errorData;
       },
       complete: () => {
-        console.info('User Data loaded');
       },
     });
   }
@@ -171,6 +176,7 @@ export class EditarUsuarioComponent implements OnInit {
   dialogoResetearContrasenia(): void {
     Swal.fire({
       title: '¿Desea restablecer la contraseña del usuario?',
+      text: 'La nueva contraseña será el número de cédula del Docente',
       showDenyButton: true,
       icon: 'warning',
       //showCancelButton: true,
@@ -223,7 +229,6 @@ export class EditarUsuarioComponent implements OnInit {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           if (this.userDetailsForm.valid) {
-            console.log('this.userDetailsForm', this.userDetailsForm);
             this.guardarInformacionUsuario();
           } else {
             this.showAlert(
@@ -265,11 +270,8 @@ export class EditarUsuarioComponent implements OnInit {
       width: '1000px',
       data: { user_id: this.userId },
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('result', result);
-
+    dialogRef.afterClosed().subscribe(() => {
+      setTimeout(() => {
         this.cursoProfesorService
           .getAllCursoProfesorByProfesorId(this.userId)
           .subscribe({
@@ -277,6 +279,28 @@ export class EditarUsuarioComponent implements OnInit {
               this.cursosProfesor = cursosProfesor;
             },
           });
+      }, 250); // Retraso de 500 ms (medio segundo)
+    });
+  }
+
+  dialogAgregarCursoTutor() {
+    this.agregarCursoProfesorDialog = true;
+    this.submitted = false;
+    this.cursoTutor = {};
+
+    const dialogRef = this.dialog.open(DialogoCursoTutorComponent, {
+      width: '1000px',
+      data: { user_id: this.userId },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+
+        this.cursoService.getCursoByUserId(this.userId).subscribe({
+          next: (cursosTutor) => {
+            this.cursosTutor = cursosTutor;
+          },
+        });
       }
     });
   }
@@ -401,7 +425,6 @@ export class EditarUsuarioComponent implements OnInit {
                 .subscribe({
                   next: (data) => {
                     this.cursosProfesor = data;
-                    console.log('cursosProfesor', this.cursosProfesor);
                   },
                 });
               Swal.fire({
@@ -420,6 +443,51 @@ export class EditarUsuarioComponent implements OnInit {
               });
             },
           });
+      }
+    });
+  }
+
+  eliminarTutor(curso: any) {
+    const cursoDelTutor = {
+      id: curso.id,
+      user_id: curso.user.id,
+      descripcion: curso.descripcion,
+      codigo: curso.codigo,
+    };
+
+    Swal.fire({
+      title:
+        '¿Está seguro de eliminar la a este profesor como Tutor del curso?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cursoService.eliminarTutorCurso(cursoDelTutor).subscribe({
+          next: (res) => {
+            this.cursoService.getCursoByUserId(this.userId).subscribe({
+              next: (cursosTutor) => {
+                this.cursosTutor = cursosTutor;
+              },
+            });
+            Swal.fire({
+              title: 'Eliminado!',
+              text: 'El Profesor ya no es Tutor del curso.',
+              icon: 'success',
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              title: 'Error',
+              text:
+                'No se puede eliminar a este profesor como tutor del curso, detalle del error: ' +
+                error.error,
+              icon: 'error',
+            });
+          },
+        });
       }
     });
   }

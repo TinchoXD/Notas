@@ -43,7 +43,6 @@ export class DashboardComponent implements OnInit {
     this.loginService.userData.subscribe({
       next:(userDataToken)=>{
         this.userDataToken = this.loginService.decodeToken(userDataToken)
-        console.log('userDataToken',this.userDataToken)
       }
     })
 
@@ -53,18 +52,15 @@ export class DashboardComponent implements OnInit {
         this.user = userData;
       },
       error: (errorData) => {
-        console.log("usuario no loggeado.")
         this.errorMessage = errorData;
         this.router.navigate(['/iniciar-sesion']);
       },
       complete: ()=>{
-        console.info("User Data OK.")
       }
     });
     
     this.loginService.currentUserLoggedOn.subscribe({
       next: (userLoggedOn) => {
-        console.log('userLoggedOn',userLoggedOn)
         this.userLoggedOn = userLoggedOn;
       },
     });
@@ -87,6 +83,5 @@ export class DashboardComponent implements OnInit {
   }
 
   click() {
-    console.log('valor: ', this.value);
   }
 }

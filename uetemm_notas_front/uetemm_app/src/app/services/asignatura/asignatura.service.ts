@@ -61,7 +61,6 @@ export class AsignaturaService {
       },
       error: () => {
         this.showAlert('Error al registrar Curso', 'error');
-        console.log('Error: ', catchError(this.handleError));
       },
     });
   } */

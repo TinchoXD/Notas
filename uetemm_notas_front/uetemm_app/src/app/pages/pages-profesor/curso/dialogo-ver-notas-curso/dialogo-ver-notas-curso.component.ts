@@ -26,12 +26,10 @@ export class DialogoVerNotasCursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.curso = this.data;
-    console.log('this.curso', this.curso)
 
     this.cursoProfesorService.getCursoProfesorByCursoId(this.curso.curso.id).subscribe({
       next:(cursosProfesorData)=>{
         this.cursosProfesor = cursosProfesorData
-        console.log('cursosProfesorData', cursosProfesorData)
       }
     })
   }
@@ -52,7 +50,6 @@ export class DialogoVerNotasCursoComponent implements OnInit {
   verNotasPorAsignatura(cursoProfesor: any)
   {
 
-    console.log(cursoProfesor)
     
     this.loadingService.show();
     setTimeout(() => {

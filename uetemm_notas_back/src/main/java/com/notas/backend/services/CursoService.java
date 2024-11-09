@@ -45,7 +45,7 @@ public class CursoService {
     public boolean getCursoByCodigo(String codigo) {
         Curso curso = cursoRepository.findByCodigo(codigo);
 
-        if(curso != null){
+        if (curso != null) {
             return true;
         }
         return false;
@@ -53,10 +53,10 @@ public class CursoService {
     }
 
     @Transactional
-    public MessageResponse updateCurso(CursoRequest cursoRequest){
+    public MessageResponse updateCurso(CursoRequest cursoRequest) {
 
         Optional<Curso> curso = cursoRepository.findById(cursoRequest.id);
-        
+
         curso.get().descripcion = cursoRequest.descripcion;
 
         User user = new User();
@@ -65,6 +65,33 @@ public class CursoService {
         curso.get().user = user;
 
         return new MessageResponse("El Curso se Actualizó satisfactoriamente");
+    }
+
+    @Transactional
+    public MessageResponse updateTutorCurso(CursoRequest cursoRequest) {
+
+        Optional<Curso> curso = cursoRepository.findById(cursoRequest.id);
+        User user = new User();
+        user.id = cursoRequest.user_id;
+
+        curso.get().user = user;
+
+        return new MessageResponse("El TUTOR del Curso se Actualizó satisfactoriamente");
+    }
+
+    @Transactional
+    public MessageResponse eliminarTutorCurso(CursoRequest cursoRequest) {
+
+        Optional<Curso> curso = cursoRepository.findById(cursoRequest.id);
+
+        curso.get().descripcion = cursoRequest.descripcion;
+
+        User user = new User();
+        user.id = cursoRequest.user_id;
+
+        curso.get().user = null;
+
+        return new MessageResponse("Se eliminó el Tutor del curso");
     }
 
     @Transactional
@@ -92,7 +119,7 @@ public class CursoService {
                     .paralelo(paralelo).jornada(jornada).descripcion(cursoRequest.descripcion)
                     .status(1).codigo(cursoRequest.codigo)
                     .build();
-            cursoRepository.save(curso); 
+            cursoRepository.save(curso);
         }
 
         return new MessageResponse("El Curso se agregó satisfactoriamente.");
@@ -108,6 +135,5 @@ public class CursoService {
         cursoRepository.save(curso.get());
         return new MessageResponse("El  satisfactoriamente.");
     }
-
 
 }

@@ -163,7 +163,6 @@ export class CursosComponent implements OnInit {
   }
 
   eliminarCurso(curso: Curso) {
-    console.log('curso a borrar', curso);
     this.dialog
       .open(DialogoConfirmacionComponent, {
         data: {

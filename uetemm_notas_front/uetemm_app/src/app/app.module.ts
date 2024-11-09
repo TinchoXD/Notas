@@ -57,6 +57,8 @@ import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component'
 import { ReasignarCursoProfesorComponent } from './pages/pages-profesor/editar-usuario/reasignar-curso-profesor/reasignar-curso-profesor.component';
 import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-curso/estudiantes-curso.component';
 import { DialogoVerNotasCursoComponent } from './pages/pages-profesor/curso/dialogo-ver-notas-curso/dialogo-ver-notas-curso.component';
+import { DialogoCursoTutorComponent } from './pages/pages-profesor/editar-usuario/dialogo-curso-tutor/dialogo-curso-tutor.component';
+import { ConfiguracionesComponent } from './pages/pages-profesor/configuraciones/configuraciones.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -95,6 +97,8 @@ registerLocaleData(localeEs, 'es');
         ReasignarCursoProfesorComponent,
         EstudiantesCursoComponent,
         DialogoVerNotasCursoComponent,
+        DialogoCursoTutorComponent,
+        ConfiguracionesComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

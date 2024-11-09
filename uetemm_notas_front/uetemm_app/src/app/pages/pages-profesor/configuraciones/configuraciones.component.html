@@ -1,0 +1,22 @@
+<div class="container-page">
+    <div class="card card flex flex-wrap gap-3 p-fluid">
+        <p>Definir el rango de fechas para el ingreso de calificaciones para cada trimestre</p>
+        <div class="grid flex-auto">
+            <div class="col-4">
+                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre I </label>
+                <p-calendar inputId="rangeDatesTrimestreI" [(ngModel)]="rangeDatesTrimestreI" selectionMode="range"
+                [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+            </div>
+            <div class="col-4">
+                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre II </label>
+                <p-calendar inputId="rangeDatesTrimestreII" [(ngModel)]="rangeDatesTrimestreII" selectionMode="range" [readonlyInput]="true"
+                [showIcon]="true" [showOnFocus]="false" />
+            </div>
+            <div class="col-4">
+                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre III </label>
+                <p-calendar inputId="rangeDatesTrimestreIII" [(ngModel)]="rangeDatesTrimestreIII" selectionMode="range" [readonlyInput]="true"
+                    [showIcon]="true" [showOnFocus]="false" />
+            </div>
+        </div>
+    </div>
+</div>

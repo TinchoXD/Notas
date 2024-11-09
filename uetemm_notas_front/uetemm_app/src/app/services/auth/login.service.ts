@@ -84,7 +84,6 @@ export class LoginService {
   }
 
   /*   register(addUserRequest: AddUserRequest): Observable<any>{
-    console.log("addUserRequest:", addUserRequest)
     return this.http.post<any>(environment.urlHost + '/auth/register', addUserRequest).subscribe({
       next: () =>{
 
@@ -110,7 +109,6 @@ export class LoginService {
   }
 
   register(addUserRequest: AddUserRequest) {
-    console.log('addUserRequest:', addUserRequest);
     return this.http
       .post<any>(environment.urlHost + '/auth/register', addUserRequest)
       .subscribe({
@@ -119,7 +117,6 @@ export class LoginService {
         },
         error: () => {
           this.showAlert('Error al registrar usuario', 'error');
-          console.log('Error: ', catchError(this.handleError));
         },
       });
   }

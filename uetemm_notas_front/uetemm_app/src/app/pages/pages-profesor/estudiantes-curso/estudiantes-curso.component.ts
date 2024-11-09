@@ -32,7 +32,6 @@ export class EstudiantesCursoComponent implements OnInit {
       this.estudianteService.getEstudiantesByCursoId(cursoId['id']).subscribe({
         next: (estudiantes) => {
           this.estudiantes = estudiantes;
-          console.log(this.estudiantes);
           this.loading = false;
         },
       });
@@ -67,9 +66,6 @@ export class EstudiantesCursoComponent implements OnInit {
       id: estudiante.id,
       estado: valor.checked,
     };
-
-    console.log('55555555', status);
-
     this.estudianteService.updateEstudentStatus(status).subscribe({
       next: () => {
         this.showAlert('Se actualizó el estado del usuario', 'success');

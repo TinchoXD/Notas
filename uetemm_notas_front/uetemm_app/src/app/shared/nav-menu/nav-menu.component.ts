@@ -48,25 +48,6 @@ export class NavMenuComponent {
     return this.router.url.includes('/estudiante/mis-calificaciones/') ;
   }
 
-  /*
-  
-    esRutaMisCalificaciones(): boolean {
-
-    const rutaActual = this.router.url;
-    console.log('rutaActual',rutaActual)
-    
-    const rutaEsperada = '/estudiante/mis-calificaciones';
-    console.log('rutaEsperada',rutaEsperada)
-    
-    // Extraer el parámetro `cedulaCodificada` de la ruta actual
-    const cedulaCodificada = this.route.snapshot.paramMap.get('cedulaCodificada');
-    console.log('cedulaCodificada',cedulaCodificada)
-
-    // Comprobar si la URL actual empieza con la ruta esperada y tiene la cédula codificada
-    return rutaActual.startsWith(rutaEsperada) && !!cedulaCodificada;
-  }
-  
-  */
 
   ngOnInit(): void {
     //this.esRutaMisCalificaciones();

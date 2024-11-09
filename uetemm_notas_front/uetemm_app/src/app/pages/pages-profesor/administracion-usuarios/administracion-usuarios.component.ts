@@ -36,7 +36,7 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
 
   sizes!: any[];
   selectedSize: any = { name: 'Small', class: 'p-datatable-sm' };
-  userDataToken!: any
+  userDataToken!: any;
 
   //usuarios!: User[];
   usuarios!: any[];
@@ -72,32 +72,41 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-
     this.loginService.userData.subscribe({
-      next:(userDataToken)=>{
-        this.userDataToken = this.loginService.decodeToken(userDataToken)
-      }
-    })
+      next: (userDataToken) => {
+        this.userDataToken = this.loginService.decodeToken(userDataToken);
+      },
+    });
 
     this.userService.getAllUser().subscribe({
       next: (data) => {
         this.usuarios = data;
-        console.log('USUARIOS', data);
         this.usuarios.forEach((usuario) => {
-          this.cursoProfesorService.getAllCursoProfesorByProfesorId(usuario.id)
+          this.cursoProfesorService
+            .getAllCursoProfesorByProfesorId(usuario.id)
             .subscribe({
               next: (cursos) => {
                 usuario.curso = cursos;
-    
+
                 // Extraer los códigos únicos de los cursos
-                const codigosUnicos = Array.from(
-                  new Set(cursos.map((curso: any) => curso.curso.codigo))
+                const cursosUnicos = Array.from(
+                  new Set(
+                    cursos.map(
+                      (cursoUnico: any) =>
+                        cursoUnico.curso.grado.nombre +
+                        ' ' +
+                        cursoUnico.curso.paralelo.nombre +
+                        ' de ' +
+                        cursoUnico.curso.nivel.nombre +
+                        ' ' +
+                        cursoUnico.curso.subnivel.nombre +
+                        ' '
+                    )
+                  )
                 );
-    
+
                 // Crear un string concatenado con los códigos únicos
-                usuario.cursosCodigos = codigosUnicos.join('|');
-    
-                console.log('Usuario con cursosCodigos únicos:', usuario.cursosCodigos);
+                usuario.cursosUnicos = cursosUnicos;
               },
             });
         });
@@ -110,8 +119,6 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
       { name: 'Large', class: 'p-datatable-lg' },
     ];
   }
-
-
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -126,10 +133,8 @@ export class AdministracionUsuariosComponent implements AfterViewInit, OnInit {
     // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-      console.log(sortState.direction);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
-      console.log(sortState.direction);
     }
   }
 
