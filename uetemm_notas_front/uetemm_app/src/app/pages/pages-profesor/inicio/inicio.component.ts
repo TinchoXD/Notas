@@ -67,7 +67,7 @@ export class InicioComponent implements OnInit {
         },
         y: {
           min: 0,
-          max: 10,
+          //max: 10,
 
           ticks: {
             color: textColorSecondary,

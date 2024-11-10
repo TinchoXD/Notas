@@ -1,5 +1,7 @@
 package com.notas.backend.request;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,12 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CursoProfesorRequest {
-    public int id;
-    public int curso_id;
-    public int asignatura_id;
-    public int user_id;
-   
-    
+public class ConfiguracionFechasRequest {
+
+    public String fechaConfigTipo;
+    public Date fechaConfigInicio;
+    public Date fechaConfigFin;
     
 }

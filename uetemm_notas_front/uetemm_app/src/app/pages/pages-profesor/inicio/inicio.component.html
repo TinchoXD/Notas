@@ -18,26 +18,29 @@
               <ng-container>
                 <div class="asignatura" *ngFor="let asignatura of curso.value"
                   (click)="navegarADetalle(asignatura.cursoProfesor_id)" style="cursor: pointer;">
-                  <i class="pi pi-angle-right" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
+                  <i class="pi pi-angle-right m-2" style="font-size: 1rem"></i> {{ asignatura.nombreAsignatura }}
                 </div>
               </ng-container>
             </p-card>
           </div>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Header II">
+      <p-tabPanel header="Gráficos">
         <div *ngFor="let curso of asignaturasPorCurso | keyvalue">
-          <div style="background-color: #d7daea; border-radius: 20px; padding-top: 8px; padding-bottom: 1px; padding-right: 10px; padding-left: 10px;">
+          <div
+            style="background-color: #d7daea; border-radius: 20px; padding-top: 8px; padding-bottom: 1px; padding-right: 10px; padding-left: 10px;">
             <p style="font-size: large;"><strong><i class="pi pi-angle-right" style="font-size: 1rem;"></i> {{ curso.key
                 }}</strong></p>
           </div>
           <div class=" grid">
             <ng-container>
-              <div class="col-6 " *ngFor="let asignatura of curso.value; let i = index">
-                <i class="pi pi-circle-fill" style="font-size: 1rem; cursor: pointer;"></i>
-                <p class="asignatura" style="cursor: pointer;" (click)="navegarADetalle(asignatura.cursoProfesor_id)" pTooltip="Ir al curso">{{
-                  asignatura.nombreAsignatura }}</p>
-                  
+              <div class="col-4 " *ngFor="let asignatura of curso.value; let i = index">
+
+                <p class="asignatura m-2" style="cursor: pointer;" (click)="navegarADetalle(asignatura.cursoProfesor_id)"
+                  pTooltip="Ir al curso">
+                  <i class="pi pi-caret-right" style="font-size: 1rem; cursor: pointer;"></i>{{asignatura.nombreAsignatura }}
+                </p>
+
                 <p-chart height="300px" type="line" [data]="asignatura.dataNotas" [options]="options" />
               </div>
             </ng-container>

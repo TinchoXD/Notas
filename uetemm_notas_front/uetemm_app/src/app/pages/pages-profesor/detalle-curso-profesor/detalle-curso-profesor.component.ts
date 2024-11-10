@@ -17,6 +17,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
 import { CalificacionService } from '../../../services/calificacion/calificacion.service';
 import { CursoService } from '../../../services/curso/curso.service';
+import { ConfiguracionFechasService } from '../../../services/configuracionFechas/configuracion-fechas.service';
 // Necesario para pdfmake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -58,6 +59,12 @@ export class DetalleCursoProfesorComponent implements OnInit {
   aplicaSupletorio!: boolean;
   colSpanSupletorio!: number;
 
+  rangosFechas: any[] = [];
+  rangeDatesTrimestreI: Date[] = [];
+  rangeDatesTrimestreII: Date[] = [];
+  rangeDatesTrimestreIII: Date[] = [];
+  rangeDatesSupletorio: Date[] = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private route: ActivatedRoute,
@@ -67,7 +74,8 @@ export class DetalleCursoProfesorComponent implements OnInit {
     private notaService: NotaService,
     private messageServicePNG: MessageService,
     private calificacionService: CalificacionService,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private configuracionFechasService: ConfiguracionFechasService
   ) {}
 
   ngOnInit(): void {
@@ -138,8 +146,111 @@ export class DetalleCursoProfesorComponent implements OnInit {
           },
         });
     });
+    this.configuracionFechasService.getConfiguracionFechas().subscribe({
+      next: (fechas) => {
+        this.rangosFechas = fechas;
+        console.log('rangosFechas', this.rangosFechas);
+        this.rangosFechas.forEach((fechaConfig) => {
+          if (fechaConfig.tipo === 'trimestre_i') {
+            this.rangeDatesTrimestreI = [
+              new Date(
+                fechaConfig.fechaInicio !== null
+                  ? fechaConfig.fechaInicio
+                  : new Date()
+              ),
+              new Date(
+                fechaConfig.fechaFin !== null
+                  ? fechaConfig.fechaFin
+                  : new Date()
+              ),
+            ];
+          } else if (fechaConfig.tipo === 'trimestre_ii') {
+            this.rangeDatesTrimestreII = [
+              new Date(
+                fechaConfig.fechaInicio !== null
+                  ? fechaConfig.fechaInicio
+                  : new Date()
+              ),
+              new Date(
+                fechaConfig.fechaFin !== null
+                  ? fechaConfig.fechaFin
+                  : new Date()
+              ),
+            ];
+          } else if (fechaConfig.tipo === 'trimestre_iii') {
+            this.rangeDatesTrimestreIII = [
+              new Date(
+                fechaConfig.fechaInicio !== null
+                  ? fechaConfig.fechaInicio
+                  : new Date()
+              ),
+              new Date(
+                fechaConfig.fechaFin !== null
+                  ? fechaConfig.fechaFin
+                  : new Date()
+              ),
+            ];
+          } else if (fechaConfig.tipo === 'supletorio') {
+            this.rangeDatesSupletorio = [
+              new Date(
+                fechaConfig.fechaInicio !== null
+                  ? fechaConfig.fechaInicio
+                  : new Date()
+              ),
+              new Date(
+                fechaConfig.fechaFin !== null
+                  ? fechaConfig.fechaFin
+                  : new Date()
+              ),
+            ];
+          }
+        });
+      },
+    });
+
     this.loading = false;
   }
+
+  validarFechaTrimestreI(): boolean {
+    if (
+      new Date() >= this.rangeDatesTrimestreI[0] &&
+      new Date() <= this.rangeDatesTrimestreI[1]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  validarFechaTrimestreII(): boolean {
+    if (
+      new Date() >= this.rangeDatesTrimestreII[0] &&
+      new Date() <= this.rangeDatesTrimestreII[1]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  validarFechaTrimestreIII(): boolean {
+    if (
+      new Date() >= this.rangeDatesTrimestreIII[0] &&
+      new Date() <= this.rangeDatesTrimestreIII[1]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  validarFechaSupletorio(): boolean {
+    if (
+      new Date() >= this.rangeDatesSupletorio[0] &&
+      new Date() <= this.rangeDatesSupletorio[1]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   guardarNota(notaEstudiante: any) {
     const nota = {
       estu_id: notaEstudiante.id,

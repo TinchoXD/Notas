@@ -1,22 +1,31 @@
 <div class="container-page">
     <div class="card card flex flex-wrap gap-3 p-fluid">
-        <p>Definir el rango de fechas para el ingreso de calificaciones para cada trimestre</p>
+        <p>Definir el rango de fechas para el ingreso de calificaciones para cada Aporte</p>
         <div class="grid flex-auto">
-            <div class="col-4">
+            <div class="col-sm">
                 <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre I </label>
                 <p-calendar inputId="rangeDatesTrimestreI" [(ngModel)]="rangeDatesTrimestreI" selectionMode="range"
-                [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
             </div>
-            <div class="col-4">
-                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre II </label>
-                <p-calendar inputId="rangeDatesTrimestreII" [(ngModel)]="rangeDatesTrimestreII" selectionMode="range" [readonlyInput]="true"
-                [showIcon]="true" [showOnFocus]="false" />
+            <div class="col-sm">
+                <label for="rangeDatesTrimestreII" class="font-bold block mb-2"> Trimestre II </label>
+                <p-calendar inputId="rangeDatesTrimestreII" [(ngModel)]="rangeDatesTrimestreII" selectionMode="range"
+                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
             </div>
-            <div class="col-4">
-                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre III </label>
-                <p-calendar inputId="rangeDatesTrimestreIII" [(ngModel)]="rangeDatesTrimestreIII" selectionMode="range" [readonlyInput]="true"
-                    [showIcon]="true" [showOnFocus]="false" />
+            <div class="col-sm">
+                <label for="rangeDatesTrimestreIII" class="font-bold block mb-2"> Trimestre III </label>
+                <p-calendar inputId="rangeDatesTrimestreIII" [(ngModel)]="rangeDatesTrimestreIII" selectionMode="range"
+                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" [locale]="es"></p-calendar>
             </div>
+            <div class="col-sm">
+                <label for="rangeDatesSupletorio" class="font-bold block mb-2"> Supletorio </label>
+                <p-calendar inputId="rangeDatesSupletorio" [(ngModel)]="rangeDatesSupletorio" selectionMode="range"
+                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" [locale]="es" />
+            </div>
+        </div>
+        <div mat-dialog-actions align="end" style="text-align: end; justify-content: end;">
+            <button mat-flat-button (click)="guardarConfiguracionFechas()" [color]="color" 
+                [disabled]="!esFormularioValido()">Guardar</button>
         </div>
     </div>
 </div>
