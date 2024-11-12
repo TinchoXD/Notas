@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from './loginRequest';
-import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpRequest,
+} from '@angular/common/http';
 import {
   Observable,
   catchError,
@@ -14,11 +18,10 @@ import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { AlertService } from '../alert/alert.service';
 import { AddUserRequest } from '../../pages/pages-profesor/agregar-usuario/addUserRequest';
-
 import { AlertType } from '../../shared/alert/alertType';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
-import { UserService } from '../user/user.service';
+
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -38,6 +41,7 @@ export class LoginService {
   userId: number = 0;
   user_estado_usuario: number = 0;
   private tokenKey = 'token';
+  private tokenExpirationDate: Date | null = null; // Variable para almacenar la fecha de expiración del token
 
   constructor(
     private http: HttpClient,
@@ -50,6 +54,15 @@ export class LoginService {
     this.currentUserData = new BehaviorSubject<string>(
       sessionStorage.getItem('token') || ''
     );
+
+    // Establece la fecha de expiración si el token ya está en sessionStorage
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.decodeToken(token);
+      if (decodedToken && decodedToken.exp) {
+        this.tokenExpirationDate = new Date(decodedToken.exp * 1000); // Convertir exp a milisegundos
+      }
+    }
   }
 
   showAlert(mensaje: string, type: string) {
@@ -60,36 +73,36 @@ export class LoginService {
 
   login(credenciales: LoginRequest): Observable<any> {
     return this.http
-      .post<any>(environment.urlHost + '/auth/login', credenciales)
-      .pipe(
-        tap((userData) => {
-          sessionStorage.setItem('token', userData.token);
-          this.currentUserData.next(userData.token);
-          this.currentUserLoggedOn.next(true);
-          this.userId = JSON.parse(
-            window.atob(userData.token.split('.')[1])
-          ).userId;
-          this.user_estado_usuario = JSON.parse(
-            window.atob(userData.token.split('.')[1])
-          ).user_estado_usuario;
+    .post<any>(environment.urlHost + '/auth/login', credenciales)
+    .pipe(
+      tap((userData) => {
+        sessionStorage.setItem('token', userData.token);
+        this.currentUserData.next(userData.token);
+        this.currentUserLoggedOn.next(true);
 
-          if (this.user_estado_usuario == 0) {
-            this.showAlert('El usuario se encuentra deshabilitado.', 'error');
-            throw new Error('El usuario se encuentra deshabilitado.');
-          }
-        }),
-        map((userData) => userData.token),
-        catchError(this.handleError)
-      );
+        const decodedToken = JSON.parse(
+          window.atob(userData.token.split('.')[1])
+        );
+
+        this.userId = decodedToken.userId;
+        this.user_estado_usuario = decodedToken.user_estado_usuario;
+        this.tokenExpirationDate = this.getTokenExpirationDate(); // Usar el método actual para obtener la fecha de expiración
+
+        if (this.user_estado_usuario == 0) {
+          this.showAlert('El usuario se encuentra deshabilitado.', 'error');
+          throw new Error('El usuario se encuentra deshabilitado.');
+        }
+
+        Swal.fire({
+          title: 'Bienvenido',
+          text: `Su sesión se cerrará automáticamente en ${this.getTokenExpirationTime()}`,
+          icon: 'info',
+        });
+      }),
+      map((userData) => userData.token),
+      catchError(this.handleError)
+    );
   }
-
-  /*   register(addUserRequest: AddUserRequest): Observable<any>{
-    return this.http.post<any>(environment.urlHost + '/auth/register', addUserRequest).subscribe({
-      next: () =>{
-
-      }
-    })
-  } */
 
   verificarCambioDeContrasenia(userData: any): void {
     if (userData.user_requiere_cambio_contrasena === 1) {
@@ -156,8 +169,6 @@ export class LoginService {
     return this.currentUserData.value;
   }
 
-
-
   getuserIdsession(): number {
     return this.userId;
   }
@@ -197,5 +208,28 @@ export class LoginService {
     }
   }
 
+  // Obtener la fecha y hora de expiración del token
+  getTokenExpirationDate(): Date | null {
+    const token = this.getToken();
+    if (!token) return null;
   
+    const decodedToken = this.decodeToken(token);
+    if (decodedToken && decodedToken.exp) {
+      return new Date(decodedToken.exp * 1000); // Convertir a milisegundos
+    }
+    return null;
+  }
+
+  private getTokenExpirationTime(): string {
+    const expiration = this.getTokenExpirationDate();
+    if (!expiration) return '00:00';
+
+    const now = new Date();
+    const diffMs = expiration.getTime() - now.getTime(); // Diferencia en milisegundos
+
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${String(diffHours).padStart(2, '0')}:${String(diffMinutes).padStart(2, '0')}`;
+  }
 }

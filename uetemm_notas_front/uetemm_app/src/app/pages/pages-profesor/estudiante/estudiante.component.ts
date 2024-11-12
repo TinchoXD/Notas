@@ -8,6 +8,9 @@ import { LoadingService } from '../../../services/loading/loading.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../services/alert/alert.service';
 import { LoginService } from '../../../services/auth/login.service';
+import { ExportarNotasIndividualPdfService } from '../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
+import { NotaService } from '../../../services/nota/nota.service';
+import { forkJoin } from 'rxjs';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -43,7 +46,9 @@ export class EstudianteComponent implements OnInit {
     private alertService: AlertService,
     //private messageServicePNG: MessageService,
     private messageService: MessageService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
+    private notaService: NotaService
   ) {}
 
   ngOnInit(): void {
@@ -122,4 +127,56 @@ export class EstudianteComponent implements OnInit {
       this.alertService.showAlert(mensaje, type);
     }
   }
+
+
+generarReporteNotasIndividual(estudianteRow: any) {
+  console.log('estudianteRow', estudianteRow);
+  
+  let notas = [] = []; // Define las notas aquí
+  let notasGenerales = [] = [];
+
+  // Obtenemos las notas usando forkJoin para ejecutarlas en paralelo
+  forkJoin({
+    notas: this.notaService.getNotasByEstudiante(estudianteRow.id),
+    notasGenerales: this.notaService.getNotasByEstudiante(estudianteRow.id),
+    notaAnimacionLectura: this.notaService.getNotaAnimacionLecturaByEstudianteIdAndCursoId(
+      estudianteRow.id,
+      estudianteRow.curso.id
+    ),
+    notaAcompaniamientoIntegralAula: this.notaService.getNotaAcompaniamientoIntegralAulaByEstudianteIdAndCursoId(
+      estudianteRow.id,
+      estudianteRow.curso.id
+    ),
+    notaComportamiento: this.notaService.getNotaComportamientoByEstudianteIdAndCursoId(
+      estudianteRow.id,
+      estudianteRow.curso.id
+    ),
+  }).subscribe({
+    next: (results) => {
+      const {
+        notas,
+        notasGenerales,
+        notaAnimacionLectura,
+        notaAcompaniamientoIntegralAula,
+        notaComportamiento
+      } = results;
+
+      // Pasamos las notas y el estudiante a exportarPDF
+      const estudiante = estudianteRow;
+
+      this.exportarNotasIndividualPdfService.exportarPDF(
+        notas,
+        notasGenerales,
+        notaAnimacionLectura,
+        notaAcompaniamientoIntegralAula,
+        notaComportamiento,
+        estudiante
+      );
+    },
+    error: (error) => {
+      console.error('Error al obtener una o más notas:', error);
+    }
+  });
+}
+
 }

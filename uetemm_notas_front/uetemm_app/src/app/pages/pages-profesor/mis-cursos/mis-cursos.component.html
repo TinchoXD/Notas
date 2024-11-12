@@ -10,13 +10,17 @@
         </div>
 
 
-        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true" styleClass="p-datatable-striped p-datatable-sm"
+        <p-table #dt [value]="cursosProfesor" [rows]="10" [paginator]="true"
+            styleClass="p-datatable-striped p-datatable-sm"
             [globalFilterFields]="['codigo', 'nivel.nombre','subnivel.nombre', 'grado.nombre','paralelo.nombre', 'jornada.nombre', 'asignatura.nombre'] "
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
             <ng-template pTemplate="header">
                 <tr>
+                    <th>
+                        #
+                    </th>
                     <th pSortableColumn="curso.codigo">
                         Código <p-sortIcon field="curso.codigo" />
                     </th>
@@ -39,12 +43,18 @@
                         Asignatura <p-sortIcon field="asignatura.nombre" />
                     </th>
                     <th>
+                        Nombre 
+                    </th>
+                    <th>
                     </th>
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-cursoProfesorRow>
+            <ng-template pTemplate="body" let-cursoProfesorRow let-rowIndex="rowIndex">
                 <tr>
+                    <td>
+                        {{ rowIndex + 1 }}
+                    </td>
                     <td>
                         {{ cursoProfesorRow.curso.codigo }}
                     </td>
@@ -67,10 +77,13 @@
                         {{ cursoProfesorRow.asignatura.nombre }}
                     </td>
                     <td>
+                        {{ cursoProfesorRow.curso.nombre}}
+                    </td>
+                    <td>
                         <p-button pRipple icon="pi pi-eye" severity="info" [rounded]="true" [outlined]="true"
-                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfesor(cursoProfesorRow)"/>
+                            pTooltip="Ver Curso" class="mr-2" (click)="verCursoProfesor(cursoProfesorRow)" />
                         <p-button pRipple icon="pi pi-users" severity="warning" [rounded]="true" [outlined]="true"
-                            pTooltip="Ver estudiantes" class="mr-2" (click)="verEstudiantesCurso(cursoProfesorRow)"/>
+                            pTooltip="Ver estudiantes" class="mr-2" (click)="verEstudiantesCurso(cursoProfesorRow)" />
                     </td>
                 </tr>
             </ng-template>

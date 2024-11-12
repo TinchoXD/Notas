@@ -26,13 +26,11 @@ export class MisCursosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.loginService.userData.subscribe((token) => {
       if (token) {
         // Decodifica el token para obtener la información del usuario
         this.userData = this.loginService.decodeToken(token);
-        this.loginService.verificarCambioDeContrasenia(this.userData)
-
+        this.loginService.verificarCambioDeContrasenia(this.userData);
       }
     });
 
@@ -71,6 +69,18 @@ export class MisCursosComponent implements OnInit {
                   b.curso.jornada.nombre
                 );
               });
+
+           
+              this.cursosProfesor.forEach((cursoProfesor) => {
+                cursoProfesor.curso.nombre = cursoProfesor.curso.grado.nombre +
+                ' ' +
+                cursoProfesor.curso.paralelo.nombre +
+                ' de ' +
+                cursoProfesor.curso.nivel.nombre +
+                ' ' +
+                cursoProfesor.curso.subnivel.nombre;
+              });
+
               if (cursos.length === 0) {
                 Swal.fire({
                   title: 'Advertencia!',
@@ -112,7 +122,7 @@ export class MisCursosComponent implements OnInit {
     }, 150); // Retraso de 2 segundos antes de la navegación
   }
 
-  verEstudiantesCurso(cursoProfesor: any){
+  verEstudiantesCurso(cursoProfesor: any) {
     this.loadingService.show();
     setTimeout(() => {
       this.router

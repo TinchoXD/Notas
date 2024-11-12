@@ -30,6 +30,9 @@
                     [showCurrentPageReport]="true">
                     <ng-template pTemplate="header">
                         <tr>
+                            <th >
+                                # 
+                            </th>
                             <th pSortableColumn="nombre">
                                 Asignatura <p-sortIcon field="nombre" />
                             </th>
@@ -39,8 +42,11 @@
                         </tr>
                     </ng-template>
 
-                    <ng-template pTemplate="body" let-asignaturaRow>
+                    <ng-template pTemplate="body" let-asignaturaRow let-rowIndex="rowIndex">
                         <tr>
+                            <td>
+                                {{ rowIndex + 1 }}
+                            </td>
                             <td>
                                 {{ asignaturaRow.nombre }}
                             </td>

@@ -107,7 +107,7 @@
 
         <p-table #dt [value]="usuarios" [rows]="10" [paginator]="true"
             styleClass="{{selectedSize.class}} p-datatable-striped"
-            [globalFilterFields]="['cursosCodigos', 'firstname', 'lastname', 'username', 'role', 'user_email_institucional', 'user_estado_usuario']"
+            [globalFilterFields]="['cursosCodigos', 'firstname', 'lastname', 'username', 'role', 'user_email_institucional', 'user_estado_usuario', 'cursosUnicos']"
             [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [showCurrentPageReport]="true">
@@ -135,8 +135,8 @@
                     <th pSortableColumn="user_estado_usuario">
                         Estado <p-sortIcon field="user_estado_usuario" />
                     </th>
-                    <th pSortableColumn="cursosCodigos">
-                        Cursos <p-sortIcon field="cursosCodigos" />
+                    <th pSortableColumn="cursosUnicos">
+                        Cursos <p-sortIcon field="cursosUnicos" />
                     </th>
                     <th *ngIf="userDataToken.role === 'ADMIN'">
                         Acciones

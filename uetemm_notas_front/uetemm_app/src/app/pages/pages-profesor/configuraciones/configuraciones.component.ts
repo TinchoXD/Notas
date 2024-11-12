@@ -4,6 +4,7 @@ import { ConfiguracionFechasService } from '../../../services/configuracionFecha
 import { ThemePalette } from '@angular/material/core';
 import { ConfiguracionFechasRequest } from '../../../services/configuracionFechas/configuracionFechasRequest';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../../services/auth/login.service';
 
 @Component({
   selector: 'app-configuraciones',
@@ -19,13 +20,27 @@ export class ConfiguracionesComponent implements OnInit {
   rangosFechas: any[] = [];
   color: ThemePalette = 'primary';
   fechaConfigRequest: ConfiguracionFechasRequest[] = [];
+  userDataToken!: any;
+  modalVisible = true;
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private configuracionFechasService: ConfiguracionFechasService
+    private configuracionFechasService: ConfiguracionFechasService,
+    private loginService: LoginService,
   ) {}
 
   ngOnInit(): void {
+
+    this.loginService.userData.subscribe({
+      next: (userDataToken) => {
+        this.userDataToken = this.loginService.decodeToken(userDataToken);
+        if (this.userDataToken.role === 'ADMIN') {
+          this.modalVisible = false;
+        } else {
+        }
+      },
+    });
+
     this.primengConfig.setTranslation({
       dayNames: [
         'domingo',

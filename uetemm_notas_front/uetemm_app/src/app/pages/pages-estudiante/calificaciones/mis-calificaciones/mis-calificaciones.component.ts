@@ -53,7 +53,6 @@ export class MisCalificacionesComponent implements OnInit {
           next: (estudiante) => {
             if (estudiante) {
               this.estudiante = estudiante;
-              console.log('this.estudiante', this.estudiante);
               this.notaService
                 .getNotasByEstudiante(this.estudiante.id)
                 .subscribe({
@@ -67,9 +66,6 @@ export class MisCalificacionesComponent implements OnInit {
                       });
 
                     this.notas = notas;
-
-                    console.log('estudiante.id', estudiante.id);
-                    console.log('estudiante.curs_id', estudiante.curso.id);
                     this.notaService
                       .getNotaAnimacionLecturaByEstudianteIdAndCursoId(
                         estudiante.id,
@@ -191,7 +187,6 @@ export class MisCalificacionesComponent implements OnInit {
   }
 
   estado(estudiante: any, notaFinal: number) {
-    // console.log(estudiante.estado)
     if (estudiante.estado === 0) {
       return 'Retirado';
     }
@@ -255,7 +250,12 @@ export class MisCalificacionesComponent implements OnInit {
 
       contenidoTabla.push([
         { text: nota.cursoProfesor.asignatura.nombre },
-        { text: nota.calificacionT1 + ' - ' +this.convertirCulitativo(nota.calificacionT1) },
+        {
+          text:
+            nota.calificacionT1 +
+            ' - ' +
+            this.convertirCulitativo(nota.calificacionT1),
+        },
         { text: this.convertirCulitativo(nota.calificacionT2) },
         { text: this.convertirCulitativo(nota.calificacionT3) },
         { text: this.convertirCulitativo(promedioTrimestral) },
@@ -388,39 +388,51 @@ export class MisCalificacionesComponent implements OnInit {
         rowSpan: undefined,
       },
       {
-        text: this.convertirCualitativoComportamiento(this.notaComportamiento.calificacionT1),
-        colSpan: 1,
-        style: 'tableBody',
-        rowSpan: undefined,
-      },
-      {
-        text: this.convertirCualitativoComportamiento(this.notaComportamiento.calificacionT2),
-        colSpan: 1,
-        style: 'tableBody',
-        rowSpan: undefined,
-      },
-      {
-        text: this.convertirCualitativoComportamiento(this.notaComportamiento.calificacionT3),
-        colSpan: 1,
-        style: 'tableBody',
-        rowSpan: undefined,
-      },
-      {
-        text: 'PROMEDIO FINAL: '+this.convertirCualitativoComportamiento(
-          (this.notaComportamiento.calificacionT1 +
-            this.notaComportamiento.calificacionT2 +
-            this.notaComportamiento.calificacionT3) /
-            3
+        text: this.convertirCualitativoComportamiento(
+          this.notaComportamiento.calificacionT1
         ),
+        colSpan: 1,
+        style: 'tableBody',
+        rowSpan: undefined,
+      },
+      {
+        text: this.convertirCualitativoComportamiento(
+          this.notaComportamiento.calificacionT2
+        ),
+        colSpan: 1,
+        style: 'tableBody',
+        rowSpan: undefined,
+      },
+      {
+        text: this.convertirCualitativoComportamiento(
+          this.notaComportamiento.calificacionT3
+        ),
+        colSpan: 1,
+        style: 'tableBody',
+        rowSpan: undefined,
+      },
+      {
+        text:
+          'PROMEDIO FINAL: ' +
+          this.convertirCualitativoComportamiento(
+            (this.notaComportamiento.calificacionT1 +
+              this.notaComportamiento.calificacionT2 +
+              this.notaComportamiento.calificacionT3) /
+              3
+          ),
         colSpan: 1,
         style: 'tableBody',
         rowSpan: undefined,
       },
     ]);
 
-
     const fechaActual = new Date();
-    const opciones: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const opciones: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    };
     const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
 
     const docDefinition: any = {
@@ -522,7 +534,6 @@ export class MisCalificacionesComponent implements OnInit {
         };
       },
     };
-    
 
     pdfMake.createPdf(docDefinition).download('reporte_calificaciones.pdf');
   }
@@ -534,10 +545,6 @@ export class MisCalificacionesComponent implements OnInit {
           this.notasGenerales = notasGenerales;
 
           const totalNotas = this.notasGenerales.length;
-          console.log(
-            'this.notasGenerales.length:',
-            this.notasGenerales.length
-          );
 
           const sumaPromedios = this.notasGenerales.reduce((suma, nota) => {
             const promedioFinal = this.redondear(

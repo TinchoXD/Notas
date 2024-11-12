@@ -32,6 +32,7 @@ public class JwtService {
     }
 
     private String getToken(Map<String,Object> extraClaims, User user) {
+        
         return Jwts
             .builder()
             .claims(extraClaims)
@@ -46,7 +47,7 @@ public class JwtService {
             .expiration(new Date(System.currentTimeMillis()+1000*60*60))
             .signWith(getKey())
             .compact();
-    }
+    } 
 
     private SecretKey getKey() {
        byte[] keyBytes=Decoders.BASE64.decode(SECRET_KEY);
