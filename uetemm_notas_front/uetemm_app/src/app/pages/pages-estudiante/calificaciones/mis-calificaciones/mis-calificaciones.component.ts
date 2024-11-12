@@ -15,6 +15,7 @@ import { CalificacionService } from '../../../../services/calificacion/calificac
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { style } from '@angular/animations';
+import { ExportarNotasIndividualPdfService } from '../../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -37,7 +38,8 @@ export class MisCalificacionesComponent implements OnInit {
     private estudianteService: EstudianteService,
     private activatedRoute: ActivatedRoute,
     private notaService: NotaService,
-    private calificacionService: CalificacionService
+    private calificacionService: CalificacionService,
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
   ) {
     this.codec = new Codec();
   }
@@ -225,7 +227,25 @@ export class MisCalificacionesComponent implements OnInit {
     return '#6c757d';
   }
 
-  async exportarPDF(): Promise<void> {
+  exportarPDF(){
+    this.exportarNotasIndividualPdfService.exportarPDF(
+      this.estudiante
+    );
+  }
+/* 
+  exportarPDF(){
+    this.exportarNotasIndividualPdfService.exportarPDF(
+      this.notas,
+      this.notasGenerales,
+      this.notaAnimacionLectura,
+      this.notaAcompaniamientoIntegralAula,
+      this.notaComportamiento,
+      this.estudiante
+    );
+  } */
+
+
+  async exportarPDF_OLD(): Promise<void> {
     const contenidoTabla = [
       [
         { text: 'ASIGNATURAS', rowSpan: 2, style: 'tableHeader' },

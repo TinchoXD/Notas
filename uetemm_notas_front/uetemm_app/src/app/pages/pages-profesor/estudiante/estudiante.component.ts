@@ -128,55 +128,8 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
-
-generarReporteNotasIndividual(estudianteRow: any) {
-  console.log('estudianteRow', estudianteRow);
-  
-  let notas = [] = []; // Define las notas aquí
-  let notasGenerales = [] = [];
-
-  // Obtenemos las notas usando forkJoin para ejecutarlas en paralelo
-  forkJoin({
-    notas: this.notaService.getNotasByEstudiante(estudianteRow.id),
-    notasGenerales: this.notaService.getNotasByEstudiante(estudianteRow.id),
-    notaAnimacionLectura: this.notaService.getNotaAnimacionLecturaByEstudianteIdAndCursoId(
-      estudianteRow.id,
-      estudianteRow.curso.id
-    ),
-    notaAcompaniamientoIntegralAula: this.notaService.getNotaAcompaniamientoIntegralAulaByEstudianteIdAndCursoId(
-      estudianteRow.id,
-      estudianteRow.curso.id
-    ),
-    notaComportamiento: this.notaService.getNotaComportamientoByEstudianteIdAndCursoId(
-      estudianteRow.id,
-      estudianteRow.curso.id
-    ),
-  }).subscribe({
-    next: (results) => {
-      const {
-        notas,
-        notasGenerales,
-        notaAnimacionLectura,
-        notaAcompaniamientoIntegralAula,
-        notaComportamiento
-      } = results;
-
-      // Pasamos las notas y el estudiante a exportarPDF
-      const estudiante = estudianteRow;
-
-      this.exportarNotasIndividualPdfService.exportarPDF(
-        notas,
-        notasGenerales,
-        notaAnimacionLectura,
-        notaAcompaniamientoIntegralAula,
-        notaComportamiento,
-        estudiante
-      );
-    },
-    error: (error) => {
-      console.error('Error al obtener una o más notas:', error);
-    }
-  });
-}
-
+  generarReporteNotasIndividual(estudianteRow: any) {
+    
+    this.exportarNotasIndividualPdfService.exportarPDF(estudianteRow);
+  }
 }
