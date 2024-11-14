@@ -129,7 +129,6 @@ export class EstudianteComponent implements OnInit {
   }
 
   generarReporteNotasIndividual(estudianteRow: any) {
-    
     this.exportarNotasIndividualPdfService.exportarPDF(estudianteRow);
   }
 }

@@ -7,6 +7,7 @@ import { UserService } from '../../services/user/user.service';
 import Swal from 'sweetalert2';
 import { EstudianteService } from '../../services/estudiante/estudiante.service';
 import { Codec } from '../../services/codec/codec';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   estudiante: any;
   errorMessage: string = '';
+  config: any[] = []
+  imagenLogo : any
 
   get username() {
     return this.loginForm.controls['username'];
@@ -33,6 +36,19 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm.clearValidators();
     this.loginService.logout();
+
+    this.configService.getAllConfig().subscribe({
+      next: (configRes) => {
+        this.config = configRes;
+
+        this.imagenLogo = this.config.find(
+          (item) => item.key === 'imagenLogo'
+        );
+        console.log('this.imagenLogo ', this.imagenLogo )
+      },
+    });
+
+
   }
 
   constructor(
@@ -40,6 +56,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private estudianteService: EstudianteService,
     private userService: UserService,
+    private configService: ConfigService,
     private loginService: LoginService) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(10)]],

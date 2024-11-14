@@ -47,6 +47,7 @@
                 </th>
                 <th> </th>
                 <th> </th>
+                <th> </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-estudianteRow let-rowIndex="rowIndex">
@@ -71,6 +72,10 @@
                 <td >
                     <p-button pRipple icon="pi {{userDataToken.role === 'ADMIN' ? 'pi-pencil' : 'pi-eye'}}" severity="success" [rounded]="true" [outlined]="true"
                         pTooltip="{{userDataToken.role === 'ADMIN' ? 'Editar' : 'Ver'}} Estudiante" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
+                </td>
+                <td >
+                    <p-button pRipple icon="pi pi-file-pdf" severity="warning" [rounded]="true" [outlined]="true"
+                        pTooltip="Generar reporte de Notas" class="mr-2" (click)="generarReporteNotasIndividual(estudianteRow)" />
                 </td>
                 <td *ngIf="userDataToken.role === 'ADMIN'" >
                     <p-toggleButton [(ngModel)]="estudianteRow.estado" onLabel="Activo" [onIcon]="onIcion"

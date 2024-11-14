@@ -75,7 +75,7 @@
                         <p-button pRipple icon="pi pi-pencil" severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="Editar Estudiante" class="mr-2" (click)="editarEstudiante(estudianteRow)" />
                     </td>
-                    <td *ngIf="userDataToken.role === 'ADMIN'" >
+                    <td >
                         <p-button pRipple icon="pi pi-file-pdf" severity="warning" [rounded]="true" [outlined]="true"
                             pTooltip="Generar reporte de Notas" class="mr-2" (click)="generarReporteNotasIndividual(estudianteRow)" />
                     </td>

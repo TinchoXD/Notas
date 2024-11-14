@@ -22,7 +22,6 @@ import { AlertType } from '../../shared/alert/alertType';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 
-
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
 }
@@ -73,35 +72,35 @@ export class LoginService {
 
   login(credenciales: LoginRequest): Observable<any> {
     return this.http
-    .post<any>(environment.urlHost + '/auth/login', credenciales)
-    .pipe(
-      tap((userData) => {
-        sessionStorage.setItem('token', userData.token);
-        this.currentUserData.next(userData.token);
-        this.currentUserLoggedOn.next(true);
+      .post<any>(environment.urlHost + '/auth/login', credenciales)
+      .pipe(
+        tap((userData) => {
+          sessionStorage.setItem('token', userData.token);
+          this.currentUserData.next(userData.token);
+          this.currentUserLoggedOn.next(true);
 
-        const decodedToken = JSON.parse(
-          window.atob(userData.token.split('.')[1])
-        );
+          const decodedToken = JSON.parse(
+            window.atob(userData.token.split('.')[1])
+          );
 
-        this.userId = decodedToken.userId;
-        this.user_estado_usuario = decodedToken.user_estado_usuario;
-        this.tokenExpirationDate = this.getTokenExpirationDate(); // Usar el método actual para obtener la fecha de expiración
+          this.userId = decodedToken.userId;
+          this.user_estado_usuario = decodedToken.user_estado_usuario;
+          this.tokenExpirationDate = this.getTokenExpirationDate(); // Usar el método actual para obtener la fecha de expiración
 
-        if (this.user_estado_usuario == 0) {
-          this.showAlert('El usuario se encuentra deshabilitado.', 'error');
-          throw new Error('El usuario se encuentra deshabilitado.');
-        }
+          if (this.user_estado_usuario == 0) {
+            this.showAlert('El usuario se encuentra deshabilitado.', 'error');
+            throw new Error('El usuario se encuentra deshabilitado.');
+          }
 
-        Swal.fire({
-          title: 'Bienvenido',
-          text: `Su sesión se cerrará automáticamente en ${this.getTokenExpirationTime()}`,
-          icon: 'info',
-        });
-      }),
-      map((userData) => userData.token),
-      catchError(this.handleError)
-    );
+          Swal.fire({
+            title: 'Bienvenido',
+            text: `Su sesión se cerrará automáticamente en ${this.getTokenExpirationTime()}`,
+            icon: 'info',
+          });
+        }),
+        map((userData) => userData.token),
+        catchError(this.handleError)
+      );
   }
 
   verificarCambioDeContrasenia(userData: any): void {
@@ -212,7 +211,7 @@ export class LoginService {
   getTokenExpirationDate(): Date | null {
     const token = this.getToken();
     if (!token) return null;
-  
+
     const decodedToken = this.decodeToken(token);
     if (decodedToken && decodedToken.exp) {
       return new Date(decodedToken.exp * 1000); // Convertir a milisegundos
@@ -227,9 +226,17 @@ export class LoginService {
     const now = new Date();
     const diffMs = expiration.getTime() - now.getTime(); // Diferencia en milisegundos
 
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    let diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    let diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)) + 1; // Añadir 1 minuto
 
-    return `${String(diffHours).padStart(2, '0')}:${String(diffMinutes).padStart(2, '0')}`;
+    // Ajuste en caso de que los minutos adicionales desborden la hora
+    if (diffMinutes === 60) {
+      diffMinutes = 0;
+      diffHours += 1;
+    }
+
+    return `${String(diffHours).padStart(2, '0')}h : ${String(
+      diffMinutes
+    ).padStart(2, '0')}m`;
   }
 }

@@ -39,7 +39,7 @@ export class MisCalificacionesComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private notaService: NotaService,
     private calificacionService: CalificacionService,
-    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService
   ) {
     this.codec = new Codec();
   }
@@ -227,12 +227,10 @@ export class MisCalificacionesComponent implements OnInit {
     return '#6c757d';
   }
 
-  exportarPDF(){
-    this.exportarNotasIndividualPdfService.exportarPDF(
-      this.estudiante
-    );
+  exportarPDF() {
+    this.exportarNotasIndividualPdfService.exportarPDF(this.estudiante);
   }
-/* 
+  /* 
   exportarPDF(){
     this.exportarNotasIndividualPdfService.exportarPDF(
       this.notas,
@@ -243,7 +241,6 @@ export class MisCalificacionesComponent implements OnInit {
       this.estudiante
     );
   } */
-
 
   async exportarPDF_OLD(): Promise<void> {
     const contenidoTabla = [

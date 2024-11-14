@@ -1,33 +1,142 @@
 <p-toast />
 <div class="container-page" [ngClass]="{'dialog-blur': modalVisible }">
-    <div class="card card flex flex-wrap gap-3 p-fluid">
-        <p>Definir el rango de fechas para el ingreso de calificaciones para cada Aporte</p>
-        <div class="grid flex-auto">
-            <div class="col-sm">
-                <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre I </label>
-                <p-calendar inputId="rangeDatesTrimestreI" [(ngModel)]="rangeDatesTrimestreI" selectionMode="range"
-                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+    <div class="card ">
+
+        <p>Información General</p>
+
+
+        <div *ngFor="let config of configs">
+
+            <div *ngIf="config.key !== 'imagenLogo' ">
+                <label for="{{config.key}}" class="col-fixed" style="width:220px">{{config.descripcion}}</label>
+                <div>
+                    <input style="width:100%" pInputText id="{{config.key}}" [(ngModel)]="config.value"
+                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                </div>
+                <small class="p-invalid" *ngIf="submittedInformacionGeneral && !config.value" style="color: red;">El
+                    campo '{{config.descripcion}}' es obligatorio</small>
             </div>
-            <div class="col-sm">
-                <label for="rangeDatesTrimestreII" class="font-bold block mb-2"> Trimestre II </label>
-                <p-calendar inputId="rangeDatesTrimestreII" [(ngModel)]="rangeDatesTrimestreII" selectionMode="range"
-                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+
+            <div *ngIf="config.key === 'imagenLogo' ">
+                <label for="{{config.key}}" class="col-fixed" style="width:220px">{{config.descripcion}}</label>
+                <div class="drop-container" (click)="fileInput.click()" (dragover)="onDragOver($event)" id="logoInput"
+                    (drop)="onDrop($event)">
+                    <i class="pi pi-trash" pTooltip="Eliminar" (click)="clearImage(configs); $event.stopPropagation();"
+                        *ngIf="config.value"></i>
+                    <div *ngIf="!config.value" class="drop-message ">
+                        <p>Arrastra y suelta una imagen aquí.</p>
+                    </div>
+                    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*"
+                        style="display: none;">
+                    <div class="image-container" *ngIf="config.value">
+                        <img [src]="config.value" alt="Imagen seleccionada">
+                    </div>
+                </div>
+                <small class="p-invalid" *ngIf="submittedInformacionGeneral && !config.value" style="color: red;">La
+                    imagen para el logo es necesaria</small>
             </div>
-            <div class="col-sm">
-                <label for="rangeDatesTrimestreIII" class="font-bold block mb-2"> Trimestre III </label>
-                <p-calendar inputId="rangeDatesTrimestreIII" [(ngModel)]="rangeDatesTrimestreIII" selectionMode="range"
-                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" [locale]="es"></p-calendar>
-            </div>
-            <div class="col-sm">
-                <label for="rangeDatesSupletorio" class="font-bold block mb-2"> Supletorio </label>
-                <p-calendar inputId="rangeDatesSupletorio" [(ngModel)]="rangeDatesSupletorio" selectionMode="range"
-                    [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" [locale]="es" />
-            </div>
+
+
+
         </div>
-        <div mat-dialog-actions align="end" style="text-align: end; justify-content: end;">
-            <button mat-flat-button (click)="guardarConfiguracionFechas()" [color]="color" 
-                [disabled]="!esFormularioValido()">Guardar</button>
+
+        
+        <!-- <div>
+            <label for="nombreRector" class="col-fixed" style="width:220px">Nombre del Rector(a)</label>
+            <div>
+                <input style="width:100%" pInputText id="nombreRector" aria-describedby="username-help"
+                    [(ngModel)]="nombreRector"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+            </div>
+            <small class="p-invalid" *ngIf="submittedInformacionGeneral && !nombreRector" style="color: red;">El nombre
+                del rector(a) es necesario</small>
         </div>
+        <div>
+            <label for="nombreInstitucion" class="col-fixed" style="width:220px">Nombre de la Institución</label>
+            <div>
+                <input style="width:100%" pInputText id="nombreInstitucion" aria-describedby="username-help"
+                    [(ngModel)]="nombreInstitucion"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+            </div>
+            <small class="p-invalid" *ngIf="submittedInformacionGeneral && !nombreInstitucion" style="color: red;">El
+                nombre de la instituciín es necesario</small>
+        </div>
+        <div>
+            <label for="codigoAMIE" class="col-fixed" style="width:220px">Código AMIE</label>
+            <div>
+                <input style="width:100%" pInputText id="codigoAMIE" aria-describedby="username-help"
+                    [(ngModel)]="codigoAMIE"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+            </div>
+            <small class="p-invalid" *ngIf="submittedInformacionGeneral && !codigoAMIE" style="color: red;">El código
+                AMIE es necesario</small>
+        </div>
+
+        <div>
+            <label for="anioLectivo" class="col-fixed" style="width:220px">Año Lectivo</label>
+            <div>
+                <input style="width:100%" pInputText id="anioLectivo" aria-describedby="username-help"
+                    [(ngModel)]="anioLectivo"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+            </div>
+            <small class="p-invalid" *ngIf="submittedInformacionGeneral && !anioLectivo" style="color: red;">El año
+                lectivo es necesario</small>
+        </div>
+
+        <div>
+            <label for="logoInput" class="col-fixed" style="width:220px">Logo Institución</label>
+            <div class="drop-container" (click)="fileInput.click()" (dragover)="onDragOver($event)" id="logoInput"
+                (drop)="onDrop($event)">
+                <i class="pi pi-trash" pTooltip="Eliminar" *ngIf="imageBase64"></i>
+                <div *ngIf="!imageBase64" class="drop-message ">
+                    <p>Arrastra y suelta una imagen aquí.</p>
+                </div>
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+                <div class="image-container" *ngIf="imageBase64">
+                    <img [src]="imageBase64" alt="Imagen seleccionada">
+                </div>
+            </div>
+            <small class="p-invalid" *ngIf="submittedInformacionGeneral && !imageBase64" style="color: red;">La imagen
+                para el logo es necesaria</small>
+        </div> -->
+        <div align="end" style="text-align: end; justify-content: end;" class="mt-3">
+            <button mat-flat-button (click)="guardarInformacionGeneral()" [color]="color">Guardar información
+                general</button>
+        </div>
+
+        <p-divider></p-divider>
+        <p>Definir el rango de fechas para el ingreso de calificaciones para cada aporte</p>
+        <div class="flex flex-wrap gap-3 p-fluid mb-3">
+            <div class="grid flex-auto">
+                <div class="col-sm">
+                    <label for="rangeDatesTrimestreI" class="font-bold block mb-2"> Trimestre I </label>
+                    <p-calendar inputId="rangeDatesTrimestreI" [(ngModel)]="rangeDatesTrimestreI" selectionMode="range"
+                        [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+                </div>
+                <div class="col-sm">
+                    <label for="rangeDatesTrimestreII" class="font-bold block mb-2"> Trimestre II </label>
+                    <p-calendar inputId="rangeDatesTrimestreII" [(ngModel)]="rangeDatesTrimestreII"
+                        selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" />
+                </div>
+                <div class="col-sm">
+                    <label for="rangeDatesTrimestreIII" class="font-bold block mb-2"> Trimestre III </label>
+                    <p-calendar inputId="rangeDatesTrimestreIII" [(ngModel)]="rangeDatesTrimestreIII"
+                        selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false"
+                        [locale]="es"></p-calendar>
+                </div>
+                <div class="col-sm">
+                    <label for="rangeDatesSupletorio" class="font-bold block mb-2"> Supletorio </label>
+                    <p-calendar inputId="rangeDatesSupletorio" [(ngModel)]="rangeDatesSupletorio" selectionMode="range"
+                        [readonlyInput]="true" [showIcon]="true" [showOnFocus]="false" [locale]="es" />
+                </div>
+            </div>
+
+        </div>
+        <div align="end" style="text-align: end; justify-content: end;">
+            <button mat-flat-button (click)="guardarConfiguracionFechas()" [color]="color"
+                [disabled]="!esFormularioValido()">Guardar rango fechas</button>
+        </div>
+
     </div>
 </div>
 

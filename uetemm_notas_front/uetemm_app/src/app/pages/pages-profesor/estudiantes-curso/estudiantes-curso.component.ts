@@ -5,6 +5,7 @@ import { LoginService } from '../../../services/auth/login.service';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { AlertType } from '../../../shared/alert/alertType';
 import { AlertService } from '../../../services/alert/alert.service';
+import { ExportarNotasIndividualPdfService } from '../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -44,7 +45,8 @@ export class EstudiantesCursoComponent implements OnInit {
     private loginService: LoginService,
     private loadingService: LoadingService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService
   ) {}
 
   editarEstudiante(estudiante: any) {
@@ -77,5 +79,9 @@ export class EstudiantesCursoComponent implements OnInit {
     if (isAlertType(type)) {
       this.alertService.showAlert(mensaje, type);
     }
+  }
+
+  generarReporteNotasIndividual(estudianteRow: any) {
+    this.exportarNotasIndividualPdfService.exportarPDF(estudianteRow);
   }
 }
