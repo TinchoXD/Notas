@@ -149,7 +149,6 @@ export class DetalleCursoProfesorComponent implements OnInit {
     this.configuracionFechasService.getConfiguracionFechas().subscribe({
       next: (fechas) => {
         this.rangosFechas = fechas;
-        console.log('rangosFechas', this.rangosFechas);
         this.rangosFechas.forEach((fechaConfig) => {
           if (fechaConfig.tipo === 'trimestre_i') {
             this.rangeDatesTrimestreI = [

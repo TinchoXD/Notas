@@ -50,10 +50,12 @@
                         class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPDF()"
                         class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-                    <div style="text-align: center; align-content: center;">
+                    
+                    <!-- Contenedor centrado para el título -->
+                    <div style="flex-grow: 1; text-align: center;">
                         <h2>{{cursoProfesor?.asignatura.nombre}}</h2>
                     </div>
-
+            
                     <p-iconField iconPosition="left" class="ml-auto">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
@@ -61,7 +63,7 @@
                         <input pInputText type="text" placeholder="Buscar estudiante..."
                             (input)="dtEstudiante.filterGlobal($any($event.target).value, 'contains')" />
                     </p-iconField>
-
+            
                     <button mat-mini-fab class="ml-3"
                         matTooltip="Autoguardado: los cambios se aplicarán automáticamente al registrar la nota">
                         <mat-icon>save</mat-icon>

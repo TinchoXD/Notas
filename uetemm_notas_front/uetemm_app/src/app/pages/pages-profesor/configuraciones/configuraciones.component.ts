@@ -107,17 +107,12 @@ export class ConfiguracionesComponent implements OnInit {
     this.configService.getAllConfig().subscribe({
       next: (configRes) => {
         this.configs = configRes;
-
-        /* const imageBase64Obj = this.configs.find(item => item.key === "imagenLogo" )
-        this.imageBase64 = imageBase64Obj.value
-        console.log('this.imageBase64', this.imageBase64); */
       },
     });
 
     this.configuracionFechasService.getConfiguracionFechas().subscribe({
       next: (fechas) => {
         this.rangosFechas = fechas;
-        console.log('rangosFechas', this.rangosFechas);
         this.rangosFechas.forEach((fechaConfig) => {
           if (fechaConfig.tipo === 'trimestre_i') {
             this.rangeDatesTrimestreI = [
@@ -193,7 +188,6 @@ export class ConfiguracionesComponent implements OnInit {
   guardarConfiguracionFechas() {
     if (this.esFormularioValido()) {
       // Lógica para guardar la configuración de fechas
-      console.log('Configuración guardada correctamente');
       this.fechaConfigRequest = [
         {
           fechaConfigTipo: 'trimestre_i',
@@ -216,9 +210,6 @@ export class ConfiguracionesComponent implements OnInit {
           fechaConfigFin: new Date(this.rangeDatesSupletorio[1]),
         },
       ];
-
-      console.log('his.fechaConfigRequest', this.fechaConfigRequest);
-
       this.configuracionFechasService
         .postConfiguracionFechas(this.fechaConfigRequest)
         .subscribe({
@@ -228,7 +219,6 @@ export class ConfiguracionesComponent implements OnInit {
               text: `${res.message}`,
               icon: 'success',
             });
-            console.log('res', res);
           },
         });
     } else {
@@ -249,30 +239,38 @@ export class ConfiguracionesComponent implements OnInit {
   guardarInformacionGeneral() {
     this.submittedInformacionGeneral = true;
 
+    let i = 0;
+
     this.configs.forEach((config) => {
-      if (!config.value) {
-        return
+      if (config.value === '') {
+        i++;
       }
     });
 
-    console.log('Valores a guardar', this.configs);
-    this.configService.postConfiguracion(this.configs).subscribe({
-      next:(res)=>{
-        Swal.fire({
-          icon: 'success',
-          title: 'Guardado.',
-          text: `${res.message}`,
-        });
-      },
-      error:(error)=>{
-        Swal.fire({
-          icon: 'error',
-          title: 'Error.',
-          text: `${error.message}`,
-        });
-      }
-    })
-
+    if (i === 0) {
+      this.configService.postConfiguracion(this.configs).subscribe({
+        next: (res) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Guardado.',
+            text: `${res.message}`,
+          });
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error.',
+            text: `${error.message}`,
+          });
+        },
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Advertencia.',
+        text: `No se ha guardado la configuración general, Complete todos los campos.`,
+      });
+    }
   }
 
   onFileSelected(event: Event): void {
@@ -305,7 +303,6 @@ export class ConfiguracionesComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
-    console.log('IMAGEN', this.imageBase64);
   }
 
   onDragOver(event: DragEvent): void {

@@ -136,7 +136,20 @@ export class LoginService {
   logout(): void {
     sessionStorage.removeItem('token');
     this.currentUserLoggedOn.next(false);
-    this.router.navigate(['/iniciar-sesion']);
+
+    const hasReloaded = localStorage.getItem('hasReloaded');
+    if (!hasReloaded) {
+      localStorage.setItem('hasReloaded', 'true');
+      this.router.navigate(['/iniciar-sesion']).then(() => {
+        location.reload();
+      });
+    } else {
+      localStorage.removeItem('hasReloaded');
+    }
+
+    /* this.router.navigate(['/iniciar-sesion']).then(() => {
+      location.reload();
+    }); */
   }
 
   private handleError(error: HttpErrorResponse) {

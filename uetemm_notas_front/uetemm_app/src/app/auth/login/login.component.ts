@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
         this.imagenLogo = this.config.find(
           (item) => item.key === 'imagenLogo'
         );
-        console.log('this.imagenLogo ', this.imagenLogo )
       },
     });
 

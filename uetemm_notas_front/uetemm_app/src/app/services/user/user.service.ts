@@ -44,7 +44,7 @@ export class UserService implements OnInit {
       this.id = JSON.parse(window.atob(token.split('.')[1])).userId;
       return this.http.get<User>(environment.urlApi + "users/user/" + this.id).pipe(catchError(this.handleError))
     } catch (error) {
-      console.log('error: ' + error)
+      console.error('error: ' + error)
     }
     
     return of(); 
