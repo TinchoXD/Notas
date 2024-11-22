@@ -85,8 +85,11 @@ export class ExportarNotasIndividualPdfService {
           notaComportamiento,
         }) => {
           this.notas = notas;
+          this.notaAnimacionLectura = notaAnimacionLectura
+          this.notaAcompaniamientoIntegralAula = notaAcompaniamientoAula
+          this.notaComportamiento = notaComportamiento
 
-          if (notaAnimacionLectura) {
+          /* if (notaAnimacionLectura) {
             const cursoProfesorAnimacion = {
               asignatura: { nombre: 'Animación a la Lectura' },
               user: {
@@ -98,9 +101,10 @@ export class ExportarNotasIndividualPdfService {
               ...notaAnimacionLectura,
               cursoProfesor: cursoProfesorAnimacion,
             });
-          }
+            
+          } */
 
-          if (notaAcompaniamientoAula) {
+          /* if (notaAcompaniamientoAula) {
             const cursoProfesorAcompaniamiento = {
               asignatura: { nombre: 'Acompañamiento Integral en el Aula' },
               user: {
@@ -112,9 +116,9 @@ export class ExportarNotasIndividualPdfService {
               ...notaAcompaniamientoAula,
               cursoProfesor: cursoProfesorAcompaniamiento,
             });
-          }
+          } */
 
-          if (notaComportamiento) {
+          /* if (notaComportamiento) {
             const cursoProfesorComportamiento = {
               asignatura: { nombre: 'Comportamiento' },
               user: {
@@ -126,7 +130,7 @@ export class ExportarNotasIndividualPdfService {
               ...notaComportamiento,
               cursoProfesor: cursoProfesorComportamiento,
             });
-          }
+          } */
 
           // Generar el documento PDF después de completar todas las solicitudes
           this.generarDocumentoPDF(this.estudiante);

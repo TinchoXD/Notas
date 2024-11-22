@@ -57,8 +57,10 @@ export class InicioComponent implements OnInit {
       },
       scales: {
         x: {
+          
           ticks: {
             color: textColorSecondary,
+            
           },
           grid: {
             color: surfaceBorder,
@@ -66,11 +68,15 @@ export class InicioComponent implements OnInit {
           },
         },
         y: {
-          min: 0,
-          max: 10,
+          // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
+        suggestedMin: 0,
+
+        // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
+        suggestedMax: 10,
 
           ticks: {
             color: textColorSecondary,
+            stepSize: 1
           },
           grid: {
             color: surfaceBorder,
