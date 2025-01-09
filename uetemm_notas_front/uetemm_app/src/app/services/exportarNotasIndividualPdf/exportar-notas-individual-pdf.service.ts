@@ -85,9 +85,9 @@ export class ExportarNotasIndividualPdfService {
           notaComportamiento,
         }) => {
           this.notas = notas;
-          this.notaAnimacionLectura = notaAnimacionLectura
-          this.notaAcompaniamientoIntegralAula = notaAcompaniamientoAula
-          this.notaComportamiento = notaComportamiento
+          this.notaAnimacionLectura = notaAnimacionLectura;
+          this.notaAcompaniamientoIntegralAula = notaAcompaniamientoAula;
+          this.notaComportamiento = notaComportamiento;
 
           /* if (notaAnimacionLectura) {
             const cursoProfesorAnimacion = {
@@ -212,7 +212,7 @@ export class ExportarNotasIndividualPdfService {
       {
         text: this.convertirCulitativo(await this.calcularPromedioAnual()),
         colSpan: 1,
-        style: 'tableBody',
+        style: 'promedioAnualCell',
       },
     ]);
 
@@ -471,6 +471,10 @@ export class ExportarNotasIndividualPdfService {
         },
         tableBody: {
           alignment: 'center',
+        },
+        promedioAnualCell: {
+          //color: 'blue',
+          fillColor: '#99ccff',
         },
       },
       defaultStyle: {

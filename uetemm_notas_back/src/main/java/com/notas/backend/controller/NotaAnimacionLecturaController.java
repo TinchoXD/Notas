@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.notas.backend.model.Nota;
 import com.notas.backend.model.NotaAnimacionLectura;
 import com.notas.backend.request.NotaComplementariaRequest;
-import com.notas.backend.request.NotaRequest;
 import com.notas.backend.services.CatogoService;
 import com.notas.backend.services.NotaService;
 

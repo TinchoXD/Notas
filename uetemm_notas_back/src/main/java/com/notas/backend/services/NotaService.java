@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Curso;
 import com.notas.backend.model.CursoProfesor;
 import com.notas.backend.model.Estudiante;
@@ -18,7 +17,6 @@ import com.notas.backend.repository.NotaAcompaniamientoIntegralAulaRepository;
 import com.notas.backend.repository.NotaAnimacionLectucaRepository;
 import com.notas.backend.repository.NotaComportamientoRepository;
 import com.notas.backend.repository.NotaRepository;
-import com.notas.backend.request.CatalogoRequest;
 import com.notas.backend.request.NotaComplementariaRequest;
 import com.notas.backend.request.NotaRequest;
 import com.notas.backend.response.MessageResponse;

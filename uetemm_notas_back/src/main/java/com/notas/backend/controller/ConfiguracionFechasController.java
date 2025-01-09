@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.notas.backend.request.ConfiguracionFechasRequest;
-import com.notas.backend.request.CursoRequest;
 import com.notas.backend.services.ConfiguracionFechasService;
 
 import lombok.RequiredArgsConstructor;

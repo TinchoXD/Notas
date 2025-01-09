@@ -21,6 +21,7 @@ export class ConfigService {
     .pipe(catchError(this.handleError));
   }
 
+  
   postConfiguracion(configRequest: configRequest[]): Observable<any> {
     return this.http.post(environment.urlApi + 'config/guardarConfiguracion', configRequest).pipe(catchError(this.handleError))
   }

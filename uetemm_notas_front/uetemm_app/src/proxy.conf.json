@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://localhost:8091",
+      "target": "https://9640-190-152-144-117.ngrok-free.app",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"

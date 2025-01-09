@@ -36,7 +36,7 @@ public class ConfigController {
     }
 
         // * GUARDAR CONFIGURACION */
-    @PostMapping(value = "/guardarConfiguracion")
+    @PostMapping(value = "/guardarConfiguracion") 
     public ResponseEntity<Object> guardarConfiguracionFechas(@RequestBody ConfiguracionRequest[] request) {
         return ResponseEntity.ok(configService.guardarConfiguracion(request)); 
     }

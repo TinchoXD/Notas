@@ -6,15 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.ConfiguracionFechas;
-import com.notas.backend.model.Curso;
-import com.notas.backend.model.CursoProfesor;
-import com.notas.backend.model.User;
-import com.notas.backend.repository.AdministracionUsuariosRepository;
 import com.notas.backend.repository.ConfiguracionFechasRepository;
 import com.notas.backend.request.ConfiguracionFechasRequest;
-import com.notas.backend.request.CursoProfesorRequest;
 import com.notas.backend.response.MessageResponse;
 
 import jakarta.transaction.Transactional;

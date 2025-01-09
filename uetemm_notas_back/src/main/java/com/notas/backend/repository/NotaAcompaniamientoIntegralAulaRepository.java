@@ -1,11 +1,8 @@
 package com.notas.backend.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.notas.backend.model.NotaAcompaniamientoIntegralAula;
-import com.notas.backend.model.NotaAnimacionLectura;
 
 public interface NotaAcompaniamientoIntegralAulaRepository extends JpaRepository<NotaAcompaniamientoIntegralAula, Integer> {
 
