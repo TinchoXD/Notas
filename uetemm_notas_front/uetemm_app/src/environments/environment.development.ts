@@ -1,12 +1,12 @@
 export const environment = {
     production: false,
     
-    //urlHost: 'http://localhost:8080',
-    //urlApi:  'http://localhost:8080/api/',
+    urlHost: 'http://localhost:8080',
+    urlApi:  'http://localhost:8080/api/',
     
     //ForwaredPort
-    urlHost: 'https://26ksss72-8080.use2.devtunnels.ms',
-    urlApi:  'https://26ksss72-8080.use2.devtunnels.ms/api/',
+    //urlHost: 'https://26ksss72-8080.use2.devtunnels.ms',
+    //urlApi:  'https://26ksss72-8080.use2.devtunnels.ms/api/',
     
     //urlHost: 'http://192.168.1.66:8080',
     //urlApi: 'http://192.168.1.66:8080/api/',
