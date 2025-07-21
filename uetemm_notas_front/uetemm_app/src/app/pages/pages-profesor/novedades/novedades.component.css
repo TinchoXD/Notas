@@ -1,0 +1,49 @@
+.container {
+    max-width: 100%;
+    padding: 1.0rem;
+    
+    box-sizing: border-box;
+  }
+
+
+  .text-center {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .text-center {
+      font-size: 1.25rem;
+    }
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  .table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+p-toolbar {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+p-toolbar .p-toolbar-group-left,
+p-toolbar .p-toolbar-group-right {
+    display: flex;
+    align-items: center;
+}

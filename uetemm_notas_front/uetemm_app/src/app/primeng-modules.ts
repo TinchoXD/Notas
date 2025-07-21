@@ -22,7 +22,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { BadgeModule } from 'primeng/badge';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { CalendarModule } from 'primeng/calendar';
+import { Calendar, CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -105,7 +105,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AutoFocusModule } from 'primeng/autofocus';
-
+import { DialogService } from 'primeng/dynamicdialog';
 
 
 @NgModule({
@@ -144,8 +144,13 @@ import { AutoFocusModule } from 'primeng/autofocus';
     TabViewModule,
     SliderModule,
     CalendarModule,
-    
-    
+    DynamicDialogModule,
+    TimelineModule,
+    MessageModule,
+    MessagesModule,
+
+    //ReactiveFormsModule, DatePickerModule,
+
   ],
 })
 export class PrimeNGModule {}

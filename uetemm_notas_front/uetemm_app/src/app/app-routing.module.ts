@@ -21,6 +21,9 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { InicioComponent } from './pages/pages-profesor/inicio/inicio.component';
 import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-curso/estudiantes-curso.component';
 import { ConfiguracionesComponent } from './pages/pages-profesor/configuraciones/configuraciones.component';
+import { NovedadesComponent } from './pages/pages-profesor/novedades/novedades.component';
+import { NovedadesCursoComponent } from './pages/pages-profesor/novedades/novedades-curso/novedades-curso.component';
+import { NovedadesCursoEstudianteComponent } from './pages/pages-profesor/novedades/novedades-curso/novedades-curso-estudiante/novedades-curso-estudiante.component';
 
 const routes: Routes = [
  
@@ -47,6 +50,9 @@ const routes: Routes = [
   { path: 'cursos-tutor', component: TutorComponent, canActivate: [authGuard] },
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
   { path: 'configuracion', component: ConfiguracionesComponent, canActivate: [authGuard] },
+  { path: 'novedades', component: NovedadesComponent, canActivate: [authGuard] },
+  { path: 'novedades/curso/:cursoid', component: NovedadesCursoComponent, canActivate: [authGuard] },
+  { path: 'novedades/curso/:cursoid/estudiante/:estudianteid', component: NovedadesCursoEstudianteComponent, canActivate: [authGuard] },
   { path: 'notfound', component: PageNotFoundComponent, canActivate: [authGuard] },
 
   { path: '**', redirectTo: '/notfound' },

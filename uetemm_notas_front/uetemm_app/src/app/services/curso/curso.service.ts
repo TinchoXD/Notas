@@ -17,7 +17,16 @@ function isAlertType(type: string): type is AlertType {
 })
 export class CursoService {
   constructor(private http: HttpClient, private alertService: AlertService) {}
+private cursoId!: number;
 
+  setCursoId(id: number) {
+    this.cursoId = id;
+  }
+
+  getCursoId(): number {
+    return this.cursoId;
+  }
+  
   getCurso(): Observable<Curso[]> {
     return this.http
       .get<Curso[]>(environment.urlApi + 'cursos/all')

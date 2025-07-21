@@ -10,7 +10,11 @@ import { LoginComponent } from './auth/login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './shared/nav/nav.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { UserDetailsComponent } from './pages/pages-profesor/user-details/user-details.component';
 import { JwtInterceptoprService } from './services/auth/jwt-interceptor.service';
 import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
@@ -18,7 +22,11 @@ import { CambiarContrasenaComponent } from './pages/pages-profesor/cambiar-contr
 import { DialogoConfirmacionComponent } from './shared/dialogo-confirmacion/dialogo-confirmacion.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS,
+} from '@angular/material/core';
 import { MaterialModule } from './material-module';
 import { PrimeNGModule } from './primeng-modules';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
@@ -59,67 +67,93 @@ import { EstudiantesCursoComponent } from './pages/pages-profesor/estudiantes-cu
 import { DialogoVerNotasCursoComponent } from './pages/pages-profesor/curso/dialogo-ver-notas-curso/dialogo-ver-notas-curso.component';
 import { DialogoCursoTutorComponent } from './pages/pages-profesor/editar-usuario/dialogo-curso-tutor/dialogo-curso-tutor.component';
 import { ConfiguracionesComponent } from './pages/pages-profesor/configuraciones/configuraciones.component';
+import { NovedadesComponent } from './pages/pages-profesor/novedades/novedades.component';
+import { NovedadesCursoComponent } from './pages/pages-profesor/novedades/novedades-curso/novedades-curso.component';
+import { NovedadesCursoEstudianteComponent } from './pages/pages-profesor/novedades/novedades-curso/novedades-curso-estudiante/novedades-curso-estudiante.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CrearActualizarNovedadComponent } from './pages/pages-profesor/novedades/crear-actualizar-novedad/crear-actualizar-novedad.component';
 
 
 registerLocaleData(localeEs, 'es');
 
-@NgModule({ declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        DashboardComponent,
-        LoginComponent,
-        NavComponent,
-        UserDetailsComponent,
-        CambiarContrasenaComponent,
-        DialogoConfirmacionComponent,
-        NavMenuComponent,
-        AlertComponent,
-        AdministracionUsuariosComponent,
-        EditarUsuarioComponent,
-        LoadingComponent,
-        AgregarUsuarioComponent,
-        AgregarCursoComponent,
-        CursosComponent,
-        DialogoAsignaturaComponent,
-        AsignaturaComponent,
-        DialogoCursoProfesorComponent,
-        MisCursosComponent,
-        EstudianteComponent,
-        EstudianteFormComponent,
-        AsignarCursoComponent,
-        DetalleCursoProfesorComponent,
-        TutorComponent,
-        DetalleCursoTutorComponent,
-        MisCalificacionesComponent,
-        PageNotFoundComponent,
-        InicioComponent,
-        ReasignarCursoProfesorComponent,
-        EstudiantesCursoComponent,
-        DialogoVerNotasCursoComponent,
-        DialogoCursoTutorComponent,
-        ConfiguracionesComponent,
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        NgbModule,
-        ReactiveFormsModule,
-        MatMenuModule,
-        MaterialModule,
-        OverlayModule,
-        MatNativeDateModule,
-        PrimeNGModule,
-        FormsModule,
-        AsyncPipe], providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptoprService, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
-        { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
-        { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-        { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
-        { provide: LOCALE_ID, useValue: 'es' }, // Configuración de LOCALE_ID
-        MessageService,
-        LoadingService,
-        provideAnimationsAsync(),
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
-export class AppModule { }
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    DashboardComponent,
+    LoginComponent,
+    NavComponent,
+    UserDetailsComponent,
+    CambiarContrasenaComponent,
+    DialogoConfirmacionComponent,
+    NavMenuComponent,
+    AlertComponent,
+    AdministracionUsuariosComponent,
+    EditarUsuarioComponent,
+    LoadingComponent,
+    AgregarUsuarioComponent,
+    AgregarCursoComponent,
+    CursosComponent,
+    DialogoAsignaturaComponent,
+    AsignaturaComponent,
+    DialogoCursoProfesorComponent,
+    MisCursosComponent,
+    EstudianteComponent,
+    EstudianteFormComponent,
+    AsignarCursoComponent,
+    DetalleCursoProfesorComponent,
+    TutorComponent,
+    DetalleCursoTutorComponent,
+    MisCalificacionesComponent,
+    PageNotFoundComponent,
+    InicioComponent,
+    ReasignarCursoProfesorComponent,
+    EstudiantesCursoComponent,
+    DialogoVerNotasCursoComponent,
+    DialogoCursoTutorComponent,
+    ConfiguracionesComponent,
+    NovedadesComponent,
+    NovedadesCursoComponent,
+    NovedadesCursoEstudianteComponent,
+    CrearActualizarNovedadComponent,
+     
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    ReactiveFormsModule,
+    MatMenuModule,
+    MaterialModule,
+    OverlayModule,
+    MatNativeDateModule,
+    PrimeNGModule,
+    FormsModule,
+    AsyncPipe,
+  ],
+  providers: [
+    DialogService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptoprService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptorService,
+      multi: true,
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+    { provide: LOCALE_ID, useValue: 'es' }, // Configuración de LOCALE_ID
+
+    MessageService,
+    LoadingService,
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
+})
+export class AppModule {}

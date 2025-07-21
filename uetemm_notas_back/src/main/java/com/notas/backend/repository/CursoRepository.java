@@ -16,4 +16,6 @@ public interface CursoRepository extends JpaRepository<Curso,Integer> {
     
     Curso findByCodigo(String codigo);
 
+    
+
 }

@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+
+
+<!-- Header Mis Cursos -->
+<div class="container" style="font-size: 0.9rem; max-width: 1000px;">
+
+    <div class="row" style="margin-top: 2rem;">
+        <div class="col-md-10 text-center">
+            <p style="font-size: x-large;">Mis Cursos</p>
+            <p style="font-size: small;">Seleccione un curso</p>
+            <div class="absolute bottom-0 left-0  ml-3" style="min-width: 120px; min-height: 70px;">
+                <p-button label="Salir" icon="pi pi-chevron-left" class="mr-2" (click)="logout()"></p-button>
+            </div>
+        </div>
+        <div style="text-align: left; margin-bottom: 10px;">
+
+        </div>
+    </div>
+
+    <ng-container *ngIf="loading">
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+      <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+    </ng-container>
+
+
+    <p-table #dt *ngIf="!loading" [value]="cursosProfesor" [responsiveLayout]="'scroll'" styleClass="p-datatable-striped p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr style="font-size: large;">
+                <th>#</th>
+                <th>Curso</th>
+                <th>Asignatura</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr style="height: 8vh; cursor: pointer;" (click)="seleccionarCurso(rowData)">
+                <td style="font-size: large;">{{ i + 1 }}</td>
+                <td style="font-size: large;">{{ rowData.curso.nombre }}</td>
+                <td style="font-size: large;">{{ rowData.asignatura.nombre }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

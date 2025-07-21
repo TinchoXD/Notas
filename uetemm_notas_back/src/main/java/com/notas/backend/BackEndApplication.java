@@ -12,7 +12,7 @@ public class BackEndApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
-		return application.sources(BackEndApplication.class);
+		return application.sources(BackEndApplication.class); 
 	}
 
 

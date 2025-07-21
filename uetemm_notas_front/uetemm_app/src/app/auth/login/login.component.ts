@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { LoginRequest } from '../../services/auth/loginRequest';
@@ -12,18 +17,17 @@ import { ConfigService } from '../../services/config/config.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-
   codec: Codec;
 
-  loginError: string = "";
+  loginError: string = '';
   loginForm: FormGroup;
   estudiante: any;
   errorMessage: string = '';
-  config: any[] = []
-  imagenLogo : any
+  config: any[] = [];
+  imagenLogo: any;
 
   get username() {
     return this.loginForm.controls['username'];
@@ -41,13 +45,9 @@ export class LoginComponent implements OnInit {
       next: (configRes) => {
         this.config = configRes;
 
-        this.imagenLogo = this.config.find(
-          (item) => item.key === 'imagenLogo'
-        );
+        this.imagenLogo = this.config.find((item) => item.key === 'imagenLogo');
       },
     });
-
-
   }
 
   constructor(
@@ -56,40 +56,60 @@ export class LoginComponent implements OnInit {
     private estudianteService: EstudianteService,
     private userService: UserService,
     private configService: ConfigService,
-    private loginService: LoginService) {
+    private loginService: LoginService
+  ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(10)]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
-    this.codec = new Codec(); 
+    this.codec = new Codec();
   }
 
   login() {
     if (this.loginForm.valid) {
-      this.loginError = "";
+      this.loginError = '';
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
           if (userData.user_status) {
-
           }
         },
         error: (errorData) => {
-          this.loginError = errorData
+          this.loginError = errorData;
         },
         complete: () => {
-
-          console.info("Login Completo")
+          console.info('Login Completo');
           this.router.navigateByUrl('/inicio');
           this.loginForm.reset();
-        }
+        },
       });
     } else {
       this.loginForm.markAllAsTouched();
-     
     }
   }
 
-  async verCalificaciones(){
+  reportarNovedades() {
+    if (this.loginForm.valid) {
+      this.loginError = '';
+      this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
+        next: (userData) => {
+          if (userData.user_status) {
+          }
+        },
+        error: (errorData) => {
+          this.loginError = errorData;
+        },
+        complete: () => {
+          console.info('Login Completo');
+          this.router.navigateByUrl('/novedades');
+          this.loginForm.reset();
+        },
+      });
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
+
+  async verCalificaciones() {
     const { value: cedula } = await Swal.fire({
       title: 'Buscar estudiante',
       input: 'text',
@@ -103,12 +123,10 @@ export class LoginComponent implements OnInit {
     });
 
     if (cedula) {
-
       this.estudianteService.getEstudianteByCedula(cedula).subscribe({
-        next:async (estudiante)=>{
-          if(estudiante){
-            
-            this.estudiante = estudiante
+        next: async (estudiante) => {
+          if (estudiante) {
+            this.estudiante = estudiante;
             const { value: palabraSeguridad } = await Swal.fire({
               title: 'Palabra de seguridad',
               input: 'text',
@@ -120,28 +138,25 @@ export class LoginComponent implements OnInit {
                 autocorrect: 'off',
               },
             });
-
             if (palabraSeguridad === this.estudiante.palabraSeguridad) {
-
-              this.router.navigateByUrl('/estudiante/mis-calificaciones/'+this.codec.encode(this.estudiante.cedula));
-
+              this.router.navigateByUrl(
+                '/estudiante/mis-calificaciones/' +
+                  this.codec.encode(this.estudiante.cedula)
+              );
             } else {
               Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Error al validar la palabra de seguridad del estudiante!",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error al validar la palabra de seguridad del estudiante!',
               });
             }
-            
-            
-          }else{
+          } else {
             Swal.fire('No se encontró Estudiante');
           }
-
-        }
-      })
-
+        },
+      });
     }
   }
 
+ 
 }

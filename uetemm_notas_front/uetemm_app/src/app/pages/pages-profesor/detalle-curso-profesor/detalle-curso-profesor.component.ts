@@ -85,6 +85,7 @@ export class DetalleCursoProfesorComponent implements OnInit {
       this.id = +params.get('id')!;
       this.codigo = params.get('codigo')!;
     }); */
+    console.log('this.activatedRoute', this.activatedRoute)
 
     this.activatedRoute.params.subscribe((params) => {
       this.cursoProfesor_id = +params['id']; // El signo '+' convierte el string a número

@@ -1,3 +1,7 @@
+.cdk-overlay-container {
+  z-index: 10000 !important; /* Asegúrate de que esté sobre el diálogo */
+}
+
 ::ng-deep .p-datatable-striped tbody tr:nth-child(odd) {
   background-color: #ffffff !important;
 }
@@ -12750,3 +12754,4 @@ body.sidebar-toggled footer.sticky-footer {
 .dialog-blur {
   filter: blur(5px);
 }
+

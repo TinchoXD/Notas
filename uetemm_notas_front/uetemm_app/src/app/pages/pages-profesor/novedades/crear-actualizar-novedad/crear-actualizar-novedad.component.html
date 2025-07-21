@@ -1,0 +1,46 @@
+<div class="card">
+
+    <form [formGroup]="formNovedad" (ngSubmit)="onSubmit()">
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
+
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Fecha</mat-label>
+
+                    <input matInput [matDatepicker]="fechaRegistro" formControlName="fechaRegistro" readonly="true">
+
+                    <mat-hint>DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="fechaRegistro"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaRegistro></mat-datepicker>
+
+                    @if (formNovedad.invalid) {
+                    <mat-error> Seleccione la fecha en la que se reporta la novedad.</mat-error>
+                    }
+                </mat-form-field>
+
+            </div>
+            <div class="col-12 md:col-6">
+
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Detalle de la novedad</mat-label>
+                    <textarea matInput formControlName="descripcion" maxlength="1000"></textarea>
+                    @if (formNovedad.invalid) {
+                    <mat-error> Escriba el detalle de la novedad</mat-error>
+                    }
+                </mat-form-field>
+
+            </div>
+        </div>
+        <div class="flex justify-content-end mt-3">
+            <p-button label="Guardar" type="submit" [disabled]="formNovedad.invalid"></p-button>
+        </div>
+    </form>
+
+
+    <div class="flex w-full justify-end mt-4">
+        <p-button type="button" label="Cerrar" icon="pi pi-times" (click)="
+          closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })
+        " />
+    </div>
+</div>

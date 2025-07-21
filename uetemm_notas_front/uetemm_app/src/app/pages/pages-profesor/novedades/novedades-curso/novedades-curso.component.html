@@ -1,0 +1,58 @@
+<div class="container" style="font-size: 0.9rem; max-width: 1000px;">
+    <!-- Botón para regresar -->
+
+    <div class="grid">
+        <div class="col-fixed" style="width:100px">
+            <div class=" bottom-0 left-0  ml-3" style="min-width: 120px; min-height: 70px;">
+                <p-button label="Regresar" icon="pi pi-chevron-left" (click)="regresar()"></p-button>
+            </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div class=" text-center">
+        <p style="font-size: larger;"> {{nombreCurso}}</p>
+        <p style="font-size: small;">Seleccione un Estudiante</p>
+    </div>
+
+
+    <div class="row" style="margin-top: 1rem;">
+
+        <div style="text-align: left; margin-bottom: 10px;">
+
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Skeleton de carga -->
+    <ng-container *ngIf="loading">
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+        <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
+    </ng-container>
+
+    <p-table *ngIf="!loading" #dt [value]="estudiantes" [responsiveLayout]="'scroll'"
+        styleClass="p-datatable-striped p-datatable-sm ">
+        <ng-template pTemplate="header">
+            <tr style="font-size: small;">
+                <th>#</th>
+                <th>Estudiante</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr style="height: 8vh; cursor: pointer;" (click)="seleccionarEstudiante(rowData)">
+                <td style="font-size: small;">{{ i + 1 }}</td>
+                <td style="font-size: small;">{{ rowData.apellidosNombres }}</td>
+
+            </tr>
+        </ng-template>
+
+
+    </p-table>
+
+</div>
