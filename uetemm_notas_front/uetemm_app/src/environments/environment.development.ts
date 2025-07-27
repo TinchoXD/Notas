@@ -3,6 +3,8 @@ export const environment = {
     
     //urlHost: 'http://localhost:8080',
     //urlApi:  'http://localhost:8080/api/',
+
+    
     
     //ForwaredPort
     urlHost: 'https://4cdb7pvh-8080.use2.devtunnels.ms',

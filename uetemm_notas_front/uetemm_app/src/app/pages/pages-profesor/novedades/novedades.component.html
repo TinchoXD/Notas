@@ -38,9 +38,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-i="rowIndex">
             <tr style="height: 8vh; cursor: pointer;" (click)="seleccionarCurso(rowData)">
-                <td style="font-size: large;">{{ i + 1 }}</td>
-                <td style="font-size: large;">{{ rowData.curso.nombre }}</td>
-                <td style="font-size: large;">{{ rowData.asignatura.nombre }}</td>
+                <td style="font-size: small;">{{ i + 1 }}</td>
+                <td style="font-size: small;">{{ rowData.curso.nombre }}</td>
+                <td style="font-size: small;">{{ rowData.asignatura.nombre }}</td>
             </tr>
         </ng-template>
     </p-table>

@@ -1,6 +1,17 @@
+<p-toast></p-toast>
 <div class="card">
 
+
     <form [formGroup]="formNovedad" (ngSubmit)="onSubmit()">
+
+
+        <input type="text" formControlName="id" class="form-control" readonly hidden>
+
+        <input type="text" formControlName="estudianteId" class="form-control" readonly hidden>
+
+        <input type="text" formControlName="cursoId" class="form-control" readonly hidden>
+
+        <input type="text" formControlName="profesorId" class="form-control" readonly hidden>
         <div class="grid">
 
             <div class="col-12 md:col-6">
@@ -33,14 +44,37 @@
             </div>
         </div>
         <div class="flex justify-content-end mt-3">
-            <p-button label="Guardar" type="submit" [disabled]="formNovedad.invalid"></p-button>
         </div>
+
+
+
+
+        <div class="grid">
+            <div class="col">
+                <p-button type="button" label="Cerrar" icon="pi pi-times"
+                    (click)="closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })" />
+            </div>
+            <div class="col">
+                <p-button severity="success" class="" icon label="Guardar" type="submit" icon="pi pi-save"
+                    [disabled]="formNovedad.invalid" />
+            </div>
+            <div class="col" *ngIf="esActualizar">
+                <p-button severity="danger" class="" icon="pi pi-trash" label="Eliminar" (click)="eliminar()" />
+            </div>
+        </div>
+
+
+
+        <!-- <div class="flex w-full justify-end mt-4">
+            <p-button type="button" label="Cerrar" icon="pi pi-times"
+                (click)="closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })" />
+            <p-button severity="success" class="ml-3" icon label="Guardar" type="submit" icon="pi pi-save"
+                [disabled]="formNovedad.invalid" />
+            <p-button severity="danger" class="ml-3" icon="pi pi-trash" label="Eliminar" (click)="eliminar()" />
+        </div> -->
+
+
     </form>
 
 
-    <div class="flex w-full justify-end mt-4">
-        <p-button type="button" label="Cerrar" icon="pi pi-times" (click)="
-          closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })
-        " />
-    </div>
 </div>

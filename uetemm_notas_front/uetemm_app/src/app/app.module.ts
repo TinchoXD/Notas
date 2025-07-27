@@ -72,6 +72,7 @@ import { NovedadesCursoComponent } from './pages/pages-profesor/novedades/noveda
 import { NovedadesCursoEstudianteComponent } from './pages/pages-profesor/novedades/novedades-curso/novedades-curso-estudiante/novedades-curso-estudiante.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CrearActualizarNovedadComponent } from './pages/pages-profesor/novedades/crear-actualizar-novedad/crear-actualizar-novedad.component';
+import { NovedesEstudianteComponent } from './pages/pages-profesor/novedades/novedades-curso/novedes-estudiante/novedes-estudiante.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -117,6 +118,7 @@ registerLocaleData(localeEs, 'es');
     NovedadesCursoComponent,
     NovedadesCursoEstudianteComponent,
     CrearActualizarNovedadComponent,
+    NovedesEstudianteComponent,
      
   ],
   bootstrap: [AppComponent],

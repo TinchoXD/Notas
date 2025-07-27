@@ -9,7 +9,7 @@ import { EstudianteService } from '../../../../services/estudiante/estudiante.se
 import { NotaService } from '../../../../services/nota/nota.service';
 import { UserService } from '../../../../services/user/user.service';
 import { CursoServiceShared } from '../../../../shared/cursoShared.service';
-import { async } from 'rxjs';
+import { async, forkJoin } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NovedadesCursoEstudianteComponent } from './novedades-curso-estudiante/novedades-curso-estudiante.component';
 import { Footer } from '../../../../shared/footer-dialog/footer';
@@ -27,7 +27,7 @@ export class NovedadesCursoComponent implements OnInit {
   id: number = 0;
   codigo: string | null = null;
   estudiantes: any[] = [];
-
+  cursoProfesor: any;
   nombreCurso: string = '';
 
   ref: DynamicDialogRef | undefined;
@@ -53,22 +53,30 @@ export class NovedadesCursoComponent implements OnInit {
     this.cargarDatosCurso();
 
     console.log('Curso: ', this.curso);
-    this.estudianteService.getEstudiantesByCursoId(this.cursoId).subscribe({
-      next: (estudiantes) => {
+
+    forkJoin({
+      estudiantes: this.estudianteService.getEstudiantesByCursoId(this.cursoId),
+      cursoProfesor: this.cursoProfesorService.getCursoProfesorByCursoId(
+        this.cursoId
+      ),
+    }).subscribe({
+      next: ({ estudiantes, cursoProfesor }) => {
         this.estudiantes = estudiantes;
-        console.log('Estudiantes del curso:', this.estudiantes);
+        this.cursoProfesor = cursoProfesor[0];
+
+        console.log('this.cursoProfesor = cursoProfesor;', this.cursoProfesor);
       },
-      error: (error) => {
-        console.error('Error al cargar los estudiantes:', error);
+      error: (err) => {
+        console.error('Error al cargar los estudiantes:', err);
         this.messageServicePNG.add({
           severity: 'error',
           summary: 'Error',
           detail: 'No se pudieron cargar los estudiantes del curso',
         });
       },
-      complete: () => { 
-        this.loading = false // Cambia el estado de carga a falso después de cargar los estudiantes
-      }
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 
@@ -112,6 +120,7 @@ export class NovedadesCursoComponent implements OnInit {
       data: {
         cursoId: this.cursoId,
         estudiante,
+        profesor: this.cursoProfesor.user,
       },
       closable: false,
       breakpoints: {

@@ -1,3 +1,7 @@
+.swal-zindex-fix {
+  z-index: 20100 !important; /* Asegúrate que sea más alto que el p-dialog */
+}
+
 .cdk-overlay-container {
   z-index: 10000 !important; /* Asegúrate de que esté sobre el diálogo */
 }

@@ -1,13 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
-import { TableRowCollapseEvent, TableRowExpandEvent } from 'primeng/table';
 import { NovedadCursoEstudianteService } from '../../../../../services/novedadCursoEstudiante/novedad-curso-estudiante.service';
-import { Footer } from '../../../../../shared/footer-dialog/footer';
 import { CrearActualizarNovedadComponent } from '../../crear-actualizar-novedad/crear-actualizar-novedad.component';
 
 @Component({
@@ -21,7 +19,14 @@ export class NovedadesCursoEstudianteComponent {
   cursoId: number = 0;
   novedadesEstudiante: any[] = []; // Cambia el tipo según tu modelo de datos
 
+  profesorId: number = 0;
+
   noData: string = '';
+
+  userDataToken!: any;
+  userLoggedOn: boolean = false;
+
+  errorMessage: String = '';
 
   constructor(
     public config: DynamicDialogConfig,
@@ -34,26 +39,9 @@ export class NovedadesCursoEstudianteComponent {
   ngOnInit() {
     this.estudiante = this.config.data.estudiante;
     this.cursoId = this.config.data.cursoId;
+    this.profesorId = this.config.data.profesor.id;
 
-    this.novedadesCursoEstudianteService
-      .getNovedadesByCursoAndEstudianteListDTO(this.cursoId, this.estudiante.id)
-      .subscribe({
-        next: (novedades) => {
-          this.novedadesEstudiante = novedades;
-          if (this.novedadesEstudiante.length === 0) {
-            this.noData = 'El estudiante no registra ninguna novedad 😊';
-          }
-          console.log('Novedades del estudiante:', this.novedadesEstudiante);
-        },
-        error: (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'No se pudieron cargar las novedades del estudiante.',
-          });
-          console.error('Error al cargar las novedades:', error);
-        },
-      });
+    this.cargarNovedades();
   }
 
   cerrar(): void {
@@ -67,24 +55,74 @@ export class NovedadesCursoEstudianteComponent {
       modal: true,
       contentStyle: { overflow: 'auto' },
       data: {
-        estudiante: this.estudiante,
+        estudiante: this.estudiante.id,
         curso: this.cursoId,
-        
-        querido martin del futuro, enviar en data
-         el id del estudiante
-          y el id del curso,
-          y el id del profesor (faltante)
-          para que se pueda registrar la novedad correctamente
-          
-          tqm gossip girl :)
-
+        user: this.profesorId,
       },
       closable: false,
       breakpoints: {
         '960px': '75vw',
         '640px': '90vw',
       },
-      
     });
+
+    // 👇 Aquí actualizas la tabla si se retorna una novedad
+    this.ref.onClose.subscribe((novedadCreada) => {
+
+      //? refrescar toda la tabla desde backend
+      if (novedadCreada) {
+        this.cargarNovedades(); // Método reutilizable para obtener datos actualizados
+      }
+    });
+  }
+
+    editarNovedad(novedad: any): void {
+    this.ref = this.dialogService.open(CrearActualizarNovedadComponent, {
+      header: 'Novedades del Estudiante ',
+      width: '50vw',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      data: {
+        novedad: novedad,
+        estudiante: this.estudiante.id,
+        curso: this.cursoId,
+        user: this.profesorId,
+      },
+      closable: false,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+
+    // 👇 Aquí actualizas la tabla si se retorna una novedad
+    this.ref.onClose.subscribe((novedadCreada) => {
+
+      //? refrescar toda la tabla desde backend
+      if (novedadCreada) {
+        this.cargarNovedades(); // Método reutilizable para obtener datos actualizados
+      }
+    });
+  }
+
+  cargarNovedades(): void {
+    this.novedadesCursoEstudianteService
+      .getNovedadesByCursoAndEstudianteListDTO(this.cursoId, this.estudiante.id)
+      .subscribe({
+        next: (novedades) => {
+          this.novedadesEstudiante = novedades;
+          this.noData =
+            novedades.length === 0
+              ? 'El estudiante no registra ninguna novedad 😊'
+              : '';
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudieron cargar las novedades del estudiante.',
+          });
+        },
+      });
   }
 }

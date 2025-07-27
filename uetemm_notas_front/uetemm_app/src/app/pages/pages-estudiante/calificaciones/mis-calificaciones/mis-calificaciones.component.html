@@ -13,7 +13,45 @@
             </div>
         </section>
 
+
+
         <div class="grid">
+            <div class="col-12 md:col-6 lg:col-3">
+                <label style="font-weight: bold;" for="apellidosNombres">Apellidos y Nombres</label>
+                <input id="apellidosNombres" type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    readonly value="{{estudiante?.apellidosNombres}}">
+            </div>
+            <div class="col-12 md:col-6 lg:col-3">
+                <label style="font-weight: bold;" for="cedula">Cédula de Identidad / Pasaporte</label>
+                <input id="cedula" type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    readonly value="{{estudiante?.cedula}}">
+            </div>
+            <div class="col-12 md:col-6 lg:col-3">
+                <label style="font-weight: bold;" for="curso">Curso</label>
+                <br>
+                <!-- 
+                <input id="curso" type="text"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    readonly value="{{ estudiante?.curso.nivel.nombre }} - {{ estudiante?.curso.subnivel.nombre }} - {{
+                            estudiante?.curso.grado.nombre }} - {{ estudiante?.curso.paralelo.nombre }} - {{
+                            estudiante?.curso.jornada.nombre }}"> -->
+                {{ estudiante?.curso.nivel.nombre }} - {{ estudiante?.curso.subnivel.nombre }} - {{
+                estudiante?.curso.grado.nombre }} - {{ estudiante?.curso.paralelo.nombre }} - {{
+                estudiante?.curso.jornada.nombre }}
+            </div>
+            <div class="col-12 md:col-6 lg:col-3">
+                <label style="font-weight: bold;" for="cedula">Código del Curso</label>
+                <input id="cedula" type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    readonly value="{{ estudiante?.curso.codigo }}">
+            </div>
+        </div>
+
+
+
+        <!-- <div class="grid">
             <div class="col">
                 <div class="field">
                     <label for="apellidosNombres">Apellidos y Nombres</label>
@@ -44,7 +82,7 @@
                         readonly value="{{ estudiante?.curso.codigo }}">
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <p-table #dt [value]="notas" [rows]="50" styleClass="p-datatable-sm p-datatable-striped"
@@ -54,7 +92,9 @@
             <ng-template pTemplate="caption">
                 <div class="flex">
                     <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportarPDF()"
-                        class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        class="p-button-warning mr-2" pTooltip="Generar reporte en PDF" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple icon="pi pi-info-circle" (click)="verNovedades()" label="Reporte de Novedades"
+                        class="p-button-Info mr-2" pTooltip="Ver reporte de novedades del Estudiante" tooltipPosition="bottom"></button>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
@@ -163,7 +203,7 @@
             </ng-template>
         </p-table>
         <div style=" text-align: center;">
-            <p>S - SIEMPRE  |   F - FRECUENTEMENTE  |   O - OCASIONALMENTE   |  N - NUNCA</p>
+            <p>S - SIEMPRE | F - FRECUENTEMENTE | O - OCASIONALMENTE | N - NUNCA</p>
         </div>
     </div>
 </div>

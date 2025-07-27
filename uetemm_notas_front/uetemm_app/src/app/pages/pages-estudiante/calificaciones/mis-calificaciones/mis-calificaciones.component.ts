@@ -1,12 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { Component, OnInit, Optional } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../../../../services/auth/login.service';
-import { LoginRequest } from '../../../../services/auth/loginRequest';
-import Swal from 'sweetalert2';
 import { EstudianteService } from '../../../../services/estudiante/estudiante.service';
 import { Codec } from '../../../../services/codec/codec';
 import { NotaService } from '../../../../services/nota/nota.service';
@@ -14,8 +8,10 @@ import { CalificacionService } from '../../../../services/calificacion/calificac
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { style } from '@angular/animations';
 import { ExportarNotasIndividualPdfService } from '../../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { NovedesEstudianteComponent } from '../../../pages-profesor/novedades/novedades-curso/novedes-estudiante/novedes-estudiante.component';
+import { Footer } from '../../../../shared/footer-dialog/footer';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -39,7 +35,9 @@ export class MisCalificacionesComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private notaService: NotaService,
     private calificacionService: CalificacionService,
-    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
+    @Optional() public ref: DynamicDialogRef,
+    @Optional() public dialogService: DialogService
   ) {
     this.codec = new Codec();
   }
@@ -230,17 +228,26 @@ export class MisCalificacionesComponent implements OnInit {
   exportarPDF() {
     this.exportarNotasIndividualPdfService.exportarPDF(this.estudiante);
   }
-  /* 
-  exportarPDF(){
-    this.exportarNotasIndividualPdfService.exportarPDF(
-      this.notas,
-      this.notasGenerales,
-      this.notaAnimacionLectura,
-      this.notaAcompaniamientoIntegralAula,
-      this.notaComportamiento,
-      this.estudiante
-    );
-  } */
+
+  verNovedades(): void {
+    this.ref = this.dialogService.open(NovedesEstudianteComponent, {
+      header: 'Novedades del Estudiante ',
+      width: '50vw',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      data: {
+        estudiante: this.estudiante,
+      },
+      templates: {
+        footer: Footer,
+      },
+      closable: false,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+  }
 
   async exportarPDF_OLD(): Promise<void> {
     const contenidoTabla = [

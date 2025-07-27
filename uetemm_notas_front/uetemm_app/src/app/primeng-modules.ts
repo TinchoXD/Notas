@@ -15,6 +15,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ButtonGroupModule } from 'primeng/buttongroup';
 
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -148,6 +149,8 @@ import { DialogService } from 'primeng/dynamicdialog';
     TimelineModule,
     MessageModule,
     MessagesModule,
+    ButtonGroupModule,
+    
 
     //ReactiveFormsModule, DatePickerModule,
 

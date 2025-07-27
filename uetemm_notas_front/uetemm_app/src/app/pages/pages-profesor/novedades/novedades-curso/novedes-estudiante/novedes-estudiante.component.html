@@ -1,19 +1,16 @@
-<p-toast></p-toast>
+
 
 <div class="w-full">
 
-    <p-table #dt [value]="novedadesEstudiante" styleClass="p-datatable-striped p-datatable-sm">
-        <ng-template pTemplate="caption">
-            <div class="text-end pb-4">
-                <p-button label="Nuevo" icon="pi pi-plus" text (onClick)="nuevaNovedad()" />
-            </div>
-        </ng-template>
+    <p-table #dt [value]="novedades" styleClass="p-datatable-striped p-datatable-sm">
+        
         <ng-template pTemplate="header">
             <tr>
                 <!--    <th>#</th> -->
                 <th>Fecha</th>
                 <th>Descripcion</th>
-                <th>Acciones</th>
+                <th>Profesor</th>
+               
 
             </tr>
         </ng-template>
@@ -21,10 +18,8 @@
             <tr style="height: 5vh;">
                 <td>{{ novedad.fechaRegistro | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ novedad.descripcion }}</td>
-                <td>
-                    <p-button icon="pi pi-pencil" severity="secondary" (onClick)="editarNovedad(novedad)" rounded
-                        [ngStyle]="{ width: '1.8rem', height: '1.8rem', fontSize: '0.65rem', padding: '0' }" />
-                </td>
+                <td>{{ novedad.profesor.firstname}} {{ novedad.profesor.lastname}}</td>
+                
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

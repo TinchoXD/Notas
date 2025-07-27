@@ -1,31 +1,17 @@
 <div class="container" style="font-size: 0.9rem; max-width: 1000px;">
-    <!-- Botón para regresar -->
 
-    <div class="grid">
-        <div class="col-fixed" style="width:100px">
-            <div class=" bottom-0 left-0  ml-3" style="min-width: 120px; min-height: 70px;">
-                <p-button label="Regresar" icon="pi pi-chevron-left" (click)="regresar()"></p-button>
-            </div>
+    <div class="" style="margin-top: 1rem;">
+        <div class="text-center">
+            <p style="font-size: medium;"> {{nombreCurso}}</p>
+            <p style="font-size: small;">Seleccione un Estudiante</p>
         </div>
-        <div class="col">
-        </div>
-    </div>
-    <div class=" text-center">
-        <p style="font-size: larger;"> {{nombreCurso}}</p>
-        <p style="font-size: small;">Seleccione un Estudiante</p>
-    </div>
-
-
-    <div class="row" style="margin-top: 1rem;">
-
         <div style="text-align: left; margin-bottom: 10px;">
-
+            <p-button label="Regresar" icon="pi pi-chevron-left" class="mr-2" (click)="regresar()"></p-button>
         </div>
     </div>
 
     <br>
 
-    <!-- Skeleton de carga -->
     <ng-container *ngIf="loading">
         <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
         <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
@@ -35,8 +21,7 @@
         <p-skeleton [height]="'8vh'" [width]="'100%'" [style]="{ 'margin-bottom': '10px' }"></p-skeleton>
     </ng-container>
 
-    <p-table *ngIf="!loading" #dt [value]="estudiantes" [responsiveLayout]="'scroll'"
-        styleClass="p-datatable-striped p-datatable-sm ">
+    <p-table #dt *ngIf="!loading" [value]="estudiantes" [responsiveLayout]="'scroll'" styleClass="p-datatable-striped p-datatable-sm ">
         <ng-template pTemplate="header">
             <tr style="font-size: small;">
                 <th>#</th>

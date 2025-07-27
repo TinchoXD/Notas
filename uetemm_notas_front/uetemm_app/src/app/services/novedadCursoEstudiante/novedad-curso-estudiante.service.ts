@@ -9,9 +9,40 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class NovedadCursoEstudianteService {
   constructor(private http: HttpClient) {}
 
-  getNovedadesByCursoAndEstudianteListDTO(curs_id: number, estu_id: number): Observable<any> {
+  getNovedadesByCursoAndEstudianteListDTO(
+    curs_id: number,
+    estu_id: number
+  ): Observable<any> {
     return this.http
-      .get<any>(environment.urlApi + 'novedades/dto/curso/'+curs_id+'/estudiante/' + estu_id)
+      .get<any>(
+        environment.urlApi +
+          'novedades/dto/curso/' +
+          curs_id +
+          '/estudiante/' +
+          estu_id
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getNovedadesByEstudiante(estu_id: number): Observable<any> {
+    return this.http
+      .get<any>(
+        environment.urlApi +
+          'novedades/estudiante/' +
+          estu_id
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  registrarNovedadEstudiante(novedad: any): Observable<any> {
+    return this.http
+      .post<any>(environment.urlApi + 'novedades/registrar-novedad', novedad)
+      .pipe(catchError(this.handleError));
+  }
+
+  eliminarNovedadEstudiante(novedad: any): Observable<any> {
+    return this.http
+      .post<any>(environment.urlApi + 'novedades/eliminar-novedad', novedad)
       .pipe(catchError(this.handleError));
   }
 
@@ -23,13 +54,4 @@ export class NovedadCursoEstudianteService {
     }
     return throwError(() => new Error('Algo salió mal, intente nuevamente'));
   }
-
-  registrarNovedadEstudiante(novedad: any): Observable<any> {
-
-    console.log('QQQQQQQQQQQQQQ registrarNovedadEstudiante', novedad);
-    return this.http
-      .post<any>(environment.urlApi + 'novedades/registrar-novedad', novedad)
-      .pipe(catchError(this.handleError));
-  }
-
 }
