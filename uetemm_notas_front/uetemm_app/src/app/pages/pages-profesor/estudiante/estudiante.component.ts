@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { AlertType } from '../../../shared/alert/alertType';
 import { EstudianteService } from '../../../services/estudiante/estudiante.service';
 import { ThemePalette } from '@angular/material/core';
@@ -11,6 +11,9 @@ import { LoginService } from '../../../services/auth/login.service';
 import { ExportarNotasIndividualPdfService } from '../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
 import { NotaService } from '../../../services/nota/nota.service';
 import { forkJoin } from 'rxjs';
+import { Footer } from '../../../shared/footer-dialog/footer';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { NovedesEstudianteComponent } from '../novedades/novedades-curso/novedes-estudiante/novedes-estudiante.component';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -48,7 +51,9 @@ export class EstudianteComponent implements OnInit {
     private messageService: MessageService,
     private loginService: LoginService,
     private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
-    private notaService: NotaService
+    private notaService: NotaService,
+       @Optional() public ref: DynamicDialogRef,
+        @Optional() public dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -131,4 +136,26 @@ export class EstudianteComponent implements OnInit {
   generarReporteNotasIndividual(estudianteRow: any) {
     this.exportarNotasIndividualPdfService.exportarPDF(estudianteRow);
   }
+
+  verNovedadesEstudiante(estudianteRow: any){
+    this.ref = this.dialogService.open(NovedesEstudianteComponent, {
+        header: 'Novedades del Estudiante ',
+        width: '50vw',
+        modal: true,
+        contentStyle: { overflow: 'auto' },
+        data: {
+          estudiante: estudianteRow,
+        },
+        templates: {
+          footer: Footer,
+        },
+        closable: false,
+        breakpoints: {
+          '960px': '75vw',
+          '640px': '90vw',
+        },
+      });
+  }
+
+
 }

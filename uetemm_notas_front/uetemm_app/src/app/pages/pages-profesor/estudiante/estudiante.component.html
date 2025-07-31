@@ -32,6 +32,7 @@
                     </th>
                     <th rowspan="2"> Editar</th>
                     <th rowspan="2"> Rep. Notas</th>
+                    <th rowspan="2"> Novedades</th>
                     <th  rowspan="2"  *ngIf="userDataToken.role === 'ADMIN'"  pSortableColumn="estado">Estado <p-sortIcon field="estado" rowspan="2"/></th>
                 </tr>
                 <tr>
@@ -48,8 +49,7 @@
                         <p-columnFilter type="text" field="curso.codigo" placeholder="Bucar por Código de Curso"
                             matchMode="contains" />
                     </th>
-                    <th> </th>
-                    <th> </th>
+                    
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-estudianteRow let-rowIndex="rowIndex">
@@ -78,6 +78,10 @@
                     <td >
                         <p-button pRipple icon="pi pi-file-pdf" severity="warning" [rounded]="true" [outlined]="true"
                             pTooltip="Generar reporte de Notas" class="mr-2" (click)="generarReporteNotasIndividual(estudianteRow)" />
+                    </td>
+                    <td >
+                        <p-button pRipple icon="pi pi-exclamation-triangle" severity="secondary" [rounded]="true" [outlined]="true"
+                            pTooltip="Generar reporte de Notas" class="mr-2" (click)="verNovedadesEstudiante(estudianteRow)" />
                     </td>
                     <td *ngIf="userDataToken.role === 'ADMIN'" >
                         <p-toggleButton [(ngModel)]="estudianteRow.estado" onLabel="Activo" [onIcon]="onIcion"
