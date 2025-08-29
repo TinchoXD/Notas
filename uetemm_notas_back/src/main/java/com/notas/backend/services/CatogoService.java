@@ -18,6 +18,13 @@ public class CatogoService {
     @Autowired
     CatalogoRepository catalogoRepository;
 
+    public Catalogo getById(int cataId ) {
+        System.out.println("Consultando catálogo con ID: " + cataId);
+        Catalogo result = catalogoRepository.findById(cataId).orElse(null);
+        System.out.println("Catálogo encontrado: " + result);
+        return result;
+    }
+
     public List<Catalogo> getAllCatalogos() {
         List<Catalogo> resultList = catalogoRepository.findByCatalogoParent(null);
         return resultList;

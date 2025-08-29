@@ -7,6 +7,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { NovedadCursoEstudianteService } from '../../../../../services/novedadCursoEstudiante/novedad-curso-estudiante.service';
 import { CrearActualizarNovedadComponent } from '../../crear-actualizar-novedad/crear-actualizar-novedad.component';
+import { CatalogoService } from '../../../../../services/catalogo/catalogo.service';
 
 @Component({
   selector: 'app-novedades-curso-estudiante',
@@ -28,19 +29,28 @@ export class NovedadesCursoEstudianteComponent {
 
   errorMessage: String = '';
 
+  habilitarAsignatura: boolean = false;
+
   constructor(
     public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
     public novedadesCursoEstudianteService: NovedadCursoEstudianteService, // Reemplaza con el servicio real
     private messageService: MessageService,
-    public dialogService: DialogService
-  ) {}
+    public dialogService: DialogService,
+    public catalogoService: CatalogoService,
+  ) { }
 
   ngOnInit() {
+
+    console.log('config 1111111111111111111111', this.config);
+
     this.estudiante = this.config.data.estudiante;
     this.cursoId = this.config.data.cursoId;
     this.profesorId = this.config.data.profesor.id;
     this.asignaturaId = this.config.data.asignatura.id;
+    if (this.config.data.tutor) {
+      this.habilitarAsignatura = true;
+    }
 
     this.cargarNovedades();
   }
@@ -78,7 +88,7 @@ export class NovedadesCursoEstudianteComponent {
     });
   }
 
-    editarNovedad(novedad: any): void {
+  editarNovedad(novedad: any): void {
     this.ref = this.dialogService.open(CrearActualizarNovedadComponent, {
       header: 'Novedades del Estudiante ',
       width: '50vw',
@@ -109,11 +119,22 @@ export class NovedadesCursoEstudianteComponent {
   }
 
   cargarNovedades(): void {
+
+    console.log('cursoId', this.cursoId);
+    console.log('estudiante', this.estudiante);
+    console.log('cargarNovedades', this.cursoId, this.estudiante.id);
+
     this.novedadesCursoEstudianteService
       .getNovedadesByCursoAndEstudianteListDTO(this.cursoId, this.estudiante.id)
       .subscribe({
         next: (novedades) => {
           this.novedadesEstudiante = novedades;
+          // Si necesitas agregar 'descripcion' a cada elemento:
+          this.novedadesEstudiante = this.novedadesEstudiante.map(item => ({
+            ...item,
+            asignatura: item.descripcion ?? ''
+          }));
+          console.log('novedadesEstudiante', this.novedadesEstudiante);
           this.noData =
             novedades.length === 0
               ? 'El estudiante no registra ninguna novedad 😊'
@@ -127,5 +148,11 @@ export class NovedadesCursoEstudianteComponent {
           });
         },
       });
+
+      this.catalogoService.getById(this.asignaturaId).subscribe({
+        next: (data) => {
+          console.log ('@@@@@@@@@@@@@@@@@@@@@@@@@', data)
+        }
+      })
   }
 }

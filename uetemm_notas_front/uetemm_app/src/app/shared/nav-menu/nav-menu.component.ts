@@ -36,7 +36,7 @@ export class NavMenuComponent {
   ) {
     this.userService.getUser(this.loginService.userToken).subscribe({
       next: (userData) => {
-        console.info('userDatauserDatauserDatauserDatauserData', userData);
+        //console.info('userDatauserDatauserDatauserDatauserData', userData);
         this.user = userData;
       },
       error: (errorData) => {

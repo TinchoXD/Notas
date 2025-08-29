@@ -86,7 +86,8 @@ public class NovedadCursoEstudianteService {
                         novedad.getDescripcion(),
                         novedad.getCurso().getId(),
                         novedad.getEstudiante().getId(),
-                        novedad.getProfesor() != null ? novedad.getProfesor().getId() : null))
+                        novedad.getProfesor() != null ? novedad.getProfesor().getId() : null,
+                        novedad.getAsignatura() != null ? novedad.getAsignatura().getId() : null))
                 .toList();
 
         return resuListDTO;
