@@ -57,4 +57,8 @@ public class NovedadCursoEstudiante {
     @Column(name = "noce_descripcion", nullable = true)
     public String descripcion;
 
+    @ManyToOne
+    @JoinColumn(name = "asig_id", nullable = true)
+    public Catalogo asignatura;
+
 }

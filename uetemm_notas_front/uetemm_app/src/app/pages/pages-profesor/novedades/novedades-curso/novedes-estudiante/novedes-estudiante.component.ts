@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NovedadCursoEstudianteService } from '../../../../../services/novedadCursoEstudiante/novedad-curso-estudiante.service';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UserService } from '../../../../../services/user/user.service';
+import { CursoProfesorService } from '../../../../../services/cursoProfesor/curso-profesor.service';
 
 @Component({
   selector: 'app-novedes-estudiante',
@@ -15,7 +16,7 @@ export class NovedesEstudianteComponent implements OnInit {
   noData: any;
   constructor(
     private novedadesService: NovedadCursoEstudianteService,
-    private profesorService: UserService,
+    private cursoProfesorService: CursoProfesorService,
     public config: DynamicDialogConfig
   ) {}
   ngOnInit(): void {
@@ -26,7 +27,7 @@ export class NovedesEstudianteComponent implements OnInit {
         next: (novedades) => {
           this.novedades = novedades;
           console.log('novedades', novedades);
-
+         
 
           const novedadesNew = this.novedades.map((n) => ({
             id: n.id,

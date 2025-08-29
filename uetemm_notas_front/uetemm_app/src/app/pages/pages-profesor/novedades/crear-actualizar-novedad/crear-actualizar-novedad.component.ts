@@ -30,6 +30,7 @@ export class CrearActualizarNovedadComponent implements OnInit {
     const estudiante = config.data?.estudiante ?? null;
     const curso = config.data?.curso ?? null;
     const user = config.data?.user ?? null;
+    const asignatura = config.data?.asignatura ?? null;
 
     this.formNovedad = this.formBuilder.group({
       id: [novedad.id ?? ''],
@@ -38,6 +39,7 @@ export class CrearActualizarNovedadComponent implements OnInit {
       profesorId: [user, Validators.required],
       fechaRegistro: [novedad.fechaRegistro ?? new Date(), Validators.required],
       descripcion: [novedad.descripcion ?? '', Validators.required],
+      asignaturaId: [asignatura, Validators.required],
     });
     this.esActualizar = false;
   }
@@ -106,6 +108,7 @@ export class CrearActualizarNovedadComponent implements OnInit {
       cursoId: this.novedad.cursoId,
       estudianteId: this.novedad.estudianteId,
       profesorId: this.novedad.profesorId,
+      asignaturaId: this.novedad.asignaturaId,
     };
     this.novedadCursoEstudianteService
       .eliminarNovedadEstudiante(novedadRequest)
@@ -144,5 +147,9 @@ export class CrearActualizarNovedadComponent implements OnInit {
 
   get descripcion() {
     return this.formNovedad.get('descripcion');
+  }
+
+  get asignatura() {
+    return this.formNovedad.get('asignaturaId');
   }
 }

@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.notas.backend.dto.NovedadCursoEstudianteDTO;
+import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Curso;
 import com.notas.backend.model.Estudiante;
 import com.notas.backend.model.NovedadCursoEstudiante;
 import com.notas.backend.model.User;
+import com.notas.backend.repository.CatalogoRepository;
 import com.notas.backend.repository.CursoRepository;
 import com.notas.backend.repository.EstudianteRepository;
 import com.notas.backend.repository.NovedadCursoEstudianteRepository;
@@ -52,6 +54,9 @@ public class NovedadCursoEstudianteService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CatalogoRepository asignaturaCatalogoRepository;
     /*
      * public List<Nota> getAllNotas() {
      * List<Nota> resultList = notaRepository.findAll();
@@ -105,6 +110,8 @@ public class NovedadCursoEstudianteService {
         }
         NovedadCursoEstudiante novedad = new NovedadCursoEstudiante();
 
+        Optional<Catalogo> asignatura = asignaturaCatalogoRepository.findById(novedadRequest.getAsignaturaId());
+
         if (novedadRequest.getId() != 0) {
             novedad = NovedadCursoEstudiante.builder()
                     .id(novedadRequest.getId())
@@ -113,6 +120,7 @@ public class NovedadCursoEstudianteService {
                     .profesor(profesor.get())
                     .fechaRegistro(novedadRequest.getFechaRegistro())
                     .descripcion(novedadRequest.getDescripcion())
+                    .asignatura(asignatura.get())
                     .build();
             novedadCursoEstudianteRepository.save(novedad);
         } else {
@@ -120,6 +128,7 @@ public class NovedadCursoEstudianteService {
                     .curso(curso.get())
                     .estudiante(estudiante)
                     .profesor(profesor.get())
+                    .asignatura(asignatura.get())
                     .fechaRegistro(novedadRequest.getFechaRegistro())
                     .descripcion(novedadRequest.getDescripcion())
                     .build();

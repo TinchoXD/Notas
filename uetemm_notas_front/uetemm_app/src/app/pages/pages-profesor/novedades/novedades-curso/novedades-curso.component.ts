@@ -121,6 +121,7 @@ export class NovedadesCursoComponent implements OnInit {
         cursoId: this.cursoId,
         estudiante,
         profesor: this.cursoProfesor.user,
+        asignatura: this.cursoProfesor.asignatura,
       },
       closable: false,
       breakpoints: {

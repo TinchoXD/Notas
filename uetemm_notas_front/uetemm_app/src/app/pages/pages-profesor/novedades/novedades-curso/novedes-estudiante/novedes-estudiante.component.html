@@ -1,16 +1,15 @@
-
-
 <div class="w-full">
 
     <p-table #dt [value]="novedades" styleClass="p-datatable-striped p-datatable-sm">
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <!--    <th>#</th> -->
                 <th>Fecha</th>
                 <th>Descripcion</th>
+                <th>Asignatura</th>
                 <th>Profesor</th>
-               
+
 
             </tr>
         </ng-template>
@@ -18,8 +17,9 @@
             <tr style="height: 5vh;">
                 <td>{{ novedad.fechaRegistro | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ novedad.descripcion }}</td>
+                <td>{{ novedad.asignatura.nombre }}</td>
                 <td>{{ novedad.profesor.firstname}} {{ novedad.profesor.lastname}}</td>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

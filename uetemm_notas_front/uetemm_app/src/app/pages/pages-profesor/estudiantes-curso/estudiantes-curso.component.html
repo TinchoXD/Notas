@@ -30,6 +30,7 @@
                 </th>
                 <th rowspan="2"></th>
                 <th *ngIf="userDataToken.role === 'ADMIN'"  pSortableColumn="estado">Estado <p-sortIcon field="estado" rowspan="2"/></th>
+                <th> </th>
             </tr>
             <tr>
                 <th> </th>
@@ -46,8 +47,7 @@
                         matchMode="contains" />
                 </th>
                 <th> </th>
-                <th> </th>
-                <th> </th>
+               
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-estudianteRow let-rowIndex="rowIndex">

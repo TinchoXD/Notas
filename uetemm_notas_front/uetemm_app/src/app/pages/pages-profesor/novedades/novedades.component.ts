@@ -195,7 +195,7 @@ export class NovedadesComponent implements OnInit {
   seleccionarCurso(cursoProfesor: any) {
     Swal.fire({
       title: 'Seleccionar Curso',
-      text: `${cursoProfesor.curso.nombre}`,
+      text: `${cursoProfesor.asignatura.nombre} \n- ${cursoProfesor.curso.nombre}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, seleccionar',

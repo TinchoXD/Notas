@@ -20,7 +20,7 @@ export class NovedadesCursoEstudianteComponent {
   novedadesEstudiante: any[] = []; // Cambia el tipo según tu modelo de datos
 
   profesorId: number = 0;
-
+  asignaturaId: number = 0;
   noData: string = '';
 
   userDataToken!: any;
@@ -40,6 +40,7 @@ export class NovedadesCursoEstudianteComponent {
     this.estudiante = this.config.data.estudiante;
     this.cursoId = this.config.data.cursoId;
     this.profesorId = this.config.data.profesor.id;
+    this.asignaturaId = this.config.data.asignatura.id;
 
     this.cargarNovedades();
   }
@@ -58,6 +59,7 @@ export class NovedadesCursoEstudianteComponent {
         estudiante: this.estudiante.id,
         curso: this.cursoId,
         user: this.profesorId,
+        asignatura: this.asignaturaId,
       },
       closable: false,
       breakpoints: {
@@ -87,6 +89,7 @@ export class NovedadesCursoEstudianteComponent {
         estudiante: this.estudiante.id,
         curso: this.cursoId,
         user: this.profesorId,
+        asignatura: this.asignaturaId,
       },
       closable: false,
       breakpoints: {
