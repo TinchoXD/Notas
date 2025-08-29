@@ -22,7 +22,7 @@ export class CatalogoService {
   }
 
   getById(id: number): Observable<Catalogo>{
-    return this.http.get<Catalogo>(environment.urlApi + 'catalogo/catalogo/'+id).pipe(catchError(this.handleError))
+    return this.http.get<Catalogo>(environment.urlApi + 'catalogos/catalogo/'+id).pipe(catchError(this.handleError))
   }
 
   getEstadoCivilLista(): Observable<Catalogo[]> {

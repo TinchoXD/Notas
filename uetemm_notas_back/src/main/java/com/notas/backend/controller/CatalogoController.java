@@ -31,15 +31,22 @@ public class CatalogoController {
 
     // devuelve un registro
 
-    @GetMapping("/catalogo/{id}")
-    public ResponseEntity<Object> getCatalogoById(@RequestParam int id) {
+    @GetMapping("/catalogo/{id2}")
+    public ResponseEntity<Object> getCatalogoById(@PathVariable int id2) {
         try {
-            return ResponseEntity.ok(catalogoService.getById(id));
+            System.out.println("aaaaaaaaaaaa   :" + id2);
+            return ResponseEntity.ok(catalogoService.getById(id2));
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar Lista de Catálogos", HttpStatus.BAD_REQUEST);
         }
     }
+
+    // * OBTENER CURSO POR ID */
+    /* @GetMapping("/curso/{id}")
+    public Curso getCursoById(@PathVariable int id) {
+        return cursoService.getCursoById(id);
+    } */
 
     @GetMapping("/all")
     public ResponseEntity<Object> getCatalogoList() {
