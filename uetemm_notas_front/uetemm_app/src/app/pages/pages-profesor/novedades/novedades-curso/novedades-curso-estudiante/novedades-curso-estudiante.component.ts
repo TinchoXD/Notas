@@ -116,16 +116,30 @@ export class NovedadesCursoEstudianteComponent {
   }
 
   editarNovedad(novedad: any): void {
+    let data;
+    if (this.ingresaTutor) {
+      data = {
+         novedad: novedad,
+        estudiante: this.estudiante,
+        curso: this.curso,
+        user: this.user,
+        asignatura: this.asignatura,
+      };
+    } else {
+      data = {
+         novedad: novedad,
+        estudiante: this.estudiante,
+        cursoProfesor: this.cursoProfesor,
+      };
+    }
+
+
     this.ref = this.dialogService.open(CrearActualizarNovedadComponent, {
       header: 'Novedades del Estudiante ',
       width: '50vw',
       modal: true,
       contentStyle: { overflow: 'auto' },
-      data: {
-        novedad: novedad,
-        estudiante: this.estudiante,
-        cursoProfesor: this.cursoProfesor,
-      },
+      data: data,
       closable: false,
       breakpoints: {
         '960px': '75vw',
