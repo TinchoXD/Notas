@@ -34,7 +34,6 @@ public class NovedadCursoProfesorController {
     public ResponseEntity<Object> getNovedadesByCursoAndEstudianteList(@PathVariable int curs_id,
             @PathVariable int estu_id) {
         try {
-            System.out.println("Recuperando novedades del estudiante con ID: " + estu_id + " y curso ID: " + curs_id);
             return ResponseEntity
                     .ok(novedadCursoEstudianteService.getNovedadesByCursoAndEstudianteList(curs_id, estu_id));
         } catch (Exception e) {
@@ -48,6 +47,8 @@ public class NovedadCursoProfesorController {
     @GetMapping("/dto/curso/{curs_id}/estudiante/{estu_id}")
     public List<NovedadCursoEstudianteDTO> getNovedadesByCursoAndEstudianteListDTO(@PathVariable int curs_id,
             @PathVariable int estu_id) {
+
+
         return novedadCursoEstudianteService.getNovedadesByCursoAndEstudianteListDTO(curs_id, estu_id);
     }
 
@@ -58,6 +59,7 @@ public class NovedadCursoProfesorController {
 
     @PostMapping(value = "/registrar-novedad")
     public ResponseEntity<Object> postNovedad(@RequestBody NovedadRequest request) {
+        System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         return ResponseEntity.ok(novedadCursoEstudianteService.postNovedad(request));
     }
 

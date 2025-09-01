@@ -1,5 +1,7 @@
 package com.notas.backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,6 @@ import com.notas.backend.request.CatalogoRequest;
 import com.notas.backend.services.CatogoService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/catalogos")
@@ -29,25 +30,6 @@ public class CatalogoController {
     @Autowired
     CatogoService catalogoService;
 
-    // devuelve un registro
-
-    @GetMapping("/catalogo/{id2}")
-    public ResponseEntity<Object> getCatalogoById(@PathVariable int id2) {
-        try {
-            System.out.println("aaaaaaaaaaaa   :" + id2);
-            return ResponseEntity.ok(catalogoService.getById(id2));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("error al consultar Lista de Catálogos", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    // * OBTENER CURSO POR ID */
-    /* @GetMapping("/curso/{id}")
-    public Curso getCursoById(@PathVariable int id) {
-        return cursoService.getCursoById(id);
-    } */
-
     @GetMapping("/all")
     public ResponseEntity<Object> getCatalogoList() {
         try {
@@ -56,6 +38,12 @@ public class CatalogoController {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar Lista de Catálogos", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    // * OBTENER CURSO POR ID */
+    @GetMapping("/catalogo/{id}")
+    public Optional<Catalogo> getCatalogoById(@PathVariable int id) {
+        return catalogoService.getCatalogoById(id);
     }
 
     @GetMapping("/estado_civil")
@@ -206,10 +194,6 @@ public class CatalogoController {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    public String getMethodName(@RequestParam String param) {
-        return new String();
     }
 
     @PostMapping(value = "/agregarAsignatura")

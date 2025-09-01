@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NovedadCursoEstudianteService } from '../../../../services/novedadCursoEstudiante/novedad-curso-estudiante.service';
-import Swal from 'sweetalert2';
+import { CatalogoService } from '../../../../services/catalogo/catalogo.service';
 
 @Component({
   selector: 'app-crear-actualizar-novedad',
@@ -14,41 +14,73 @@ export class CrearActualizarNovedadComponent implements OnInit {
   formNovedad: FormGroup;
   formSubmitted: boolean = false;
   errorMessage: string = '';
-  date: Date | undefined;
   esActualizar: boolean = false;
-  novedad = this.config.data.novedad;
+
+  asignaturas: any[] = [];
+
+  estudiante: any;
+  novedad: any;
+  curso: any;
+  user: any;
+  asignaturaConfig: any;
+  ingresaTutor: boolean = false;
 
   constructor(
     public config: DynamicDialogConfig,
     public ref: DynamicDialogRef,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private novedadCursoEstudianteService: NovedadCursoEstudianteService
+    private novedadCursoEstudianteService: NovedadCursoEstudianteService,
+    private catalogoService: CatalogoService
   ) {
-    // Aseguramos valores por defecto seguros
-    const novedad = config.data?.novedad || {};
-    const estudiante = config.data?.estudiante ?? null;
-    const curso = config.data?.curso ?? null;
-    const user = config.data?.user ?? null;
-    const asignatura = config.data?.asignatura ?? null;
+    // Datos iniciales
+    this.estudiante = config.data?.estudiante ?? null;
+    this.novedad = this.config.data?.novedad;
 
+    if (config.data?.cursoProfesor) {
+      this.curso = config.data?.cursoProfesor.curso ?? null;
+      this.user = config.data?.cursoProfesor.user ?? null;
+      this.asignaturaConfig = config.data?.cursoProfesor.asignatura ?? null;
+      this.ingresaTutor = false;
+    } else {
+      this.asignaturaConfig = config.data?.asignatura ?? null;
+      this.curso = config.data?.curso;
+      this.user = { id: config.data?.user.userId };
+      this.ingresaTutor = true;
+    }
+
+    if (!this.novedad) {
+      this.novedad = { id: 0 };
+    }
+
+    // Definición del formulario
     this.formNovedad = this.formBuilder.group({
-      id: [novedad.id ?? ''],
-      estudianteId: [estudiante, Validators.required],
-      cursoId: [curso, Validators.required],
-      profesorId: [user, Validators.required],
-      fechaRegistro: [novedad.fechaRegistro ?? new Date(), Validators.required],
-      descripcion: [novedad.descripcion ?? '', Validators.required],
-      asignaturaId: [asignatura, Validators.required],
+      id: [this.novedad.id ?? ''],
+      estudianteId: [this.estudiante.id, Validators.required],
+      cursoId: [this.curso.id, Validators.required],
+      profesorId: [this.user.id, Validators.required],
+      fechaRegistro: [
+        this.novedad.fechaRegistro ?? new Date(),
+        Validators.required,
+      ],
+      descripcion: [this.novedad.descripcion ?? '', Validators.required],
+      asignaturaId: [
+        this.asignaturaConfig ? this.asignaturaConfig.id : null,
+        this.ingresaTutor ? [Validators.required] : [],
+      ],
     });
     this.esActualizar = false;
   }
 
   ngOnInit(): void {
-    const existeNoveda = this.config.data?.novedad || {};
+    this.catalogoService.getAsignaturaActiveLista().subscribe({
+      next: (asignaturas) => {
+        this.asignaturas = asignaturas;
+      },
+    });
 
+    const existeNoveda = this.config.data?.novedad || {};
     if (Object.keys(existeNoveda).length > 0) {
-      // El objeto tiene propiedades
       this.esActualizar = true;
     }
   }
@@ -90,8 +122,6 @@ export class CrearActualizarNovedadComponent implements OnInit {
   }
 
   eliminar() {
-    const novedadId = this.id?.value;
-
     if (!this.novedad) {
       this.messageService.add({
         severity: 'warn',
@@ -110,6 +140,7 @@ export class CrearActualizarNovedadComponent implements OnInit {
       profesorId: this.novedad.profesorId,
       asignaturaId: this.novedad.asignaturaId,
     };
+
     this.novedadCursoEstudianteService
       .eliminarNovedadEstudiante(novedadRequest)
       .subscribe({
@@ -137,18 +168,19 @@ export class CrearActualizarNovedadComponent implements OnInit {
     return control?.invalid && (control.touched || this.formSubmitted);
   }
 
+  // Getters
   get id() {
     return this.formNovedad.get('id');
   }
-
   get fechaRegistro() {
     return this.formNovedad.get('fechaRegistro');
   }
-
   get descripcion() {
     return this.formNovedad.get('descripcion');
   }
-
+  get profesor() {
+    return this.formNovedad.get('profesorId');
+  }
   get asignatura() {
     return this.formNovedad.get('asignaturaId');
   }

@@ -168,7 +168,7 @@ public class EstudianteService {
 
             this.estudianteRepository.save(estudiante);
 
-            System.out.println();
+
 
             return new MessageResponse("El ESTUDIANTE se actualizó satisfactoriamente.");
 

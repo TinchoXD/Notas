@@ -205,7 +205,8 @@ export class NovedadesComponent implements OnInit {
         this.loadingService.show();
         setTimeout(() => {
           this.router
-            .navigate([`/novedades/curso/${cursoProfesor.curso.id}`])
+            //.navigate([`/novedades/curso/${cursoProfesor.curso.id}`])
+            .navigate([`/novedades/cursoProfesor/${cursoProfesor.id}`])
             //.navigate(['/novedades/curso', cursoProfesor.curso.id])
             .then(() => {
               this.loadingService.hide(); // Oculta el spinner de carga

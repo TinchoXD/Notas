@@ -2,12 +2,19 @@ package com.notas.backend.dto;
 
 import java.util.Date;
 
-import jakarta.persistence.criteria.CriteriaBuilder.In;
+import com.notas.backend.model.Catalogo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NovedadCursoEstudianteDTO {
 
     private Integer id;
@@ -24,21 +31,7 @@ public class NovedadCursoEstudianteDTO {
 
     private Integer asignaturaId;
 
-    public NovedadCursoEstudianteDTO(Integer id, Date fechaRegistro, String descripcion, Integer cursoId, Integer estudianteId, Integer profesorId, Integer asignaturaId) {
-        this.id = id;
-        this.fechaRegistro = fechaRegistro;
-        this.descripcion = descripcion;
-        this.cursoId = cursoId;
-        this.estudianteId = estudianteId;
-        this.profesorId = profesorId;
-        this.asignaturaId = asignaturaId;
-    }
-
-
-
-
-
-    public NovedadCursoEstudianteDTO() {
-    }
+   
+   
 
 }

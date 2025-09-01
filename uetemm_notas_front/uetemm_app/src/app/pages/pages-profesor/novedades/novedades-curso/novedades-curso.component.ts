@@ -23,6 +23,7 @@ export class NovedadesCursoComponent implements OnInit {
   loading: boolean = true;
 
   cursoId: number = 0;
+  cursoProfesorId: number = 0;
   curso: any;
   id: number = 0;
   codigo: string | null = null;
@@ -43,6 +44,7 @@ export class NovedadesCursoComponent implements OnInit {
     private cursoService: CursoService,
     private cursoServiceShared: CursoServiceShared,
     private configuracionFechasService: ConfiguracionFechasService,
+
     public dialogService: DialogService
   ) {}
 
@@ -50,40 +52,46 @@ export class NovedadesCursoComponent implements OnInit {
     // Imprimir la URL actual
     this.cursoId = this.cursoService.getCursoId();
 
-    this.cargarDatosCurso();
+    this.cursoProfesorId = this.cursoProfesorService.getCursoProfesorId();
 
-    console.log('Curso: ', this.curso);
+    this.cursoProfesorService
+      .getCursoProfesorById(this.cursoProfesorId)
+      .subscribe({
+        next: (cursoProfesor) => {
+          this.cursoProfesor = cursoProfesor;
+          this.cursoId = this.cursoProfesor.curso.id;
+          this.cargarDatosCurso();
 
-    forkJoin({
-      estudiantes: this.estudianteService.getEstudiantesByCursoId(this.cursoId),
-      cursoProfesor: this.cursoProfesorService.getCursoProfesorByCursoId(
-        this.cursoId
-      ),
-    }).subscribe({
-      next: ({ estudiantes, cursoProfesor }) => {
-        this.estudiantes = estudiantes;
-        this.cursoProfesor = cursoProfesor[0];
-
-        console.log('this.cursoProfesor = cursoProfesor;', this.cursoProfesor);
-      },
-      error: (err) => {
-        console.error('Error al cargar los estudiantes:', err);
-        this.messageServicePNG.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudieron cargar los estudiantes del curso',
-        });
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
+          forkJoin({
+            estudiantes: this.estudianteService.getEstudiantesByCursoId(
+              this.cursoId
+            ),
+            cursoProfesor: this.cursoProfesorService.getCursoProfesorByCursoId(
+              this.cursoId
+            ),
+          }).subscribe({
+            next: ({ estudiantes, cursoProfesor }) => {
+              this.estudiantes = estudiantes;
+             // this.cursoProfesor = cursoProfesor[0];
+            },
+            error: (err) => {
+              this.messageServicePNG.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'No se pudieron cargar los estudiantes del curso, ' + err,
+              });
+            },
+            complete: () => {
+              this.loading = false;
+            },
+          });
+        },
+      });
   }
 
   cargarDatosCurso(): void {
     this.cursoService.getCursoById(this.cursoId).subscribe({
       next: (curso) => {
-        console.log('Datos del curso:', curso);
         this.curso = curso;
         this.nombreCurso =
           this.curso.nivel.nombre +
@@ -100,7 +108,6 @@ export class NovedadesCursoComponent implements OnInit {
         // Aquí puedes manejar los datos del curso
       },
       error: (error) => {
-        console.error('Error al cargar el curso:', error);
         this.messageServicePNG.add({
           severity: 'error',
           summary: 'Error',
@@ -111,17 +118,17 @@ export class NovedadesCursoComponent implements OnInit {
   }
 
   seleccionarEstudiante(estudiante: any): void {
-    console.log('Estudiante seleccionado:', estudiante);
+
+
     this.ref = this.dialogService.open(NovedadesCursoEstudianteComponent, {
       header: 'Novedades del Estudiante ' + estudiante.apellidosNombres,
       width: '50vw',
       modal: true,
       contentStyle: { overflow: 'auto' },
       data: {
-        cursoId: this.cursoId,
+        //cursoId: this.cursoId,
         estudiante,
-        profesor: this.cursoProfesor.user,
-        asignatura: this.cursoProfesor.asignatura,
+        cursoProfesor: this.cursoProfesor,
       },
       closable: false,
       breakpoints: {

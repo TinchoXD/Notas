@@ -43,6 +43,8 @@ public class NovedadCursoEstudiante {
     @JoinColumn(name = "curs_id", nullable = true)
     public Curso curso;
 
+
+
     @ManyToOne
     @JoinColumn(name = "estu_id", nullable = true)
     public Estudiante estudiante;

@@ -32,7 +32,7 @@ public class ConfiguracionFechasService {
     @Transactional
     public MessageResponse guardarConfiguracionFechas(ConfiguracionFechasRequest[] configuracionFechasRequest) {
 
-        System.out.println("");
+
 
         for (ConfiguracionFechasRequest configuracionFechasItem : configuracionFechasRequest) {
             ConfiguracionFechas configuracionFechas = configuracionFechasRepository

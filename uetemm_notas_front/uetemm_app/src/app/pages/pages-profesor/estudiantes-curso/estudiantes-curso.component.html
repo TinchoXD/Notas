@@ -32,8 +32,6 @@
                     <th rowspan="2"></th>
                     <th *ngIf="userDataToken.role === 'ADMIN'" pSortableColumn="estado">Estado <p-sortIcon
                             field="estado" rowspan="2" /></th>
-                    <th> </th>
-                    <th> </th>
                 </tr>
                 <tr>
                     <th> </th>
@@ -49,8 +47,8 @@
                         <p-columnFilter type="text" field="curso.codigo" placeholder="Bucar por Código de Curso"
                             matchMode="contains" />
                     </th>
-                    <th> </th>
-                    <th> </th>
+
+
 
                 </tr>
             </ng-template>
@@ -78,22 +76,22 @@
                             severity="success" [rounded]="true" [outlined]="true"
                             pTooltip="{{userDataToken.role === 'ADMIN' ? 'Editar' : 'Ver'}} Estudiante" class="mr-2"
                             (click)="editarEstudiante(estudianteRow)" />
-                    </td>
-                    <td>
+
                         <p-button pRipple icon="pi pi-file-pdf" severity="warning" [rounded]="true" [outlined]="true"
                             pTooltip="Generar reporte de Notas" class="mr-2"
                             (click)="generarReporteNotasIndividual(estudianteRow)" />
-                    </td>
-                    <td>
+
                         <p-button pRipple icon="pi pi-exclamation-triangle" severity="secondary" [rounded]="true" [outlined]="true"
-                            pTooltip="Novedades" class="mr-2"
-                            (click)="novedadesEstudiante(estudianteRow)" />
-                    </td>
-                    <td *ngIf="userDataToken.role === 'ADMIN'">
-                        <p-toggleButton [(ngModel)]="estudianteRow.estado" onLabel="Activo" [onIcon]="onIcion"
-                            offIcon="pi pi-ban" offLabel="Inactivo"
+                            pTooltip="Regeistar novedades" class="mr-2"
+                            (click)="registrarNovedades(estudianteRow)" />
+
+
+
+                        <p-toggleButton *ngIf="userDataToken.role === 'ADMIN'" [(ngModel)]="estudianteRow.estado"
+                            onLabel="Activo" [onIcon]="onIcion" offIcon="pi pi-ban" offLabel="Inactivo"
                             (onChange)="activarDesactivar($event, estudianteRow)" />
                     </td>
+
                 </tr>
             </ng-template>
         </p-table>

@@ -1,81 +1,65 @@
 <p-toast></p-toast>
 <div class="card">
-
-
     <form [formGroup]="formNovedad" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="estudianteId">
+        <input type="hidden" formControlName="cursoId">
+        <input type="hidden" formControlName="profesorId">
 
-
-        <input type="text" formControlName="id" class="form-control" readonly hidden>
-
-        <input type="text" formControlName="estudianteId" class="form-control" readonly hidden>
-
-        <input type="text" formControlName="cursoId" class="form-control" readonly hidden>
-
-        <input type="text" formControlName="profesorId" class="form-control" readonly hidden>
-        <input type="text" formControlName="asignaturaId" class="form-control" readonly hidden>
         <div class="grid">
-
             <div class="col-12 md:col-6">
-
+                <!-- Fecha -->
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Fecha</mat-label>
-
-                    <input matInput [matDatepicker]="fechaRegistro" formControlName="fechaRegistro" readonly="true">
-
+                    <input matInput [matDatepicker]="fechaRegistroPicker" formControlName="fechaRegistro"
+                        readonly="true">
                     <mat-hint>DD/MM/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="fechaRegistro"></mat-datepicker-toggle>
-                    <mat-datepicker #fechaRegistro></mat-datepicker>
-
-                    @if (formNovedad.invalid) {
-                    <mat-error> Seleccione la fecha en la que se reporta la novedad.</mat-error>
-                    }
+                    <mat-datepicker-toggle matIconSuffix [for]="fechaRegistroPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaRegistroPicker></mat-datepicker>
+                    <mat-error *ngIf="isInvalid('fechaRegistro')">
+                        Seleccione la fecha en la que se reporta la novedad.
+                    </mat-error>
                 </mat-form-field>
 
+                <!-- Asignatura solo si ingresa tutor -->
+                <mat-form-field *ngIf="ingresaTutor" appearance="outline" style="width: 100%;">
+                    <mat-label>Asignatura</mat-label>
+                    <mat-select formControlName="asignaturaId">
+                        <mat-option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">
+                            {{ asignatura.nombre }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isInvalid('asignaturaId')">
+                        Seleccione una asignatura
+                    </mat-error>
+                </mat-form-field>
             </div>
-            <div class="col-12 md:col-6">
 
+            <!-- Descripción -->
+            <div class="col-12 md:col-6">
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Detalle de la novedad</mat-label>
                     <textarea matInput formControlName="descripcion" maxlength="1000"></textarea>
-                    @if (formNovedad.invalid) {
-                    <mat-error> Escriba el detalle de la novedad</mat-error>
-                    }
+                    <mat-error *ngIf="isInvalid('descripcion')">
+                        Escriba el detalle de la novedad
+                    </mat-error>
                 </mat-form-field>
-
             </div>
         </div>
-        <div class="flex justify-content-end mt-3">
-        </div>
 
-
-
-
+        <!-- Botones -->
         <div class="grid">
             <div class="col">
                 <p-button type="button" label="Cerrar" icon="pi pi-times"
                     (click)="closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })" />
             </div>
             <div class="col">
-                <p-button severity="success" class="" icon label="Guardar" type="submit" icon="pi pi-save"
+                <p-button severity="success" label="Guardar" type="submit" icon="pi pi-save"
                     [disabled]="formNovedad.invalid" />
             </div>
             <div class="col" *ngIf="esActualizar">
-                <p-button severity="danger" class="" icon="pi pi-trash" label="Eliminar" (click)="eliminar()" />
+                <p-button severity="danger" label="Eliminar" icon="pi pi-trash" (click)="eliminar()" />
             </div>
         </div>
-
-
-
-        <!-- <div class="flex w-full justify-end mt-4">
-            <p-button type="button" label="Cerrar" icon="pi pi-times"
-                (click)="closeDialog({ buttonType: 'Cancel', summary: 'Dialogo Cerrardo' })" />
-            <p-button severity="success" class="ml-3" icon label="Guardar" type="submit" icon="pi pi-save"
-                [disabled]="formNovedad.invalid" />
-            <p-button severity="danger" class="ml-3" icon="pi pi-trash" label="Eliminar" (click)="eliminar()" />
-        </div> -->
-
-
     </form>
-
-
 </div>

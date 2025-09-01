@@ -4,6 +4,7 @@ import { LoginService } from './services/auth/login.service';
 import { filter } from 'rxjs/operators';
 import { CursoServiceShared } from './shared/cursoShared.service';
 import { CursoService } from './services/curso/curso.service';
+import { CursoProfesorService } from './services/cursoProfesor/curso-profesor.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private cursoService: CursoService,
+    private cursoProfesorService: CursoProfesorService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private loginService: LoginService
@@ -31,9 +33,9 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         const route = this.getChild(this.activatedRoute);
         route.paramMap.subscribe((params) => {
-          const cursoId = params.get('cursoid');
-          this.isNovedadesCursoPage = !!cursoId;
-          console.log('Detectado cursoId:', cursoId);
+          const cursoProfesorId = params.get('cursoProfesorid');
+          this.isNovedadesCursoPage = !!cursoProfesorId;
+          console.log('Detectado cursoProfesorId:', cursoProfesorId);
         });
       }); */
 
@@ -42,10 +44,10 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         const route = this.getChild(this.activatedRoute);
         route.paramMap.subscribe((params) => {
-          const cursoId = Number(params.get('cursoid'));
-          console.log('Detectado cursoId:', cursoId);
-          if (cursoId) {
-            this.cursoService.setCursoId(cursoId);
+          const cursoProfesorId = Number(params.get('cursoProfesorid'));
+          console.log('Detectado cursoProfesorId:', cursoProfesorId);
+          if (cursoProfesorId) {
+            this.cursoProfesorService.setCursoProfesorId(cursoProfesorId);
             this.isNovedadesCursoPage = true;
           } else {
             this.isNovedadesCursoPage = false;
@@ -62,7 +64,7 @@ export class AppComponent implements OnInit {
           this.router.url === '/estudiante/mis-calificaciones';
         this.isNovedadesPage = this.router.url === '/novedades';
         this.isNovedadesCursoPage =
-          this.router.url.startsWith('/novedades/curso/');
+          this.router.url.startsWith('/novedades/cursoProfesor/');
         //this.isNovedadesCursoPage = this.router.url.includes('/novedades/curso/');
       }
     });

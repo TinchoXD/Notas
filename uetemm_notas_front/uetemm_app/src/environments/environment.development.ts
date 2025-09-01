@@ -7,8 +7,8 @@ export const environment = {
     
     
     //ForwaredPort
-    //urlHost: 'https://4cdb7pvh-8080.use2.devtunnels.ms',
-    //urlApi:  'https://4cdb7pvh-8080.use2.devtunnels.ms/api/',
+    //urlHost: 'https://vw18w47t-8080.use2.devtunnels.ms',
+    //urlApi:  'https://vw18w47t-8080.use2.devtunnels.ms/api/',
     
     //urlHost: 'http://192.168.1.66:8080',
     //urlApi: 'http://192.168.1.66:8080/api/',

@@ -18,6 +18,6 @@ public class NovedadRequest {
     public int cursoId;
     public int estudianteId;
     public int profesorId; // ID del profesor que registra la novedad
-    public int asignaturaId;
+    public int asignaturaId; // ID del profesor que registra la novedad
     
 }
