@@ -1,20 +1,24 @@
 package com.notas.backend.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.notas.backend.model.Catalogo;
+import com.notas.backend.model.Curso;
 import com.notas.backend.request.CatalogoRequest;
 import com.notas.backend.services.CatogoService;
 
 import lombok.RequiredArgsConstructor;
-
 
 @RestController
 @RequestMapping("/api/catalogos")
@@ -26,7 +30,6 @@ public class CatalogoController {
     @Autowired
     CatogoService catalogoService;
 
-    
     @GetMapping("/all")
     public ResponseEntity<Object> getCatalogoList() {
         try {
@@ -34,7 +37,13 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar Lista de Catálogos", HttpStatus.BAD_REQUEST);
-            }
+        }
+    }
+
+    // * OBTENER CURSO POR ID */
+    @GetMapping("/catalogo/{id}")
+    public Optional<Catalogo> getCatalogoById(@PathVariable int id) {
+        return catalogoService.getCatalogoById(id);
     }
 
     @GetMapping("/estado_civil")
@@ -44,7 +53,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Estado Civil", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/relacion_laboral")
@@ -54,7 +63,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Relacion Laboral", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/jornada_laboral")
@@ -64,7 +73,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Jornada Laboral", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/categoria")
@@ -74,7 +83,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Categoria", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/nivel_educacion")
@@ -84,7 +93,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Nivel Educacion", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/grupo_etnico")
@@ -94,7 +103,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Grupo etnico", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/nacionalidad_indigena")
@@ -104,7 +113,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Nacionalidad Indigena", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/actividad_laboral")
@@ -114,7 +123,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Actividad Laboral", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/nivel")
@@ -124,7 +133,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Nivel", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/sexo")
@@ -134,7 +143,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Sexo", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/nivelAsignatura")
@@ -144,7 +153,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - NivelAsignatura", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/subNivelAsignatura")
@@ -154,7 +163,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - SubNivelAsignatura", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/grado")
@@ -164,7 +173,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Grado", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/paralelo")
@@ -174,7 +183,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Paralelo", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/asignatura")
@@ -184,8 +193,9 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
+
     @PostMapping(value = "/agregarAsignatura")
     public ResponseEntity<Object> postAsignatura(@RequestBody CatalogoRequest request) {
         try {
@@ -193,7 +203,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al agregar - Asignatura", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/asignaturaActive")
@@ -203,7 +213,7 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Asignatura", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
     @GetMapping("/jornada")
@@ -213,12 +223,9 @@ public class CatalogoController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("error al consultar catálogo - Jornada", HttpStatus.BAD_REQUEST);
-            }
+        }
     }
 
-
-
-    
     /*
      * @GetMapping("/estado-civil")
      * public UserDTO getEstadoCivil() {

@@ -15,6 +15,15 @@ function isAlertType(type: string): type is AlertType {
 export class CursoProfesorService {
 
   constructor(private http: HttpClient, private alertService: AlertService) {}
+  private cursoProfesorId!: number;
+
+    setCursoProfesorId(id: number) {
+    this.cursoProfesorId = id;
+  }
+
+  getCursoProfesorId(): number {
+    return this.cursoProfesorId;
+  }
 
   getAllCursoProfesor(): Observable<any[]>{
     return this.http

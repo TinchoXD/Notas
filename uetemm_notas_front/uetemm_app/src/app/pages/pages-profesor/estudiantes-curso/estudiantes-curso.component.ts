@@ -6,6 +6,10 @@ import { LoadingService } from '../../../services/loading/loading.service';
 import { AlertType } from '../../../shared/alert/alertType';
 import { AlertService } from '../../../services/alert/alert.service';
 import { ExportarNotasIndividualPdfService } from '../../../services/exportarNotasIndividualPdf/exportar-notas-individual-pdf.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { NovedadesCursoEstudianteComponent } from '../novedades/novedades-curso/novedades-curso-estudiante/novedades-curso-estudiante.component';
+import { Footer } from '../../../shared/footer-dialog/footer';
+import { CursoService } from '../../../services/curso/curso.service';
 
 function isAlertType(type: string): type is AlertType {
   return type === 'success' || type === 'error';
@@ -21,6 +25,8 @@ export class EstudiantesCursoComponent implements OnInit {
   loading: boolean = true;
   userDataToken!: any;
   onIcion: string = 'pi pi-check';
+  ref: DynamicDialogRef | undefined;
+  curso: any;
 
   ngOnInit(): void {
     this.loginService.userData.subscribe({
@@ -30,6 +36,11 @@ export class EstudiantesCursoComponent implements OnInit {
     });
 
     this.activatedRoute.params.subscribe((cursoId) => {
+      this.cursoService.getCursoById(cursoId['id']).subscribe({
+        next: (curso) => {
+          this.curso = curso
+        },
+      });
       this.estudianteService.getEstudiantesByCursoId(cursoId['id']).subscribe({
         next: (estudiantes) => {
           this.estudiantes = estudiantes;
@@ -46,7 +57,9 @@ export class EstudiantesCursoComponent implements OnInit {
     private loadingService: LoadingService,
     private router: Router,
     private alertService: AlertService,
-    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService
+    private exportarNotasIndividualPdfService: ExportarNotasIndividualPdfService,
+    public dialogService: DialogService,
+    public cursoService: CursoService
   ) {}
 
   editarEstudiante(estudiante: any) {
@@ -83,5 +96,30 @@ export class EstudiantesCursoComponent implements OnInit {
 
   generarReporteNotasIndividual(estudianteRow: any) {
     this.exportarNotasIndividualPdfService.exportarPDF(estudianteRow);
+  }
+
+  registrarNovedades(estudiante: any) {
+    this.ref = this.dialogService.open(NovedadesCursoEstudianteComponent, {
+      header: 'Novedades del Estudiante ' + estudiante.apellidosNombres,
+      width: '50vw',
+      modal: true,
+      contentStyle: { overflow: 'auto' },
+      data: {
+        //cursoId: this.cursoId,
+        estudiante,
+        //cursoProfesor: this.cursoProfesor,
+        curso: this.curso,
+        tutor: this.userDataToken
+        
+      },
+      closable: false,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      templates: {
+        footer: Footer,
+      },
+    });
   }
 }

@@ -44,6 +44,10 @@ public class NovedadCursoEstudiante {
     public Curso curso;
 
     @ManyToOne
+    @JoinColumn(name = "asig_id", nullable = true)
+    public Catalogo asignatura;
+
+    @ManyToOne
     @JoinColumn(name = "estu_id", nullable = true)
     public Estudiante estudiante;
 

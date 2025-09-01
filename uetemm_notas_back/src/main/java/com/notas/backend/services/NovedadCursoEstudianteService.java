@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.notas.backend.dto.NovedadCursoEstudianteDTO;
+import com.notas.backend.model.Catalogo;
 import com.notas.backend.model.Curso;
 import com.notas.backend.model.Estudiante;
 import com.notas.backend.model.NovedadCursoEstudiante;
 import com.notas.backend.model.User;
+import com.notas.backend.repository.CatalogoRepository;
 import com.notas.backend.repository.CursoRepository;
 import com.notas.backend.repository.EstudianteRepository;
 import com.notas.backend.repository.NovedadCursoEstudianteRepository;
@@ -52,6 +54,9 @@ public class NovedadCursoEstudianteService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CatalogoRepository catalogoRepository;
     /*
      * public List<Nota> getAllNotas() {
      * List<Nota> resultList = notaRepository.findAll();
@@ -60,19 +65,22 @@ public class NovedadCursoEstudianteService {
      */
 
     public List<NovedadCursoEstudiante> getNovedadesByCursoAndEstudianteList(int curso_id, int estu_id) {
-        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository.findByCursoIdAndEstudianteId(curso_id,
+        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository.findByCursoIdAndEstudianteIdOrderByFechaRegistroDesc(curso_id,
                 estu_id);
         return resuList;
     }
 
     public List<NovedadCursoEstudiante> getNovedadesByEstudiante(int estu_id) {
-        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository.findByEstudianteIdOrderByFechaRegistroDesc(estu_id);
+        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository
+                .findByEstudianteIdOrderByFechaRegistroDesc(estu_id);
         return resuList;
     }
 
     public List<NovedadCursoEstudianteDTO> getNovedadesByCursoAndEstudianteListDTO(int curso_id, int estu_id) {
-        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository.findByCursoIdAndEstudianteId(curso_id,
+        List<NovedadCursoEstudiante> resuList = novedadCursoEstudianteRepository.findByCursoIdAndEstudianteIdOrderByFechaRegistroDesc(curso_id,
                 estu_id);
+
+
 
         List<NovedadCursoEstudianteDTO> resuListDTO = resuList.stream()
                 .map(novedad -> new NovedadCursoEstudianteDTO(
@@ -81,7 +89,9 @@ public class NovedadCursoEstudianteService {
                         novedad.getDescripcion(),
                         novedad.getCurso().getId(),
                         novedad.getEstudiante().getId(),
-                        novedad.getProfesor() != null ? novedad.getProfesor().getId() : null))
+                        novedad.getProfesor() != null ? novedad.getProfesor().getId() : null,
+                        novedad.getAsignatura().getId()
+                        ))
                 .toList();
 
         return resuListDTO;
@@ -89,6 +99,8 @@ public class NovedadCursoEstudianteService {
 
     @Transactional
     public MessageResponse postNovedad(NovedadRequest novedadRequest) {
+
+        System.out.println("novedadRequest::::::::::" + novedadRequest);
 
         Estudiante estudiante = estudianteRepository.findById(novedadRequest.getEstudianteId());
         if (estudiante == null) {
@@ -103,6 +115,12 @@ public class NovedadCursoEstudianteService {
         if (profesor == null) {
             throw new RuntimeException("Profesor no encontrado con ID: " + novedadRequest.getProfesorId());
         }
+
+        Optional<Catalogo> asignatura = catalogoRepository.findById(novedadRequest.getAsignaturaId());
+        if (asignatura == null) {
+            throw new RuntimeException("asignatura no encontrada con ID: " + novedadRequest.getAsignaturaId());
+        }
+
         NovedadCursoEstudiante novedad = new NovedadCursoEstudiante();
 
         if (novedadRequest.getId() != 0) {
@@ -111,6 +129,7 @@ public class NovedadCursoEstudianteService {
                     .curso(curso.get())
                     .estudiante(estudiante)
                     .profesor(profesor.get())
+                    .asignatura(asignatura.get())
                     .fechaRegistro(novedadRequest.getFechaRegistro())
                     .descripcion(novedadRequest.getDescripcion())
                     .build();
@@ -120,6 +139,7 @@ public class NovedadCursoEstudianteService {
                     .curso(curso.get())
                     .estudiante(estudiante)
                     .profesor(profesor.get())
+                    .asignatura(asignatura.get())
                     .fechaRegistro(novedadRequest.getFechaRegistro())
                     .descripcion(novedadRequest.getDescripcion())
                     .build();

@@ -1,6 +1,7 @@
 package com.notas.backend.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class CatogoService {
 
     @Autowired
     CatalogoRepository catalogoRepository;
+
+    public Optional<Catalogo> getCatalogoById(int id){
+        Optional<Catalogo> catalogo = catalogoRepository.findById(id);
+        return catalogo;
+    }
 
     public List<Catalogo> getAllCatalogos() {
         List<Catalogo> resultList = catalogoRepository.findByCatalogoParent(null);

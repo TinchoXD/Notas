@@ -51,8 +51,8 @@ const routes: Routes = [
   { path: 'notas-cursos/curso/:id', component: DetalleCursoTutorComponent, canActivate: [authGuard] },
   { path: 'configuracion', component: ConfiguracionesComponent, canActivate: [authGuard] },
   { path: 'novedades', component: NovedadesComponent, canActivate: [authGuard] },
-  { path: 'novedades/curso/:cursoid', component: NovedadesCursoComponent, canActivate: [authGuard] },
-  { path: 'novedades/curso/:cursoid/estudiante/:estudianteid', component: NovedadesCursoEstudianteComponent, canActivate: [authGuard] },
+  { path: 'novedades/cursoProfesor/:cursoProfesorid', component: NovedadesCursoComponent, canActivate: [authGuard] },
+  { path: 'novedades/curso/:cursoProfesorid/estudiante/:estudianteid', component: NovedadesCursoEstudianteComponent, canActivate: [authGuard] },
   { path: 'notfound', component: PageNotFoundComponent, canActivate: [authGuard] },
 
   { path: '**', redirectTo: '/notfound' },

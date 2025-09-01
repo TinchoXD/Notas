@@ -134,7 +134,6 @@ public class AdministracionUsuariosService {
             e.printStackTrace();
         }
 
-        System.out.println("");
         return resultList;
     }
 

@@ -11,8 +11,9 @@ public interface NovedadCursoEstudianteRepository extends JpaRepository<NovedadC
 
     NovedadCursoEstudiante findById(int id);
 
-    List<NovedadCursoEstudiante> findByCursoIdAndEstudianteId(int cursoId, int estudianteId);
-    
+  //List<NovedadCursoEstudiante> findByCursoIdAndEstudianteId(int cursoId, int estudianteId);
+    List<NovedadCursoEstudiante> findByCursoIdAndEstudianteIdOrderByFechaRegistroDesc(int cursoId, int estudianteId);
+
     List<NovedadCursoEstudiante> findByEstudianteIdOrderByFechaRegistroDesc(int estudianteId);
 
 
